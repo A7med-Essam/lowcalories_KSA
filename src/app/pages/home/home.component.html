@@ -1,6 +1,6 @@
 <section id="slider" dir="ltr">
   <div class="owl">
-    <owl-carousel-o [options]="customOptions" #carousel>
+    <owl-carousel-o [options]="customOptions" #carousel *ngIf="owlRefreshMode">
       <ng-template carouselSlide>
         <div class="text-center py-5" id="slider-1">
           <!-- <span class="text-white">We Serve (Since 2018)</span> -->

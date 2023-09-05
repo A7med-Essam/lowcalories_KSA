@@ -10,16 +10,19 @@ import { CarouselService } from 'ngx-owl-carousel-o/lib/services/carousel.servic
 })
 export class HomeComponent implements OnInit {
   constructor() {}
-  @ViewChild('carousel', { static: true }) carousel!: CarouselComponent;
-
+  // @ViewChild('carousel', { static: true }) carousel!: CarouselComponent;
+  owlRefreshMode:boolean = false
   ngOnInit(): void {
     setTimeout(() => {
-      const anyService = this.carousel as any;
-      const carouselService = anyService.carouselService as CarouselService;
-       carouselService.refresh();
-       carouselService.update();
-    }, 500);
+      this.owlRefreshMode = true
+      // const anyService = this.carousel as any;
+      // const carouselService = anyService.carouselService as CarouselService;
+      //  carouselService.refresh();
+      //  carouselService.update();
+    }, 1);
   }
+
+
   options: AnimationOptions = {
     path: '../../../assets/lottie/app_store.json'
   };
