@@ -1,0 +1,103 @@
+#Appointments .Dates{
+    transition: all .5s;
+}
+#Appointments .Dates:hover{
+    background-color: #E93E21 !important;
+    cursor: pointer;
+    color: #fff;
+}
+
+#Appointments .Dates.active{
+    background-color: #E93E21 !important;
+    color: #fff;
+}
+
+.ui-widget-header{
+    border: none;
+    background-color: transparent;
+}
+.ui-widget.ui-widget-content{
+    background-color: #fff;
+    width: 100%;
+    border: none;
+    border-radius: 5%;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default{
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+
+.ui-datepicker table{
+    margin-top: 20px;
+}
+.ui-state-active, .ui-widget-content .ui-state-active{
+    color: #E93E21;
+}
+.ui-state-hover{
+    cursor: pointer;
+}
+
+:host{
+    ::ng-deep .p-datepicker{
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    }
+    ::ng-deep .p-calendar{
+        height: 100%;
+    }
+    ::ng-deep .p-ripple:not(.p-disabled){
+        font-weight: 700;
+    }
+    
+}
+
+
+.qty {
+    width: 200px;
+}
+
+.qty .count {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    padding: 0 2px;
+    min-width: 70px;
+    min-height: 37px;
+    height: 37px;
+    text-align: center;
+    margin: 0 3px;
+    border: 1px solid #f5f5f5;
+}
+
+.qty .minus, .qty .plus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: #fff;
+    width: 60px;
+    border-radius: 5px;
+    height: 36px;
+    font: 34px/1 Arial,sans-serif;
+    text-align: center;
+    background-color: #E93E21;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.checkout-section{
+    gap: 12px;
+}
+
+@media (max-width:768px) {
+    .checkout-section{
+        justify-content: center !important;
+    }
+}

@@ -1,0 +1,41 @@
+.deliveredDays .item.active {
+    color: #fff;
+    background-color: #e93e21 !important;
+    position: relative;
+    padding-right: 40px !important;
+}
+
+.deliveredDays .item.active:after {
+    content: "";
+    font-family: Font Awesome\ 5 Free;
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+    animation: mymove .8s;
+}
+
+.deliveredDays .item:hover {
+    background-color: #e93e21!important;
+    color: #fff;
+}
+
+.deliveredDays .item {
+    transition: all .5s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+@keyframes mymove {
+    0% {
+        right: 20px
+    }
+
+    to {
+        right: 10px
+    }
+}
+
+.zindex_minus {
+    z-index: -2;
+}

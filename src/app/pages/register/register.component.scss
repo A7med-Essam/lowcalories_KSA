@@ -1,0 +1,20 @@
+input {
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #afafaf;
+}
+
+
+.action-button {
+    background-color: #e93e21;
+    font-weight: 400;
+    color: white;
+    border: 0 none;
+    border-radius: 1px;
+    cursor: pointer;
+    padding: 1px 0px;
+}
+
+.action-button:disabled {
+    background-color: #bbb;
+}
+

@@ -1,0 +1,272 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">{{"pages.plans.selectMeals"|translate}}</h1>
+            <p class="text-white">{{"pages.plans.desc"|translate}}</p>
+            <ul class="page-breadcrumb">
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.plans.title"|translate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="my-5">
+    <div class="container">
+        <div class="row" *ngIf="ProgramDetails | async as program">
+            <div class="col-lg-8">
+                <h1 class="fa-4x">
+                    <span class="txt-main text-orange">
+                        {{translate.currentLang == 'ar' ? program[0].myprogram.name_ar:program[0].myprogram.name}}
+                    </span>
+                </h1>
+                <p class="text-muted txt-font">
+                    {{translate.currentLang == 'ar' ?
+                    program[0].myprogram.description_ar:program[0].myprogram.description}}
+                </p>
+            </div>
+            <div class="col-12" *ngIf="carouselVisible">
+                <owl-carousel-o [options]="categoryOptions" ngClass="categories"
+                    *ngIf="categories$ |async as categories">
+                    <ng-container *ngFor="let category of categories; let i = index">
+                        <ng-template carouselSlide>
+                            <div class="item bg-white px-5 rounded py-3 font-weight-500"
+                                [ngClass]="{'active': i == category_index}"
+                                (click)="toggleCategories($event, i, category.id)">
+                                {{translate.currentLang == 'ar' ?category?.name_ar:category?.name}}
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+            <div class="col-12" *ngIf="carouselVisible">
+                <owl-carousel-o [options]="customOptions" *ngIf="meals.length > 0" ngClass="meals">
+                    <ng-container>
+                        <ng-container *ngFor="let meal of meals;let i = index">
+                            <ng-template carouselSlide>
+                                <div
+                                    class="item bg-white p-3 shadow rounded mx-3 h-100 d-flex flex-column justify-content-between mb-4">
+                                    <div>
+                                        <img [src]="meal?.image" class="img-fluid rounded-lg" alt="Meal Image">
+                                        <h5 class="txt-black mt-3" *ngIf="!meal.sideDish">{{translate.currentLang == 'ar' ?meal.mainDish.name_ar:meal.mainDish.name}}</h5>
+                                        <h5 class="txt-black mt-3" *ngIf="meal.sideDish">{{translate.currentLang == 'ar' ?meal.mainDish.name_ar:meal.mainDish.name}} /
+                                            {{translate.currentLang == 'ar' ?meal.sideDish.name_ar:meal.sideDish.name}}</h5>
+                                    </div>
+                                    <div class="text-muted">
+                                        <p class="my-1">
+                                            {{translate.currentLang == 'ar' ?meal?.description_ar:meal?.description}}
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mt-3 flex-wrap flex-md-nowrap">
+                                        <button (click)="openDetails(meal)"
+                                            class="btn bg-black text-white px-4 py-2 mt-2 w-100 me-2 font-weight-500 detailsBtn">
+                                            {{"buttons.details" | translate}}
+                                        </button>
+                                        <button (click)="pickMeal(meal)"
+                                            class="btn bg-main text-white px-4 py-2 mt-2 w-100 ms-2 font-weight-500 selectBtn">
+                                            {{"buttons.select" | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="bg-white rounded shadow-lg mx-3 p-4 cards" *ngIf="cards.length > 0 ;">
+                    <h5 class="mb-2">{{"pages.plans.labels.cards"|translate}}</h5>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 col-xl-3 my-2 day-card" *ngFor="let card of cards;let i = index;"
+                            [attr.card]="i+1">
+                            <div class="bg-white rounded shadow item px-3 py-2 meal_card">
+                                <div>
+                                    <i class="fas fa-calendar-alt text-orange"></i>
+                                    <div *ngIf="card"><b>
+                                            {{translate.currentLang == 'ar' ? (card.day | weekdayTranslate):card.day}}
+                                            , </b> <span class="txt-font">{{card.date}}</span></div>
+                                </div>
+                                <div class="mt-3">
+                                    <h6>{{"pages.plans.labels.meals"|translate}}</h6>
+                                    <div class="d-flex flex-wrap meals">
+                                        <i class="fas fa-check-circle text-muted m-1 fa-2x" [class.active]="meal.status"
+                                            (click)="displaySelectedMeal(meal)" *ngFor="let meal of card.meals"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-3" *ngIf="card.snacks.length">
+                                    <h6>{{"pages.plans.labels.snacks"|translate}}</h6>
+                                    <div class="d-flex flex-wrap snacks">
+                                        <i class="fas fa-check-circle text-muted m-1 fa-2x"
+                                            [class.active]="snack.status" (click)="displaySelectedMeal(snack)"
+                                            *ngFor="let snack of card.snacks"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 my-2">
+                <div class="text-center">
+                    <button class="btn border-0 p-0" [disabled]="!cardsStatus" (click)="getNextStep()">
+                        <a class="button mt-20 pointer py-2 px-5">{{"buttons.apply"|translate}}</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="mealDetailsModal"
+    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
+    <div *ngIf="mealDetails">
+        <div class="text-center">
+            <img [src]="mealDetails.image" class="img-fluid mb-4" alt="" width="300px">
+            <h5 class="text-orange" *ngIf="!mealDetails.sideDish">{{translate.currentLang == 'ar' ?mealDetails.mainDish.name_ar:mealDetails.mainDish.name}}</h5>
+            <h5 class="text-orange" *ngIf="mealDetails.sideDish">{{translate.currentLang == 'ar' ?mealDetails.mainDish.name_ar:mealDetails.mainDish.name}} /
+                {{translate.currentLang == 'ar' ?mealDetails.sideDish.name_ar:mealDetails.sideDish.name}}</h5>
+            <span class="font-weight-600 text-muted">
+                {{translate.currentLang == 'ar' ?mealDetails.description_ar:mealDetails.description}}
+            </span>
+        </div>
+        <hr>
+        <div class="row text-center">
+            <div class="col-sm-6 border-end my-3">
+                <h6 class="txt-main mb-3 me-4">
+                    {{translate.currentLang == 'ar' ?mealDetails.mainDish.name_ar:mealDetails.mainDish.name}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                    <span class="minus" (click)="changeMainDishNutrition(mealDetails,false)">-</span>
+                    <input type="text" class="count" [value]="mealDetails.mainDish.max_meal" disabled readonly>
+                    <span class="plus" (click)="changeMainDishNutrition(mealDetails,true)">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{translate.currentLang == 'ar' ? (mealDetails.mainDish.unit | mealUnitTranslate):mealDetails.mainDish.unit}}
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-6 my-3" *ngIf="mealDetails.sideDish">
+                <h6 class="txt-main mb-3 me-4">
+                    {{translate.currentLang == 'ar' ?mealDetails.sideDish.name_ar:mealDetails.sideDish.name}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                    <span class="minus" (click)="changeSideDishNutrition(mealDetails,false)">-</span>
+                    <input type="text" class="count" [value]="mealDetails.sideDish.max_side" disabled readonly>
+                    <span class="plus" (click)="changeSideDishNutrition(mealDetails,true)">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{translate.currentLang == 'ar' ? (mealDetails.sideDish.unit | mealUnitTranslate):mealDetails.sideDish.unit}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.calories+mealDetails.sideDish.calories).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.fat+mealDetails.sideDish.fat).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.protein+mealDetails.sideDish.protein).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.carb+mealDetails.sideDish.carb).toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-5 font-weight-600"
+                (click)="mealDetailsModal=false;pickMeal(mealDetails);">{{"buttons.select"|translate}}</button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="selectedMealModal"
+    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
+    <div *ngIf="mealDetails">
+        <div class="text-center">
+            <img [src]="mealDetails.image" class="img-fluid mb-4" alt="" width="300px">
+            <h5 class="text-orange" *ngIf="!mealDetails.sideDish">{{translate.currentLang == 'ar' ?mealDetails.mainDish.name_ar:mealDetails.mainDish.name}}</h5>
+            <h5 class="text-orange" *ngIf="mealDetails.sideDish">{{translate.currentLang == 'ar' ?mealDetails.mainDish.name_ar:mealDetails.mainDish.name}} /
+                {{translate.currentLang == 'ar' ?mealDetails.sideDish.name_ar:mealDetails.sideDish.name}}</h5>
+            <h5 class="text-dark" *ngIf="!mealDetails.sideDish">{{mealDetails.mainDish.max_meal}}
+                {{translate.currentLang == 'ar' ? (mealDetails.mainDish.unit|mealUnitTranslate):mealDetails.mainDish.unit}}</h5>
+            <h5 class="text-dark" *ngIf="mealDetails.sideDish">{{mealDetails.mainDish.max_meal}}
+                {{translate.currentLang == 'ar' ? (mealDetails.mainDish.unit|mealUnitTranslate):mealDetails.mainDish.unit}} / {{mealDetails.sideDish.max_side}} {{translate.currentLang == 'ar' ? (mealDetails.sideDish.unit|mealUnitTranslate):mealDetails.sideDish.unit}}</h5>
+            <span class="font-weight-600 text-muted">
+                {{translate.currentLang == 'ar' ?mealDetails.description_ar:mealDetails.description}}
+            </span>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.calories+mealDetails.sideDish.calories).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.fat+mealDetails.sideDish.fat).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.protein+mealDetails.sideDish.protein).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.carb+mealDetails.sideDish.carb).toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-5 font-weight-600"
+                (click)="deleteMeal();">{{"buttons.deleteMeal"|translate}}</button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-toast position="top-right" [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'300ms'"
+    [hideTransitionOptions]="'300ms'" [showTransformOptions]="'translateX(100%)'"></p-toast>

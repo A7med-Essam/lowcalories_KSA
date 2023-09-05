@@ -1,0 +1,43 @@
+@media all and (max-width: 1200px){
+    .error-content {
+        img{
+            width: 700px;
+        }
+    }
+}
+
+@media all and (max-width: 992px){
+    .error-content {
+        img{
+            width: 500px;
+        }
+    }
+}
+
+@media all and (max-width: 776px){
+    .error-content {
+        img{
+            width: 400px;
+        }
+    }
+}
+
+@media all and (max-width: 450px){
+    .error-content {
+        img{
+            width: 300px;
+        }
+    }
+}
+
+
+@media all and (max-width: 350px){
+    .error-content {
+        img{
+            width: 200px;
+        }
+        h3 {
+            font-size: 40px !important;
+        }
+    }
+}

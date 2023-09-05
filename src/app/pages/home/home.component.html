@@ -1,0 +1,296 @@
+<section id="slider" dir="ltr">
+  <div class="owl">
+    <owl-carousel-o [options]="customOptions" #carousel>
+      <ng-template carouselSlide>
+        <div class="text-center py-5" id="slider-1">
+          <!-- <span class="text-white">We Serve (Since 2018)</span> -->
+          <!-- <h3 class="text-orange">welcome to low calories</h3> -->
+          <div class="m-5">
+            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="text-center py-5" id="slider-2">
+          <!-- <span class="text-white">We Serve you</span>
+          <h3 class="text-orange">We serve you Healthy food</h3> -->
+          <!-- <img src="../../../assets/images/slider/carousel/2.png" alt="" class="img-fluid m-auto" style="width: 350px;"> -->
+          <!-- <div class="mx-3 my-1">
+            <button class="btn slider-btns btn-readmore" routerLink="../plans">Read More</button>
+          </div>
+          <div class="mx-3 my-1">
+            <button class="btn slider-btns btn-contacts" routerLink="../contacts">Contact Us</button>
+          </div> -->
+
+          <div class="m-5">
+            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="text-center py-5" id="slider-3">
+          <span class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
+          <h3 class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3>
+          <!-- <img src="../../../assets/images/slider/carousel/3.png" alt="" class="img-fluid m-auto" style="width: 350px;"> -->
+          <div class="slider3-btns">
+            <!-- <div class="mx-3">
+              <button class="btn slider-btns btn-readmore" routerLink="../plans">Read More</button>
+            </div>
+            <div class="mx-3">
+              <button class="btn slider-btns btn-contacts" routerLink="../contacts">Contact Us</button>
+            </div> -->
+            <div class="m-5">
+              <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+              <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+</section>
+
+<section class="about-2 white-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-6 my-3">
+            <img class="img-fluid" src="../../../assets/images/Certified logo/ISO-22000.png" alt="">
+          </div>
+          <div class="col-lg-6 my-3">
+            <div class="about-content mt-100">
+              <h2>{{"home.section2.title1"|translate}} <span class="text-orange">{{"home.section2.title2"|translate}}</span></h2>
+              <p>{{"home.section2.desc1"|translate}}</p>
+              <p>{{"home.section2.desc2"|translate}}</p>
+              <br><br>
+              <p>{{"home.section2.desc3"|translate}}</p>
+              <a class="button mt-10" routerLink="../plans">
+                {{"buttons.check_our_plans"|translate}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="our-menu dark black-bg pb-20">
+  <div class="page-section-pt pb-10">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="section-title text-center">
+            <div class="title-separator">
+              <i class="glyph-icon flaticon-food-27"></i>
+            </div>
+            <h2 class="text-white"> <span class="text-orange">{{"home.section3.title2"|translate}}</span> {{"home.section3.title1"|translate}}</h2>
+            <p class="text-white">{{"home.section3.desc"|translate}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-12">
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+                <p-image src="../../../assets/images/home/meals/1.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal1.title"|translate}}</h4>
+                <span class="price">26.25 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal1.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+                <p-image src="../../../assets/images/home/meals/2.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal2.title"|translate}}</h4>
+                <span class="price">30 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal2.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+              <p-image src="../../../assets/images/home/meals/3.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal3.title"|translate}}</h4>
+                <span class="price">26.25 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal3.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+              <p-image src="../../../assets/images/home/meals/4.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal4.title"|translate}}</h4>
+                <span class="price">36 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal4.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+              <p-image src="../../../assets/images/home/meals/5.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal5.title"|translate}}</h4>
+                <span class="price">36 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal5.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+              <p-image src="../../../assets/images/home/meals/6.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal6.title"|translate}}</h4>
+                <span class="price">31.5 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal6.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+              <p-image src="../../../assets/images/home/meals/7.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal7.title"|translate}}</h4>
+                <span class="price">34 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal7.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="menu-body menu-left menu-white">
+            <div class="menu-thumbnail">
+              <p-image src="../../../assets/images/home/meals/8.png" alt="Image"  [preview]="true"></p-image>
+            </div>
+            <div class="menu-details">
+              <div class="menu-title clearfix">
+                <h4>{{"home.section3.meal8.title"|translate}}</h4>
+                <span class="price">25 <sub>{{"currency"|translate}}</sub></span>
+              </div>
+              <div class="menu-description">
+                <p>{{"home.section3.meal8.desc"|translate}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="service-feature gray-bg page-section-ptb">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="section-title text-center">
+          <div class="title-separator">
+            <i class="glyph-icon flaticon-food-27"></i>
+          </div>
+          <h2> {{"home.section4.title1"|translate}} <span class="text-orange">{{"home.section4.title2"|translate}}</span></h2>
+          <p>{{"home.section4.desc"|translate}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-4 col-lg-6 mb-30">
+        <div class="service  text-center"
+          style="background-image: url('../../../assets/images/home/image-1.png');background-size: cover;background-position: center;">
+          <div class="service-content">
+            <i class="fa-regular fa-clock"></i>
+            <h4>{{"home.section4.overview1.title"|translate}}</h4>
+            <p>{{"home.section4.overview1.desc"|translate}}</p>
+          </div>
+          <div class="service-img" style="background-image: url('../../../assets/images/home/image-1.png');"></div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 mb-30">
+        <div class="service text-center"
+          style="background-image: url('../../../assets/images/home/image-2.png');background-size: cover;background-position: center;">
+          <div class="service-content">
+            <i class="fa-solid fa-bowl-food"></i>
+            <h4>{{"home.section4.overview2.title"|translate}}</h4>
+            <p>{{"home.section4.overview2.desc"|translate}}</p>
+          </div>
+          <div class="service-img" style="background-image: url('../../../assets/images/home/image-2.png');"></div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 mb-30">
+        <div class="service text-center"
+          style="background-image: url('../../../assets/images/home/image-3.jpg');background-size: cover;background-position: center;">
+          <div class="service-content">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h4>{{"home.section4.overview3.title"|translate}}</h4>
+            <p>{{"home.section4.overview3.desc"|translate}}</p>
+          </div>
+          <div class="service-img" style="background-image: url('../../../assets/images/home/image-3.jpg');"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="text-center"><a class="button mt-20" routerLink="../plans">{{"buttons.check_our_plans"|translate}}</a></div>
+  </div>
+</section>
+
+<section class="page-section-ptb parallax bg-overlay-black-70 bg-downloadApp">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title text-center m-0 mb-5">
+          <h2 class="text-white"> <span class="text-orange">{{"home.section5.title1"|translate}} </span> {{"home.section5.title2"|translate}}</h2>
+        </div>
+        <img src="https://api.lowcalories.ae/web\assets\home/qr-code-downApp.png" alt="" class="img-fluid"
+          style="width: 150px;">
+        <p class="text-white mt-30 mb-30">
+          {{"home.section5.desc1"|translate}}
+          <br>
+          {{"home.section5.desc2"|translate}}
+        </p>
+        <a target="_blank" href="https://apps.apple.com/us/app/low-calories/id1566660717" class="btn btn-app-store">
+          <ng-lottie height="100px" class="pointer" [options]="options"></ng-lottie>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>

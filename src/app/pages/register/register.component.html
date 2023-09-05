@@ -1,0 +1,215 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">{{"pages.register.title"|translate}}</h1>
+            <p class="text-white">{{"pages.register.desc"|translate}}</p>
+            <ul class="page-breadcrumb">
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.register.title"|translate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="py-5" id="register_section">
+    <div class="container">
+        <ng-container *ngIf="register$ | async as register">
+            <div *ngIf="register.status == 0 && register.error == null" class="text-danger text-center mb-2">
+                {{register.message}}
+            </div>
+            <div *ngIf="register.error != null" class="text-danger text-center mb-2">
+                {{register.error.error.message}}
+            </div>
+        </ng-container>
+        <form [formGroup]='registerForm' (ngSubmit)='onSubmit(registerForm)'>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.fname"|translate}}</label>
+                            <input formControlName="first_name" type="text" required="" name="first_name" maxlength="20">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('first_name')?.touched &&
+                                registerForm.get('first_name')?.hasError('required')">{{"validations.required"|translate}}</small>
+
+                                <!-- <small class="text-danger"
+                                *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.hasError('maxlength')">
+                                First Name Maximum Length 20 Character
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.hasError('minlength')">
+                                First Minimum Length 1 Character
+                            </small> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.lname"|translate}}</label>
+                            <input formControlName="last_name" type="text" required="" name="last_name" maxlength="20">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('last_name')?.touched &&
+                                registerForm.get('last_name')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                <!-- <small class="text-danger"
+                                *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.hasError('maxlength')">
+                                Last Name Maximum Length 20 Character
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.hasError('minlength')">
+                                Last Name Minimum Length 1 Character
+                            </small> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.pass"|translate}}</label>
+                            <input formControlName="password" type="password" required="" name="password">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('password')?.touched &&
+                                registerForm.get('password')?.hasError('required')">{{"validations.required"|translate}}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.confirmPass"|translate}}</label>
+                            <input formControlName="confirm_password" type="password" required=""
+                                name="confirm_password">
+                        </div>
+                        <small class="text-danger " *ngIf="registerForm.get('confirm_password')?.touched && 
+                        registerForm.get('confirm_password')?.invalid">
+                        {{"validations.pass"|translate}}
+                        </small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.birth"|translate}}</label>
+                            <br>
+                                <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" 
+                                formControlName='birthday' [maxDate]="maxBirthdate"></p-calendar>
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('birthday')?.touched &&
+                                registerForm.get('birthday')?.hasError('required')">{{"validations.required"|translate}}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.email"|translate}}</label>
+                            <input formControlName="email" type="email" required="" name="email">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('email')?.touched &&
+                                registerForm.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('email')?.touched &&
+                                registerForm.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.phone"|translate}}</label>
+                            <input formControlName="phone_number" type="text" required="" name="phone_number"
+                                maxlength="10" minlength="10"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('phone_number')?.touched &&
+                                registerForm.get('phone_number')?.hasError('required')">{{"validations.required"|translate}}</small>
+
+                            <!-- <small class="text-danger"
+                                *ngIf="registerForm.get('phone_number')?.touched && registerForm.get('phone_number')?.hasError('maxlength')">
+                                {{"validations.phone"|translate}}
+                            </small> -->
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('phone_number')?.touched && registerForm.get('phone_number')?.hasError('minlength')">
+                                {{"validations.phone"|translate}}
+                            </small>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.weight"|translate}}</label>
+                            <input formControlName="Weight" type="text" required="" name="Weight" maxlength="3" minlength="1"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('Weight')?.touched &&
+                                registerForm.get('Weight')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                <!-- <small class="text-danger"
+                                *ngIf="registerForm.get('Weight')?.touched && registerForm.get('Weight')?.hasError('maxlength')">
+                                Weight Maximum Length 3 Digits
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('Weight')?.touched && registerForm.get('Weight')?.hasError('minlength')">
+                                Weight Minimum Length 1 Digits
+                            </small> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.height"|translate}}</label>
+                            <input formControlName="height" type="text" required="" name="height" maxlength="3" minlength="1"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('height')?.touched &&
+                                registerForm.get('height')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                <!-- <small class="text-danger"
+                                *ngIf="registerForm.get('height')?.touched && registerForm.get('height')?.hasError('maxlength')">
+                                Height Maximum Length 3 Digits
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('height')?.touched && registerForm.get('height')?.hasError('minlength')">
+                                Height Minimum Length 1 Digits
+                            </small> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">{{"pages.register.form.gender"|translate}}</label>
+                            <p-dropdown formControlName="gender" [options]="gender" appendTo="body"
+                                [style]="{'width':'100%'}" placeholder=' '></p-dropdown>
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('gender')?.touched &&
+                                registerForm.get('gender')?.hasError('required')">{{"validations.required"|translate}}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <button class="btn border-0 pointer mt-4 w-100 next action-button rounded p-0"
+                        [disabled]="registerForm.invalid">
+                        <a class="button w-100">
+                            {{"buttons.register"|translate}}
+                            <ng-container *ngIf="register$ | async as register">
+                                <ng-container *ngIf="register.loading">
+                                    <i class="fa-solid fa-circle-notch fa-spin p-0 mx-1"></i>
+                                </ng-container>
+                            </ng-container>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

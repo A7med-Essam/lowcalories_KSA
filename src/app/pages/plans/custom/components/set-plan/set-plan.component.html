@@ -1,0 +1,143 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange" *ngIf="ProgramDetails | async as program">{{translate.currentLang == 'ar' ?program[0].myprogram.name_ar:program[0].myprogram.name}}</h1>
+            <p class="text-white">{{"pages.plans.desc"|translate}}</p>
+            <ul class="page-breadcrumb">
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.plans.title"|translate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section id="section3" class="my-5" *ngIf="skeletonMode$ | async">
+    <div class="container-lg text-center">
+        <div class="row">
+            <div class="col-12">
+                <p-skeleton width="30%" height="1.5rem"></p-skeleton>
+            </div>
+            <div class="col-12 mb-3 mt-2">
+                <p-skeleton width="40%" height="1rem"></p-skeleton>
+            </div>
+            <div class="col-12 my-3">
+                <p-skeleton width="100%" height="3rem"></p-skeleton>
+            </div>
+            <div class="col-12 my-3">
+                <p-skeleton width="100%" height="3rem"></p-skeleton>
+            </div>
+            <div class="col-12 my-3">
+                <p-skeleton width="100%" height="3rem"></p-skeleton>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="my-5">
+    <div class="container">
+        <div class="row" *ngIf="ProgramDetails | async as program">
+            <div class="col-lg-8">
+                <h1 class="fa-4x">
+                    <span class="txt-main text-orange">
+                        {{translate.currentLang == 'ar' ?program[0].myprogram.name_ar:program[0].myprogram.name}}
+                    </span>
+                </h1>
+                <p class="text-muted txt-font">
+                    {{translate.currentLang == 'ar' ?program[0].myprogram.description_ar:program[0].myprogram.description}}
+                </p>
+
+                <form [formGroup]='ProgramDetailsForm' (ngSubmit)='onSubmit(ProgramDetailsForm)' class="mt-4"
+                    *ngIf="ProgramDetails | async as program">
+                    <div class="row mx-0">
+                        <div class="col-12 my-2">
+                            <div class="mb-2"><label>{{"pages.plans.options.type"|translate}}<span class="text-danger">*</span></label></div>
+                            <p-dropdown [options]="program" formControlName='Plan_Type' ngClass="w-100" appendTo="body"
+                                (onChange)="getSelectedPlanType($event.value)" placeholder='{{"pages.plans.options.typePlaceholder"|translate}}'
+                                optionLabel="name">
+                            </p-dropdown>
+                            <small class="text-danger " *ngIf="ProgramDetailsForm.get('Plan_Type')?.touched &&
+                            ProgramDetailsForm.get('Plan_Type')?.invalid">{{"validations.required"|translate}}</small>
+                        </div>
+                        <div class="col-12 my-2" *ngIf="selectedPlanType">
+                            <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}<span class="text-danger">*</span></label></div>
+                            <p-dropdown [options]="max_meal" formControlName='Number_of_Meals' ngClass="w-100"
+                                appendTo="body" placeholder='{{"pages.plans.options.mealsPlaceholder"|translate}}'>
+                            </p-dropdown>
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('Number_of_Meals')?.touched &&
+                            ProgramDetailsForm.get('Number_of_Meals')?.invalid">{{"validations.required"|translate}}</small>
+                        </div>
+                        <div class="col-12 my-2" *ngIf="selectedPlanType">
+                            <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span class="text-danger">*</span></label></div>
+                            <p-dropdown [options]="max_days" formControlName='Number_of_Days' ngClass="w-100"
+                                appendTo="body" placeholder='{{"pages.plans.options.daysPlaceholder"|translate}}'>
+                            </p-dropdown>
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
+                            ProgramDetailsForm.get('Number_of_Days')?.invalid">{{"validations.required"|translate}}</small>
+                        </div>
+                        <div class="col-12 my-2" *ngIf="selectedPlanType">
+                            <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}<span class="text-danger">*</span></label></div>
+                            <p-dropdown [options]="max_snack" formControlName='Type_of_Snacks' ngClass="w-100"
+                                appendTo="body" placeholder='{{"pages.plans.options.snacksPlaceholder"|translate}}'>
+                            </p-dropdown>
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('Type_of_Snacks')?.touched &&
+                            ProgramDetailsForm.get('Type_of_Snacks')?.invalid">{{"validations.required"|translate}}</small>
+                        </div>
+                        <div class="col-12 my-2" *ngIf="selectedPlanType">
+                            <div>
+                                <div class="mb-2"><label>{{"pages.plans.options.date"|translate}} <span class="text-danger">*</span></label></div>
+                                <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
+                                    (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
+                                    formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
+                                <small class="text-danger"
+                                    *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
+                                ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
+                            </div>
+                            <div class="my-2">
+                                <label>{{"pages.plans.options.delivery.title"|translate}} <span class="text-danger">*</span></label>
+                                <div><small><span class="text-muted">{{"pages.plans.options.delivery.desc"|translate}}</span></small>
+                                </div>
+                                <div class="row mt-3 deliveredDays" #deliveredDays>
+                                    <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12"
+                                        *ngFor="let delivery_day of delivery_days; let i = index">
+                                        <label
+                                            class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek"
+                                            [for]="'day'+i" [attr.day]="getDayNumber(delivery_day?.day_name)"
+                                            #CurrentDay [attr.dayName]="delivery_day?.day_name"
+                                            (click)="checkDeliveryDays(CurrentDay);">
+                                            {{translate.currentLang == 'ar' ? delivery_day?.day_name_ar:delivery_day?.day_name}}
+                                        </label>
+                                        <input type="checkbox" hidden formControlName='CheckDays' [id]="'day'+i">
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12">
+                                        <label
+                                            class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md allWeek"
+                                            day="8" [for]="'day8'" (click)="checkAllWeekBtn(AllWeek);" #AllWeek>
+                                            {{translate.currentLang == 'ar' ?"كل الأسبوع":"All Week"}}
+                                        </label>
+                                        <input type="checkbox" hidden formControlName='CheckDays' [id]="'day8'">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2">
+                            <div class="text-center">
+                                <button class="btn border-0 p-0" type="submit" [disabled]="ProgramDetailsForm.invalid">
+                                    <a class="button mt-20 pointer py-2 px-5">{{"buttons.apply"|translate}}
+                                        <ng-container *ngIf="nextButtonMode$ | async">
+                                            <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                                        </ng-container>
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4 flex-center my-3">
+                <img alt="Program Image" class="w-75"
+                    [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new">
+            </div>
+        </div>
+    </div>
+</section>

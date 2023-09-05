@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-12 my-3" [ngClass]="{'col-xl-7': times.length}">
+        <p-calendar [inline]="true" [minDate]="minDate" [maxDate]="maxDate" [disabledDates]="disabledDates"
+            (onSelect)="getSelectedDate($event)"></p-calendar>
+    </div>
+    <div class="col-xl-5 my-3" *ngIf="times.length">
+        <div class="text-center shadow-lg rounded bg-white p-3 h-100" id="Appointments">
+            <h5>{{"pages.clinic.step2.appointments"|translate}}</h5>
+            <h6 class="text-orange">{{selectedAppointment.date}}</h6>
+            <div class="row my-3" *ngIf="times?.length; else noTimes">
+                <div class="col-6 my-2" *ngFor="let time of times">
+                    <div class="f-size-sm Dates text-center shadow rounded bg-white p-3 font-weight-500"
+                        (click)="toggleAppointments($event);getSelectedTime(time.id)">
+                        {{time?.time_from}} - {{time?.time_to}}
+                    </div>
+                </div>
+            </div>
+            <ng-template #noTimes>
+                <span>{{"pages.clinic.step2.noTimes"|translate}}</span> <br>
+                <a href="https://api.whatsapp.com/send?phone={{mobile}}&text=*Clinic Reservation*" target="_blank"
+                    rel="noopener noreferrer"><i class="fab fa-whatsapp mr-2"></i> {{"buttons.here"|translate}}</a>
+            </ng-template>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="times.length">
+        <div class="text-start shadow-lg rounded bg-white py-3">
+            <div *ngIf="checkoutResponse$ | async as res" class="my-2 text-center">
+                <span *ngIf="res.status == 0" class="text-danger">
+                    {{res.message}}
+                </span>
+            </div>
+            <p class="h6 mb-3 mt-3 ms-4">
+                <i class="fa fa-user text-orange"></i>
+                {{"pages.clinic.step2.members"|translate}}
+            </p>
+            <div class="d-flex justify-content-between align-items-center flex-wrap checkout-section">
+                <div class="ms-4">
+                    <div class="qty flex-center">
+                        <span (click)="countDown(people_count)" class="minus">-</span>
+                        <input type="text" class="count meals" name="qty" [value]="selectedMembers" readonly min="1" [max]="max_people"
+                            disabled #people_count>
+                        <span (click)="countUp(people_count)" class="plus">+</span>
+                    </div>
+                </div>
+                <h5 class="me-5 mt-2">
+                    <i class="fas fa-ambulance"></i>
+                    {{"pages.clinic.step2.inbody"|translate}} : <span class="text-orange">{{inbodyPrice}} <sub>{{"currency"|translate}}</sub></span>
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between align-items-end flex-wrap">
+        <div>
+            <button class="btn border-0 p-0 btn-dark px-5 py-2" (click)="getBack()">{{"buttons.back"|translate}}</button>
+        </div>
+        <div>
+            <button class="btn border-0 p-0" [disabled]="selectedTime==0" (click)="getCheckout()">
+                <a class="button mt-20 pointer py-2 px-5">{{"buttons.checkout"|translate}}</a>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div style="display: none;">
+    <div #lottie>
+        <ng-lottie height="350px" [options]="options"></ng-lottie>
+    </div>
+</div>

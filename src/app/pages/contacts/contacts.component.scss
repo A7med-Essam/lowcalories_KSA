@@ -1,0 +1,52 @@
+#contactSection main form input, #contactSection main form textarea {
+    padding-left: 40px;
+    transition: all 1s;
+    font-size: 14px;
+}#contactSection button {
+    background: #e93e21;
+    color: #fff;
+    border: none !important;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: 3px;
+    padding: 10px 30px;
+}#contactSection button::after {
+    content: "";
+    background: #1e2327;
+    position: absolute;
+    z-index: -1;
+    padding: 0.85em 0.75em;
+    border: 0.25rem solid #1e2327 !important;
+    display: block;
+    transition: all 0.35s;
+}
+
+button.slide_from_bottom::after {
+    left: 0;
+    right: 0;
+    top: 100%;
+    bottom: -100%;
+}#contactSection button:hover {
+    color: #fff;
+}#contactSection button[class^="slide"]:hover::after {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: all 0.35s;
+}#contactSection header h2 {
+    font-size: 60px;
+}#contactSection main form .form-field i {
+    position: absolute;
+    left: 0;
+    color: #e93e21;
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    z-index: 99;
+}#contactSection main form .form-field {
+    position: relative;
+}

@@ -1,0 +1,34 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">{{"pages.terms.title2"|translate}}</h1>
+            <p class="text-white">{{"pages.terms.desc"|translate}}</p>
+            <ul class="page-breadcrumb">
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.terms.title1"|translate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="page-section-ptb" *ngIf="skeletonMode$ | async">
+    <div class="container">
+        <div class="my-5">
+            <p-skeleton height="2rem" width="50%" styleClass="mb-3"></p-skeleton>
+            <p-skeleton styleClass="mb-2"></p-skeleton>
+            <p-skeleton styleClass="mb-2"></p-skeleton>
+            <p-skeleton styleClass="mb-2"></p-skeleton>
+        </div>
+    </div>
+</section>
+<section class="page-section-ptb">
+    <div class="container">
+        <main class="mt-5">
+            <div class="section-group text-start my-4" *ngFor="let terms of terms$ | async">
+                <h2 class="text-orange mb-3">{{translate.currentLang == 'ar' ? terms?.header_ar :terms?.header}}</h2>
+                <div [innerHTML]="translate.currentLang == 'ar' ? terms?.description_ar:terms?.description" style="line-height: 45px;" class="text-muted">
+                </div>
+            </div>
+        </main>
+    </div>
+</section>
+

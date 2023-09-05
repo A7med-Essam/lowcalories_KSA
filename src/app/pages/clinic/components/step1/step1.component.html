@@ -1,0 +1,78 @@
+<form [formGroup]='clinicForm' (ngSubmit)='onSubmit(clinicForm)'>
+    <div class="row">
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"pages.clinic.step1.name"|translate}}<span class="text-danger">*</span></label></div>
+            <input type="text" pInputText [style]="{'width':'100%'}"
+                formControlName="first_name" />
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('first_name')?.touched &&
+                clinicForm.get('first_name')?.hasError('required')">{{"validations.required"|translate}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"pages.clinic.step1.email"|translate}}<span class="text-danger">*</span></label></div>
+            <input type="email" pInputText [style]="{'width':'100%'}"
+                formControlName="email" />
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('email')?.touched &&
+                clinicForm.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
+            </div>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('email')?.touched &&
+                clinicForm.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"pages.clinic.step1.mobile"|translate}}<span class="text-danger">*</span></label></div>
+            <input type="text" pInputText [style]="{'width':'100%'}" maxlength="10"
+                formControlName="phone_number"
+                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('phone_number')?.touched &&
+                clinicForm.get('phone_number')?.hasError('required')">{{"validations.required"|translate}}</small>
+            </div>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('phone_number')?.touched &&
+                clinicForm.get('phone_number')?.hasError('pattern')">{{"validations.phone"|translate}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"pages.clinic.step1.whats"|translate}}<span class="text-danger">*</span></label></div>
+            <input type="text" pInputText [style]="{'width':'100%'}"
+            maxlength="10" minlength="10"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                formControlName="whatsApp" />
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('whatsApp')?.touched &&
+                clinicForm.get('whatsApp')?.hasError('required')">{{"validations.required"|translate}}</small>
+            </div>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('whatsApp')?.touched &&
+                clinicForm.get('whatsApp')?.hasError('pattern')">{{"validations.whats"|translate}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <label class="mb-2">{{"pages.clinic.step1.address"|translate}}<span class="text-danger">*</span></label>
+            <input type="text" pInputText [style]="{'width':'100%'}"
+                formControlName="address" />
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('address')?.touched &&
+                clinicForm.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2" *ngIf="emirates$ |async as emirates">
+            <label class="mb-2">{{"pages.clinic.step1.emirates"|translate}}<span class="text-danger">*</span></label>
+            <p-dropdown [options]="emirates" formControlName="emirate_id" optionLabel="en_name" optionValue="id"
+                autoWidth="false" [style]="{'width':'100%'}" placeholder=' '></p-dropdown>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('emirate_id')?.touched &&
+                clinicForm.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
+            </div>
+        </div>
+        <div class="col-12 text-end">
+            <button class="btn border-0 p-0" type="submit" [disabled]="clinicForm.invalid">
+                <a class="button mt-20 pointer py-2 px-5">{{"buttons.next"|translate}}</a>
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,433 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">{{"pages.checkout.title" | translate}}</h1>
+            <p class="text-white">{{"pages.checkout.desc" | translate}}</p>
+            <ul class="page-breadcrumb">
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home" | translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.checkout.title" | translate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="bg-img-main my-5">
+    <div class="container">
+        <h1 class="fa-4x">
+            <span class="text-orange">{{"pages.checkout.title" | translate}}</span>
+        </h1>
+        <div class="row mt-5">
+            <div class="col-lg-3 col-md-4 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded text-center h-100"
+                    *ngIf="subscriptionInfo$ | async as sub">
+                    <div *ngIf="ProgramDetails | async as program">
+                        <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new"
+                            class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
+                        <h6 class="text-orange">{{translate.currentLang == 'ar' ?
+                            program[0].myprogram.name_ar:program[0].myprogram.name}}</h6>
+                    </div>
+                    <div>
+                        <span>
+                            <i class="fa-solid fa-bahai" style="font-size: 10px;"></i>
+                            {{"pages.checkout.subscription.selectedPlan" | translate}}
+                            <i class="fa-solid fa-bahai" style="font-size: 10px;"></i>
+                        </span>
+                        <br>
+                        <span>
+                            {{sub.meal_types.length}}M-LW-{{sub.no_days}}D-{{sub.no_snacks}}S
+                        </span>
+                    </div>
+                    <div class="mt-3">
+                        <a class="txt-main pointer" (click)="subscribtionModal=true">{{"buttons.viewMore" | translate}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center h-100">
+                    <div class="container">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <img id="meal_img" src="../../../../../../assets/images/check-out/noun-gift-46445.png"
+                                class="img-fluid" alt="">
+                            <h5 class="text-orange mb-0 mx-2">{{"pages.checkout.giftcode.title" | translate}}</h5>
+                        </div>
+                        <div class="row mt-3 mb-4">
+                            <div class="col-xl-10 col-lg-9 col-md-8 col-12 my-2">
+                                <input type="text" class="form-control"
+                                    placeholder='{{"pages.checkout.giftcode.placeholder" | translate}}' #inputGiftCode>
+                            </div>
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-12 my-2">
+                                <a class="button pointer py-2 px-5 w-100" (click)="applyGiftCode(inputGiftCode)">
+                                    <button class="btn w-100 border-0 flex-center">
+                                        <span class="mx-1">{{"buttons.apply"|translate}}</span>
+                                        <ng-container *ngIf="giftcodeButtonMode$ | async">
+                                            <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                                        </ng-container>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="mt-3" *ngIf="price$ |async as price">
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"pages.checkout.giftcode.total" | translate}}</span> <span
+                                    class="txt-main">{{price.price.toFixed(2)}} <sub class="text-orange">{{"currency" |
+                                        translate}}</sub></span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"pages.checkout.giftcode.code" | translate}}</span> <span
+                                    class="txt-main">{{price.code_apply.toFixed(2)}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"pages.checkout.giftcode.vat" | translate}}</span> <span class="txt-main">
+                                    {{price.vat*100}}%
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"pages.checkout.form.bag" | translate}}</span> <span class="txt-main">
+                                    {{(checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ? 50:0}} <sub
+                                    class="text-orange">{{"currency" | translate}}</sub>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3 font-weight-500">
+                                <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span> 
+                                <span class="txt-main">{{
+                                        (checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ?
+                                         (price.grand_total+50).toFixed(2) : price.grand_total.toFixed(2)
+                                        }} 
+                                        <sub class="text-orange">{{"currency" | translate}}</sub>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center">
+                    <div class="container" *ngIf="login$ | async as user">
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <h5>{{"pages.checkout.form.title" | translate}}</h5>
+                            <h6 class="txt-main pointer ms-4">
+                                <u *ngIf="user.data" (click)="displayUserAddressModal()">{{"pages.checkout.selectLocation.title" | translate}}</u>
+                            </h6>
+                        </div>
+                        <div *ngIf="checkoutResponse$ | async as res">
+                            <span *ngIf="res.status == 0" class="text-danger">
+                                {{res.message}}
+                            </span>
+                        </div>
+
+                        <form *ngIf="user.data" [formGroup]='checkoutForm'
+                            (ngSubmit)='checkout_With_Auth(checkoutForm)'>
+                            <div class="my-4 text-start">
+                                {{"pages.checkout.form.emirate" | translate}}
+                                <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
+                                    formControlName='emirate_id' placeholder=' '></p-dropdown>
+                                <div class="text-start">
+                                    <small class="text-danger ms-1"
+                                        *ngIf="checkoutForm.get('emirate_id')?.touched &&
+                                            checkoutForm.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                </div>
+                            </div>
+                            <div class="my-4 text-start">
+                                <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
+                                <input formControlName="area_id" pInputText type="text">
+                                <div class="text-start">
+                                    <small class="text-danger ms-1"
+                                        *ngIf="checkoutForm.get('area_id')?.touched &&
+                                        checkoutForm.get('area_id')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                </div>
+                            </div>
+                            <div class="my-4 text-start">
+                                <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
+                                <input type="text" pInputText formControlName='address' />
+                                <div class="text-start">
+                                    <small class="text-danger ms-1"
+                                        *ngIf="checkoutForm.get('address')?.touched &&
+                                        checkoutForm.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='bag' id="checkoutForm_bag">
+                                        <label for="checkoutForm_bag" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.bag" | translate}}</small>
+                                        </label>
+                                </div>
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='cutlery' id="checkoutForm_cutlery">
+                                        <label for="checkoutForm_cutlery" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.cutlery" | translate}}</small>
+                                        </label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
+                                <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                    class="img-fluid mx-1" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                <small class="mx-2 font-weight-500">
+                                    {{"pages.checkout.form.terms.desc1" | translate}}<a class="text-orange pointer mx-1" (click)="termsModal = true">
+                                        {{"pages.terms.title2"|translate}} </a> 
+                                        {{"pages.checkout.form.terms.desc2" | translate}}
+                                </small>
+                            </div>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="checkoutForm.get('terms')?.touched &&
+                                    checkoutForm.get('terms')?.hasError('required')">{{"validations.terms"|translate}}
+                                </small>
+                            </div>
+                            <button class="btn w-100 border-0" type="submit" [disabled]="checkoutForm.invalid">
+                                <a class="button pointer py-2 px-5 ms-2">
+                                    {{"buttons.checkout"|translate}}
+                                </a>
+                            </button>
+                        </form>
+
+                        <form *ngIf="!user.data" [formGroup]='checkoutForm_without_auth'
+                            (ngSubmit)='checkout_Without_Auth(checkoutForm_without_auth)'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.firstName" | translate}}</label>
+                                        <input type="text" pInputText formControlName='first_name' />
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('first_name')?.touched &&
+                                                checkoutForm_without_auth.get('first_name')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.lastName" | translate}}</label>
+                                        <input type="text" pInputText formControlName='last_name' />
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('last_name')?.touched &&
+                                        checkoutForm_without_auth.get('last_name')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.email" | translate}}</label>
+                                        <input type="email" pInputText formControlName='email' />
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                        checkoutForm_without_auth.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                                checkoutForm_without_auth.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.phone" | translate}}</label>
+                                        <input type="text" pInputText formControlName='phone_number' maxlength="10"
+                                            minlength="10"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
+                                        checkoutForm_without_auth.get('phone_number')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
+                                            checkoutForm_without_auth.get('phone_number')?.hasError('pattern')">{{"validations.phone"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.password" | translate}}</label>
+                                        <input type="password" pInputText formControlName='password' />
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('password')?.touched &&
+                                        checkoutForm_without_auth.get('password')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.emirate" | translate}}</label>
+                                        <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
+                                            formControlName='emirate_id' placeholder=' '></p-dropdown>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('emirate_id')?.touched &&
+                                        checkoutForm_without_auth.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
+                                        <input formControlName="area_id" pInputText type="text">
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('area_id')?.touched &&
+                                        checkoutForm_without_auth.get('area_id')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
+                                        <input formControlName="address" pInputText type="text">
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('address')?.touched &&
+                                        checkoutForm_without_auth.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='bag'  id="checkoutForm_without_auth_bag">
+                                        <label for="checkoutForm_without_auth_bag" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.bag" | translate}}</small>
+                                        </label>
+                                </div>
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='cutlery'  id="checkoutForm_without_auth_cutlery">
+                                        <label for="checkoutForm_without_auth_cutlery" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.cutlery" | translate}}</small>
+                                        </label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
+                                <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                    class="img-fluid mx-1" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <div>
+                                    <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                    <small class="mx-2 font-weight-500">
+                                        {{"pages.checkout.form.terms.desc1" | translate}}
+                                        <a class="text-orange pointer mx-1" (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
+                                        {{"pages.checkout.form.terms.desc2" | translate}}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('terms')?.touched &&
+                                    checkoutForm_without_auth.get('terms')?.hasError('required')">
+                                    {{"validations.terms"|translate}}
+                                </small>
+                            </div>
+                            <button class="btn w-100 border-0" type="submit"
+                                [disabled]="checkoutForm_without_auth.invalid">
+                                <a class="button pointer py-2 px-5 ms-2">
+                                    {{"buttons.checkout"|translate}}
+                                </a>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog header='{{"pages.checkout.subscription.title" | translate}}' [(visible)]="subscribtionModal" [modal]="true"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div class="modal-body" *ngIf="subscriptionInfo$ | async as sub">
+        <div class="text-center" *ngIf="ProgramDetails | async as program">
+            <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new" class="img-fluid"
+                style="width: 150px;" alt="Program Image">
+            <h5 class="text-orange mt-2">{{translate.currentLang == 'ar'
+                ?program[0].myprogram.name_ar:program[0].myprogram.name}}</h5>
+        </div>
+        <h6 class="txt-main">{{"pages.checkout.subscription.delivery" | translate}}:</h6>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-12" *ngFor="let day of sub.delivery_days">
+                <div class="delivery-day bg-main text-white rounded py-2 px-3 position-relative my-1"
+                    id="checkout_subscriptionInfo_deliveryDays">
+                    {{day | titlecase | weekdayTranslate}}
+                </div>
+            </div>
+        </div>
+        <hr style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">{{"pages.checkout.subscription.meals" | translate}}:</h6>
+            <span>{{sub.meal_types.length}}</span>
+        </div>
+        <hr class="my-2" style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">{{"pages.checkout.subscription.snacks" | translate}}:</h6>
+            <span>{{sub.no_snacks}}</span>
+        </div>
+        <hr class="my-2" style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">{{"pages.checkout.subscription.startDate" | translate}}:</h6>
+            <span>{{sub.start_date}}</span>
+        </div>
+        <hr class="my-2" style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">{{"pages.checkout.subscription.subscriptionDays" | translate}}:</h6>
+            <span>{{sub.no_days}}</span>
+        </div>
+        <div class="mt-4 text-center">
+            <button class="btn border-0 p-0" (click)="subscribtionModal = false">
+                <a class="button mt-20 pointer py-2 px-5">
+                    {{"buttons.close" | translate}}
+                </a>
+            </button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header='{{"pages.checkout.selectLocation.modalTitle" | translate}}' [(visible)]="addressesModal" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false">
+    <div *ngIf="addresses$ | async as addresses;">
+        <div *ngFor="let address of addresses"
+            class="d-flex flex-wrap justify-content-between py-3 px-2 bg-white shadow rounded align-items-center my-3 text-center">
+            <div class="flex-center">
+                <i class="fas fa-map-marker-alt mx-2"></i>
+                <div class="text-start">
+                    <u class="txt-font-bold">
+                        {{address.emirate.en_name}},
+                        {{address.area_id}}
+                    </u>
+                    <div class="text-muted">
+                        <u>{{address.landmark}}</u>
+                    </div>
+                </div>
+            </div>
+            <div class="text-start">
+                <h6 class="text-orange pointer m-2 px-3" (click)="selectAddress(address)">
+                    <span><i class="fas fa-hand-pointer mx-1"></i> {{"buttons.selectAddress" | translate}}</span>
+                </h6>
+            </div>
+        </div>
+        <div *ngIf="addresses.length == 0">
+            {{"pages.checkout.selectLocation.empty.message1" | translate}}
+            <br>
+            {{"pages.checkout.selectLocation.empty.message2" | translate}}
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header='{{"pages.terms.title2"|translate}}' [(visible)]="termsModal" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false">
+    <div class="section-group text-start my-4" *ngFor="let terms of terms$ | async">
+        <h2 class="text-orange mb-3">{{translate.currentLang == 'ar' ? terms?.header_ar :terms?.header}}</h2>
+        <div [innerHTML]="translate.currentLang == 'ar' ? terms?.description_ar:terms?.description"
+            style="line-height: 45px;" class="text-muted">
+        </div>
+    </div>
+</p-dialog>
+
+<div style="display: none;">
+    <div #lottie>
+        <ng-lottie height="350px" [options]="options"></ng-lottie>
+    </div>
+</div>

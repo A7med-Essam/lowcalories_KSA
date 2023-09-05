@@ -1,0 +1,147 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">{{"pages.plans.showMeals"|translate}}</h1>
+            <p class="text-white">{{"pages.plans.desc"|translate}}</p>
+            <ul class="page-breadcrumb">
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.plans.title"|translate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white shadow rounded-lg mx-3 my-5" *ngIf="cards |async as cards">
+    <div *ngIf="carouselVisible">
+        <owl-carousel-o [options]="categoryOptions" id="selectedMeals">
+            <ng-container *ngFor="let card of cards; let i = index">
+                <ng-template carouselSlide>
+                    <div class="day pointer px-3 py-2 px-4" (click)="toggleCards(i)">
+                        <div class="content pb-2" [ngClass]="{'active': i == 0}" #CurrentDate
+                            (click)="toggleDates(CurrentDate)">
+                            <i class="fas fa-calendar-alt text-orange"></i>
+                            <div>
+                                <b>{{translate.currentLang == 'ar' ? (card.day | weekdayTranslate ) : card.day}} , </b>
+                                <span class="txt-font">{{card?.date}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+</div>
+
+<div class="bg-white p-3 shadow rounded mx-3 my-4" id="CurrentMeals" *ngIf="cards|async as cards">
+    <div class="my-3">
+        <h5 class="text-orange text-start">{{"pages.plans.labels.meals"|translate}}</h5>
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-2" *ngFor="let meal of cards[CurrentIndex].meals">
+                <div
+                    class="bg-white p-3 shadow rounded mx-3 text-start d-flex flex-column justify-content-between h-100">
+                    <img [src]="meal.details.image" class="img-fluid rounded m-auto" alt="" width="300px">
+                    <h6 class="txt-black mt-3" *ngIf="!meal.details.sideDish">
+                        {{translate.currentLang == 'ar' ? meal.details.mainDish.name_ar:meal.details.mainDish.name}}
+                    </h6>
+                    <span *ngIf="!meal.details.sideDish">{{meal.details.mainDish.max_meal}}{{translate.currentLang == 'ar' ? (meal.details.mainDish.unit|mealUnitTranslate) :meal.details.mainDish.unit}}</span>
+                    <h6 class="txt-black mt-3" *ngIf="meal.details.sideDish">
+                        {{translate.currentLang == 'ar' ? meal.details.mainDish.name_ar:meal.details.mainDish.name}} / {{translate.currentLang == 'ar' ?meal.details.sideDish.name_ar:meal.details.sideDish.name}}
+                    </h6>
+                    <span *ngIf="meal.details.sideDish">
+                        {{meal.details.mainDish.max_meal}} {{translate.currentLang == 'ar' ? (meal.details.mainDish.unit|mealUnitTranslate) :meal.details.mainDish.unit}} / {{meal.details.sideDish.max_side}} {{translate.currentLang == 'ar' ? (meal.details.sideDish.unit|mealUnitTranslate) :meal.details.sideDish.unit}}
+                    </span>
+                    <div class="text-muted">
+                        <p class="my-1">
+                            {{translate.currentLang == 'ar' ?meal.details.description_ar:meal.details.description}}
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="text-orange d-flex justify-content-between">
+                        <div>
+                            <small><i>{{"nutritions.calories"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.calories).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.calories+meal.details.sideDish.calories).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>{{"nutritions.fat"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.fat).toFixed(2)}}</span>
+                                <span *ngIf="meal.details.sideDish">{{(meal.details.mainDish.fat+meal.details.sideDish.fat).toFixed(2)}}</span>
+                            </small>
+                        </div>
+                        <div>
+                            <small><i>{{"nutritions.protein"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.protein).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.protein+meal.details.sideDish.protein).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>{{"nutritions.carb"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.carb).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.carb+meal.details.sideDish.carb).toFixed(2)}}</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="cards[CurrentIndex].snacks.length" class="my-3">
+        <h5 class="text-orange text-start">{{"pages.plans.labels.snacks"|translate}}</h5>
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-2" *ngFor="let meal of cards[CurrentIndex].snacks">
+                <div
+                    class="bg-white p-3 shadow rounded mx-3 text-start d-flex flex-column justify-content-between h-100">
+                    <img [src]="meal.details.image" class="img-fluid rounded m-auto" alt="" width="300px">
+                    <h5 class="txt-black mt-3" *ngIf="!meal.details.sideDish">{{translate.currentLang == 'ar' ? meal.details.mainDish.name_ar:meal.details.mainDish.name}}</h5>
+                    <span *ngIf="!meal.details.sideDish">{{meal.details.mainDish.max_meal}}{{translate.currentLang == 'ar' ? (meal.details.mainDish.unit|mealUnitTranslate) :meal.details.mainDish.unit}}</span>
+                    <h5 class="txt-black mt-3" *ngIf="meal.details.sideDish">{{translate.currentLang == 'ar' ? meal.details.mainDish.name_ar:meal.details.mainDish.name}} / {{translate.currentLang == 'ar' ?meal.details.sideDish.name_ar:meal.details.sideDish.name}}</h5>
+                    <span *ngIf="meal.details.sideDish">
+                        {{meal.details.mainDish.max_meal}} {{translate.currentLang == 'ar' ? (meal.details.mainDish.unit|mealUnitTranslate) :meal.details.mainDish.unit}} / {{meal.details.sideDish.max_side}} {{translate.currentLang == 'ar' ? (meal.details.sideDish.unit|mealUnitTranslate) :meal.details.sideDish.unit}}
+                    </span>
+                    <div class="text-muted ">
+                        <p class="my-1">
+                            {{translate.currentLang == 'ar' ?meal.details.description_ar:meal.details.description}}
+                        </p>
+                    </div>
+                    <div class="text-orange d-flex justify-content-between">
+                        <div>
+                            <small><i>{{"nutritions.calories"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.calories).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.calories+meal.details.sideDish.calories).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>{{"nutritions.fat"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.fat).toFixed(2)}}</span>
+                                <span *ngIf="meal.details.sideDish">{{(meal.details.mainDish.fat+meal.details.sideDish.fat).toFixed(2)}}</span>
+                            </small>
+                        </div>
+                        <div>
+                            <small><i>{{"nutritions.protein"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.protein).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.protein+meal.details.sideDish.protein).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>{{"nutritions.carb"|translate}}: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.carb).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.carb+meal.details.sideDish.carb).toFixed(2)}}</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-4">
+    <div class="text-center">
+        <a class="button mt-20 pointer py-1 px-5" (click)="getCheckout()">
+            <button class="btn w-100 border-0">{{"buttons.proceed"|translate}}
+                <ng-container *ngIf="nextButtonMode$ | async">
+                    <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                </ng-container>
+            </button>
+        </a>
+    </div>
+</div>
