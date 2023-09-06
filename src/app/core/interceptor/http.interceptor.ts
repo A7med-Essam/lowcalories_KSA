@@ -29,12 +29,15 @@ export class AuthInterceptor implements HttpInterceptor {
     const currentLang: string =
       this._LocalService.getJsonValue('currentLang') || 'en';
     let HttpHeader;
-    if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
+    if (this._LocalService.getJsonValue('lowcalories_KSA')) {
       HttpHeader = request.clone({
         setHeaders: {
-          'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
-          'lang': currentLang
-        }
+          Authorization: `Bearer ${
+            this._LocalService.getJsonValue('lowcalories_KSA').access_token
+          }`,
+          lang: currentLang,
+          accept: 'application/json',
+        },
       });
       return next.handle(HttpHeader).pipe(
         tap((res: any) => {
@@ -45,14 +48,18 @@ export class AuthInterceptor implements HttpInterceptor {
                 switchMap((res) => {
                   if (res.data) {
                     const item =
-                      this._LocalService.getJsonValue('lowcaloriesAE_new');
-                    item.auth_token = res.data;
-                    this._LocalService.setJsonValue('lowcaloriesAE_new', item);
+                      this._LocalService.getJsonValue('lowcalories_KSA');
+                    item.access_token = res.data;
+                    this._LocalService.setJsonValue('lowcalories_KSA', item);
                     const newRequest = request.clone({
                       setHeaders: {
-                        'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
-                        'lang': currentLang
-                      }
+                        Authorization: `Bearer ${
+                          this._LocalService.getJsonValue('lowcalories_KSA')
+                            .access_token
+                        }`,
+                        lang: currentLang,
+                        accept: 'application/json',
+                      },
                     });
                     return next.handle(newRequest);
                   } else {
@@ -66,12 +73,12 @@ export class AuthInterceptor implements HttpInterceptor {
                           ? 'الرجاء تسجيل الدخول'
                           : 'Please login',
                       icon: 'error',
-                      confirmButtonText: currentLang == 'ar'? "تأكيد":'Confirm',
+                      confirmButtonText: currentLang == 'ar' ? 'حسنا' : 'OK',
                     });
                     this._Store.dispatch(
                       LOGOUT_SUCCESS({ data: null, message: '', status: 0 })
                     );
-                    this._LocalService.removeItem('lowcaloriesAE_new');
+                    this._LocalService.removeItem('lowcalories_KSA');
                     this._Router.navigate(['login']);
                     return next.handle(request);
                   }
@@ -81,12 +88,12 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         })
       );
-    }
-    else{
+    } else {
       request = request.clone({
         setHeaders: {
-          'lang': currentLang
-        }
+          lang: currentLang,
+          accept: 'application/json',
+        },
       });
     }
     return next.handle(request);

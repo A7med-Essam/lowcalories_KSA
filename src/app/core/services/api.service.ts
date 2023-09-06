@@ -22,9 +22,4 @@ export class ApiService {
       .pipe(retry(1));
   }
 
-  postReqV3(endPoint: string, body: any, params?: HttpParams): Observable<any> {
-    return this.http
-      .post(environment.BaseUrlV3 + endPoint, body, { params: params })
-      .pipe(retry(1));
-  }
 }

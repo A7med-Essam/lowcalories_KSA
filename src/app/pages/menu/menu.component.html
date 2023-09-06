@@ -90,25 +90,25 @@
                     <div class="item bg-white px-5 rounded py-3 font-weight-500"
                         [ngClass]="{'active': i == category_index}" (click)="toggleCategories($event, i)">
                         <i [classList]="category.icon + ' fa-solid mx-1'"></i> 
-                        {{translate.currentLang == 'ar' ? category?.name_ar :category?.name}}
+                        {{translate.currentLang == 'ar' ? category?.category_name_ar :category?.category_name}}
                     </div>
                 </ng-template>
             </ng-container>
         </owl-carousel-o>
         <div class="row mt-5" *ngIf="menu$ |async as menu">
-            <div class="col-lg-6" *ngFor="let item of menu[category_index].menus">
+            <div class="col-lg-6" *ngFor="let item of menu[category_index].meals">
                 <div class="menu-body menu-left menu-white">
                     <div class="menu-thumbnail">
-                        <img class="img-responsive center-block" [src]="item.image" [alt]="item.name">
+                        <img class="img-responsive center-block" [src]="item.meal_image" alt="{{translate.currentLang == 'ar' ? item?.meal_name_ar :item?.meal_name_en}}">
                     </div>
                     <div class="menu-details">
                         <div class="menu-title clearfix">
-                            <h4>{{translate.currentLang == 'ar' ? item?.name_ar :item?.name}}</h4>
-                            <span class="price" *ngIf="!item.price.includes('=>')">
-                                {{item.price}} <sub>{{"currency"|translate}}</sub>
+                            <h4>{{translate.currentLang == 'ar' ? item?.meal_name_ar :item?.meal_name_en}}</h4>
+                            <span class="price" *ngIf="!item.meal_price.toString().includes('=>')">
+                                {{item.meal_price}} <sub>{{"currency"|translate}}</sub>
                             </span>
-                            <ul class="price text-end" style="font-size: small;line-height: normal;" *ngIf="item.price.includes('=>')">
-                                <ol *ngFor="let meal of parseAndCalculatePrices(item.price)">
+                            <ul class="price text-end" style="font-size: small;line-height: normal;" *ngIf="item.meal_price.toString().includes('=>')">
+                                <ol *ngFor="let meal of parseAndCalculatePrices(item.meal_price.toString())">
                                     <div *ngIf="translate.currentLang == 'ar'">
                                         <span class="mx-1">{{meal.gmQuantity}}</span>
                                         <span class="mx-1">{{meal.gmUnit | mealUnitTranslate}}</span>
@@ -137,11 +137,37 @@
                             </ul>
                         </div>
                         <div class="menu-description">
-                            <p>{{translate.currentLang == 'ar' ? item?.description_ar :item?.description_en}}</p>
+                            <p>{{translate.currentLang == 'ar' ? item?.description_ar :item?.description}}</p>
                         </div>
-                        <small class="text-muted">
-                            {{item.nutrations}}
-                        </small>
+                        <div class="row" style="font-size: 10px;">
+                            <div class="col-md-3 col-6 my-2 postion-relative">
+                                <div class="content rounded-circle shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
+                                    <small class="text-muted">{{(item.meal_calories).toFixed(2)}}</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 my-2 postion-relative">
+                                <div class="content rounded-circle shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
+                                    <small class="text-muted">{{(item.meal_fat).toFixed(2)}}</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 my-2 postion-relative">
+                                <div class="content rounded-circle shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
+                                    <small class="text-muted">{{(item.meal_protein).toFixed(2)}}</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 my-2 postion-relative">
+                                <div class="content rounded-circle shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
+                                    <small class="text-muted">{{(item.meal_carb).toFixed(2)}}</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

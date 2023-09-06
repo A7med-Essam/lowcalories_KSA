@@ -10,6 +10,6 @@ export class MenuService {
   constructor(private _ApiService: ApiService) {}
 
   getMenu(): Observable<{status:number,data:IMenuResponse[], message:string}> {
-    return this._ApiService.postReq('menu', '');
+    return this._ApiService.postReq('getMenu', '');
   }
 }

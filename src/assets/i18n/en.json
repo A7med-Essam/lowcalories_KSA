@@ -97,16 +97,11 @@
       "title":"Register",
       "desc":"Create Your Account Now!",
       "form":{
-        "fname":"First Name",
-        "lname":"Last Name",
+        "name":"Username",
         "pass":"Password",
         "confirmPass":"Confirm Password",
         "email":"Email",
-        "birth":"Birth Date",
-        "phone":"Phone Number",
-        "weight":"Weight",
-        "height":"Height",
-        "gender":"Gender"
+        "phone":"Mobile Number"
       }
     },
     "login":{

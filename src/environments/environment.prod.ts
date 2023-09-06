@@ -1,5 +1,4 @@
 export const environment = {
-  BaseUrl: 'https://api.lowcalories.ksa/api/v4/',
-  BaseUrlV3: 'https://api.lowcalories.ksa/api/v3/',
+  BaseUrl: 'https://api.thelowcalories.com/api/ksa/',
   production: true,
 };

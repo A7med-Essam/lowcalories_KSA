@@ -13,7 +13,7 @@ export class ContactsService {
     message: string;
     data: string;
   }> {
-    return this._ApiService.postReq('sendContactMail', mail);
+    return this._ApiService.postReq('contact_with_email', mail);
   }
 }
 

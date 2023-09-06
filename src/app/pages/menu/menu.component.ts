@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
-import { IMenu, IMenuResponse } from 'src/app/interfaces/menu.interface';
+import {  Observable, Subject, takeUntil } from 'rxjs';
+import {  IMenuResponse } from 'src/app/interfaces/menu.interface';
 import { SharedService } from 'src/app/services/shared.service';
 import { FETCH_MENU_START } from 'src/app/store/menuStore/menu.action';
 import {

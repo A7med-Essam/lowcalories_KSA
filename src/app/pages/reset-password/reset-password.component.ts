@@ -52,7 +52,7 @@ export class ResetPasswordComponent {
       icon: status ? 'success' : 'error',
       title: this.translate.currentLang == 'ar'? "خدمة إعادة تعيين كلمة المرور":'Reset Password Service',
       text: message,
-      confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
+      confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
     });
   }
 }

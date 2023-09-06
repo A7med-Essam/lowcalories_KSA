@@ -271,7 +271,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             icon: 'error',
             title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
             text: res.message,
-            confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
+            confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
           })
         }
       }

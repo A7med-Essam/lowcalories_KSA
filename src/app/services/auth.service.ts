@@ -37,10 +37,10 @@ export class AuthService {
   }
 
   forgetPassword(email:string): Observable<{ status: number; data: null; message: string }>{
-    return this._ApiService.postReq('sendResetMailService', {email});
+    return this._ApiService.postReq('sendResetMail', {email});
   }
 
   resetPassword(acc:any): Observable<{ status: number; data: null; message: string }>{
-    return this._ApiService.postReq('getResetMailService', acc);
+    return this._ApiService.postReq('getResetMail', acc);
   }
 }

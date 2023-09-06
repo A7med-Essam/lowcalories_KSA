@@ -39,7 +39,7 @@ export class GiftcodeEffects {
                 title: res.message,
                 text: this.translate.currentLang == 'ar'? "تم تطبيق كود الهدية!":'Gift Code Applied!',
                 icon: res.status == 1 ? 'success' : 'error',
-                confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
+                confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
               });
             }),
             catchError((error: HttpErrorResponse) =>

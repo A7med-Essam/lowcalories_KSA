@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
           icon: 'error',
           title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
           text: res.message,
-          confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
+          confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
         })
       }
     });
@@ -55,13 +55,8 @@ export class RegisterComponent implements OnInit,OnDestroy {
     this.registerForm = this._FormBuilder.group({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
-      first_name: new FormControl(null, [Validators.required, Validators.max(20), Validators.min(1)]),
-      last_name: new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(1)]),
-      phone_number: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
-      gender: new FormControl(null, [Validators.required]),
-      birthday: new FormControl(this.maxBirthdate, [Validators.required]),
-      height: new FormControl(null, [Validators.required, Validators.maxLength(3), Validators.minLength(1)]),
-      Weight: new FormControl(null, [Validators.required, Validators.maxLength(3), Validators.minLength(1)]),
+      name: new FormControl(null, [Validators.required, Validators.max(20), Validators.min(1)]),
+      mobile: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       confirm_password: new FormControl(null),
     },{ 
       validator: ConfirmedValidator('password', 'confirm_password')

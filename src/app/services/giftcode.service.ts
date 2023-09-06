@@ -9,6 +9,6 @@ import { IGiftCodeData, IGiftCodeResponse } from '../interfaces/giftcode.interfa
 export class GiftcodeService {
   constructor(private _ApiService: ApiService) {}
   applyGiftCode(subscription:IGiftCodeData): Observable<{status:number,data:IGiftCodeResponse, message:string}>{
-    return this._ApiService.postReqV3('giftCodeV4', subscription);
+    return this._ApiService.postReq('giftCodeV4', subscription);
   }
 }

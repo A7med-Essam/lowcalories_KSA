@@ -57,7 +57,7 @@ export class ContactsComponent implements OnInit {
       icon: status ? 'success' : 'error',
       title: this.translate.currentLang == 'ar'? "خدمة البريد":'Mail Service',
       text: message,
-      confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
+      confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
     });
   }
 }

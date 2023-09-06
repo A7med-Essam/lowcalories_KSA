@@ -13,7 +13,7 @@ export class TermsService {
   ) { }
 
   getTerms():Observable<{data:ITermsResponse[],status:number,message:string}> {
-    return this._ApiService.postReq('termsConditions','');
+    return this._ApiService.postReq('terms','');
   }
 
 }
