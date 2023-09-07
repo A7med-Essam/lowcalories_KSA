@@ -7,7 +7,7 @@ import * as fromNormalPlanActions from "../normalPlanStore/normalPlan.action";
 // ==============================================================GET PLAN===============================================================
 
 export interface INormalPlanState extends IHttpResponse {
-    data: INormalPlanResponse[] | null;
+    data: INormalPlanResponse | null;
   }
   
   const normalPlanInitialState: INormalPlanState = {
@@ -67,7 +67,7 @@ export interface INormalPlanState extends IHttpResponse {
 // ==========================================================SHOW MEALS===================================================================
 
   export interface IShowMealsState extends IHttpResponse {
-    data: IShowMealsResponse[] | null;
+    data: IShowMealsResponse | null;
   }
   
   const showMealsInitialState: IShowMealsState = {

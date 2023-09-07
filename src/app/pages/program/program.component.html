@@ -33,7 +33,7 @@
         <div class="pricing-table h-100 plan-format bg-white shadow-lg my-4 rounded position-relative overflow-hidden">
           <div class="pricing-title">
             <img class="img-fluid rounded-top" alt="Program Image"
-              [src]="'https://api.lowcalories.ae/'+program?.image_new">
+              [src]="program?.image">
             <h2 class="mt-4">{{translate.currentLang == 'ar' ? program?.name_ar :program?.name}}</h2>
             <p class="px-3">{{translate.currentLang == 'ar' ? program?.description_ar :program?.description}}</p>
           </div>

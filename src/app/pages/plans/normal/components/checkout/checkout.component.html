@@ -21,10 +21,8 @@
                 <div class="item shadow-lg bg-white py-4 rounded text-center h-100"
                     *ngIf="subscriptionInfo$ | async as sub">
                     <div *ngIf="ProgramDetails | async as program">
-                        <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new"
-                            class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
-                        <h6 class="text-orange">{{translate.currentLang == 'ar' ?
-                            program[0].myprogram.name_ar:program[0].myprogram.name}}</h6>
+                        <img [src]="program.image" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
+                        <h6 class="text-orange">{{translate.currentLang == 'ar' ? program.name_ar:program.name}}</h6>
                     </div>
                     <div>
                         <span>
@@ -33,9 +31,9 @@
                             <i class="fa-solid fa-bahai" style="font-size: 10px;"></i>
                         </span>
                         <br>
-                        <span>
+                        <!-- <span>
                             {{sub.meal_types.length}}M-LW-{{sub.no_days}}D-{{sub.no_snacks}}S
-                        </span>
+                        </span> -->
                     </div>
                     <div class="mt-3">
                         <a class="txt-main pointer" (click)="subscribtionModal=true">{{"buttons.viewMore" | translate}}</a>
@@ -341,10 +339,8 @@
     [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <div class="modal-body" *ngIf="subscriptionInfo$ | async as sub">
         <div class="text-center" *ngIf="ProgramDetails | async as program">
-            <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new" class="img-fluid"
-                style="width: 150px;" alt="Program Image">
-            <h5 class="text-orange mt-2">{{translate.currentLang == 'ar'
-                ?program[0].myprogram.name_ar:program[0].myprogram.name}}</h5>
+            <img [src]="program.image" class="img-fluid" style="width: 150px;" alt="Program Image">
+            <h5 class="text-orange mt-2">{{translate.currentLang == 'ar'? program.name_ar:program.name}}</h5>
         </div>
         <h6 class="txt-main">{{"pages.checkout.subscription.delivery" | translate}}:</h6>
         <div class="row">
@@ -363,7 +359,7 @@
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">
             <h6 class="txt-main">{{"pages.checkout.subscription.snacks" | translate}}:</h6>
-            <span>{{sub.no_snacks}}</span>
+            <!-- <span>{{sub.no_snacks}}</span> -->
         </div>
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">
@@ -373,7 +369,7 @@
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">
             <h6 class="txt-main">{{"pages.checkout.subscription.subscriptionDays" | translate}}:</h6>
-            <span>{{sub.no_days}}</span>
+            <!-- <span>{{sub.no_days}}</span> -->
         </div>
         <div class="mt-4 text-center">
             <button class="btn border-0 p-0" (click)="subscribtionModal = false">

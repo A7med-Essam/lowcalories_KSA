@@ -13,7 +13,7 @@ export class CustomPlanService {
   ) { }
 
   getCustomProgramDetails(program_id:number): Observable<{ status: number; data: ICustomPlanResponse[]; message: string }> {
-    return this._ApiService.postReq('getPlans', {program_id});
+    return this._ApiService.postReq('program_details', {program_id});
   }
 
   getCustomMeals(plan_id:number): Observable<{ status: number; data: ICustomMealsResponse[]; message: string }> {

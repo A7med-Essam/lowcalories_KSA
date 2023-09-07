@@ -77,12 +77,7 @@ export class NormalPlanEffects {
       ofType(fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_START),
       exhaustMap((action) =>
         this._NormalPlanService
-          .getNormalProgramPrice({
-            day_count: action.data.day_count,
-            meal_count: action.data.meal_count,
-            program_id: action.data.program_id,
-            snack_count: action.data.snack_count,
-          })
+          .getNormalProgramPrice(action.data)
           .pipe(
             map((res) =>
               fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_SUCCESS({

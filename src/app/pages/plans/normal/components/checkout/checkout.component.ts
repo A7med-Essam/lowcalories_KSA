@@ -50,7 +50,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
   emirates$!: Observable<IEmirateResponse[] | any>;
   terms$!: Observable<ITermsResponse[] | any>;
-  ProgramDetails!: Observable<INormalPlanResponse[] | null>;
+  ProgramDetails!: Observable<INormalPlanResponse | null>;
   login$!: Observable<ILoginState>;
   subscribtionModal: boolean = false;
   program_id: number = 0;
@@ -99,7 +99,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             fromNormalPlanSelector.normalPlanSelector
           ).pipe(takeUntil(this.destroyed$)).subscribe(res=>{
             if (res) {
-              this._Store.dispatch(FETCH_EMIRATE_START({programType:res[0].myprogram.company}));
+              // this._Store.dispatch(FETCH_EMIRATE_START({programType:res[0].myprogram.company}));
             }
           })
 

@@ -111,12 +111,7 @@ export class CustomPlanEffects {
       ofType(fromCustomPlanActions.FETCH_CUSTOMPLAN_PRICE_START),
       exhaustMap((action) =>
         this._CustomPlanService
-          .getCustomProgramPrice({
-            day_count: action.data.day_count,
-            meal_count: action.data.meal_count,
-            plan_id: action.data.plan_id,
-            snack_count: action.data.snack_count,
-          })
+          .getCustomProgramPrice(action.data)
           .pipe(
             map((res) =>
               fromCustomPlanActions.FETCH_CUSTOMPLAN_PRICE_SUCCESS({

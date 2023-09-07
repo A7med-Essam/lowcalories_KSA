@@ -1,75 +1,128 @@
+// export interface INormalPlanResponse {
+//     id:          number;
+//     program_id:  number;
+//     name:        string;
+//     name_ar:     string;
+//     no_meals:    number;
+//     plan_prices: string;
+//     details:     null;
+//     options:     IOptions[];
+//     myprogram:   IMyProgram;
+// }
+
 export interface INormalPlanResponse {
-    id:          number;
-    program_id:  number;
-    name:        string;
-    name_ar:     string;
-    no_meals:    number;
-    plan_prices: string;
-    details:     null;
-    options:     IOptions[];
-    myprogram:   IMyProgram;
+    id:                number;
+    name:              string;
+    name_ar:           string;
+    min_meals:         number;
+    image:             string;
+    meal_types:        MealType[];
+    snack_types:       MealType[];
+    subscription_days: SubscriptionDay[];
+    delivery_days:     DeliveryDay[];
 }
 
-interface IMyProgram {
-    id:             number;
-    active:         number;
-    type:           string;
-    company:        string;
-    name:           string;
-    name_ar:        string;
-    description:    string;
-    description_ar: string;
-    image:          string;
-    order_number:   number;
-    max_meals:      number;
-    no_snacks:      number;
-    shortcut_name:  string;
-    image_new:      string;
-    bag_price:      number;
-    snack_price:    number;
+export interface DeliveryDay {
+    id:               number;
+    day_name:         string;
+    day_name_ar:      string;
+    closed:           number;
+    deleted_at:       null;
+    day_name_in_view: string;
 }
 
-export interface IOptions {
-    id:            number;
-    plan_id:       number;
-    no_days:       string;
-    shortcut_name: string;
-    price:         string;
+export interface MealType {
+    id:                number;
+    meal_type_name:    string;
+    meal_type_name_ar: string;
+    meal_name_backend: string;
+    meal_type:         string;
+    order_number:      number;
+    program_id:        number;
+    deleted_at:        null;
 }
+
+export interface SubscriptionDay {
+    id:         number;
+    day_count:  string;
+    program_id: number;
+    deleted_at: null;
+}
+
+
+
+
+// interface IMyProgram {
+//     id:             number;
+//     active:         number;
+//     type:           string;
+//     company:        string;
+//     name:           string;
+//     name_ar:        string;
+//     description:    string;
+//     description_ar: string;
+//     image:          string;
+//     order_number:   number;
+//     max_meals:      number;
+//     no_snacks:      number;
+//     shortcut_name:  string;
+//     image_new:      string;
+//     bag_price:      number;
+//     snack_price:    number;
+// }
+
+// export interface IOptions {
+//     id:            number;
+//     plan_id:       number;
+//     no_days:       string;
+//     shortcut_name: string;
+//     price:         string;
+// }
+
+// export interface IShowMealsResponse {
+//     day:   string;
+//     date:  Date;
+//     meals: INormalPlanMeal[];
+// }
 
 export interface IShowMealsResponse {
-    day:   string;
-    date:  Date;
-    meals: INormalPlanMeal[];
+    [key: string]: IMeal[];
 }
 
-interface INormalPlanMeal {
-    id:               number;
-    program_id:       number;
-    plan_id:          number;
-    category_meal_id: number;
-    level:            string;
-    name:             string;
-    name_ar:          string;
-    description:      string;
-    description_ar:   string;
-    type:             string
-    meal_unit:        string;
-    side_unit:        string;
-    max_meal:         number;
-    max_side:         number;
-    image:            string;
-    image_web:        string;
+
+export interface IMeal {
+    meal_name_en: string;
+    meal_name_ar: string;
+    meal_image:   string;
 }
+
+// interface INormalPlanMeal {
+//     id:               number;
+//     program_id:       number;
+//     plan_id:          number;
+//     category_meal_id: number;
+//     level:            string;
+//     name:             string;
+//     name_ar:          string;
+//     description:      string;
+//     description_ar:   string;
+//     type:             string
+//     meal_unit:        string;
+//     side_unit:        string;
+//     max_meal:         number;
+//     max_side:         number;
+//     image:            string;
+//     image_web:        string;
+// }
 
 export interface ISubscriptionData {
-    plan_option_id: number;
-    start_date:     string;
-    delivery_days:  string[];
-    meal_types:     string[];
-    program_id:     number;
-    no_snacks:      number;
-    no_days:        number
+    program_id:       number;
+    subscription_days:number;
+    meal_types:       string[];
+    delivery_days:    string[];
+    start_date:       string;
+    snacks:           string[];
+    meals:            string[];
 }
 
 export interface INormalProgramPriceResponse{
@@ -80,11 +133,10 @@ export interface INormalProgramPriceResponse{
     grand_total: number;
 }
 
-
 export interface INormalSubscriptionPrice{
     program_id:     number;
     meal_count:     number;
-    day_count:      number;
+    subscription_day_count:      number;
     snack_count:    number;
 }
 

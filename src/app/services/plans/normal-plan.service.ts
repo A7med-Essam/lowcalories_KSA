@@ -12,16 +12,16 @@ export class NormalPlanService {
     private _ApiService:ApiService,
   ) { }
 
-  getMeals(SubscriptionForm:ISubscriptionData): Observable<{ status: number; data: IShowMealsResponse[]; message: string }> {
-    return this._ApiService.postReq('showMeals',SubscriptionForm);
+  getMeals(SubscriptionForm:ISubscriptionData): Observable<{ status: number; data: IShowMealsResponse; message: string }> {
+    return this._ApiService.postReq('show_Meals',SubscriptionForm);
   }
 
-  getNormalProgramDetails(program_id:number): Observable<{ status: number; data: INormalPlanResponse[]; message: string }> {
-    return this._ApiService.postReq('getPlans', {program_id});
+  getNormalProgramDetails(program_id:number): Observable<{ status: number; data: INormalPlanResponse; message: string }> {
+    return this._ApiService.postReq('program_details', {program_id});
   }
 
   getNormalProgramPrice(subscription:INormalSubscriptionPrice) : Observable<{status:number,data:INormalProgramPriceResponse, message:string}>{
-    return this._ApiService.postReq('getNormalPrices', subscription);
+    return this._ApiService.postReq('program_prices', subscription);
   }
 
   checkout(checkout:ICheckout): Observable<{status:number,data:string, message:string}>{

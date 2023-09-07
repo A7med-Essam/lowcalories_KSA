@@ -21,8 +21,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class ShowMealsComponent implements OnInit, OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   category_index: number = 0;
-  ProgramMeals!: Observable<IShowMealsResponse[] | null>;
-  ProgramDetails!: Observable<INormalPlanResponse[] | null>;
+  category_key: string = '';
+  ProgramMeals!: Observable<IShowMealsResponse | null>;
+  ProgramDetails!: Observable<INormalPlanResponse | null>;
   nextButtonMode$: Observable<boolean | null> = of(false);
   carouselVisible:boolean = true;
   customOptions: OwlOptions = {
@@ -61,6 +62,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
+          this.category_key = Object.keys(res)[0];
           this.ProgramDetails = _Store.select(
             fromNormalPlanSelector.normalPlanSelector
           );
@@ -93,8 +95,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  toggleCategories(e: Event, index: number) {
+  toggleCategories(e: Event, index: number, key:string) {
     this.category_index = index;
+    this.category_key = key;
     this._SharedService.toggleCategories(e);
   }
 
@@ -111,10 +114,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           this._Store.dispatch(
             FETCH_NORMALPLAN_PRICE_START({
               data: {
-                day_count: res.no_days,
-                meal_count: res.meal_types.length,
+                subscription_day_count: res.subscription_days,
+                meal_count: res.meals.length,
                 program_id: res.program_id,
-                snack_count: res.no_snacks,
+                snack_count: res.snacks.length,
               },
             })
           );
