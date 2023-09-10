@@ -131,6 +131,7 @@ export interface INormalProgramPriceResponse{
     code_apply:  number;
     vat:         number;
     grand_total: number;
+    bag_price :  number
 }
 
 export interface INormalSubscriptionPrice{

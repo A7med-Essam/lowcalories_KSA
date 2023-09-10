@@ -45,7 +45,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
   max_snack: string[] = [];
   max_days: string[] = [];
   @ViewChild('AllWeek') AllWeek!: ElementRef;
-  uaeDate!: Date;
+  ksaDate!: Date;
   @ViewChild('deliveredDays') deliveredDays!: ElementRef;
   nextButtonMode$: Observable<boolean | null> = of(false);
 
@@ -62,7 +62,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
     private _SharedService: SharedService,
     private _ElementRef: ElementRef,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
   }
@@ -86,7 +86,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
         this.nextButtonMode$ = this._Store.select(
           fromCustomPlanSelector.showMealsLoadingSelector
         );
-        this.getUaeDate();
+        this.getKsaDate();
       }
     });
   }
@@ -125,7 +125,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
           i++
         ) {
           // this.max_days.push(i.toString());
-          this.max_days = ["7","14","21","28"]
+          this.max_days = ['7', '14', '21', '28'];
         }
       }
     });
@@ -214,8 +214,8 @@ export class SetPlanComponent implements OnInit, OnDestroy {
     this._SharedService.checkAllWeek(e);
   }
 
-  getUaeDate() {
-    this.uaeDate = this._SharedService.getUaeTime();
+  getKsaDate() {
+    this.ksaDate = this._SharedService.getKsaTime();
   }
 
   delivery_days = [

@@ -6,7 +6,8 @@
             </h1>
             <p class="text-white">{{"pages.plans.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
                 <li><span>{{"pages.plans.title"|translate}}</span></li>
             </ul>
         </div>
@@ -50,21 +51,24 @@
                     *ngIf="ProgramDetails | async as program">
                     <div class="row mx-0">
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span
+                                        class="text-danger">*</span></label></div>
                             <p-dropdown [options]="subscription_days" formControlName='subscription_days'
                                 ngClass="w-100" optionLabel="day_count" optionValue="day_count" placeholder=' '>
                             </p-dropdown>
-                            <small class="text-danger " *ngIf="ProgramDetailsForm.get('subscription_days')?.touched &&
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('subscription_days')?.touched &&
                             ProgramDetailsForm.get('subscription_days')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}<span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}<span
+                                        class="text-danger">*</span></label></div>
                             <div class=" d-flex flex-wrap gap-4" formArrayName="meal_types">
                                 <div *ngFor="let meal of meal_types; let i = index">
-                                  <label>
-                                    <input type="checkbox" [formControlName]="i" />
-                                    {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
-                                  </label>
+                                    <label>
+                                        <input type="checkbox" [formControlName]="i" />
+                                        {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
+                                    </label>
                                 </div>
                             </div>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.hasError('atLeastOneChecked', 'meal_types') && 
@@ -73,27 +77,31 @@
                             </small>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}<span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}<span
+                                        class="text-danger">*</span></label></div>
                             <div class=" d-flex flex-wrap gap-4" formArrayName="snack_types">
                                 <div *ngFor="let meal of snack_types; let i = index">
-                                  <label>
-                                    <input type="checkbox" [formControlName]="i" />
-                                    {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
-                                  </label>
+                                    <label>
+                                        <input type="checkbox" [formControlName]="i" />
+                                        {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
+                                    </label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>{{"pages.plans.options.date"|translate}} <span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.date"|translate}} <span
+                                        class="text-danger">*</span></label></div>
                             <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
-                                formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
+                                formControlName='Start_Date' [minDate]="ksaDate" [disabledDays]="[5]"></p-calendar>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
                             ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
-                            <label>{{"pages.plans.options.delivery.title"|translate}} <span class="text-danger">*</span></label>
-                            <div><small><span class="text-muted">{{"pages.plans.options.delivery.desc"|translate}}</span></small>
+                            <label>{{"pages.plans.options.delivery.title"|translate}} <span
+                                    class="text-danger">*</span></label>
+                            <div><small><span
+                                        class="text-muted">{{"pages.plans.options.delivery.desc"|translate}}</span></small>
                             </div>
                             <div class="row mt-3 deliveredDays" #deliveredDays>
                                 <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12"
@@ -101,9 +109,9 @@
                                     <label
                                         class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek"
                                         [for]="'day'+i" [attr.day]="getDayNumber(delivery_day.day_name)" #CurrentDay
-                                        [attr.dayName]="delivery_day.day_name"
-                                        (click)="checkDeliveryDays(CurrentDay);">
-                                        {{translate.currentLang == 'ar' ? delivery_day.day_name_ar:delivery_day.day_name}}
+                                        [attr.dayName]="delivery_day.day_name" (click)="checkDeliveryDays(CurrentDay);">
+                                        {{translate.currentLang == 'ar' ?
+                                        delivery_day.day_name_ar:delivery_day.day_name}}
                                     </label>
                                     <input type="checkbox" hidden formControlName='CheckDays' [id]="'day'+i">
                                 </div>

@@ -28,7 +28,8 @@
                 <ng-container *ngFor="let meal of programMeals | keyvalue; let i = index">
                     <ng-template carouselSlide>
                         <div class="item bg-white px-5 rounded py-3 font-weight-500 text-center" *ngIf="meal"
-                            [ngClass]="{'active': i == category_index}" (click)="toggleCategories($event,i,meal.key)">{{meal.key | mealNameTranslate}}
+                            [ngClass]="{'active': i == category_index}" (click)="toggleCategories($event,i,meal.key)">
+                            {{translate.currentLang == 'ar' ? (meal.key | mealNameTranslate) : meal.key}}
                         </div>
                     </ng-template>
                 </ng-container>

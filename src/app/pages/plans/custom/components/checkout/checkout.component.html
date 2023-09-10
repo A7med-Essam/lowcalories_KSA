@@ -35,7 +35,7 @@
                         </span>
                         <br>
                         <span>
-                            {{sub.number_of_Meals.length}}M-LW-{{sub.number_of_Days}}D-{{sub.number_of_Snacks}}S
+                            {{sub.number_of_Meals.length}}M-{{sub.Plan_Type.name.toLowerCase().includes("lose") ? 'LWC' :'GWC'}}-{{sub.number_of_Days}}D-{{sub.number_of_Snacks}}S
                         </span>
                     </div>
                     <div class="mt-3">
@@ -348,7 +348,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 col-12" *ngFor="let day of sub.delivery_days">
                 <div class="delivery-day bg-main text-white rounded py-2 px-3 position-relative my-1" id="checkout_subscriptionInfo_deliveryDays">
-                    {{day | titlecase | weekdayTranslate}}
+                    {{translate.currentLang == 'ar' ? (day | titlecase | weekdayTranslate):day | titlecase}}
                 </div>
             </div>
         </div>

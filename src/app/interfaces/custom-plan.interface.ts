@@ -110,6 +110,7 @@ export interface ICustomProgramPriceResponse{
     code_apply:  number;
     vat:         number;
     grand_total: number;
+    bag_price :  number
 }
 
 export interface ICheckout {

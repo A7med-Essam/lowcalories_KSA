@@ -40,11 +40,13 @@ import { I18nService } from 'src/app/core/i18n/i18n.service';
   templateUrl: './setPlan.component.html',
   styleUrls: ['./setPlan.component.scss'],
 })
-export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked {
+export class SetPlanComponent
+  implements OnInit, OnDestroy, AfterContentChecked
+{
   private destroyed$: Subject<void> = new Subject();
   @ViewChild('AllWeek') AllWeek!: ElementRef;
   @ViewChild('deliveredDays') deliveredDays!: ElementRef;
-  uaeDate!: Date;
+  ksaDate!: Date;
   ProgramDetails!: Observable<INormalPlanResponse | null>;
   program_id: number = 0;
   ProgramDetailsForm: FormGroup = new FormGroup({});
@@ -60,7 +62,7 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
     private _SharedService: SharedService,
     private _ElementRef: ElementRef,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
   }
@@ -85,7 +87,7 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
           fromNormalPlanSelector.showMealsLoadingSelector
         );
         this.getProgramDetails();
-        this.getUaeDate();
+        this.getKsaDate();
       }
     });
   }
@@ -97,7 +99,7 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
   createPlanForm() {
     this.ProgramDetailsForm = this._FormBuilder.group({
       Start_Date: new FormControl(null, [Validators.required]),
-      subscription_days: new FormControl(null,[Validators.required]),
+      subscription_days: new FormControl(null, [Validators.required]),
       meal_types: new FormArray([], [this.atLeastOneCheckedValidator()]),
       snack_types: new FormArray([]),
       CheckDays: new FormControl(null),
@@ -108,11 +110,11 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
     return (formArray: AbstractControl): { [key: string]: boolean } | null => {
       if (formArray && formArray instanceof FormArray) {
         const values = formArray.value as boolean[];
-        const hasChecked = values.some(value => value === true);
-  
+        const hasChecked = values.some((value) => value === true);
+
         return hasChecked ? null : { atLeastOneChecked: true };
       }
-  
+
       return null;
     };
   }
@@ -121,39 +123,48 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
     this._SharedService.onSelectedDate(SelectedDate, deliveredDays);
   }
 
-  meal_types:MealType[] = []
-  snack_types:MealType[] = []
+  meal_types: MealType[] = [];
+  snack_types: MealType[] = [];
   subscription_days: SubscriptionDay[] = [];
-  delivery_days:DeliveryDay[] = [];
+  delivery_days: DeliveryDay[] = [];
 
   getProgramDetails() {
     this.ProgramDetails.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
       if (res) {
-        this.delivery_days = res.delivery_days.filter(day => day.closed !== 1);
+        this.delivery_days = res.delivery_days.filter(
+          (day) => day.closed !== 1
+        );
         this.subscription_days = res.subscription_days;
-        this.ProgramDetailsForm.get('subscription_days')?.setValue(res.subscription_days[0].day_count);
+        this.ProgramDetailsForm.get('subscription_days')?.setValue(
+          res.subscription_days[0].day_count
+        );
         this.meal_types = res.meal_types;
         this.meal_types.forEach(() => {
-          const meal_types_FormArray  :any= this.ProgramDetailsForm.get('meal_types')
+          const meal_types_FormArray: any =
+            this.ProgramDetailsForm.get('meal_types');
           let condition = meal_types_FormArray.controls.length == 0;
-          (this.ProgramDetailsForm.get('meal_types') as FormArray).push(new FormControl(condition));
+          (this.ProgramDetailsForm.get('meal_types') as FormArray).push(
+            new FormControl(condition)
+          );
         });
-        this.snack_types = res.snack_types
+        this.snack_types = res.snack_types;
         this.snack_types.forEach(() => {
-          (this.ProgramDetailsForm.get('snack_types') as FormArray).push(new FormControl(false));
+          (this.ProgramDetailsForm.get('snack_types') as FormArray).push(
+            new FormControl(false)
+          );
         });
         this.setDefaultDate();
       }
     });
   }
 
-  getUaeDate() {
-    this.uaeDate = this._SharedService.getUaeTime();
+  getKsaDate() {
+    this.ksaDate = this._SharedService.getKsaTime();
   }
 
   setDefaultDate() {
     setTimeout(() => {
-      let DefaultDate: Date = this.uaeDate;
+      let DefaultDate: Date = this.ksaDate;
       if (DefaultDate.getDay() === 5) {
         DefaultDate.setDate(DefaultDate.getDate() + 1);
       }
@@ -181,25 +192,30 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
     let SelectedDate: Date = form.value.Start_Date;
     let SubscriptionData: ISubscriptionData = {
       program_id: Number(this.program_id),
-      subscription_days:form.value.subscription_days,
-      start_date: SelectedDate.toLocaleDateString('pt-br').split('/').reverse().join('-'),
+      subscription_days: form.value.subscription_days,
+      start_date: SelectedDate.toLocaleDateString('pt-br')
+        .split('/')
+        .reverse()
+        .join('-'),
       delivery_days: this.getSelectedDeliveryDays(),
-      meal_types: [...this.getMealTypes(form.value.meal_types,this.meal_types)
-        ,...this.getMealTypes(form.value.snack_types,this.snack_types)],
-      meals:this.getMealTypes(form.value.meal_types,this.meal_types),
-      snacks:this.getMealTypes(form.value.snack_types,this.snack_types)
+      meal_types: [
+        ...this.getMealTypes(form.value.meal_types, this.meal_types),
+        ...this.getMealTypes(form.value.snack_types, this.snack_types),
+      ],
+      meals: this.getMealTypes(form.value.meal_types, this.meal_types),
+      snacks: this.getMealTypes(form.value.snack_types, this.snack_types),
     };
     return SubscriptionData;
   }
-  
-  getMealTypes(meals:boolean[],meal_types:MealType[]){
+
+  getMealTypes(meals: boolean[], meal_types: MealType[]) {
     let selectedMeals: string[] = [];
     meals.forEach((status, index) => {
       if (status) {
-        selectedMeals.push(meal_types[index].meal_name_backend)
+        selectedMeals.push(meal_types[index].meal_name_backend);
       }
     });
-    return selectedMeals
+    return selectedMeals;
   }
 
   getSelectedDeliveryDays() {
