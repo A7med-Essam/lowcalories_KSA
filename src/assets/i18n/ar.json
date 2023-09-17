@@ -20,7 +20,8 @@
     "deleteMeal":"حذف الوجبة",
     "viewMore":"عرض المزيد",
     "close":"إغلاق",
-    "selectAddress":"أختار العنوان"
+    "selectAddress":"أختار العنوان",
+    "edit":"تعديل الوجبة"
   },
   "pages":{
     "home":"الصفحة الرئيسية",

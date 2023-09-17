@@ -20,7 +20,8 @@
     "deleteMeal":"Delete Meal",
     "viewMore":"View More",
     "close":"Close",
-    "selectAddress":"Select Address"
+    "selectAddress":"Select Address",
+    "edit":"Edit Meal"
   },
   "pages":{
     "home":"Home",

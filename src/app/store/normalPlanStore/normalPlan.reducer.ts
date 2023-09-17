@@ -67,7 +67,7 @@ export interface INormalPlanState extends IHttpResponse {
 // ==========================================================SHOW MEALS===================================================================
 
   export interface IShowMealsState extends IHttpResponse {
-    data: IShowMealsResponse | null;
+    data: IShowMealsResponse[] | null;
   }
   
   const showMealsInitialState: IShowMealsState = {

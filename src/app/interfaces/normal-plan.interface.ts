@@ -86,15 +86,31 @@ export interface SubscriptionDay {
 // }
 
 export interface IShowMealsResponse {
-    [key: string]: IMeal[];
+    day:   string;
+    date:  Date;
+    meals: Meal[];
 }
 
-
-export interface IMeal {
-    meal_name_en: string;
-    meal_name_ar: string;
-    meal_image:   string;
+export interface Meal {
+    mainDish: Dish;
+    sideDish: Dish[];
 }
+
+export interface Dish {
+    meal_id:         number;
+    meal_type:       string;
+    meal_name_en:    string;
+    meal_name_ar:    string;
+    unit:            string;
+    meal_name_image: string;
+    protein:         number;
+    calories:        number;
+    carb:            number;
+    fat:             number;
+    qty:             number;
+    defaultQty:      number;
+}
+
 
 // interface INormalPlanMeal {
 //     id:               number;
@@ -151,14 +167,15 @@ export interface ICheckout {
     plan_option_id: number;
     start_date:     string;
     delivery_days:  string[];
-    meal_types:     string[];
+    meal_backend_types:     string[];
     program_id:     number;
     no_snacks:      number;
-    grand_total:    number;
+    total_price:    number;
     price:          number;
     code_id:        number;
     bag:            number;
     cutlery:        number;
+    subscription_days: number;
     location: {
         emirate_id:     number;
         area_id:        string;
@@ -170,5 +187,7 @@ export interface ICheckout {
     email?:          string;
     phone_number?:   string;
     password?:       string;
+    subscription_from :string,
+    address_id: number
 }
 

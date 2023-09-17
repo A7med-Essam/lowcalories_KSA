@@ -377,9 +377,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   selectAddress(address: IAddressResponse) {
-    this.checkoutForm.get('address')?.setValue(address.landmark);
-    this.checkoutForm.get('emirate_id')?.setValue(address.emirate_id);
-    this.checkoutForm.get('area_id')?.setValue(address.area_id);
+    this.checkoutForm.get('address')?.setValue(address.address);
+    this.checkoutForm.get('emirate_id')?.setValue(address.area.state.name);
+    this.checkoutForm.get('area_id')?.setValue(address.area.area_en);
     this.addressesModal = false;
   }
 

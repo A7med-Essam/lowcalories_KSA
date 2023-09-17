@@ -12,8 +12,8 @@ export class NormalPlanService {
     private _ApiService:ApiService,
   ) { }
 
-  getMeals(SubscriptionForm:ISubscriptionData): Observable<{ status: number; data: IShowMealsResponse; message: string }> {
-    return this._ApiService.postReq('show_Meals',SubscriptionForm);
+  getMeals(SubscriptionForm:ISubscriptionData): Observable<{ status: number; data: IShowMealsResponse[]; message: string }> {
+    return this._ApiService.postReq('showMealInDetails',SubscriptionForm);
   }
 
   getNormalProgramDetails(program_id:number): Observable<{ status: number; data: INormalPlanResponse; message: string }> {

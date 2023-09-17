@@ -14,6 +14,6 @@ export class AddressService {
     status: number;
     message: string;
   }> {
-    return this._ApiService.postReq('myAddresses', '');
+    return this._ApiService.postReq('addresses', '');
   }
 }

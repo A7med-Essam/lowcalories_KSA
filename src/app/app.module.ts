@@ -61,7 +61,7 @@ const APP_PRIMENG_MODULE = [
     NotfoundComponent,
     ForgetPasswordComponent,
     FaqComponent,
-    ResetPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

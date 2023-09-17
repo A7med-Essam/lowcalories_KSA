@@ -6222,6 +6222,13 @@ button.nav-link.active a {
 .bg-downloadApp::before {
   background: rgba(0, 0, 0, 0.6);
 }
+@media all and (max-width:992px) {
+  .bg-darkImg {
+    h1 {
+      font-size: 40px;
+    }
+  }
+}
 
 @media all and (max-width:776px) {
   .bg-darkImg {
@@ -6231,7 +6238,7 @@ button.nav-link.active a {
   }
 }
 
-@media all and (max-width:350px) {
+@media all and (max-width:500px) {
   .bg-darkImg {
     height: 430px !important;
 

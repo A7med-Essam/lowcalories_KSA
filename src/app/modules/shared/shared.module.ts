@@ -4,14 +4,15 @@ import { WeekdayTranslatePipe } from 'src/app/core/pipes/weekday-translate.pipe'
 import { MealUnitTranslatePipe } from 'src/app/core/pipes/meal-unit-translate.pipe';
 import { I18nModule } from 'src/app/core/i18n/i18n.module';
 import { MealNameTranslatePipe } from 'src/app/core/pipes/meal-name-translate.pipe';
+import { SumPipe } from 'src/app/core/pipes/sum.pipe';
 
 @NgModule({
-  declarations: [WeekdayTranslatePipe,MealUnitTranslatePipe,MealNameTranslatePipe],
+  declarations: [WeekdayTranslatePipe,MealUnitTranslatePipe,MealNameTranslatePipe,SumPipe],
   imports: [
     CommonModule,I18nModule
   ],
   exports:[
-    WeekdayTranslatePipe,MealUnitTranslatePipe,I18nModule,MealNameTranslatePipe
+    WeekdayTranslatePipe,MealUnitTranslatePipe,I18nModule,MealNameTranslatePipe,SumPipe
   ]
 })
 export class SharedModule { }

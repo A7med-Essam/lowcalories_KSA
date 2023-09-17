@@ -195,7 +195,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
-        meal_types: sub?.meal_types,
+        meal_backend_types: sub?.meal_types,
         no_snacks: sub?.no_snacks,
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
@@ -204,13 +204,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         cutlery: Number(form.value.cutlery),
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
-        grand_total: priceinfo?.grand_total,
+        total_price: priceinfo?.grand_total,
         location: {
           emirate_id: form.value.emirate_id,
           area_id: form.value.area_id,
           property_number: '',
           landmark: form.value.address,
         },
+        subscription_days:sub?.subscription_days,
+        subscription_from:'web',
+        address_id:form.value.emirate_id
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
@@ -232,7 +235,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
-        meal_types: sub?.meal_types,
+        meal_backend_types: sub?.meal_types,
         no_snacks: sub?.no_snacks,
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
@@ -241,7 +244,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         cutlery: Number(form.value.cutlery),
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
-        grand_total: priceinfo?.grand_total,
+        total_price: priceinfo?.grand_total,
         location: {
           emirate_id: form.value.emirate_id,
           area_id: form.value.area_id,
@@ -253,6 +256,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         email: form.value.email,
         phone_number: form.value.phone_number,
         password: form.value.password,
+        subscription_days:sub?.subscription_days,
+        subscription_from:'web',
+        address_id:form.value.emirate_id
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
@@ -292,9 +298,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   selectAddress(address: IAddressResponse) {
-    this.checkoutForm.get('address')?.setValue(address.landmark);
-    this.checkoutForm.get('emirate_id')?.setValue(address.emirate_id);
-    this.checkoutForm.get('area_id')?.setValue(address.area_id);
+    this.checkoutForm.get('address')?.setValue(address.address);
+    this.checkoutForm.get('emirate_id')?.setValue(address.id);
+    this.checkoutForm.get('area_id')?.setValue(address.area.area_en);
     this.addressesModal = false;
   }
 
