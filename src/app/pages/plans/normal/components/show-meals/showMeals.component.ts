@@ -11,7 +11,7 @@ import {
   Meal,
 } from 'src/app/interfaces/normal-plan.interface';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { FETCH_NORMALPLAN_PRICE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import { FETCH_NORMALPLAN_PRICE_START, SAVE_NORMAL_MEALS } from 'src/app/store/normalPlanStore/normalPlan.action';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -24,7 +24,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   category_index: number = 0;
   ProgramMeals!: Observable<IShowMealsResponse[] | null>;
-  userMeals: IShowMealsResponse[]=[]
+  userMeals: IShowMealsResponse[]=[];
   ProgramDetails!: Observable<INormalPlanResponse | null>;
   nextButtonMode$: Observable<boolean | null> = of(false);
   mealDetailsModal: boolean = false;
@@ -51,6 +51,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     },
   };
   currentMeal!: Meal;
+  currentMealIndex:number = 0;
 
   constructor(
     private _SharedService: SharedService,
@@ -115,6 +116,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
+          this._Store.dispatch(SAVE_NORMAL_MEALS({ data: this.userMeals }));
           this._Store.dispatch(
             FETCH_NORMALPLAN_PRICE_START({
               data: {
@@ -134,7 +136,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  currentMealIndex:number = 0;
   openDetails(meal:Meal,index:number) {
     this.currentMealIndex = index;
     this.currentMeal = meal;
@@ -209,12 +210,13 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   }
 
   calcNutrition(meal: Dish,originalMeal: any, type:string) {
-    const caloriesPercentage = originalMeal.mainDish[type] / originalMeal.mainDish.qty
-    return (caloriesPercentage * meal.qty);
+    const caloriesPercentage = Number(originalMeal.mainDish[type]) / Number(originalMeal.mainDish.qty)
+    return (Number(caloriesPercentage || 0) * Number(meal.qty));
   }
+
   calcNutrition2(meal: Dish,originalMeal: any, type:string,index:number) {
-    const caloriesPercentage = originalMeal.sideDish[index][type] / this.currentMeal.sideDish[index].qty
-    return (caloriesPercentage * meal.qty);
+    const caloriesPercentage = Number(originalMeal.sideDish[index][type]) / Number(this.currentMeal.sideDish[index].qty)
+    return (Number(caloriesPercentage || 0) * Number(meal.qty));
   }
 
 }

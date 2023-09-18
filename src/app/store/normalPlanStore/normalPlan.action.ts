@@ -6,6 +6,7 @@ export const FETCH_NORMALPLAN_START = createAction('[Normal Plan] FETCH_NORMALPL
 export const FETCH_NORMALPLAN_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_SUCCESS', props<{data:INormalPlanResponse,message:string,status:number}>())
 export const FETCH_NORMALPLAN_FAILED = createAction('[Normal Plan] FETCH_NORMALPLAN_FAILED', props<{error:HttpErrorResponse}>())
 export const SAVE_NORMAL_SUBSCRIPTION = createAction('[Normal Plan] SAVE_NORMAL_SUBSCRIPTION', props<{data:ISubscriptionData}>())
+export const SAVE_NORMAL_MEALS = createAction('[Normal Plan] SAVE_NORMAL_MEALS', props<{data:IShowMealsResponse[]}>())
 
 
 export const FETCH_SHOWMEALS_START = createAction('[Normal Plan] FETCH_SHOWMEALS_START', props<{data:ISubscriptionData}>())

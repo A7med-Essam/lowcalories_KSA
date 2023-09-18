@@ -30,6 +30,7 @@ export interface AppState {
   customPlan: fromCustomPlanStore.ICustomPlanState;
   customSubscription: fromCustomPlanStore.ICustomSubscriptionState;
   normalSubscription: fromNormalPlanStore.INormalSubscriptionState;
+  normalSubscriptionMeals: fromNormalPlanStore.INormalSubscriptionMealsState;
   normalPlanPrice: fromNormalPlanStore.INormalPlanPriceState;
   emirate: fromEmirateStore.IEmirateState;
   normalCheckout: fromNormalPlanStore.ICheckoutState;
@@ -55,6 +56,7 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   customPlan: fromCustomPlanStore.CustomPlanReducer,
   customSubscription: fromCustomPlanStore.CustomSubscriptionReducer,
   normalSubscription: fromNormalPlanStore.NormalSubscriptionReducer,
+  normalSubscriptionMeals: fromNormalPlanStore.NormalSubscriptionMealsReducer,
   normalPlanPrice: fromNormalPlanStore.NormalPlanPriceReducer,
   emirate: fromEmirateStore.EmirateReducer,
   normalCheckout: fromNormalPlanStore.NormalPlanCheckoutReducer,

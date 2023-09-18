@@ -188,6 +188,7 @@ export interface ICheckout {
     phone_number?:   string;
     password?:       string;
     subscription_from :string,
-    address_id: number
+    address_id: number,
+    list_days:  IShowMealsResponse[]
 }
 

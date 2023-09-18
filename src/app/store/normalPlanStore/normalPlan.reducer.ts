@@ -64,6 +64,24 @@ export interface INormalPlanState extends IHttpResponse {
       }))
     );
 
+    // ==============================================================SAVE MEALS===============================================================
+
+    export interface INormalSubscriptionMealsState {
+      data: IShowMealsResponse[] | null;
+    }
+    
+    const NormalSubscriptionMealsInitialState: INormalSubscriptionMealsState = {
+      data: null,
+    };
+    
+    export const NormalSubscriptionMealsReducer = createReducer(
+      NormalSubscriptionMealsInitialState,
+      on(fromNormalPlanActions.SAVE_NORMAL_MEALS, (state, action) => ({
+        ...state,
+        data: action.data
+      }))
+    );
+
 // ==========================================================SHOW MEALS===================================================================
 
   export interface IShowMealsState extends IHttpResponse {

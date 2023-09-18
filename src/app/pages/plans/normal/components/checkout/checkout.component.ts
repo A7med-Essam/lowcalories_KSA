@@ -13,6 +13,7 @@ import {
   ICheckout,
   INormalPlanResponse,
   INormalProgramPriceResponse,
+  IShowMealsResponse,
   ISubscriptionData,
 } from 'src/app/interfaces/normal-plan.interface';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
@@ -63,7 +64,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     path: '../../../../../../assets/lottie/payment.json',
   };
   @ViewChild('lottie') lottie!: ElementRef;
-
+  userMeals: IShowMealsResponse[] | null = [];
 
 
   constructor(
@@ -82,6 +83,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         this.price = res ? res.price : 0;
+      });
+      _Store
+      .select(fromNormalPlanSelector.normalSubscriptionMealsSelector)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        this.userMeals = res;
       });
     _Store
       .select(fromNormalPlanSelector.normalSubscriptionSelector)
@@ -213,7 +220,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         },
         subscription_days:sub?.subscription_days,
         subscription_from:'web',
-        address_id:form.value.emirate_id
+        address_id:form.value.emirate_id,
+        list_days:this.userMeals ? this.userMeals : []
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
@@ -258,7 +266,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         password: form.value.password,
         subscription_days:sub?.subscription_days,
         subscription_from:'web',
-        address_id:form.value.emirate_id
+        address_id:form.value.emirate_id,
+        list_days:this.userMeals ? this.userMeals : []
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
