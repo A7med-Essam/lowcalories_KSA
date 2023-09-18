@@ -354,12 +354,12 @@
         <hr style="height: .5px;">
         <div class="d-flex justify-content-between">
             <h6 class="txt-main">{{"pages.checkout.subscription.meals" | translate}}:</h6>
-            <span>{{sub.meal_types.length}}</span>
+            <span>{{sub.meals.length}}</span>
         </div>
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">
             <h6 class="txt-main">{{"pages.checkout.subscription.snacks" | translate}}:</h6>
-            <!-- <span>{{sub.no_snacks}}</span> -->
+            <span>{{sub.snacks.length}}</span>
         </div>
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">
@@ -369,7 +369,7 @@
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">
             <h6 class="txt-main">{{"pages.checkout.subscription.subscriptionDays" | translate}}:</h6>
-            <!-- <span>{{sub.no_days}}</span> -->
+            <span>{{sub.subscription_days}}</span>
         </div>
         <div class="mt-4 text-center">
             <button class="btn border-0 p-0" (click)="subscribtionModal = false">
