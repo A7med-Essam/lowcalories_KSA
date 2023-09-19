@@ -132,6 +132,7 @@
       },
       "form":{
         "title":"Checkout Form",
+        "name":"Name",
         "firstName":"First Name",
         "lastName":"Last Name",
         "email":"Email",
@@ -140,6 +141,7 @@
         "emirate":"Emirates",
         "address":"Address",
         "phone":"Phone Number",
+        "landline":"Landline",
         "terms":{
           "title":"We Accept",
           "desc1":"I accepted the ",

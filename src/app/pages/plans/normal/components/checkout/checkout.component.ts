@@ -65,7 +65,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   };
   @ViewChild('lottie') lottie!: ElementRef;
   userMeals: IShowMealsResponse[] | null = [];
-
+  areas:any[] = ["Gada","El-Dmam"]
 
   constructor(
     private _Store: Store,
@@ -150,13 +150,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   setCheckoutForm_Without_Auth() {
     this.checkoutForm_without_auth = this._FormBuilder.group({
-      first_name: new FormControl(null, [Validators.required]),
-      last_name: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
       phone_number: new FormControl(null, [Validators.required,Validators.pattern('^[\\d]{10}$')]),
       address: new FormControl(null, [Validators.required]),
-      emirate_id: new FormControl(null, [Validators.required]),
+      landline: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       cutlery:new FormControl(false),

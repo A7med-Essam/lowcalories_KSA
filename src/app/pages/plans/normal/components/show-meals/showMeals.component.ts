@@ -124,6 +124,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
                 meal_count: res.meals.length,
                 program_id: res.program_id,
                 snack_count: res.snacks.length,
+                list_days: this.userMeals
               },
             })
           );

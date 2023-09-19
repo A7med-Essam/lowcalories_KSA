@@ -188,23 +188,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
-                                        <label class="text-muted">{{"pages.checkout.form.firstName" | translate}}</label>
-                                        <input type="text" pInputText formControlName='first_name' />
+                                        <label class="text-muted">{{"pages.checkout.form.name" | translate}}</label>
+                                        <input type="text" pInputText formControlName='name' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
-                                                *ngIf="checkoutForm_without_auth.get('first_name')?.touched &&
-                                                checkoutForm_without_auth.get('first_name')?.hasError('required')">{{"validations.required"|translate}}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-2 text-start">
-                                        <label class="text-muted">{{"pages.checkout.form.lastName" | translate}}</label>
-                                        <input type="text" pInputText formControlName='last_name' />
-                                        <div class="text-start">
-                                            <small class="text-danger ms-1"
-                                                *ngIf="checkoutForm_without_auth.get('last_name')?.touched &&
-                                        checkoutForm_without_auth.get('last_name')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                                *ngIf="checkoutForm_without_auth.get('name')?.touched &&
+                                                checkoutForm_without_auth.get('name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -253,20 +242,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
-                                        <label class="text-muted">{{"pages.checkout.form.emirate" | translate}}</label>
-                                        <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
-                                            formControlName='emirate_id' placeholder=' '></p-dropdown>
-                                        <div class="text-start">
-                                            <small class="text-danger ms-1"
-                                                *ngIf="checkoutForm_without_auth.get('emirate_id')?.touched &&
-                                        checkoutForm_without_auth.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
-                                        <input formControlName="area_id" pInputText type="text">
+                                        <!-- <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
+                                            formControlName='area_id' placeholder=' '></p-dropdown> -->
+                                            <p-dropdown [options]="areas"
+                                            formControlName='area_id' placeholder=' '></p-dropdown>
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
                                                 *ngIf="checkoutForm_without_auth.get('area_id')?.touched &&
@@ -275,6 +255,18 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.landline" | translate}}</label>
+                                        <input formControlName="landline" pInputText type="text" 
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('landline')?.touched &&
+                                        checkoutForm_without_auth.get('landline')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
                                         <input formControlName="address" pInputText type="text">

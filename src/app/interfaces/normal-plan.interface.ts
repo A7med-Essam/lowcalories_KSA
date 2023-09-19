@@ -155,6 +155,7 @@ export interface INormalSubscriptionPrice{
     meal_count:     number;
     subscription_day_count:      number;
     snack_count:    number;
+    list_days:  IShowMealsResponse[]
 }
 
 export interface IGiftCodeData{
