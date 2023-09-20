@@ -138,7 +138,7 @@
         "email":"Email",
         "password":"Password",
         "area":"Area",
-        "emirate":"Emirates",
+        "state":"States",
         "address":"Address",
         "phone":"Phone Number",
         "landline":"Landline",

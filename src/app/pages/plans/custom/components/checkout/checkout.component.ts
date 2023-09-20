@@ -17,9 +17,7 @@ import * as fromCustomPlanSelector from 'src/app/store/customPlanStore/customPla
 import { Observable, of, Subject, takeUntil } from 'rxjs';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
-import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
-import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
-import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
+import { stateSelector } from 'src/app/store/stateStore/state.selector';
 import { FETCH_USERADDRESS_START } from 'src/app/store/userAddressStore/address.action';
 import { addressSelector } from 'src/app/store/userAddressStore/address.selector';
 import { IAddressResponse } from 'src/app/interfaces/address.interface';
@@ -39,7 +37,10 @@ import {
 } from 'src/app/interfaces/custom-plan.interface';
 import { FETCH_CHECKOUT_START } from 'src/app/store/customPlanStore/customPlan.action';
 import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
-import { giftCodeLoadingSelector, giftCodeSelector } from 'src/app/store/giftcodeStore/giftcode.selector';
+import {
+  giftCodeLoadingSelector,
+  giftCodeSelector,
+} from 'src/app/store/giftcodeStore/giftcode.selector';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
 
@@ -55,7 +56,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   subscriptionInfo$: Observable<ISubscriptionData | null> = of(null);
   price$: Observable<ICustomProgramPriceResponse | null> = of(null);
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
-  emirates$!: Observable<IEmirateResponse[] | any>;
+  emirates$!: Observable<any[] | any>;
   terms$!: Observable<ITermsResponse[] | any>;
   ProgramDetails!: Observable<ICustomPlanResponse[] | null>;
   login$!: Observable<ILoginState>;
@@ -78,7 +79,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _FormBuilder: FormBuilder,
     private _ActivatedRoute: ActivatedRoute,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
@@ -102,10 +103,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.ProgramDetails = this._Store.select(
             fromCustomPlanSelector.customPlanSelector
           );
-          this._Store.dispatch(FETCH_EMIRATE_START({programType:res.Plan_Type.myprogram.company}));
+          // this._Store.dispatch(
+          //   FETCH_EMIRATE_START({
+          //     programType: res.Plan_Type.myprogram.company,
+          //   })
+          // );
           this._Store.dispatch(FETCH_USERADDRESS_START());
           this._Store.dispatch(FETCH_TERMS_START());
-          this.emirates$ = this._Store.select(emirateSelector);
+          this.emirates$ = this._Store.select(stateSelector);
           this.addresses$ = this._Store.select(addressSelector);
           this.terms$ = this._Store.select(termsSelector);
           this.checkoutResponse$ = this._Store.select(
@@ -136,8 +141,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      cutlery:new FormControl(false),
-      bag:new FormControl(false),
+      cutlery: new FormControl(false),
+      bag: new FormControl(false),
     });
   }
 
@@ -147,13 +152,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       last_name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
-      phone_number: new FormControl(null, [Validators.required,Validators.pattern('^[\\d]{10}$'),]),
+      phone_number: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[\\d]{10}$'),
+      ]),
       address: new FormControl(null, [Validators.required]),
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      cutlery:new FormControl(false),
-      bag:new FormControl(false),
+      cutlery: new FormControl(false),
+      bag: new FormControl(false),
     });
   }
 
@@ -161,9 +169,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
-      this.giftcodeButtonMode$ = this._Store.select(
-        giftCodeLoadingSelector
-      );
+      this.giftcodeButtonMode$ = this._Store.select(giftCodeLoadingSelector);
       this._Store.dispatch(
         FETCH_GIFTCODE_START({
           data: {
@@ -173,9 +179,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
         })
       );
-      this.price$ = this._Store.select(
-        giftCodeSelector
-      );
+      this.price$ = this._Store.select(giftCodeSelector);
     }
   }
 
@@ -352,14 +356,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       res.loading == false && this.paymentSwal.close();
       if (res.data) {
         res.status == 1 && (window.location.href = res.data);
-      }else{
+      } else {
         if (res.message !== null && res.status == 0) {
           Swal.fire({
             icon: 'error',
-            title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
+            title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
             text: res.message,
-            confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
-          })
+            confirmButtonText:
+              this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+          });
         }
       }
     });

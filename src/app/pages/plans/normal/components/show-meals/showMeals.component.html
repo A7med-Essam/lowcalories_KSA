@@ -39,15 +39,20 @@
             <div class="row">
                 <div class="col-lg-6 my-3" *ngFor="let meal of userMeals[category_index]?.meals; let i = index">
                     <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
+                        <div class="col-12 text-end">
+                                <small class="text-orange mb-3">
+                                    {{ translate.currentLang == 'ar' ?  (meal.mainDish.meal_type | mealNameTranslate) : meal.mainDish.meal_type}}
+                                </small>
+                        </div>
                         <div class="col-3 d-flex">
                             <img [src]="meal.mainDish.meal_name_image" alt="" class="img-fluid rounded menuImage"
                                 style="width: 100px;height: 100px;">
                         </div>
                         <div class="col-9 d-flex justify-content-between flex-column">
                             <div class="content mt-xl-3 mt-md-0 mt-3 d-flex justify-content-between">
-                                <h6>
-                                    {{translate.currentLang == 'ar' ?meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
-                                </h6>
+                                    <h6>
+                                        {{translate.currentLang == 'ar' ?meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
+                                    </h6>
                                 <!-- <p class="text-muted m-0" *ngIf="meal?.description">
                                     <i class="fas fa-info-circle txt-main"></i> {{translate.currentLang == 'ar' ?meal?.description_ar:meal?.description}}
                                 </p> -->
@@ -99,7 +104,7 @@
                 </h6>
                 <div class="qty d-flex align-items-center justify-content-center disable-selection">
                     <span class="minus" (click)="changeMainDishNutrition(currentMeal,false)">-</span>
-                    <input type="text" class="count" [value]="currentMeal.mainDish.qty" disabled readonly>
+                    <input type="text" class="count" [value]="currentMeal.mainDish.showDefaultQty" disabled readonly>
                     <span class="plus" (click)="changeMainDishNutrition(currentMeal,true)">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
@@ -113,7 +118,7 @@
                     </h6>
                     <div class="qty d-flex align-items-center justify-content-center disable-selection">
                         <span class="minus" (click)="changeSideDishNutrition(currentMeal,false,i)">-</span>
-                        <input type="text" class="count" [value]="item.qty" disabled readonly>
+                        <input type="text" class="count" [value]="item.showDefaultQty" disabled readonly>
                         <span class="plus" (click)="changeSideDishNutrition(currentMeal,true,i)">+</span>
                         <span class="txt-main txt-font ms-2">
                             {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}

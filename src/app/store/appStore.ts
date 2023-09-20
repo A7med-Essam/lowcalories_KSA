@@ -6,7 +6,7 @@ import * as fromAuthStore from './authStore/auth.reducer';
 import * as fromProgramStore from './programStore/program.reducer';
 import * as fromNormalPlanStore from './normalPlanStore/normalPlan.reducer';
 import * as fromCustomPlanStore from './customPlanStore/customPlan.reducer';
-import * as fromEmirateStore from './emirateStore/emirate.reducer';
+import * as fromStateStore from './stateStore/state.reducer';
 import * as fromAddressStore from './userAddressStore/address.reducer';
 import * as fromTermsStore from './termsStore/terms.reducer';
 import * as fromClinicStore from './clinicStore/clinic.reducer';
@@ -14,7 +14,7 @@ import * as fromGiftcodeStore from './giftcodeStore/giftcode.reducer';
 import { GiftcodeEffects } from './giftcodeStore/giftcode.effect';
 import { NormalPlanEffects } from './normalPlanStore/normalPlan.effect';
 import { CustomPlanEffects } from './customPlanStore/customPlan.effect';
-import { EmirateEffects } from './emirateStore/emirate.effect';
+import { StateEffects } from './stateStore/state.effect';
 import { AddressEffects } from './userAddressStore/address.effect';
 import { TermsEffects } from './termsStore/terms.effect';
 import { ClinicEffects } from './clinicStore/clinic.effect';
@@ -32,7 +32,7 @@ export interface AppState {
   normalSubscription: fromNormalPlanStore.INormalSubscriptionState;
   normalSubscriptionMeals: fromNormalPlanStore.INormalSubscriptionMealsState;
   normalPlanPrice: fromNormalPlanStore.INormalPlanPriceState;
-  emirate: fromEmirateStore.IEmirateState;
+  state: fromStateStore.IState;
   normalCheckout: fromNormalPlanStore.ICheckoutState;
   address: fromAddressStore.IAddresseState;
   terms: fromTermsStore.ITermsState;
@@ -44,7 +44,7 @@ export interface AppState {
   customPlanPrice: fromCustomPlanStore.ICustomPlanPriceState;
   customCheckout: fromCustomPlanStore.ICheckoutState;
   giftCode: fromGiftcodeStore.IGiftCodeState;
-  menu:fromMenuStore.IMenuState
+  menu: fromMenuStore.IMenuState;
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -58,7 +58,7 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   normalSubscription: fromNormalPlanStore.NormalSubscriptionReducer,
   normalSubscriptionMeals: fromNormalPlanStore.NormalSubscriptionMealsReducer,
   normalPlanPrice: fromNormalPlanStore.NormalPlanPriceReducer,
-  emirate: fromEmirateStore.EmirateReducer,
+  state: fromStateStore.StateReducer,
   normalCheckout: fromNormalPlanStore.NormalPlanCheckoutReducer,
   address: fromAddressStore.AddressReducer,
   terms: fromTermsStore.TermsReducer,
@@ -70,7 +70,7 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   customPlanPrice: fromCustomPlanStore.CustomPlanPriceReducer,
   customCheckout: fromCustomPlanStore.CustomPlanCheckoutReducer,
   giftCode: fromGiftcodeStore.GiftCodeReducer,
-  menu:fromMenuStore.MenuReducer
+  menu: fromMenuStore.MenuReducer,
 };
 
 export const APP_EFFECTS = [
@@ -78,12 +78,12 @@ export const APP_EFFECTS = [
   ProgramEffects,
   NormalPlanEffects,
   CustomPlanEffects,
-  EmirateEffects,
+  StateEffects,
   AddressEffects,
   TermsEffects,
   ClinicEffects,
   GiftcodeEffects,
-  MenuEffects
+  MenuEffects,
 ];
 
 export interface IHttpResponse {

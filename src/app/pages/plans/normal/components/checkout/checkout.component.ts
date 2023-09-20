@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -18,12 +24,10 @@ import {
 } from 'src/app/interfaces/normal-plan.interface';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
-import {
-  FETCH_CHECKOUT_START,
-} from 'src/app/store/normalPlanStore/normalPlan.action';
-import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
-import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
-import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
+import { FETCH_CHECKOUT_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import { FETCH_STATE_START } from 'src/app/store/stateStore/state.action';
+import { Area, IStateResponse } from 'src/app/interfaces/state.interface';
+import { stateSelector } from 'src/app/store/stateStore/state.selector';
 import { FETCH_USERADDRESS_START } from 'src/app/store/userAddressStore/address.action';
 import { addressSelector } from 'src/app/store/userAddressStore/address.selector';
 import { IAddressResponse } from 'src/app/interfaces/address.interface';
@@ -32,7 +36,10 @@ import { AnimationOptions } from 'ngx-lottie';
 import { FETCH_TERMS_START } from 'src/app/store/termsStore/terms.action';
 import { ITermsResponse } from 'src/app/interfaces/terms.interface';
 import { termsSelector } from 'src/app/store/termsStore/terms.selector';
-import { giftCodeLoadingSelector, giftCodeSelector } from 'src/app/store/giftcodeStore/giftcode.selector';
+import {
+  giftCodeLoadingSelector,
+  giftCodeSelector,
+} from 'src/app/store/giftcodeStore/giftcode.selector';
 import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
@@ -49,7 +56,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   subscriptionInfo$: Observable<ISubscriptionData | null> = of(null);
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
-  emirates$!: Observable<IEmirateResponse[] | any>;
+  states$!: Observable<IStateResponse[] | any>;
   terms$!: Observable<ITermsResponse[] | any>;
   ProgramDetails!: Observable<INormalPlanResponse | null>;
   login$!: Observable<ILoginState>;
@@ -65,7 +72,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   };
   @ViewChild('lottie') lottie!: ElementRef;
   userMeals: IShowMealsResponse[] | null = [];
-  areas:any[] = ["Gada","El-Dmam"]
+  areas: Area[] = [];
 
   constructor(
     private _Store: Store,
@@ -73,7 +80,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _FormBuilder: FormBuilder,
     private _ActivatedRoute: ActivatedRoute,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
@@ -84,7 +91,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.price = res ? res.price : 0;
       });
-      _Store
+    _Store
       .select(fromNormalPlanSelector.normalSubscriptionMealsSelector)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
@@ -102,17 +109,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.ProgramDetails = this._Store.select(
             fromNormalPlanSelector.normalPlanSelector
           );
-          this._Store.select(
-            fromNormalPlanSelector.normalPlanSelector
-          ).pipe(takeUntil(this.destroyed$)).subscribe(res=>{
-            if (res) {
-              // this._Store.dispatch(FETCH_EMIRATE_START({programType:res[0].myprogram.company}));
-            }
-          })
+          this._Store
+            .select(fromNormalPlanSelector.normalPlanSelector)
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((res) => {
+              if (res) {
+                this._Store.dispatch(FETCH_STATE_START());
+              }
+            });
 
           this._Store.dispatch(FETCH_USERADDRESS_START());
           this._Store.dispatch(FETCH_TERMS_START());
-          this.emirates$ = this._Store.select(emirateSelector);
+          this.states$ = this._Store.select(stateSelector);
           this.addresses$ = this._Store.select(addressSelector);
           this.terms$ = this._Store.select(termsSelector);
           this.checkoutResponse$ = this._Store.select(
@@ -140,11 +148,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   setCheckoutForm() {
     this.checkoutForm = this._FormBuilder.group({
       address: new FormControl(null, [Validators.required]),
-      emirate_id: new FormControl(null, [Validators.required]),
+      state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      cutlery:new FormControl(false),
-      bag:new FormControl(false),
+      cutlery: new FormControl(false),
+      bag: new FormControl(false),
     });
   }
 
@@ -153,13 +161,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
-      phone_number: new FormControl(null, [Validators.required,Validators.pattern('^[\\d]{10}$')]),
+      phone_number: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[\\d]{10}$'),
+      ]),
       address: new FormControl(null, [Validators.required]),
       landline: new FormControl(null, [Validators.required]),
+      state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      cutlery:new FormControl(false),
-      bag:new FormControl(false),
+      cutlery: new FormControl(false),
+      bag: new FormControl(false),
     });
   }
 
@@ -167,9 +179,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
-      this.giftcodeButtonMode$ = this._Store.select(
-        giftCodeLoadingSelector
-      );
+      this.giftcodeButtonMode$ = this._Store.select(giftCodeLoadingSelector);
       this._Store.dispatch(
         FETCH_GIFTCODE_START({
           data: {
@@ -179,9 +189,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
         })
       );
-      this.price$ = this._Store.select(
-        giftCodeSelector
-      );
+      this.price$ = this._Store.select(giftCodeSelector);
     }
   }
 
@@ -212,15 +220,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         price: priceinfo?.price,
         total_price: priceinfo?.grand_total,
         location: {
-          emirate_id: form.value.emirate_id,
+          state_id: form.value.state_id,
           area_id: form.value.area_id,
           property_number: '',
           landmark: form.value.address,
         },
-        subscription_days:sub?.subscription_days,
-        subscription_from:'web',
-        address_id:form.value.emirate_id,
-        list_days:this.userMeals ? this.userMeals : []
+        subscription_days: sub?.subscription_days,
+        subscription_from: 'web',
+        address_id: form.value.state_id,
+        list_days: this.userMeals ? this.userMeals : [],
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
@@ -253,7 +261,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         price: priceinfo?.price,
         total_price: priceinfo?.grand_total,
         location: {
-          emirate_id: form.value.emirate_id,
+          state_id: form.value.state_id,
           area_id: form.value.area_id,
           property_number: '',
           landmark: form.value.address,
@@ -263,10 +271,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         email: form.value.email,
         phone_number: form.value.phone_number,
         password: form.value.password,
-        subscription_days:sub?.subscription_days,
-        subscription_from:'web',
-        address_id:form.value.emirate_id,
-        list_days:this.userMeals ? this.userMeals : []
+        subscription_days: sub?.subscription_days,
+        subscription_from: 'web',
+        address_id: form.value.state_id,
+        list_days: this.userMeals ? this.userMeals : [],
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
@@ -279,14 +287,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       res.loading == false && this.paymentSwal.close();
       if (res.data) {
         res.status == 1 && (window.location.href = res.data);
-      }else{
+      } else {
         if (res.message !== null && res.status == 0) {
           Swal.fire({
             icon: 'error',
-            title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
+            title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
             text: res.message,
-            confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
-          })
+            confirmButtonText:
+              this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+          });
         }
       }
     });
@@ -294,27 +303,25 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   // *****************************************************Address*****************************************************
 
-  displayUserAddressModal(){
-    this.addresses$
-    .pipe(takeUntil(this.destroyed$))
-    .subscribe(res=>{
+  displayUserAddressModal() {
+    this.addresses$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
       if (res == null) {
         this._Store.dispatch(FETCH_USERADDRESS_START());
       }
-    })
-    this.addressesModal = true
+    });
+    this.addressesModal = true;
   }
 
   selectAddress(address: IAddressResponse) {
     this.checkoutForm.get('address')?.setValue(address.address);
-    this.checkoutForm.get('emirate_id')?.setValue(address.id);
+    this.checkoutForm.get('state_id')?.setValue(address.id);
     this.checkoutForm.get('area_id')?.setValue(address.area.area_en);
     this.addressesModal = false;
   }
 
   // *****************************************************Swal && Lottie*****************************************************
-  paymentSwal:any;
-  fireSwal(){
+  paymentSwal: any;
+  fireSwal() {
     this.paymentSwal = Swal.mixin({
       showConfirmButton: false,
       timerProgressBar: false,
@@ -326,7 +333,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   // *****************************************************Terms*****************************************************
-  onCheckTermsChange(event: any){
-    event.target.checked && (this.termsModal = true)
+  onCheckTermsChange(event: any) {
+    event.target.checked && (this.termsModal = true);
   }
 }

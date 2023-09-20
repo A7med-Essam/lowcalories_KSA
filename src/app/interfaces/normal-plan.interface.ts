@@ -1,15 +1,3 @@
-// export interface INormalPlanResponse {
-//     id:          number;
-//     program_id:  number;
-//     name:        string;
-//     name_ar:     string;
-//     no_meals:    number;
-//     plan_prices: string;
-//     details:     null;
-//     options:     IOptions[];
-//     myprogram:   IMyProgram;
-// }
-
 export interface INormalPlanResponse {
     id:                number;
     name:              string;
@@ -49,42 +37,6 @@ export interface SubscriptionDay {
     deleted_at: null;
 }
 
-
-
-
-// interface IMyProgram {
-//     id:             number;
-//     active:         number;
-//     type:           string;
-//     company:        string;
-//     name:           string;
-//     name_ar:        string;
-//     description:    string;
-//     description_ar: string;
-//     image:          string;
-//     order_number:   number;
-//     max_meals:      number;
-//     no_snacks:      number;
-//     shortcut_name:  string;
-//     image_new:      string;
-//     bag_price:      number;
-//     snack_price:    number;
-// }
-
-// export interface IOptions {
-//     id:            number;
-//     plan_id:       number;
-//     no_days:       string;
-//     shortcut_name: string;
-//     price:         string;
-// }
-
-// export interface IShowMealsResponse {
-//     day:   string;
-//     date:  Date;
-//     meals: INormalPlanMeal[];
-// }
-
 export interface IShowMealsResponse {
     day:   string;
     date:  Date;
@@ -109,27 +61,8 @@ export interface Dish {
     fat:             number;
     qty:             number;
     defaultQty:      number;
+    showDefaultQty:  number;
 }
-
-
-// interface INormalPlanMeal {
-//     id:               number;
-//     program_id:       number;
-//     plan_id:          number;
-//     category_meal_id: number;
-//     level:            string;
-//     name:             string;
-//     name_ar:          string;
-//     description:      string;
-//     description_ar:   string;
-//     type:             string
-//     meal_unit:        string;
-//     side_unit:        string;
-//     max_meal:         number;
-//     max_side:         number;
-//     image:            string;
-//     image_web:        string;
-// }
 
 export interface ISubscriptionData {
     program_id:       number;
@@ -178,7 +111,7 @@ export interface ICheckout {
     cutlery:        number;
     subscription_days: number;
     location: {
-        emirate_id:     number;
+        state_id:     number;
         area_id:        string;
         property_number:any;
         landmark:       string
@@ -192,4 +125,3 @@ export interface ICheckout {
     address_id: number,
     list_days:  IShowMealsResponse[]
 }
-

@@ -118,7 +118,7 @@
                             (ngSubmit)='checkout_With_Auth(checkoutForm)'>
                             <div class="my-4 text-start">
                                 {{"pages.checkout.form.emirate" | translate}}
-                                <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
+                                <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}" optionValue="id"
                                     formControlName='emirate_id' placeholder=' '></p-dropdown>
                                 <div class="text-start">
                                     <small class="text-danger ms-1"
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="my-4 text-start">
-                                <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
+                                <label class="text-muted">{{"pages.checkout.form.state" | translate}}</label>
                                 <input formControlName="area_id" pInputText type="text">
                                 <div class="text-start">
                                     <small class="text-danger ms-1"
@@ -242,10 +242,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.state" | translate}}</label>
+                                        <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
+                                            formControlName='state_id' placeholder=' '></p-dropdown>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('state_id')?.touched &&
+                                        checkoutForm_without_auth.get('state_id')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
-                                        <!-- <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
-                                            formControlName='area_id' placeholder=' '></p-dropdown> -->
-                                            <p-dropdown [options]="areas"
+                                        <p-dropdown [options]="this.checkoutForm_without_auth.get('state_id')?.value?.['areas']" 
+                                        optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}" optionValue="id"
                                             formControlName='area_id' placeholder=' '></p-dropdown>
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
@@ -266,7 +277,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
                                         <input formControlName="address" pInputText type="text">
