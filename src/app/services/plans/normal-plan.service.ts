@@ -25,7 +25,7 @@ export class NormalPlanService {
   }
 
   checkout(checkout:ICheckout): Observable<{status:number,data:string, message:string}>{
-    if (checkout.phone_number) {
+    if (checkout.mobile) {
       return this._ApiService.postReq('checkOutWithOutAuth', checkout);
     }
     else{

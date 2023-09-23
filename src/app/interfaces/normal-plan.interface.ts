@@ -110,18 +110,14 @@ export interface ICheckout {
     bag:            number;
     cutlery:        number;
     subscription_days: number;
-    location: {
-        state_id:     number;
-        area_id:        string;
-        property_number:any;
-        landmark:       string
-    }
-    first_name? :    string;
-    last_name?:      string;
+    state_id:     number;
+    area_id:        string;
+    name? :    string;
     email?:          string;
-    phone_number?:   string;
+    mobile?:   string;
     password?:       string;
     subscription_from :string,
     address_id: number,
+    address?: string,
     list_days:  IShowMealsResponse[]
 }
