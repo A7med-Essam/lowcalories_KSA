@@ -68,14 +68,14 @@
                         <div class="info-right pull-right" >
                           <div class="address">
                             <ng-container *ngFor="let social of social$ | async">
-                              <p *ngIf="social.type.toLowerCase() == 'address'">{{"logoMetaData.location.title" | translate}}</p>
-                              <p *ngIf="social.type.toLowerCase() == 'phone'"> 04-5973939 </p>
-                              <p *ngIf="social.type.toLowerCase() == 'google'">info@Lowcalories.ae</p>
-                              <a *ngIf="social.type.toLowerCase() == 'address'" target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt"><i
+                              <p *ngIf="social.type.toLowerCase() == 'address'">{{social.value}}</p>
+                              <p *ngIf="social.type.toLowerCase() == 'phone'">{{social.value}}</p>
+                              <p *ngIf="social.type.toLowerCase() == 'google'">{{social.value}}</p>
+                              <a *ngIf="social.type.toLowerCase() == 'address'" target="_blank" [href]="social.link"><i
                                   class="fa fa-map-o pr-10"></i> {{"logoMetaData.location.findUs" | translate}}</a>
                             </ng-container>
                             <ul class="list-inline mt-15 d-flex">
-                            <ng-container *ngFor="let social of social$ | async">
+                                <ng-container *ngFor="let social of social$ | async">
                                 <li *ngIf="social.type.toLowerCase() == 'facebook'" class="mx-2"><a target="_blank"
                                     [href]="social.link"
                                     data-tooltip="facebook"> <i class="fa fa-facebook-f"></i> </a>
@@ -92,7 +92,7 @@
                                       <a target="_blank" [href]="social.link"
                                     data-tooltip="instagram"> <i class="fa fa-instagram"></i> </a>
                                 </li>
-                              </ng-container>
+                                </ng-container>
                             </ul>
                           </div>
                         </div>
