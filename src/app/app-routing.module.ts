@@ -16,21 +16,21 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'plans', component: ProgramComponent },
   { path: 'terms', component: TermsComponent },
-  {
-    path: 'clinic',
-    loadChildren: () =>
-      import('./pages/clinic/clinic.module').then((m) => m.ClinicModule),
-  },
+  // {
+  //   path: 'clinic',
+  //   loadChildren: () =>
+  //     import('./pages/clinic/clinic.module').then((m) => m.ClinicModule),
+  // },
   {
     path: 'normal/:id',
     loadChildren: () =>
       import('./pages/plans/normal/normal.module').then((m) => m.NormalModule),
   },
-  {
-    path: 'custom/:id',
-    loadChildren: () =>
-      import('./pages/plans/custom/custom.module').then((m) => m.CustomModule),
-  },
+  // {
+  //   path: 'custom/:id',
+  //   loadChildren: () =>
+  //     import('./pages/plans/custom/custom.module').then((m) => m.CustomModule),
+  // },
   { path: 'contacts', component: ContactsComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'register', component: RegisterComponent },

@@ -11,6 +11,7 @@ import * as fromAddressStore from './userAddressStore/address.reducer';
 import * as fromTermsStore from './termsStore/terms.reducer';
 import * as fromClinicStore from './clinicStore/clinic.reducer';
 import * as fromGiftcodeStore from './giftcodeStore/giftcode.reducer';
+import * as fromSocialMediaStore from './socialMediaStore/socialMedia.reducer';
 import { GiftcodeEffects } from './giftcodeStore/giftcode.effect';
 import { NormalPlanEffects } from './normalPlanStore/normalPlan.effect';
 import { CustomPlanEffects } from './customPlanStore/customPlan.effect';
@@ -20,6 +21,7 @@ import { TermsEffects } from './termsStore/terms.effect';
 import { ClinicEffects } from './clinicStore/clinic.effect';
 import { MenuEffects } from './menuStore/menu.effect';
 import * as fromMenuStore from './menuStore/menu.reducer';
+import { SocialMediaEffects } from './socialMediaStore/socialMedia.effect';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
@@ -45,6 +47,7 @@ export interface AppState {
   customCheckout: fromCustomPlanStore.ICheckoutState;
   giftCode: fromGiftcodeStore.IGiftCodeState;
   menu: fromMenuStore.IMenuState;
+  socialMedia: fromSocialMediaStore.ISocialMediaState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -71,6 +74,7 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   customCheckout: fromCustomPlanStore.CustomPlanCheckoutReducer,
   giftCode: fromGiftcodeStore.GiftCodeReducer,
   menu: fromMenuStore.MenuReducer,
+  socialMedia: fromSocialMediaStore.socialMediaReducer,
 };
 
 export const APP_EFFECTS = [
@@ -84,6 +88,7 @@ export const APP_EFFECTS = [
   ClinicEffects,
   GiftcodeEffects,
   MenuEffects,
+  SocialMediaEffects
 ];
 
 export interface IHttpResponse {

@@ -36,7 +36,11 @@
                         </li>
                         <li class="d-flex justify-content-between">
                             <span>{{"footer.section2.suggestions"|translate}}</span>
-                            <span>04-5973939</span>
+                            <ng-container *ngFor="let social of social$ | async">
+                                <span *ngIf="social.type.toLowerCase() == 'phone'">
+                                    <a class="text-reset" [href]="'tel:'+social.value">{{social.value}}</a>
+                                </span>
+                            </ng-container>
                         </li>
                         <li>{{"footer.section2.holidays"|translate}}</li>
                     </ul>
@@ -45,38 +49,49 @@
             <div class="col-lg-3 offset-lg-1 my-2">
                 <div class="contact">
                     <h4 class="text-white mb-30">{{"footer.section3.title"|translate}}</h4>
-                    <p class="text-white">{{"footer.section3.desc"|translate}}</p>
-                    <p class="text-white">info@Lowcalories.ae</p>
-                    <a class="text-orange" target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt"><i class="far fa-map pr-10"></i> 
-                        {{"footer.section3.findUs"|translate}}
-                    </a>
+                    <ng-container *ngFor="let social of social$ | async">
+                        <p class="text-white" *ngIf="social.type.toLowerCase() == 'address'">{{social.value}}</p>
+                        <p class="text-white" *ngIf="social.type.toLowerCase() == 'google'">{{social.value}}</p>
+                        <a class="text-orange" target="_blank" *ngIf="social.type.toLowerCase() == 'address'"
+                            [href]="social.link"><i class="far fa-map pr-10"></i>
+                            {{"footer.section3.findUs"|translate}}
+                        </a>
+                    </ng-container>
+                    
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" *ngIf="social$ | async as social" >
         <div class="container">
             <div class="row">
                 <div class="co-lg-12 co-md-12 col-sm-12 col-xs-12 text-center">
                     <div class="footer-social">
                         <ul class="list-inline d-flex justify-content-center">
-                            <li class="mx-2"><a target="_blank"
-                                    href="https://www.facebook.com/pages/category/Restaurant/Low-calories-209535336392037/"
-                                    [attr.data-tooltip]="'footer.section4.logo.face'|translate"> <i class="fab fa-facebook-f"></i> </a>
-                            </li>
-                            <li class="mx-2"><a target="_blank" href="https://api.whatsapp.com/send?phone=971522089620"
-                                    [attr.data-tooltip]="'footer.section4.logo.whats'|translate"> <i class="fab fa-whatsapp"></i> </a>
-                            </li>
-                            <li class="mx-2"><a target="_blank"
-                                    href="https://www.google.com/search?safe=active&source=hp&ei=1njNX5ysAcWCar6hsJAO&iflsig=AINFCbYAAAAAX82G5mU1BuwOFuZHp-Z4wCw0V0r-kbyA&q=low+calories+restaurant+abu+dhabi&oq=low+calories+restaurant+&gs_lcp=CgZwc3ktYWIQAxgAMgIIADICCAAyBQgAEMkDMgIIADIICC4QxwEQrwEyCAguEMcBEK8BMggILhDHARCvATIICC4QxwEQrwEyCAguEMcBEK8BMggILhDHARCvAToOCC4QsQMQgwEQyQMQkwI6BQgAELEDOg4ILhCxAxCDARDHARCjAjoICAAQsQMQgwE6CAguELEDEIMBOgUILhCxAzoOCC4QxwEQowIQyQMQkwI6AgguOgQIABAKUP42WMFtYNx8aABwAHgAgAGHAYgBww-SAQQwLjE3mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab/"
-                                    [attr.data-tooltip]="'footer.section4.logo.google'|translate"> <i class="fab fa-google-plus"></i> </a> </li>
-                            <li class="mx-2"><a target="_blank" href="https://www.instagram.com/lowcaloriesae/"
-                                    [attr.data-tooltip]="'footer.section4.logo.insta'|translate"> <i class="fab fa-instagram"></i> </a>
-                            </li>
+                            <ng-container *ngFor="let sm of social">
+                                <ng-container [ngSwitch]="sm.type.toLowerCase()">
+                                <li *ngSwitchCase="'facebook'" class="mx-2"><a target="_blank" [href]="sm.link"
+                                        [attr.data-tooltip]="'footer.section4.logo.face'|translate"> <i
+                                            class="fab fa-facebook-f"></i> </a> </li>
+
+                                <li *ngSwitchCase="'whatsapp'" class="mx-2"><a target="_blank" [href]="sm.link"
+                                        [attr.data-tooltip]="'footer.section4.logo.whats'|translate"> <i
+                                            class="fab fa-whatsapp"></i> </a> </li>
+
+                                <li *ngSwitchCase="'google'" class="mx-2"><a target="_blank" [href]="'mailto:'+sm.value"
+                                        [attr.data-tooltip]="'footer.section4.logo.google'|translate"> <i
+                                            class="fab fa-google-plus"></i> </a> </li>
+
+                                <li *ngSwitchCase="'instgram'" class="mx-2"><a target="_blank" [href]="sm.link"
+                                        [attr.data-tooltip]="'footer.section4.logo.insta'|translate"> <i
+                                            class="fab fa-instagram"></i> </a> </li>
+                            </ng-container>
+                        </ng-container>
                         </ul>
                     </div>
                     <p class="text-white mt-30">
-                        &copy; {{"footer.section4.copyright.title"|translate}} {{currentYear}} {{"footer.section4.copyright.desc"|translate}}
+                        &copy; {{"footer.section4.copyright.title"|translate}} {{currentYear}}
+                        {{"footer.section4.copyright.desc"|translate}}
                     </p>
                 </div>
             </div>

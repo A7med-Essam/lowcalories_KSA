@@ -5,9 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { ContactsService } from 'src/app/services/contacts.service';
+import { Observable } from 'rxjs';
+import { ContactsService, socialMedia } from 'src/app/services/contacts.service';
 import Swal from 'sweetalert2';
+import * as fromSocialMediaSelector from '../../store/socialMediaStore/socialMedia.selector';
 
 @Component({
   selector: 'app-contacts',
@@ -17,11 +20,16 @@ import Swal from 'sweetalert2';
 export class ContactsComponent implements OnInit {
   EmailForm: FormGroup = new FormGroup({});
   sendMailBtnStatus: boolean = false;
+  social$: Observable<socialMedia[] | null>;
+
   constructor(
     private _FormBuilder: FormBuilder,
     private _ContactsService: ContactsService,
-    private translate:TranslateService
-  ) {}
+    private translate:TranslateService,
+    private _Store:Store
+  ) {
+    this.social$ = this._Store.select(fromSocialMediaSelector.socialMediaSelector);
+  }
 
   ngOnInit(): void {
     this.setEmailForm();

@@ -15,6 +15,14 @@ export class ContactsService {
   }> {
     return this._ApiService.postReq('contact_with_email', mail);
   }
+
+  getSocialMedia(): Observable<{
+    status: number;
+    message: string;
+    data: socialMedia[];
+  }> {
+    return this._ApiService.postReq('social_media', '');
+  }
 }
 
 interface IMail {
@@ -23,4 +31,13 @@ interface IMail {
   subject: string;
   mobile: string;
   message: string;
+}
+
+export interface socialMedia {
+  id: number;
+  type: string;
+  value: string;
+  link: string;
+  image: string;
+  deleted_at: null;
 }

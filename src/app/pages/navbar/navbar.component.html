@@ -5,22 +5,30 @@
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="topbar-left text-left">
             <ul>
-              <li class="mx-1"><i class="fa fa-phone"></i> 04-5973939 </li>
-              <li class="mx-1"><i class="fa fa-envelope"></i> info@Lowcalories.ae</li>
+              <ng-container *ngFor="let social of social$ | async">
+                <li *ngIf="social.type.toLowerCase() == 'phone'" class="mx-1">
+                  <i class="fa fa-phone"></i> <a [href]="'tel:'+social.value">{{social.value}} </a>
+                </li>
+                <li *ngIf="social.type.toLowerCase() == 'google'" class="mx-1">
+                  <i class="fa fa-envelope"></i> <a [href]="'mailto:'+social.value">{{social.value}} </a>
+                </li>
+              </ng-container>
             </ul>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="topbar-right text-end">
             <ul>
-              <li class="mx-1"><a
-                  href="https://www.facebook.com/pages/category/Restaurant/Low-calories-209535336392037/"
-                  target="_blank"><i class="fab fa-facebook"></i> </a></li>
-              <li class="mx-1"><a href="https://api.whatsapp.com/send?phone=971522089620" target="_blank"><i
-                    class="fab fa-whatsapp"></i> </a></li>
-              <li class="mx-1"><a href="https://www.instagram.com/lowcaloriesae/" target="_blank"><i
-                    class="fab fa-instagram"></i>
-                </a></li>
+              <ng-container *ngFor="let social of social$ | async">
+                <li *ngIf="social.type.toLowerCase() == 'facebook'" class="mx-1"><a
+                    [href]="social.link"
+                    target="_blank"><i class="fab fa-facebook"></i> </a></li>
+                <li *ngIf="social.type.toLowerCase() == 'whatsapp'" class="mx-1"><a [href]="social.link" target="_blank"><i
+                      class="fab fa-whatsapp"></i> </a></li>
+                <li *ngIf="social.type.toLowerCase() == 'instgram'" class="mx-1"><a [href]="social.link" target="_blank"><i
+                      class="fab fa-instagram"></i>
+                  </a></li>
+              </ng-container>
             </ul>
           </div>
         </div>
@@ -57,28 +65,34 @@
                             </p>
                           </div>
                         </div>
-                        <div class="info-right pull-right">
+                        <div class="info-right pull-right" >
                           <div class="address">
-                            <p>{{"logoMetaData.location.title" | translate}}</p>
-                            <p> 04-5973939 </p>
-                            <p>info@Lowcalories.ae</p>
-                            <a target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt"><i
-                                class="fa fa-map-o pr-10"></i> {{"logoMetaData.location.findUs" | translate}}</a>
+                            <ng-container *ngFor="let social of social$ | async">
+                              <p *ngIf="social.type.toLowerCase() == 'address'">{{"logoMetaData.location.title" | translate}}</p>
+                              <p *ngIf="social.type.toLowerCase() == 'phone'"> 04-5973939 </p>
+                              <p *ngIf="social.type.toLowerCase() == 'google'">info@Lowcalories.ae</p>
+                              <a *ngIf="social.type.toLowerCase() == 'address'" target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt"><i
+                                  class="fa fa-map-o pr-10"></i> {{"logoMetaData.location.findUs" | translate}}</a>
+                            </ng-container>
                             <ul class="list-inline mt-15 d-flex">
-                              <li class="mx-2"><a target="_blank"
-                                  href="https://www.facebook.com/pages/category/Restaurant/Low-calories-209535336392037/"
-                                  data-tooltip="facebook"> <i class="fa fa-facebook-f"></i> </a>
-                              </li>
-                              <li class="mx-2"><a target="_blank"
-                                  href="https://api.whatsapp.com/send?phone=971522089620" data-tooltip="whatsapp"> <i
-                                    class="fa fa-whatsapp"></i> </a>
-                              </li>
-                              <li class="mx-2"><a target="_blank"
-                                  href="https://www.google.com/search?safe=active&source=hp&ei=1njNX5ysAcWCar6hsJAO&iflsig=AINFCbYAAAAAX82G5mU1BuwOFuZHp-Z4wCw0V0r-kbyA&q=low+calories+restaurant+abu+dhabi&oq=low+calories+restaurant+&gs_lcp=CgZwc3ktYWIQAxgAMgIIADICCAAyBQgAEMkDMgIIADIICC4QxwEQrwEyCAguEMcBEK8BMggILhDHARCvATIICC4QxwEQrwEyCAguEMcBEK8BMggILhDHARCvAToOCC4QsQMQgwEQyQMQkwI6BQgAELEDOg4ILhCxAxCDARDHARCjAjoICAAQsQMQgwE6CAguELEDEIMBOgUILhCxAzoOCC4QxwEQowIQyQMQkwI6AgguOgQIABAKUP42WMFtYNx8aABwAHgAgAGHAYgBww-SAQQwLjE3mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab/"
-                                  data-tooltip="google-plus"> <i class="fa fa-google-plus"></i> </a> </li>
-                              <li class="mx-2"><a target="_blank" href="https://www.instagram.com/lowcaloriesae/"
-                                  data-tooltip="instagram"> <i class="fa fa-instagram"></i> </a>
-                              </li>
+                            <ng-container *ngFor="let social of social$ | async">
+                                <li *ngIf="social.type.toLowerCase() == 'facebook'" class="mx-2"><a target="_blank"
+                                    [href]="social.link"
+                                    data-tooltip="facebook"> <i class="fa fa-facebook-f"></i> </a>
+                                </li>
+                                <li *ngIf="social.type.toLowerCase() == 'whatsapp'" class="mx-2"><a target="_blank"
+                                    [href]="social.link" data-tooltip="whatsapp"> <i
+                                      class="fa fa-whatsapp"></i> </a>
+                                </li>
+                                <li *ngIf="social.type.toLowerCase() == 'address'" class="mx-2"><a target="_blank"
+                                    [href]="social.link"
+                                    data-tooltip="google-plus"> <i class="fa fa-google-plus"></i> </a> </li>
+                               
+                                    <li *ngIf="social.type.toLowerCase() == 'instgram'" class="mx-2">
+                                      <a target="_blank" [href]="social.link"
+                                    data-tooltip="instagram"> <i class="fa fa-instagram"></i> </a>
+                                </li>
+                              </ng-container>
                             </ul>
                           </div>
                         </div>
@@ -93,7 +107,7 @@
                       <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
                       <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a></li>
                       <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a></li>
-                      <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li>
+                      <!-- <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li> -->
                       <!-- <li routerLink="questions" routerLinkActive="active"><a>FAQ </a></li> -->
                       <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a></li>
                       <ng-container *ngIf="login$ | async as login">
