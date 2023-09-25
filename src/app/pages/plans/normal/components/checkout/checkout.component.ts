@@ -306,7 +306,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   selectAddress(address: IAddressResponse) {
-    this.states$.subscribe(res=>{
+    this.states$.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
       const [state] = res.filter((s:any) => s.id == address.area.state.id)
       this.checkoutForm.get('state_id')?.setValue(state);
       const [area] = state.areas.filter((a:any) => a.id == address.area.id)
