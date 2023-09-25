@@ -107,7 +107,7 @@ export interface ICheckout {
     total_price:    number;
     price:          number;
     code_id:        number;
-    bag:            number;
+    // bag:            number;
     cutlery:        number;
     subscription_days: number;
     state_id:     number;

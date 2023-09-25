@@ -6,11 +6,11 @@
           <div class="topbar-left text-left">
             <ul>
               <ng-container *ngFor="let social of social$ | async">
-                <li *ngIf="social.type.toLowerCase() == 'phone'" class="mx-1">
-                  <i class="fa fa-phone"></i> <a [href]="'tel:'+social.value">{{social.value}} </a>
+                <li *ngIf="social.type.toLowerCase() == 'phone'" class="mx-1" dir="ltr">
+                  <i class="fa fa-phone"></i> <a class="m-1" [href]="'tel:'+social.value">{{social.value}} </a>
                 </li>
-                <li *ngIf="social.type.toLowerCase() == 'google'" class="mx-1">
-                  <i class="fa fa-envelope"></i> <a [href]="'mailto:'+social.value">{{social.value}} </a>
+                <li *ngIf="social.type.toLowerCase() == 'google'" class="mx-1" dir="ltr">
+                  <i class="fa fa-envelope"></i> <a class="m-1" [href]="'mailto:'+social.value">{{social.value}} </a>
                 </li>
               </ng-container>
             </ul>

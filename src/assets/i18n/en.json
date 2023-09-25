@@ -1,6 +1,7 @@
 {
   "lang": "Ar",
   "currency": "SAR",
+  "deliveryMsg":"Delivery is from Saturday to Thursday, and there is no delivery on Thursday for two days together",
   "buttons":{
     "read_more":"Read More",
     "contact_us":"Contact Us",

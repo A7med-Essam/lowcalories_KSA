@@ -34,6 +34,7 @@ import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-setPlan',
@@ -248,6 +249,13 @@ export class SetPlanComponent
 
   checkAllWeekBtn(e: HTMLElement) {
     this._SharedService.checkAllWeek(e);
+    if (e.classList.contains("active")) {
+      Swal.fire({
+        title: this.translate.instant('deliveryMsg'),
+        confirmButtonText:
+        this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+      })
+    }
   }
 
   getDayNumber(Day_name: string | undefined | null) {

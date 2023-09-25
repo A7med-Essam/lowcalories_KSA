@@ -152,7 +152,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       cutlery: new FormControl(false),
-      bag: new FormControl(false),
+      // bag: new FormControl(false),
     });
   }
 
@@ -171,7 +171,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       cutlery: new FormControl(false),
-      bag: new FormControl(false),
+      // bag: new FormControl(false),
     });
   }
 
@@ -214,7 +214,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
-        bag: Number(form.value.bag),
+        // bag: Number(form.value.bag),
         cutlery: Number(form.value.cutlery),
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
@@ -223,7 +223,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         area_id: form.value.area_id,
         subscription_days: sub?.subscription_days,
         subscription_from: 'web',
-        address_id: form.value.area_id,
+        address_id: form.value.address,
+        address: form.value.address,
         list_days: this.userMeals ? this.userMeals : [],
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
@@ -251,7 +252,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
-        bag: Number(form.value.bag),
+        // bag: Number(form.value.bag),
         cutlery: Number(form.value.cutlery),
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
@@ -305,9 +306,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   selectAddress(address: IAddressResponse) {
+    this.states$.subscribe(res=>{
+      const [state] = res.filter((s:any) => s.id == address.area.state.id)
+      this.checkoutForm.get('state_id')?.setValue(state);
+      const [area] = state.areas.filter((a:any) => a.id == address.area.id)
+      this.checkoutForm.get('area_id')?.setValue(area.id);
+    })
     this.checkoutForm.get('address')?.setValue(address.address);
-    this.checkoutForm.get('state_id')?.setValue(address.id);
-    this.checkoutForm.get('area_id')?.setValue(address.area.area_en);
     this.addressesModal = false;
   }
 
