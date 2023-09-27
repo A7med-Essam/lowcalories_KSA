@@ -61,7 +61,7 @@ export interface Dish {
     fat:             number;
     qty:             number;
     defaultQty:      number;
-    showDefaultQty:  number;
+    min_qty:  number;
 }
 
 export interface ISubscriptionData {

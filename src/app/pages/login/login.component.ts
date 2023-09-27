@@ -33,11 +33,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.login$ = _Store.select(loginSelector);
     this.subscribe$ = this.login$.subscribe((res) => {
       res.data && this._Router.navigate(['/home']);
-      if (res.error?.error.message !== undefined) {
+      if (res.message !== null && res.status == 0) {
         Swal.fire({
           icon: 'error',
           title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
-          text: res.error?.error.message,
+          text: res.message,
           confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
         })
       }

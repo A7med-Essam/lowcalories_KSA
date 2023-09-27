@@ -171,8 +171,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     const modifiedMeal: Meal = { ...meal };
     const mainDish: Dish = { ...meal.mainDish };
     const increment = mainDish.unit === 'GM' ? 5 : 1;
-    const newQty = increase? Math.min(mainDish.showDefaultQty + increment): Math.max(mainDish.showDefaultQty - increment,mainDish.defaultQty);
-    mainDish.showDefaultQty = newQty;
+    const newQty = increase? Math.min(mainDish.qty + increment): Math.max(mainDish.qty - increment,mainDish.min_qty);
+    mainDish.qty = newQty;
     mainDish.calories = this.calcNutrition(mainDish, meal,'calories');
     mainDish.fat = this.calcNutrition(mainDish, meal,'fat');
     mainDish.carb = this.calcNutrition(mainDish, meal,'carb');
@@ -189,10 +189,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     if (index >= 0 && index < modifiedMeal.sideDish.length) {
       const sideDish: Dish = modifiedMeal.sideDish[index];
       const increment = sideDish.unit === 'GM' ? 5 : 1;
-      const newQty = increase ? Math.min(sideDish.showDefaultQty + increment) : Math.max(sideDish.showDefaultQty - increment, sideDish.defaultQty);
+      const newQty = increase ? Math.min(sideDish.qty + increment) : Math.max(sideDish.qty - increment, sideDish.min_qty);
   
       // Update the quantity for the specific side dish
-      sideDish.showDefaultQty = newQty;
+      sideDish.qty = newQty;
   
       // Recalculate nutrition information for all side dishes
       modifiedMeal.sideDish.forEach((e, i) => {
@@ -206,13 +206,13 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   }
 
   calcNutrition(meal: Dish,originalMeal: any, type:string) {
-    const caloriesPercentage = Number(originalMeal.mainDish[type]) / Number(originalMeal.mainDish.showDefaultQty)
-    return (Number(caloriesPercentage || 0) * Number(meal.showDefaultQty));
+    const caloriesPercentage = Number(originalMeal.mainDish[type]) / Number(originalMeal.mainDish.qty)
+    return (Number(caloriesPercentage || 0) * Number(meal.qty));
   }
 
   calcNutrition2(meal: Dish,originalMeal: any, type:string,index:number) {
-    const caloriesPercentage = Number(originalMeal.sideDish[index][type]) / Number(this.currentMeal.sideDish[index].showDefaultQty)
-    return (Number(caloriesPercentage || 0) * Number(meal.showDefaultQty));
+    const caloriesPercentage = Number(originalMeal.sideDish[index][type]) / Number(this.currentMeal.sideDish[index].qty)
+    return (Number(caloriesPercentage || 0) * Number(meal.qty));
   }
 
 }

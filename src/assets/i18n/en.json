@@ -149,7 +149,8 @@
           "desc2":"of the meals plan"
         },
         "cutlery":"Cutlery",
-        "bag":"Safty Bag"
+        "bag":"Safty Bag",
+        "deliveryFees":"Delivery Fees"
       },
       "subscription":{
         "title":"Subscription Info",

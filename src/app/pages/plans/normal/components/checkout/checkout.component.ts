@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -73,14 +74,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   @ViewChild('lottie') lottie!: ElementRef;
   userMeals: IShowMealsResponse[] | null = [];
   areas: Area[] = [];
-
+  deliveryFees:number = 0;
   constructor(
     private _Store: Store,
     private _Router: Router,
     private _FormBuilder: FormBuilder,
     private _ActivatedRoute: ActivatedRoute,
     private _I18nService: I18nService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private cdref: ChangeDetectorRef
   ) {
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
@@ -117,8 +119,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 this._Store.dispatch(FETCH_STATE_START());
               }
             });
-
-          this._Store.dispatch(FETCH_USERADDRESS_START());
+            this.login$
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(res=>{
+              if (res.data) {
+                this._Store.dispatch(FETCH_USERADDRESS_START());
+              }
+            })
           this._Store.dispatch(FETCH_TERMS_START());
           this.states$ = this._Store.select(stateSelector);
           this.addresses$ = this._Store.select(addressSelector);
@@ -141,6 +148,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setCheckoutForm();
     this.setCheckoutForm_Without_Auth();
+    this.checkoutForm_without_auth.get("area_id")?.valueChanges
+    .pipe(takeUntil(this.destroyed$))
+    .subscribe(area_id => {
+      const states:IStateResponse = this.checkoutForm_without_auth.value.state_id; 
+      this.getDeliveryFees(area_id,states)
+   })
+   this.checkoutForm.get("area_id")?.valueChanges
+   .pipe(takeUntil(this.destroyed$))
+   .subscribe(area_id => {
+     const states:IStateResponse = this.checkoutForm.value.state_id; 
+    this.getDeliveryFees(area_id,states)
+  })
+  }
+
+  getDeliveryFees(area_id:number, states:IStateResponse){
+    let selectedArea = states.areas.find(e=>e.id == area_id)
+    let sub:ISubscriptionData|null;
+    this.subscriptionInfo$.pipe(takeUntil(this.destroyed$)).subscribe((res) => (sub = res));
+    let selectedFees = selectedArea?.fees.find(e=>e.days == sub?.subscription_days)
+    this.deliveryFees = selectedFees?.fees || 0
+    this.cdref.detectChanges();
   }
 
   // *****************************************************Reactive Forms*****************************************************
@@ -174,6 +202,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       // bag: new FormControl(false),
     });
   }
+  
 
   // *****************************************************GiftCode*****************************************************
 

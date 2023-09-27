@@ -104,7 +104,7 @@
                 </h6>
                 <div class="qty d-flex align-items-center justify-content-center disable-selection">
                     <span class="minus" (click)="changeMainDishNutrition(currentMeal,false)">-</span>
-                    <input type="text" class="count" [value]="currentMeal.mainDish.showDefaultQty" disabled readonly>
+                    <input type="text" class="count" [value]="currentMeal.mainDish.qty" disabled readonly>
                     <span class="plus" (click)="changeMainDishNutrition(currentMeal,true)">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
@@ -118,7 +118,7 @@
                     </h6>
                     <div class="qty d-flex align-items-center justify-content-center disable-selection">
                         <span class="minus" (click)="changeSideDishNutrition(currentMeal,false,i)">-</span>
-                        <input type="text" class="count" [value]="item.showDefaultQty" disabled readonly>
+                        <input type="text" class="count" [value]="item.qty" disabled readonly>
                         <span class="plus" (click)="changeSideDishNutrition(currentMeal,true,i)">+</span>
                         <span class="txt-main txt-font ms-2">
                             {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
