@@ -1,23 +1,29 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'mealNameTranslate'
+  name: 'mealNameTranslate',
 })
 export class MealNameTranslatePipe implements PipeTransform {
+  transform(value: string, lang: string): string {
+    const lowercasedValue = value.toLowerCase();
 
-  private mealNameTranslations: { [key: string]: string } = {
-    'breakfast': 'الأفطار',
-    'meal_one': 'الوجبة الاولي',
-    'meal_two': 'الغداء',
-    'meal_three': 'العشاء',
-    'meal_four': 'الوجبة الرابعة',
-    'snack_one': 'سناك 1',
-    'snack_two': 'سناك 2',
-  };
-
-  transform(mealName: string): string {
-    const translatedMealName = this.mealNameTranslations[mealName.toLowerCase()];
-    return translatedMealName || mealName;
+    switch (lowercasedValue) {
+      case 'breakfast':
+        return lang === 'en' ? 'Breakfast' : 'فطور';
+      case 'meal_two':
+        return lang === 'en' ? 'Lunch' : 'غداء';
+      case 'meal_three':
+        return lang === 'en' ? 'Dinner' : 'عشاء';
+      case 'meal_four':
+        return lang === 'en' ? 'Meal 4' : 'وجبة 4';
+      case 'meal_one':
+        return lang === 'en' ? 'Meal 1' : 'وجبة 1';
+      case 'snack_one':
+        return lang === 'en' ? value : `وجبة خفيفة 1`;
+      case 'snack_two':
+        return lang === 'en' ? value : `وجبة خفيفة 2`;
+      default:
+        return value;
+    }
   }
-
 }

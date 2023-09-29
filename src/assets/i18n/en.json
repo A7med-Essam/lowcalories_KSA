@@ -46,6 +46,7 @@
       },
       "showMeals":"Show Meals",
       "selectMeals":"Select Meals",
+      "warning":"You will be charged for each additional 50 grams or pieces in the meal",
       "labels":{
         "meals":"Meals",
         "snacks":"Snacks",
@@ -129,6 +130,8 @@
         "total":"Total",
         "code":"Code",
         "vat":"Vat",
+        "extra_carb":"Extra carbohydrates",
+        "extra_protein":"Extra protein",
         "grandTotal":"Grand Total"
       },
       "form":{

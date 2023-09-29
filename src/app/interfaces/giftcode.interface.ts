@@ -10,5 +10,7 @@ export interface IGiftCodeResponse{
     code_apply:  number;
     vat:         number;
     grand_total: number;
-    bag_price :  number
+    bag_price :  number;
+    extra_fifty_carb: number;
+    extra_fifty_protein:number;
 }
