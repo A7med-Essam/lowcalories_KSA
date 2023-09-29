@@ -109,7 +109,8 @@
                                 <span class="txt-main">
                                     <!-- {{price.grand_total.toFixed(2)}} -->
 
-                                    {{deliveryFees ? (price.grand_total+deliveryFees).toFixed(2)  : price.grand_total.toFixed(2)}}
+                                    {{deliveryFees ? (price.grand_total+deliveryFees+price.extra_fifty_protein+price.extra_fifty_carb).toFixed(2)  :
+                                         (price.grand_total+price.extra_fifty_protein+price.extra_fifty_carb).toFixed(2)}}
                                     <!-- {{
                                     (checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ?
                                      (price.grand_total+price.bag_price).toFixed(2) : price.grand_total.toFixed(2)

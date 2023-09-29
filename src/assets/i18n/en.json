@@ -46,7 +46,7 @@
       },
       "showMeals":"Show Meals",
       "selectMeals":"Select Meals",
-      "warning":"You will be charged for each additional 50 grams or pieces in the meal",
+      "warning":"You will be charged for each additional grams or pieces in the meal",
       "labels":{
         "meals":"Meals",
         "snacks":"Snacks",

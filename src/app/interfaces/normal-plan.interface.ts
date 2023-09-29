@@ -2,6 +2,8 @@ export interface INormalPlanResponse {
     id:                number;
     name:              string;
     name_ar:           string;
+    description_ar:           string;
+    description:           string;
     min_meals:         number;
     image:             string;
     meal_types:        MealType[];
@@ -61,7 +63,9 @@ export interface Dish {
     fat:             number;
     qty:             number;
     defaultQty:      number;
-    min_qty:  number;
+    min_qty:         number;
+    tag:             string|null;
+    counter:         number;
 }
 
 export interface ISubscriptionData {

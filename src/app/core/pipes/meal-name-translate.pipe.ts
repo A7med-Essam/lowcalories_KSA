@@ -10,14 +10,14 @@ export class MealNameTranslatePipe implements PipeTransform {
     switch (lowercasedValue) {
       case 'breakfast':
         return lang === 'en' ? 'Breakfast' : 'فطور';
-      case 'meal_two':
-        return lang === 'en' ? 'Lunch' : 'غداء';
-      case 'meal_three':
-        return lang === 'en' ? 'Dinner' : 'عشاء';
-      case 'meal_four':
-        return lang === 'en' ? 'Meal 4' : 'وجبة 4';
       case 'meal_one':
-        return lang === 'en' ? 'Meal 1' : 'وجبة 1';
+        return lang === 'en' ? 'Lunch' : 'غداء';
+      case 'meal_two':
+        return lang === 'en' ? 'Dinner' : 'عشاء';
+      case 'meal_three':
+        return lang === 'en' ? 'PRE-WORKOUT' : 'وجبة ما قبل التمرين';
+      case 'meal_four':
+        return lang === 'en' ? 'AFTER-WORKOUT' : 'وجبة بعد التمرين';
       case 'snack_one':
         return lang === 'en' ? value : `وجبة خفيفة 1`;
       case 'snack_two':

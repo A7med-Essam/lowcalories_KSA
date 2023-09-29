@@ -43,10 +43,9 @@
                         {{translate.currentLang == 'ar' ? program.name_ar:program.name}}
                     </span>
                 </h1>
-                <!-- <p class="text-muted txt-font">
+                <p class="text-muted txt-font">
                     {{translate.currentLang == 'ar' ?program.description_ar:program.description}}
-                </p> -->
-
+                </p>
                 <form [formGroup]='ProgramDetailsForm' (ngSubmit)='onSubmit(ProgramDetailsForm)' class="mt-4"
                     *ngIf="ProgramDetails | async as program">
                     <div class="row mx-0">

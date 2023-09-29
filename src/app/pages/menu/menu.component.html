@@ -82,7 +82,7 @@
     </div>
 </section>
 
-<section class="our-menu white-bg pt-5">
+<!-- <section class="our-menu white-bg pt-5">
     <div class="container" *ngIf="carouselVisible">
         <owl-carousel-o [options]="categoryOptions" ngClass="categories" *ngIf="menu$ |async as menu">
             <ng-container *ngFor="let category of menu; let i = index">
@@ -167,6 +167,32 @@
                                     <small class="text-muted">{{(item.meal_carb).toFixed(2)}}</small>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+
+<section class="our-menu white-bg pt-5">
+    <div class="container">
+        <div class="row mt-5" *ngIf="menu$ |async as menu">
+            <div class="col-lg-6" *ngFor="let item of menu">
+                <div class="menu-body menu-left menu-white">
+                    <div class="menu-thumbnail">
+                        <img class="img-responsive center-block" [src]="item.image" alt="{{translate.currentLang == 'ar' ? item?.item_ar :item?.item}}">
+                    </div>
+                    <div class="menu-details">
+                        <div class="menu-title clearfix">
+                            <h4>{{translate.currentLang == 'ar' ? item?.item_ar :item?.item}}</h4>
+                            <span class="price">
+                                {{item.price}} <sub>{{"currency"|translate}}</sub>
+                            </span>
+                        </div>
+                        <div class="menu-description">
+                            <p>{{translate.currentLang == 'ar' ? item?.item_ar :item?.item}}</p>
                         </div>
                     </div>
                 </div>

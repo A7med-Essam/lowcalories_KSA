@@ -170,8 +170,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   changeMainDishNutrition(meal: Meal, increase: boolean) {
     const modifiedMeal: Meal = { ...meal };
     const mainDish: Dish = { ...meal.mainDish };
-    const increment = mainDish.unit === 'GM' ? 5 : 1;
-    const newQty = increase? Math.min(mainDish.qty + increment): Math.max(mainDish.qty - increment,mainDish.min_qty);
+    const newQty = increase? Math.min(mainDish.qty + mainDish.counter): Math.max(mainDish.qty - mainDish.counter,mainDish.min_qty);
     mainDish.qty = newQty;
     mainDish.calories = this.calcNutrition(mainDish, meal,'calories');
     mainDish.fat = this.calcNutrition(mainDish, meal,'fat');
@@ -188,8 +187,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     // Ensure that the specified index is within the bounds of the sideDish array
     if (index >= 0 && index < modifiedMeal.sideDish.length) {
       const sideDish: Dish = modifiedMeal.sideDish[index];
-      const increment = sideDish.unit === 'GM' ? 5 : 1;
-      const newQty = increase ? Math.min(sideDish.qty + increment) : Math.max(sideDish.qty - increment, sideDish.min_qty);
+      const newQty = increase ? Math.min(sideDish.qty + sideDish.counter) : Math.max(sideDish.qty - sideDish.counter, sideDish.min_qty);
   
       // Update the quantity for the specific side dish
       sideDish.qty = newQty;
