@@ -153,6 +153,8 @@
           },
           "cutlery":"أدوات المائدة",
           "bag":"حقيبة الأمان",
+          "delivery":"توصيل",
+          "pickUp":"استلام",
           "deliveryFees":"رسوم التوصيل"
         },
         "subscription": {

@@ -52,7 +52,7 @@
                             <div class="content mt-xl-3 mt-md-0 mt-3 d-flex justify-content-between">
                                 <div>
                                     <h6>
-                                        {{translate.currentLang == 'ar' ?meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
+                                        {{translate.currentLang == 'ar' ?meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name}}
                                     </h6>
                                     <p class="text-muted m-0">
                                         <i class="fas fa-info-circle txt-main"></i>
@@ -108,13 +108,38 @@
                 <h6 class="txt-main mb-3 me-4">
                     {{translate.currentLang == 'ar' ?currentMeal.mainDish.meal_name_ar:currentMeal.mainDish.meal_name_en}}
                 </h6>
-                <div class="qty d-flex align-items-center justify-content-center disable-selection">
-                    <span class="minus" (click)="changeMainDishNutrition(currentMeal,false)">-</span>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection" *ngIf="currentMeal.mainDish.tag != 'cp'">
+                    <span class="minus" (click)="changeMainDishNutrition(currentMeal,false)" [class.disabled-bg]="!currentMeal.mainDish.tag">-</span>
                     <input type="text" class="count" [value]="currentMeal.mainDish.qty" disabled readonly>
-                    <span class="plus" (click)="changeMainDishNutrition(currentMeal,true)">+</span>
+                    <span class="plus" (click)="changeMainDishNutrition(currentMeal,true)" [class.disabled-bg]="!currentMeal.mainDish.tag">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
                     </span>
+                </div>
+                <div *ngIf="currentMeal.mainDish.tag == 'cp'">
+                    <div class="my-3">
+                        <small class="text-orange">Extra Protien</small>
+                        <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                            <span class="minus" (click)="calcExtra(currentMeal,false,'p')">-</span>
+                            <input type="text" class="count" [value]="currentMeal.mainDish.extra.protein" disabled readonly>
+                            <span class="plus" (click)="calcExtra(currentMeal,true,'p')">+</span>
+                            <span class="txt-main txt-font ms-2">
+                                {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <small class="text-orange">Extra Carb</small>
+                        <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                            <span class="minus" (click)="calcExtra(currentMeal,false,'c')">-</span>
+                            <input type="text" class="count" [value]="currentMeal.mainDish.extra.carb" disabled readonly>
+                            <span class="plus" (click)="calcExtra(currentMeal,true,'c')">+</span>
+                            <span class="txt-main txt-font ms-2">
+                                {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <ng-container *ngIf="currentMeal.sideDish">
@@ -122,13 +147,37 @@
                     <h6 class="txt-main mb-3 me-4">
                         {{translate.currentLang == 'ar' ?item.meal_name_ar:item.meal_name_en}}
                     </h6>
-                    <div class="qty d-flex align-items-center justify-content-center disable-selection">
-                        <span class="minus" (click)="changeSideDishNutrition(currentMeal,false,i)">-</span>
+                    <div class="qty d-flex align-items-center justify-content-center disable-selection" *ngIf="item.tag != 'cp'">
+                        <span class="minus" (click)="changeSideDishNutrition(currentMeal,false,i)" [class.disabled-bg]="!item.tag">-</span>
                         <input type="text" class="count" [value]="item.qty" disabled readonly>
-                        <span class="plus" (click)="changeSideDishNutrition(currentMeal,true,i)">+</span>
+                        <span class="plus" (click)="changeSideDishNutrition(currentMeal,true,i)" [class.disabled-bg]="!item.tag">+</span>
                         <span class="txt-main txt-font ms-2">
                             {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
                         </span>
+                    </div>
+                    <div *ngIf="item.tag == 'cp'">
+                       <div class="my-3">
+                        <small class="text-orange">Extra Protien</small>
+                        <div  class="qty d-flex align-items-center justify-content-center disable-selection">
+                            <span class="minus" (click)="calcExtra2(currentMeal,false,'p',i)">-</span>
+                            <input type="text" class="count" [value]="item?.extra?.protein" disabled readonly>
+                            <span class="plus" (click)="calcExtra2(currentMeal,true,'p',i)">+</span>
+                            <span class="txt-main txt-font ms-2">
+                                {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
+                            </span>
+                        </div>
+                       </div>
+                       <div class="my-3">
+                        <small class="text-orange">Extra Carb</small>
+                        <div  class="qty d-flex align-items-center justify-content-center disable-selection">
+                            <span class="minus" (click)="calcExtra2(currentMeal,false,'c',i)">-</span>
+                            <input type="text" class="count" [value]="item?.extra?.carb" disabled readonly>
+                            <span class="plus" (click)="calcExtra2(currentMeal,true,'c',i)">+</span>
+                            <span class="txt-main txt-font ms-2">
+                                {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
+                            </span>
+                        </div>
+                       </div>
                     </div>
                 </div>
             </ng-container>

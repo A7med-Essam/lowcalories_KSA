@@ -80,21 +80,15 @@
                                     {{price.vat*100}}%
                                 </span>
                             </div>
-                            <!-- <div class="d-flex justify-content-between my-3 font-weight-500">
-                                <span>{{"pages.checkout.form.bag" | translate}}</span> <span class="txt-main">
-                                    {{(checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ? price.bag_price:0}} <sub
-                                    class="text-orange">{{"currency" | translate}}</sub>
-                                </span>
-                            </div> -->
                             <div class="d-flex justify-content-between my-3 font-weight-500">
                                 <span>{{"pages.checkout.giftcode.extra_carb" | translate}}</span> <span class="txt-main">
-                                    <span>{{price.extra_fifty_carb}}</span>
+                                    <span>{{price.extra_details.carb.total_price}}</span>
                                      <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between my-3 font-weight-500">
                                 <span>{{"pages.checkout.giftcode.extra_protein" | translate}}</span> <span class="txt-main">
-                                    <span>{{price.extra_fifty_protein}}</span>
+                                    <span>{{price.extra_details.protein.total_price}}</span>
                                      <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
@@ -107,14 +101,7 @@
                             <div class="d-flex justify-content-between mt-3 font-weight-500">
                                 <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span> 
                                 <span class="txt-main">
-                                    <!-- {{price.grand_total.toFixed(2)}} -->
-
-                                    {{deliveryFees ? (price.grand_total+deliveryFees+price.extra_fifty_protein+price.extra_fifty_carb).toFixed(2)  :
-                                         (price.grand_total+price.extra_fifty_protein+price.extra_fifty_carb).toFixed(2)}}
-                                    <!-- {{
-                                    (checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ?
-                                     (price.grand_total+price.bag_price).toFixed(2) : price.grand_total.toFixed(2)
-                                    }}  -->
+                                        {{(price.grand_total+deliveryFees+(price.extra_details | sumExtra)).toFixed(2)}}
                                     <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
@@ -172,17 +159,9 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
-                                <!-- <div class="mx-2">
-                                        <input type="checkbox" formControlName='bag' id="checkoutForm_bag">
-                                        <label for="checkoutForm_bag" class="mx-1 font-weight-500">
-                                            <small>{{"pages.checkout.form.bag" | translate}}</small>
-                                        </label>
-                                </div> -->
-                                <div class="mx-2">
-                                        <input type="checkbox" formControlName='cutlery' id="checkoutForm_cutlery">
-                                        <label for="checkoutForm_cutlery" class="mx-1 font-weight-500">
-                                            <small>{{"pages.checkout.form.cutlery" | translate}}</small>
-                                        </label>
+                                <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
+                                    <p-radioButton [inputId]="category.name+1" [value]="category.value" formControlName="delivery_status"></p-radioButton>
+                                    <label [for]="category.name+1" class="mx-2">{{ category.name }}</label>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
@@ -317,17 +296,9 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
-                                <!-- <div class="mx-2">
-                                        <input type="checkbox" formControlName='bag'  id="checkoutForm_without_auth_bag">
-                                        <label for="checkoutForm_without_auth_bag" class="mx-1 font-weight-500">
-                                            <small>{{"pages.checkout.form.bag" | translate}}</small>
-                                        </label>
-                                </div> -->
-                                <div class="mx-2">
-                                        <input type="checkbox" formControlName='cutlery'  id="checkoutForm_without_auth_cutlery">
-                                        <label for="checkoutForm_without_auth_cutlery" class="mx-1 font-weight-500">
-                                            <small>{{"pages.checkout.form.cutlery" | translate}}</small>
-                                        </label>
+                                <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
+                                    <p-radioButton [inputId]="category.name+2" [value]="category.value" formControlName="delivery_status"></p-radioButton>
+                                    <label [for]="category.name+2" class="mx-2">{{ category.name }}</label>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">

@@ -99,6 +99,7 @@ export class SharedService {
         return 0;
       case 'MONDAY':
         return 1;
+      case 'TUESDAY':
       case 'TUSEDAY':
         return 2;
       case 'WEDNESDAY':
@@ -119,7 +120,7 @@ export class SharedService {
       case '1':
         return 'MONDAY';
       case '2':
-        return 'TUSEDAY';
+        return 'TUESDAY';
       case '3':
         return 'WEDNESDAY';
       case '4':

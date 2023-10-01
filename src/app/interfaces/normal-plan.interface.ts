@@ -54,6 +54,7 @@ export interface Dish {
     meal_id:         number;
     meal_type:       string;
     meal_name_en:    string;
+    meal_name:       string;
     meal_name_ar:    string;
     unit:            string;
     meal_name_image: string;
@@ -66,6 +67,12 @@ export interface Dish {
     min_qty:         number;
     tag:             string|null;
     counter:         number;
+    extra:           extra
+}
+
+interface extra {
+    carb:number;
+    protein:number;
 }
 
 export interface ISubscriptionData {
@@ -86,7 +93,19 @@ export interface INormalProgramPriceResponse{
     grand_total: number;
     bag_price :  number;
     extra_fifty_carb: number;
-    extra_fifty_protein:number
+    extra_fifty_protein:number;
+    extra_details:Extra;
+}
+
+export interface Extra {
+    carb:    extraPrice;
+    protein: extraPrice;
+}
+
+export interface extraPrice {
+    PCS:         number;
+    GM:          number;
+    total_price: number;
 }
 
 export interface INormalSubscriptionPrice{

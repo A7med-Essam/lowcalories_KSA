@@ -130,8 +130,8 @@
         "total":"Total",
         "code":"Code",
         "vat":"Vat",
-        "extra_carb":"Extra carbohydrates",
-        "extra_protein":"Extra protein",
+        "extra_carb":"Extra Carb",
+        "extra_protein":"Extra Protein",
         "grandTotal":"Grand Total"
       },
       "form":{
@@ -153,6 +153,8 @@
         },
         "cutlery":"Cutlery",
         "bag":"Safty Bag",
+        "delivery":"Delivery",
+        "pickUp":"Pick Up",
         "deliveryFees":"Delivery Fees"
       },
       "subscription":{

@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
@@ -30,6 +31,7 @@ export function playerFactory() {
     CarouselModule,
     LottieModule.forRoot({ player: playerFactory }),
     SharedModule,
+    RadioButtonModule,
   ],
 })
 export class NormalModule {}

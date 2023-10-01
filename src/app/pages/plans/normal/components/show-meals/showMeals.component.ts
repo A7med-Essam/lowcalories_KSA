@@ -11,7 +11,10 @@ import {
   Meal,
 } from 'src/app/interfaces/normal-plan.interface';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { FETCH_NORMALPLAN_PRICE_START, SAVE_NORMAL_MEALS } from 'src/app/store/normalPlanStore/normalPlan.action';
+import {
+  FETCH_NORMALPLAN_PRICE_START,
+  SAVE_NORMAL_MEALS,
+} from 'src/app/store/normalPlanStore/normalPlan.action';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -24,11 +27,11 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   category_index: number = 0;
   ProgramMeals!: Observable<IShowMealsResponse[] | null>;
-  userMeals: IShowMealsResponse[]=[];
+  userMeals: IShowMealsResponse[] = [];
   ProgramDetails!: Observable<INormalPlanResponse | null>;
   nextButtonMode$: Observable<boolean | null> = of(false);
   mealDetailsModal: boolean = false;
-  carouselVisible:boolean = true;
+  carouselVisible: boolean = true;
   customOptions: OwlOptions = {
     loop: false,
     autoplay: false,
@@ -51,7 +54,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     },
   };
   currentMeal!: Meal;
-  currentMealIndex:number = 0;
+  currentMealIndex: number = 0;
 
   constructor(
     private _SharedService: SharedService,
@@ -59,7 +62,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     private _Router: Router,
     private _Store: Store,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
     _Store
@@ -67,8 +70,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
-          this.userMeals = res 
-          
+          this.userMeals = res;
+
           this.ProgramDetails = _Store.select(
             fromNormalPlanSelector.normalPlanSelector
           );
@@ -81,22 +84,23 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           });
         }
       });
-      if (this._I18nService.currentLang == 'ar') {
-        this.customOptions.rtl = true;
-      }
-      this.translate.onLangChange.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
+    if (this._I18nService.currentLang == 'ar') {
+      this.customOptions.rtl = true;
+    }
+    this.translate.onLangChange
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
         if (res.lang == 'ar') {
           this.customOptions.rtl = true;
-        }else{
+        } else {
           this.customOptions.rtl = false;
         }
         this.carouselVisible = false;
-  
+
         setTimeout(() => {
           this.carouselVisible = true;
         });
-    
-      })
+      });
   }
 
   ngOnInit(): void {}
@@ -124,7 +128,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
                 meal_count: res.meals.length,
                 program_id: res.program_id,
                 snack_count: res.snacks.length,
-                list_days: this.userMeals
+                list_days: this.userMeals,
               },
             })
           );
@@ -137,7 +141,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  openDetails(meal:Meal,index:number) {
+  openDetails(meal: Meal, index: number) {
     this.currentMealIndex = index;
     this.currentMeal = meal;
     this.mealDetailsModal = true;
@@ -146,71 +150,141 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   editMeal(meal: Meal) {
     // Make a shallow copy of userMeals to avoid mutating the original array
     const updatedUserMeals = [...this.userMeals];
-  
+
     // Find the meal with the same date as the current category
     const categoryMeal = updatedUserMeals[this.category_index];
-  
+
     if (categoryMeal) {
       const updatedMeals = [...categoryMeal.meals];
-  
+
       // Update the meal at the currentMealIndex with the new meal
       updatedMeals[this.currentMealIndex] = meal;
-  
+
       // Update the userMeals array with the updated meals for the same date
       updatedUserMeals[this.category_index] = {
         ...categoryMeal,
         meals: updatedMeals,
       };
-  
+
       // Update the userMeals property with the new array
       this.userMeals = updatedUserMeals;
     }
   }
 
   changeMainDishNutrition(meal: Meal, increase: boolean) {
-    const modifiedMeal: Meal = { ...meal };
-    const mainDish: Dish = { ...meal.mainDish };
-    const newQty = increase? Math.min(mainDish.qty + mainDish.counter): Math.max(mainDish.qty - mainDish.counter,mainDish.min_qty);
-    mainDish.qty = newQty;
-    mainDish.calories = this.calcNutrition(mainDish, meal,'calories');
-    mainDish.fat = this.calcNutrition(mainDish, meal,'fat');
-    mainDish.carb = this.calcNutrition(mainDish, meal,'carb');
-    mainDish.protein = this.calcNutrition(mainDish, meal,'protein');
+    if (meal.mainDish.tag) {
+      // const modifiedMeal: Meal = { ...meal };
+      const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
+      const mainDish: Dish = modifiedMeal.mainDish
+      const newQty = increase
+        ? Math.min(mainDish.qty + mainDish.counter)
+        : Math.max(mainDish.qty - mainDish.counter, mainDish.min_qty);
+      mainDish.qty = newQty;
+      mainDish.tag == 'p' ? (mainDish.extra.protein = (mainDish.qty-mainDish.defaultQty) > 0 ?  mainDish.qty-mainDish.defaultQty : 0) : 
+      mainDish.extra.carb =  (mainDish.qty-mainDish.defaultQty) > 0 ? mainDish.qty-mainDish.defaultQty:0
+      mainDish.calories = this.calcNutrition(mainDish, meal, 'calories');
+      mainDish.fat = this.calcNutrition(mainDish, meal, 'fat');
+      mainDish.carb = this.calcNutrition(mainDish, meal, 'carb');
+      mainDish.protein = this.calcNutrition(mainDish, meal, 'protein');
+      modifiedMeal.mainDish = mainDish;
+      this.currentMeal = modifiedMeal;
+    }
+  }
+
+  changeSideDishNutrition(meal: Meal, increase: boolean, index: number) {
+    if (meal.sideDish[index].tag) {
+      // Clone the entire meal object to ensure mutability
+      const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
+
+      // Ensure that the specified index is within the bounds of the sideDish array
+      if (index >= 0 && index < modifiedMeal.sideDish.length) {
+        const sideDish: Dish = modifiedMeal.sideDish[index];
+        const newQty = increase
+          ? Math.min(sideDish.qty + sideDish.counter)
+          : Math.max(sideDish.qty - sideDish.counter, sideDish.min_qty);
+
+        // Update the quantity for the specific side dish
+        sideDish.qty = newQty;
+        sideDish.tag == 'p' ? 
+        (sideDish.extra.protein =  (sideDish.qty-sideDish.defaultQty) > 0 ?sideDish.qty-sideDish.defaultQty : 0)
+         : sideDish.extra.carb =  (sideDish.qty-sideDish.defaultQty > 0 ? sideDish.qty-sideDish.defaultQty:0)
+
+        // Recalculate nutrition information for all side dishes
+        modifiedMeal.sideDish.forEach((e, i) => {
+          e.calories = this.calcNutrition2(e, modifiedMeal, 'calories', i);
+          e.fat = this.calcNutrition2(e, modifiedMeal, 'fat', i);
+          e.carb = this.calcNutrition2(e, modifiedMeal, 'carb', i);
+          e.protein = this.calcNutrition2(e, modifiedMeal, 'protein', i);
+        });
+        this.currentMeal = modifiedMeal;
+      }
+    }
+  }
+
+  calcNutrition(meal: Dish, originalMeal: any, type: string) {
+    const caloriesPercentage =
+      Number(originalMeal.mainDish[type]) / Number(originalMeal.mainDish.qty);
+    return Number(caloriesPercentage || 0) * Number(meal.qty);
+  }
+
+  calcNutrition2(meal: Dish, originalMeal: any, type: string, index: number) {
+    const caloriesPercentage =
+      Number(originalMeal.sideDish[index][type]) /
+      Number(this.currentMeal.sideDish[index].qty);
+    return Number(caloriesPercentage || 0) * Number(meal.qty);
+  }
+
+  calcExtra(meal: Meal, increase: boolean, type: 'p' | 'c') {
+    const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
+    const mainDish: Dish = modifiedMeal.mainDish;
+    
+    const extraProperty = type === 'p' ? 'protein' : 'carb';
+    const currentExtraValue = mainDish.extra[extraProperty];
+    const newExtra = increase
+      ? Math.min(currentExtraValue + mainDish.counter)
+      : Math.max(currentExtraValue - mainDish.counter, 0);
+    
+    mainDish.extra[extraProperty] = newExtra;
+    mainDish.qty = (mainDish.defaultQty+this.sumExtra(mainDish.extra))
+    mainDish.calories = this.calcNutrition(mainDish, meal, 'calories');
+    mainDish.fat = this.calcNutrition(mainDish, meal, 'fat');
+    mainDish.carb = this.calcNutrition(mainDish, meal, 'carb');
+    mainDish.protein = this.calcNutrition(mainDish, meal, 'protein');
     modifiedMeal.mainDish = mainDish;
     this.currentMeal = modifiedMeal;
   }
-  
-  changeSideDishNutrition(meal: Meal, increase: boolean, index: number) {
-    // Clone the entire meal object to ensure mutability
+
+  calcExtra2(meal: Meal, increase: boolean, type: 'p' | 'c', index:number) {
     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
-    
-    // Ensure that the specified index is within the bounds of the sideDish array
+    const extraProperty = type === 'p' ? 'protein' : 'carb';
     if (index >= 0 && index < modifiedMeal.sideDish.length) {
       const sideDish: Dish = modifiedMeal.sideDish[index];
-      const newQty = increase ? Math.min(sideDish.qty + sideDish.counter) : Math.max(sideDish.qty - sideDish.counter, sideDish.min_qty);
-  
-      // Update the quantity for the specific side dish
-      sideDish.qty = newQty;
-  
-      // Recalculate nutrition information for all side dishes
+      const currentExtraValue = sideDish.extra[extraProperty];
+
+      const newExtra = increase
+      ? Math.min(currentExtraValue + sideDish.counter)
+      : Math.max(currentExtraValue - sideDish.counter, 0);
+      sideDish.extra[extraProperty] = newExtra;
+      sideDish.qty = (sideDish.defaultQty+this.sumExtra(sideDish.extra))
       modifiedMeal.sideDish.forEach((e, i) => {
         e.calories = this.calcNutrition2(e, modifiedMeal, 'calories', i);
         e.fat = this.calcNutrition2(e, modifiedMeal, 'fat', i);
         e.carb = this.calcNutrition2(e, modifiedMeal, 'carb', i);
         e.protein = this.calcNutrition2(e, modifiedMeal, 'protein', i);
       });
+      modifiedMeal.sideDish[index] = sideDish;
       this.currentMeal = modifiedMeal;
     }
   }
 
-  calcNutrition(meal: Dish,originalMeal: any, type:string) {
-    const caloriesPercentage = Number(originalMeal.mainDish[type]) / Number(originalMeal.mainDish.qty)
-    return (Number(caloriesPercentage || 0) * Number(meal.qty));
-  }
-
-  calcNutrition2(meal: Dish,originalMeal: any, type:string,index:number) {
-    const caloriesPercentage = Number(originalMeal.sideDish[index][type]) / Number(this.currentMeal.sideDish[index].qty)
-    return (Number(caloriesPercentage || 0) * Number(meal.qty));
+  sumExtra(extra:any){
+    let total = 0;
+    for (const key in extra) {
+      if (extra.hasOwnProperty(key)) {
+        total += extra[key];
+      }
+    }
+    return total
   }
 
 }

@@ -13,4 +13,16 @@ export interface IGiftCodeResponse{
     bag_price :  number;
     extra_fifty_carb: number;
     extra_fifty_protein:number;
+    extra_details:Extra;
+}
+
+export interface Extra {
+    carb:    extraPrice;
+    protein: extraPrice;
+}
+
+export interface extraPrice {
+    PCS:         number;
+    GM:          number;
+    total_price: number;
 }

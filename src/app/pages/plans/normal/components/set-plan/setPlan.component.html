@@ -90,7 +90,7 @@
                         <div class="col-12 my-2">
                             <div class="mb-2"><label>{{"pages.plans.options.date"|translate}} <span
                                         class="text-danger">*</span></label></div>
-                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
+                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" [minDate]="ksaDate"
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
                                 formControlName='Start_Date'  [disabledDays]="[5]"></p-calendar>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&

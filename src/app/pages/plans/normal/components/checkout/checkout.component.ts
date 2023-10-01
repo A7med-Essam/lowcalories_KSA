@@ -74,7 +74,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   @ViewChild('lottie') lottie!: ElementRef;
   userMeals: IShowMealsResponse[] | null = [];
   areas: Area[] = [];
-  deliveryFees:number = 0;
+  deliveryStatus: any[] = [
+    { name: 'Delivery', value: true },
+    { name: 'Pick Up', value: false },
+  ];
+  deliveryFees: number = 0;
   constructor(
     private _Store: Store,
     private _Router: Router,
@@ -119,13 +123,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 this._Store.dispatch(FETCH_STATE_START());
               }
             });
-            this.login$
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe(res=>{
-              if (res.data) {
-                this._Store.dispatch(FETCH_USERADDRESS_START());
-              }
-            })
+          this.login$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+            if (res.data) {
+              this._Store.dispatch(FETCH_USERADDRESS_START());
+            }
+          });
           this._Store.dispatch(FETCH_TERMS_START());
           this.states$ = this._Store.select(stateSelector);
           this.addresses$ = this._Store.select(addressSelector);
@@ -148,26 +150,59 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setCheckoutForm();
     this.setCheckoutForm_Without_Auth();
-    this.checkoutForm_without_auth.get("area_id")?.valueChanges
-    .pipe(takeUntil(this.destroyed$))
-    .subscribe(area_id => {
-      const states:IStateResponse = this.checkoutForm_without_auth.value.state_id; 
-      this.getDeliveryFees(area_id,states)
-   })
-   this.checkoutForm.get("area_id")?.valueChanges
-   .pipe(takeUntil(this.destroyed$))
-   .subscribe(area_id => {
-     const states:IStateResponse = this.checkoutForm.value.state_id; 
-    this.getDeliveryFees(area_id,states)
-  })
+    this.checkoutForm_without_auth
+      .get('area_id')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((area_id) => {
+        const states: IStateResponse =
+          this.checkoutForm_without_auth.value.state_id;
+        this.getDeliveryFees(area_id, states,this.checkoutForm_without_auth.value.delivery_status);
+      });
+    this.checkoutForm
+      .get('area_id')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((area_id) => {
+        const states: IStateResponse = this.checkoutForm.value.state_id;
+        this.getDeliveryFees(area_id, states,this.checkoutForm.value.delivery_status);
+      });
+
+    this.checkoutForm
+      .get('delivery_status')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((status) => {
+          const states: IStateResponse = this.checkoutForm.value.state_id;
+          this.getDeliveryFees(this.checkoutForm.value.area_id, states,status);
+      });
+
+
+      this.checkoutForm_without_auth
+      .get('delivery_status')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((status) => {
+          const states: IStateResponse =
+            this.checkoutForm_without_auth.value.state_id;
+          this.getDeliveryFees(
+            this.checkoutForm_without_auth.value.area_id,
+            states,
+            status
+          );
+      });
   }
 
-  getDeliveryFees(area_id:number, states:IStateResponse){
-    let selectedArea = states.areas.find(e=>e.id == area_id)
-    let sub:ISubscriptionData|null;
-    this.subscriptionInfo$.pipe(takeUntil(this.destroyed$)).subscribe((res) => (sub = res));
-    let selectedFees = selectedArea?.fees.find(e=>e.days == sub?.subscription_days)
-    this.deliveryFees = selectedFees?.fees || 0
+  getDeliveryFees(area_id: number, states: IStateResponse, delivery_status:boolean) {
+    if (delivery_status) {
+      let selectedArea = states.areas.find((e) => e.id == area_id);
+      let sub: ISubscriptionData | null;
+      this.subscriptionInfo$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((res) => (sub = res));
+      let selectedFees = selectedArea?.fees.find(
+        (e) => e.days == sub?.subscription_days
+      );
+      this.deliveryFees = selectedFees?.fees || 0;
+    } else {
+      this.deliveryFees = 0;
+    }
     this.cdref.detectChanges();
   }
 
@@ -179,7 +214,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      cutlery: new FormControl(false),
+      delivery_status: new FormControl(false),
+      // cutlery: new FormControl(false),
       // bag: new FormControl(false),
     });
   }
@@ -198,11 +234,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      cutlery: new FormControl(false),
+      delivery_status: new FormControl(false),
+      // cutlery: new FormControl(false),
       // bag: new FormControl(false),
     });
   }
-  
 
   // *****************************************************GiftCode*****************************************************
 
@@ -335,12 +371,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   selectAddress(address: IAddressResponse) {
-    this.states$.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
-      const [state] = res.filter((s:any) => s.id == address.area.state.id)
+    this.states$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      const [state] = res.filter((s: any) => s.id == address.area.state.id);
       this.checkoutForm.get('state_id')?.setValue(state);
-      const [area] = state.areas.filter((a:any) => a.id == address.area.id)
+      const [area] = state.areas.filter((a: any) => a.id == address.area.id);
       this.checkoutForm.get('area_id')?.setValue(area.id);
-    })
+    });
     this.checkoutForm.get('address')?.setValue(address.address);
     this.addressesModal = false;
   }
