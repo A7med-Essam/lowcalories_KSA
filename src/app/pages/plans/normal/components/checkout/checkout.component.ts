@@ -280,7 +280,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
         // bag: Number(form.value.bag),
-        cutlery: Number(form.value.cutlery),
+        // cutlery: Number(form.value.cutlery),
+        delivery_status:form.value.delivery_status,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
         total_price: priceinfo?.grand_total,
@@ -292,6 +293,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         address: form.value.address,
         list_days: this.userMeals ? this.userMeals : [],
       };
+      checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
       this.redirectToPaymentGateway();
@@ -318,7 +320,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
         // bag: Number(form.value.bag),
-        cutlery: Number(form.value.cutlery),
+        // cutlery: Number(form.value.cutlery),
+        delivery_status:form.value.delivery_status,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
         total_price: priceinfo?.grand_total,
@@ -334,6 +337,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         address_id: form.value.state_id,
         list_days: this.userMeals ? this.userMeals : [],
       };
+      checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
       this.redirectToPaymentGateway();

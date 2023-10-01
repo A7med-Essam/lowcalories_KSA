@@ -133,7 +133,8 @@ export interface ICheckout {
     price:          number;
     code_id:        number;
     // bag:            number;
-    cutlery:        number;
+    // cutlery:        number;
+    delivery_status: boolean
     subscription_days: number;
     state_id:     number;
     area_id:        string;
