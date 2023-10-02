@@ -15,7 +15,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromNormalPlanSelector from 'src/app/store/normalPlanStore/normalPlan.selector';
-import { Observable, of, Subject, takeUntil } from 'rxjs';
+import { combineLatest, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import {
   ICheckout,
   INormalPlanResponse,
@@ -245,6 +245,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
       this.giftcodeButtonMode$ = this._Store.select(giftCodeLoadingSelector);
+
+      let prevPrice$ = this._Store.select(fromNormalPlanSelector.normalPlanPriceSelector);
+
       this._Store.dispatch(
         FETCH_GIFTCODE_START({
           data: {
@@ -254,7 +257,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
         })
       );
-      this.price$ = this._Store.select(giftCodeSelector);
+      
+      this.price$ = this._Store.select(giftCodeSelector).pipe(
+        map((giftCode) => {
+          return giftCode
+        })
+      );
+
+
+      this.price$ = combineLatest([
+        this._Store.select(giftCodeSelector),
+        prevPrice$,
+      ]).pipe(
+        map(([giftCode, prevPrice]) => {
+          if (giftCode && prevPrice) {
+            const updatedObject = { 
+              ...giftCode, extra_details: prevPrice.extra_details,
+               extra_fifty_carb:prevPrice.extra_fifty_carb,
+               extra_fifty_protein:prevPrice.extra_fifty_protein 
+            };
+            giftCode = updatedObject;
+          }
+          return giftCode;
+        })
+      );
+
     }
   }
 
