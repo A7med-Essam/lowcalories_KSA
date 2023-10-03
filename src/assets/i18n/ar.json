@@ -155,7 +155,8 @@
           "bag":"حقيبة الأمان",
           "delivery":"توصيل",
           "pickUp":"استلام",
-          "deliveryFees":"رسوم التوصيل"
+          "deliveryFees":"رسوم التوصيل",
+          "dislike":"اختر الوجبات المسببة للحساسية"
         },
         "subscription": {
           "title": "معلومات الاشتراك",

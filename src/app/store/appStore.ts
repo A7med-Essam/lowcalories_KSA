@@ -1,7 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActionReducerMap } from '@ngrx/store';
-import { AuthEffect } from './authStore/auth.effect';
-import { ProgramEffects } from './programStore/program.effect';
 import * as fromAuthStore from './authStore/auth.reducer';
 import * as fromProgramStore from './programStore/program.reducer';
 import * as fromNormalPlanStore from './normalPlanStore/normalPlan.reducer';
@@ -9,9 +7,14 @@ import * as fromCustomPlanStore from './customPlanStore/customPlan.reducer';
 import * as fromStateStore from './stateStore/state.reducer';
 import * as fromAddressStore from './userAddressStore/address.reducer';
 import * as fromTermsStore from './termsStore/terms.reducer';
+import * as fromDislikeStore from './dislikeStore/dislike.reducer';
 import * as fromClinicStore from './clinicStore/clinic.reducer';
 import * as fromGiftcodeStore from './giftcodeStore/giftcode.reducer';
 import * as fromSocialMediaStore from './socialMediaStore/socialMedia.reducer';
+import * as fromMenuStore from './menuStore/menu.reducer';
+
+import { AuthEffect } from './authStore/auth.effect';
+import { ProgramEffects } from './programStore/program.effect';
 import { GiftcodeEffects } from './giftcodeStore/giftcode.effect';
 import { NormalPlanEffects } from './normalPlanStore/normalPlan.effect';
 import { CustomPlanEffects } from './customPlanStore/customPlan.effect';
@@ -20,8 +23,8 @@ import { AddressEffects } from './userAddressStore/address.effect';
 import { TermsEffects } from './termsStore/terms.effect';
 import { ClinicEffects } from './clinicStore/clinic.effect';
 import { MenuEffects } from './menuStore/menu.effect';
-import * as fromMenuStore from './menuStore/menu.reducer';
 import { SocialMediaEffects } from './socialMediaStore/socialMedia.effect';
+import { DislikeEffects } from './dislikeStore/dislike.effect';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
@@ -48,6 +51,7 @@ export interface AppState {
   giftCode: fromGiftcodeStore.IGiftCodeState;
   menu: fromMenuStore.IMenuState;
   socialMedia: fromSocialMediaStore.ISocialMediaState
+  dislike: fromDislikeStore.IDislikeState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -75,6 +79,7 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   giftCode: fromGiftcodeStore.GiftCodeReducer,
   menu: fromMenuStore.MenuReducer,
   socialMedia: fromSocialMediaStore.socialMediaReducer,
+  dislike: fromDislikeStore.DislikeReducer
 };
 
 export const APP_EFFECTS = [
@@ -88,7 +93,8 @@ export const APP_EFFECTS = [
   ClinicEffects,
   GiftcodeEffects,
   MenuEffects,
-  SocialMediaEffects
+  SocialMediaEffects,
+  DislikeEffects
 ];
 
 export interface IHttpResponse {

@@ -15,6 +15,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -32,6 +34,7 @@ export function playerFactory() {
     LottieModule.forRoot({ player: playerFactory }),
     SharedModule,
     RadioButtonModule,
+    MultiSelectModule
   ],
 })
 export class NormalModule {}

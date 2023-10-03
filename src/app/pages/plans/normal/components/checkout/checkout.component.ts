@@ -44,6 +44,9 @@ import {
 import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
+import { FETCH_DISLIKE_START } from 'src/app/store/dislikeStore/dislike.action';
+import { IDislikeResponse } from 'src/app/interfaces/dislike.interface';
+import { dislikeSelector } from 'src/app/store/dislikeStore/dislike.selector';
 
 @Component({
   selector: 'app-checkout',
@@ -57,6 +60,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   subscriptionInfo$: Observable<ISubscriptionData | null> = of(null);
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
+  dislike$!: Observable<IDislikeResponse[] | any>;
   states$!: Observable<IStateResponse[] | any>;
   terms$!: Observable<ITermsResponse[] | any>;
   ProgramDetails!: Observable<INormalPlanResponse | null>;
@@ -90,6 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ) {
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
+    this.dislike$ = _Store.select(dislikeSelector);
     this.price$ = _Store.select(fromNormalPlanSelector.normalPlanPriceSelector);
     _Store
       .select(fromNormalPlanSelector.normalPlanPriceSelector)
@@ -108,6 +113,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
+          this._Store.dispatch(FETCH_DISLIKE_START());
           this.program_id = res.program_id;
           this.subscriptionInfo$ = _Store.select(
             fromNormalPlanSelector.normalSubscriptionSelector
@@ -215,8 +221,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(false),
-      // cutlery: new FormControl(false),
-      // bag: new FormControl(false),
+      dislike_meals: new FormControl(false),
     });
   }
 
@@ -235,6 +240,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(false),
+      dislike_meals: new FormControl(false),
       // cutlery: new FormControl(false),
       // bag: new FormControl(false),
     });
@@ -306,6 +312,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
+        dislike_meals:form.value.dislike_meals,
         // bag: Number(form.value.bag),
         // cutlery: Number(form.value.cutlery),
         delivery_status:form.value.delivery_status,
@@ -346,6 +353,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
+        dislike_meals:form.value.dislike_meals,
         // bag: Number(form.value.bag),
         // cutlery: Number(form.value.cutlery),
         delivery_status:form.value.delivery_status,

@@ -158,6 +158,13 @@
                                         checkoutForm.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
+                            <div class="my-4 text-start">
+                                <div class="my-2 text-start">
+                                    <label class="text-muted">{{"pages.checkout.form.dislike" | translate}}</label>
+                                    <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals" defaultLabel="Select Allergic Meals" 
+                                       optionValue="meal_name" optionLabel="meal_name" display="chip" appendTo="body"></p-multiSelect>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
                                 <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
                                     <p-radioButton [inputId]="category.name+1" [value]="category.value" formControlName="delivery_status"></p-radioButton>
@@ -292,6 +299,13 @@
                                                 *ngIf="checkoutForm_without_auth.get('address')?.touched &&
                                         checkoutForm_without_auth.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.dislike" | translate}}</label>
+                                        <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals" defaultLabel="Select Allergic Meals" 
+                                           optionValue="meal_name" optionLabel="meal_name" display="chip" appendTo="body"></p-multiSelect>
                                     </div>
                                 </div>
                             </div>

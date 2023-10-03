@@ -132,6 +132,7 @@ export interface ICheckout {
     total_price:    number;
     price:          number;
     code_id:        number;
+    dislike_meals:  [];
     // bag:            number;
     // cutlery:        number;
     delivery_status: boolean

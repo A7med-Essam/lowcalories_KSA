@@ -155,7 +155,8 @@
         "bag":"Safty Bag",
         "delivery":"Delivery",
         "pickUp":"Pick Up",
-        "deliveryFees":"Delivery Fees"
+        "deliveryFees":"Delivery Fees",
+        "dislike":"Select allergic meals"
       },
       "subscription":{
         "title":"Subscription Info",

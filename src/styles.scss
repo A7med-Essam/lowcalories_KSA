@@ -6362,4 +6362,30 @@ input[type=checkbox] {
   border-color: #ed7f6c;
 }
 
+.p-multiselect-chip{
+  width: 100%;
+}
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+  background: rgb(247, 247, 247);
+  color: #ed7f6c;
+  margin-right:8px;
+}
+.p-multiselect:not(.p-disabled):hover {
+  border-color: #e93e21;
+}
+.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #ed7f6c !important;
+  background: #ed7f6c !important;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+  color: #e93e21 !important;
+  background: #fff2ef !important;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+  box-shadow: inset 0 0 0 0.15rem #f5c8c0 !important;
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: #f5c8c0;
+}
+
 @import "./assets/ar_style/styles_ar.scss";
