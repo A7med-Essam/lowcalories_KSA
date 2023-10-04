@@ -221,7 +221,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(false),
-      dislike_meals: new FormControl(false),
+      dislike_meals: new FormControl(null),
     });
   }
 
@@ -240,7 +240,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(false),
-      dislike_meals: new FormControl(false),
+      dislike_meals: new FormControl(null),
       // cutlery: new FormControl(false),
       // bag: new FormControl(false),
     });
