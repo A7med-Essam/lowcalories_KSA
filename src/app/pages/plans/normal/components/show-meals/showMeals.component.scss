@@ -1,5 +1,5 @@
-:host{
-    ::ng-deep .owl-stage{
+:host {
+    ::ng-deep .owl-stage {
         margin: 0px 10px;
         --bs-gutter-x: 1.5rem;
         --bs-gutter-y: 0;
@@ -7,11 +7,12 @@
         flex-wrap: wrap;
         position: relative;
     }
+
     ::ng-deep .owl-theme .owl-nav [class*=owl-] {
         position: absolute;
     }
 
-    ::ng-deep .owl-theme .owl-nav .owl-next{
+    ::ng-deep .owl-theme .owl-nav .owl-next {
         right: -5%;
         bottom: 50%;
         border-radius: 50%;
@@ -21,7 +22,8 @@
         justify-content: center;
         align-items: center;
     }
-    ::ng-deep .owl-theme .owl-nav .owl-prev{
+
+    ::ng-deep .owl-theme .owl-nav .owl-prev {
         left: -5%;
         bottom: 50%;
         border-radius: 50%;
@@ -34,40 +36,41 @@
 }
 
 
-:host{
-    ::ng-deep .owl-carousel .owl-item img{
-        height: 180px !important; 
+:host {
+    ::ng-deep .owl-carousel .owl-item img {
+        height: 180px !important;
     }
 }
 
 .categories .item {
     transition: all .5s;
-    box-shadow: 0 8px 12px rgba(0,0,0,.175);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, .175);
     border-radius: 5px;
     margin: 50px 0px;
     cursor: pointer;
 }
+
 .categories .item.active {
-    background-color: #e93e21!important;
+    background-color: #19a44b !important;
     color: #fff;
 }
 
-.editBtn{
+.editBtn {
     background-color: #fff;
     height: 50px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px dashed #e93e21;
-    color: #e93e21;
+    border: 2px dashed #19a44b;
+    color: #19a44b;
     width: 50px;
     transition: all .5s;
 }
 
-.editBtn:hover{
-    background-color: #e93e21;
-    border:2px solid #fff;
+.editBtn:hover {
+    background-color: #19a44b;
+    border: 2px solid #fff;
     color: #fff;
 }
 
@@ -79,13 +82,13 @@
     text-align: center;
 
     &.active {
-        background-color: #E93E21 !important;
+        background-color: #19a44b !important;
         color: #fff;
     }
 
     &:hover {
         color: #fff !important;
-        background-color: #E93E21 !important;
+        background-color: #19a44b !important;
         cursor: pointer;
     }
 }
@@ -118,7 +121,7 @@
     .meals,
     .snacks {
         .active {
-            color: #E93E21 !important;
+            color: #19a44b !important;
             cursor: pointer;
         }
     }
@@ -136,7 +139,7 @@
     height: 36px;
     font: 34px/1 Arial, sans-serif;
     text-align: center;
-    background-color: #E93E21;
+    background-color: #19a44b;
 }
 
 .qty .count {
@@ -165,15 +168,13 @@
             max-width: 400px;
         }
 
-        .p-dialog .p-dialog-header{
+        .p-dialog .p-dialog-header {
             padding: 10px 15px 0px;
         }
 
-        .p-dialog .p-dialog-header-icons button{
+        .p-dialog .p-dialog-header-icons button {
             height: 10px;
             width: 10px;
         }
     }
 }
-
-

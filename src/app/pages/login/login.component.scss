@@ -1,21 +1,29 @@
 .login-block {
     width: 100%;
     padding: 50px 0;
-}.card-container {
+}
+
+.card-container {
     background: #fff;
     border-radius: 10px;
     box-shadow: 15px 20px 10px rgba(0, 0, 0, 0.15), -15px -20px 10px rgba(0, 0, 0, 0.15);
-}.login-sec {
+}
+
+.login-sec {
     padding: 50px 30px;
     position: relative;
-}.banner-sec {
+}
+
+.banner-sec {
     // background: url(../../../assets/images/login/istockphoto-1093904158-612x612.jpg) no-repeat left bottom;
     background: url(../../../assets/images/login/bg-login.png) no-repeat left bottom;
     background-size: cover;
     min-height: 500px;
     border-radius: 0 10px 10px 0;
     padding: 0;
-}.text-caption {
+}
+
+.text-caption {
     text-align: left;
     left: 5%;
     position: absolute;
@@ -25,19 +33,29 @@
     padding-top: 20px;
     padding-bottom: 20px;
     color: #fff;
-}.banner-text {
+}
+
+.banner-text {
     width: 70%;
     position: absolute;
     bottom: 40px;
     padding-left: 20px;
-}.banner-text h2 {
+}
+
+.banner-text h2 {
     color: #fff;
     font-weight: 600;
-}.banner-text p {
+}
+
+.banner-text p {
     color: #fff;
-}#login_section .header {
+}
+
+#login_section .header {
     position: relative;
-}#login_section .header h2 {
+}
+
+#login_section .header h2 {
     font-size: 50px;
     padding-bottom: 15px;
     font-weight: 700;
@@ -48,7 +66,9 @@
     font-weight: 800;
     font-size: 30px;
     color: #de6262;
-}.login-sec h2:after {
+}
+
+.login-sec h2:after {
     content: " ";
     width: 100px;
     height: 5px;
@@ -58,24 +78,32 @@
     border-radius: 3px;
     margin-left: auto;
     margin-right: auto;
-}#login_section .body .form-group {
+}
+
+#login_section .body .form-group {
     position: relative;
-}#login_section .body .form-group i {
+}
+
+#login_section .body .form-group i {
     position: absolute;
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
     font-size: 13px;
     margin-left: 5px;
-}#login_section .body .form-group input {
+}
+
+#login_section .body .form-group input {
     width: 100%;
     height: 45px;
     padding-left: 40px;
     color: #fff;
     border-color: rgba(0, 0, 0, 0.1);
     color: #afafaf;
-}#login_section button {
-    background: #e93e21;
+}
+
+#login_section button {
+    background: #19a44b;
     color: #fff;
     border: none !important;
     position: relative;
@@ -83,7 +111,9 @@
     overflow: hidden;
     border-radius: 3px;
     padding: 10px 50px;
-}#login_section button::after {
+}
+
+#login_section button::after {
     content: "";
     background: #1e2327;
     position: absolute;
@@ -93,14 +123,19 @@
     display: block;
     transition: all 0.35s;
 }
+
 button.slide_from_bottom::after {
     left: 0;
     right: 0;
     top: 100%;
     bottom: -100%;
-}#login_section button:hover {
+}
+
+#login_section button:hover {
     color: #fff;
-}#login_section button[class^="slide"]:hover::after {
+}
+
+#login_section button[class^="slide"]:hover::after {
     left: 0;
     right: 0;
     top: 0;
@@ -119,7 +154,7 @@ button.slide_from_bottom::after {
     transition: all 0.35s;
 }
 
-.href{
+.href {
     text-decoration: none;
     color: #de6262;
     font-size: 14px;

@@ -5,18 +5,17 @@
     text-align: center;
 
     &.active {
-        background-color: #E93E21 !important;
+        background-color: #19a44b !important;
         color: #fff;
     }
 
     &:hover {
         color: #fff !important;
-        background-color: #E93E21 !important;
+        background-color: #19a44b !important;
         cursor: pointer;
     }
 }
 
 .menu-body.menu-left .menu-details {
     display: grid !important;
-  }
-
+}

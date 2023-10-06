@@ -19,7 +19,7 @@
     content: "";
     width: 0%;
     height: 2px;
-    background-color: #e93e21;
+    background-color: #19a44b;
     position: absolute;
     z-index: -1;
     transition: all .5s;
@@ -35,7 +35,7 @@
     position: relative;
 }
 
-.screen-indicator::after{
+.screen-indicator::after {
     position: absolute;
     top: 120%;
     left: 50%;
@@ -43,29 +43,34 @@
     text-align: center;
     color: #bbb;
 }
-.screen-indicator.completed::after{
-    color: #e93e21;
+
+.screen-indicator.completed::after {
+    color: #19a44b;
     transition: all .5s;
 }
 
-.screen-indicator.step1::after{
+.screen-indicator.step1::after {
     content: 'Step1';
 }
-.screen-indicator.step2::after{
+
+.screen-indicator.step2::after {
     content: 'Step2';
 }
-.screen-indicator.step3::after{
+
+.screen-indicator.step3::after {
     content: 'Step3';
 }
-.screen-indicator.step4::after{
+
+.screen-indicator.step4::after {
     content: 'Step4';
 }
-.screen-indicator.step5::after{
+
+.screen-indicator.step5::after {
     content: 'Step5';
 }
 
 .completed {
-    border-color: #e93e21;
+    border-color: #19a44b;
     color: #fff;
-    background-color: #e93e21;
+    background-color: #19a44b;
 }

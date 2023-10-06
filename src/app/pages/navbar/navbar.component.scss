@@ -1,11 +1,13 @@
 /* GOOGLE FONT */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+
 /* MENU BASIC LAYOUT */
-.topbar{
+.topbar {
   position: fixed;
   left: 0;
   right: 0;
 }
+
 .mega-menu {
   margin: 0 auto;
   // padding: 0;
@@ -17,7 +19,7 @@
   left: 0;
   right: 0;
   z-index: 999;
-/*  max-width: 1280px;
+  /*  max-width: 1280px;
   width: 100%;*/
   font-size: 16px;
   font-family: "Open Sans", sans-serif;
@@ -25,6 +27,7 @@
   clear: both;
   box-sizing: border-box;
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu {
     /*float: left;*/
@@ -32,6 +35,7 @@
     /*min-width: 200px;*/
   }
 }
+
 .mega-menu * {
   outline: none;
   list-style: none;
@@ -48,10 +52,12 @@
     word-break: break-all;
   }
 }
+
 .mega-menu i.fa {
   /*----------------------------- FONT AWESOME ICONS */
   font-family: "FontAwesome";
 }
+
 .mega-menu img {
   /*------------------------------- IMAGE */
   margin: 0;
@@ -61,11 +67,13 @@
   float: left;
   /*height: 49px;*/
 }
+
 .mega-menu input {
   /*------------------------------ DEFAULT INPUT */
   border: none;
 }
-.mega-menu > section.menu-list-items {
+
+.mega-menu>section.menu-list-items {
   margin: 0;
   // padding: 35px 0;
   background-color: #fff;
@@ -74,6 +82,7 @@
   width: 100%;
   // background-color: transparent;
 }
+
 .mega-menu .menu-logo {
   /*----------------------------------- MENU LOGO */
   margin: 0;
@@ -82,18 +91,21 @@
   float: left;
   position: relative;
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .menu-logo.menu-logo-align-right {
     /*---------------------------------------------- MENU LOGO ALIGN RIGHT */
     float: right;
   }
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .menu-logo {
     width: 100%;
   }
 }
-.mega-menu .menu-logo > li {
+
+.mega-menu .menu-logo>li {
   margin: 0;
   padding: 0;
   display: block;
@@ -101,13 +113,15 @@
   font-size: 1em;
   line-height: 50px;
 }
+
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-logo > li {
+  .mega-menu .menu-logo>li {
     width: 100%;
     line-height: normal;
   }
 }
-.mega-menu .menu-logo > li > a {
+
+.mega-menu .menu-logo>li>a {
   margin: 0;
   display: inline-block;
   float: left;
@@ -118,15 +132,16 @@
   /*padding: 0 20px 0 45px;*/
   line-height: 50px;
   -webkit-transition: background-color 200ms ease;
-          transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
 }
-.mega-menu .menu-logo > li > a:hover {
+
+.mega-menu .menu-logo>li>a:hover {
   /*-------------------------------------- HOVER MENU LOGO */
-  /*background-color: #e93e21;*/
+  /*background-color: #19a44b;*/
 }
 
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-logo > li > a {
+  .mega-menu .menu-logo>li>a {
     line-height: normal;
     padding-top: 16px;
     padding-bottom: 16px;
@@ -135,7 +150,8 @@
     width: auto;
   }
 }
-.mega-menu .menu-logo > li > a i.fa {
+
+.mega-menu .menu-logo>li>a i.fa {
   /*--------------------------------------- LOGO ICON */
   padding: 0;
   display: inline-block;
@@ -147,9 +163,10 @@
   margin: auto 0;
   line-height: 50px;
 }
-.mega-menu .menu-logo > li > a img {
+
+.mega-menu .menu-logo>li>a img {
   /*--------------------------------------- LOGO IMAGE ICON */
- /* width: 20px;
+  /* width: 20px;
   height: 20px;
   position: absolute;
   top: 0;
@@ -157,6 +174,7 @@
   bottom: 0;
   margin: auto 0;*/
 }
+
 .mega-menu .menu-links {
   /*---------------------------------------- MENU LINKS */
   margin: 0;
@@ -169,31 +187,35 @@
   .mega-menu .menu-links {
     width: 100%;
     background: #fff;
-        
+
   }
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .menu-links {
-    display: block ;
+    display: block;
     max-height: 100% !important;
     overflow: visible !important;
   }
+
   .mega-menu .menu-links.menu-links-align-right {
     /*------------------------------------------ MENU LINKS ALIGN RIGHT */
     float: right;
   }
 }
-.mega-menu .menu-links > li {
+
+.mega-menu .menu-links>li {
   margin: 0;
   padding: 0;
   display: block;
   float: left;
   -webkit-transition: background-color 200ms ease;
-          transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
   font-size: 1em;
 }
+
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-links > li {
+  .mega-menu .menu-links>li {
     width: 100%;
     position: relative;
     cursor: pointer;
@@ -201,26 +223,31 @@
     border-bottom: 1px solid #f3f3f3;
     z-index: 50;
   }
-  .mega-menu .menu-links > li.activeTriggerMobile {
-    /*background-color: #e93e21;*/
+
+  .mega-menu .menu-links>li.activeTriggerMobile {
+    /*background-color: #19a44b;*/
   }
 }
+
 @media screen and (min-width: 993px) {
-  .mega-menu .menu-links > li.activeTrigger {
-    background-color: #e93e21;
+  .mega-menu .menu-links>li.activeTrigger {
+    background-color: #19a44b;
   }
 }
-.mega-menu .menu-links > li.active a {
+
+.mega-menu .menu-links>li.active a {
   /*------------------------------------- ACTIVE CLASS MENU LINKS */
- background-color: transparent;
- color: #e93e21;
+  background-color: transparent;
+  color: #19a44b;
 }
-.mega-menu .menu-links > li:hover {
+
+.mega-menu .menu-links>li:hover {
   /*-------------------------------------- HOVER MENU LINKS */
   background-color: transparent;
-  color: #e93e21;
+  color: #19a44b;
 }
-.mega-menu .menu-links > li > a {
+
+.mega-menu .menu-links>li>a {
   margin: 0;
   padding: 0 13px;
   display: inline-block;
@@ -234,9 +261,13 @@
   position: relative;
   text-transform: capitalize;
 }
-.mega-menu .menu-links > li > a:hover { color: #e93e21; }
+
+.mega-menu .menu-links>li>a:hover {
+  color: #19a44b;
+}
+
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-links > li > a {
+  .mega-menu .menu-links>li>a {
     width: auto;
     line-height: normal;
     padding-top: 10px;
@@ -247,18 +278,21 @@
     color: #363636;
   }
 }
-.mega-menu .menu-links > li > a i.fa {
+
+.mega-menu .menu-links>li>a i.fa {
   /*---------------------------------------------------- MENU LINKS ICONS*/
   font-size: 1em;
   line-height: 0.8125em;
   padding-right: 2px;
 }
-.mega-menu .menu-links > li > a i.fa.fa-indicator {
+
+.mega-menu .menu-links>li>a i.fa.fa-indicator {
   padding-right: 0;
   padding-left: 2px;
 }
+
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-links > li > a i.fa.fa-indicator {
+  .mega-menu .menu-links>li>a i.fa.fa-indicator {
     float: right;
     position: absolute;
     right: 20px;
@@ -269,6 +303,7 @@
     z-index: -1;
   }
 }
+
 .mega-menu .menu-social-bar {
   /*---------------------------------------------- MENU SOCIAL BAR */
   margin: 0;
@@ -276,23 +311,27 @@
   float: left;
   padding: 0 10px;
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .menu-social-bar {
     display: block !important;
   }
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .menu-social-bar.menu-social-bar-right {
     float: right;
   }
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .menu-social-bar {
     width: 100%;
     text-align: center;
   }
 }
-.mega-menu .menu-social-bar > li {
+
+.mega-menu .menu-social-bar>li {
   margin: 0;
   padding: 0;
   display: block;
@@ -300,26 +339,32 @@
   font-size: 1em;
   line-height: 50px;
 }
-.mega-menu .menu-social-bar > li[data-color='blue'] > a:hover {
+
+.mega-menu .menu-social-bar>li[data-color='blue']>a:hover {
   background-color: #3b5998;
 }
-.mega-menu .menu-social-bar > li[data-color='sky-blue'] > a:hover {
+
+.mega-menu .menu-social-bar>li[data-color='sky-blue']>a:hover {
   background-color: #2caae1;
 }
-.mega-menu .menu-social-bar > li[data-color='orange'] > a:hover {
+
+.mega-menu .menu-social-bar>li[data-color='orange']>a:hover {
   background-color: #dd4b39;
 }
-.mega-menu .menu-social-bar > li[data-color='red'] > a:hover {
+
+.mega-menu .menu-social-bar>li[data-color='red']>a:hover {
   background-color: #bd081c;
 }
+
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-social-bar > li {
+  .mega-menu .menu-social-bar>li {
     float: none;
     display: inline-block;
     margin-bottom: -5px;
   }
 }
-.mega-menu .menu-social-bar > li > a {
+
+.mega-menu .menu-social-bar>li>a {
   margin: 0;
   display: inline-block;
   float: left;
@@ -328,16 +373,18 @@
   font-size: 0.875em;
   padding: 0 5px;
   -webkit-transition: background-color 200ms ease;
-          transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
   line-height: 50px;
 }
+
 @media screen and (max-width: 992px) {
-  .mega-menu .menu-social-bar > li > a {
+  .mega-menu .menu-social-bar>li>a {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-.mega-menu .menu-social-bar > li > a i.fa {
+
+.mega-menu .menu-social-bar>li>a i.fa {
   margin: 0;
   padding: 0;
   display: inline-block;
@@ -346,6 +393,7 @@
   font-size: 1.125em;
   line-height: 50px;
 }
+
 .mega-menu .menu-search-bar {
   /*--------------------------------------------------- MENU SEARCH BAR */
   margin: 0;
@@ -355,11 +403,13 @@
   position: relative;
   height: 50px;
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .menu-search-bar.menu-search-bar-left {
     float: left;
   }
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .menu-search-bar {
     width: 100%;
@@ -368,7 +418,10 @@
     right: 0;
   }
 }
-.mega-menu .menu-search-bar li, .mega-menu .menu-search-bar form, .mega-menu .menu-search-bar label {
+
+.mega-menu .menu-search-bar li,
+.mega-menu .menu-search-bar form,
+.mega-menu .menu-search-bar label {
   margin: 0;
   padding: 0;
   display: block;
@@ -376,9 +429,11 @@
   width: 100%;
   line-height: 50px;
 }
+
 .mega-menu .menu-search-bar li:hover i.fa.fa-search {
-  background: #e93e21;
+  background: #19a44b;
 }
+
 .mega-menu .menu-search-bar input {
   max-width: 0;
   width: 100%;
@@ -386,18 +441,20 @@
   padding: 5px 50px 5px 0;
   font-size: 0.8125em;
   -webkit-transition: max-width 400ms ease, background 400ms ease, padding-left 400ms ease;
-          transition: max-width 400ms ease, background 400ms ease, padding-left 400ms ease;
+  transition: max-width 400ms ease, background 400ms ease, padding-left 400ms ease;
   height: 50px;
   display: block;
   background: none;
   color: #ffffff;
   font-weight: 400;
 }
+
 .mega-menu .menu-search-bar input:focus {
   max-width: 170px;
-  background: #e93e21;
+  background: #19a44b;
   padding-left: 20px;
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .menu-search-bar input:focus {
     max-width: 100%;
@@ -405,6 +462,7 @@
     z-index: 20;
   }
 }
+
 .mega-menu .menu-search-bar i.fa.fa-search {
   position: absolute;
   top: 0;
@@ -416,33 +474,40 @@
   color: #ffffff;
   cursor: text;
   -webkit-transition: background 200ms ease;
-          transition: background 200ms ease;
+  transition: background 200ms ease;
   z-index: 40;
 }
+
 .mega-menu .menu-search-bar :-moz-placeholder {
   opacity: 1 !important;
   color: #ffffff !important;
 }
+
 .mega-menu .menu-search-bar ::-moz-placeholder {
   opacity: 1 !important;
   color: #ffffff !important;
 }
+
 .mega-menu .menu-search-bar :-ms-input-placeholder {
   opacity: 1 !important;
   color: #ffffff !important;
 }
+
 .mega-menu .menu-search-bar ::-webkit-input-placeholder {
   opacity: 1 !important;
   color: #ffffff !important;
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .menu-search-bar.active input {
     padding-right: 150px;
   }
+
   .mega-menu .menu-search-bar.active i.fa.fa-search {
     right: 70px;
   }
 }
+
 .mega-menu .menu-mobile-collapse-trigger {
   /*------------------------------------------------------ MOBILE COLLAPSE TRIGGER BUTTON */
   margin: 0;
@@ -458,11 +523,13 @@
   float: right;
   cursor: pointer;
   -webkit-transition: background 200ms ease;
-          transition: background 200ms ease;
+  transition: background 200ms ease;
 }
+
 .mega-menu .menu-mobile-collapse-trigger:hover {
   background: transparent;
 }
+
 .mega-menu .menu-mobile-collapse-trigger:before,
 .mega-menu .menu-mobile-collapse-trigger:after,
 .mega-menu .menu-mobile-collapse-trigger span {
@@ -478,41 +545,51 @@
   right: 0;
   margin: 0 auto;
   -webkit-transition: -webkit-transform 400ms ease 0s, opacity 400ms ease;
-          transition: transform 400ms ease 0s, opacity 400ms ease;
+  transition: transform 400ms ease 0s, opacity 400ms ease;
   -webkit-transform: rotate(0deg);
-      -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
   -webkit-transform-origin: 0px 50% 0px;
-      -ms-transform-origin: 0px 50% 0px;
-          transform-origin: 0px 50% 0px;
+  -ms-transform-origin: 0px 50% 0px;
+  transform-origin: 0px 50% 0px;
 }
+
 .home-2 .mega-menu .menu-mobile-collapse-trigger:before,
 .home-2 .mega-menu .menu-mobile-collapse-trigger:after,
-.home-2 .mega-menu .menu-mobile-collapse-trigger span { background: #1e2327; }
+.home-2 .mega-menu .menu-mobile-collapse-trigger span {
+  background: #1e2327;
+}
+
 .mega-menu .menu-mobile-collapse-trigger:after {
   top: 27px;
 }
+
 .mega-menu .menu-mobile-collapse-trigger span {
   top: 20px;
 }
+
 .mega-menu .menu-mobile-collapse-trigger.active span {
   opacity: 0;
 }
+
 .mega-menu .menu-mobile-collapse-trigger.active:before {
   -webkit-transform: rotate(30deg);
-      -ms-transform: rotate(30deg);
-          transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  transform: rotate(30deg);
 }
+
 .mega-menu .menu-mobile-collapse-trigger.active:after {
   -webkit-transform: rotate(-30deg);
-      -ms-transform: rotate(-30deg);
-          transform: rotate(-30deg);
+  -ms-transform: rotate(-30deg);
+  transform: rotate(-30deg);
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .menu-mobile-collapse-trigger {
     display: block;
   }
 }
+
 .mega-menu .drop-down-multilevel {
   /*-------------------------------------------------- DROP DOWN MULTILEVEL */
   margin: 0;
@@ -528,19 +605,22 @@
   float: left;
   max-width: 180px;
 }
+
 .mega-menu .drop-down-multilevel * {
   color: #1e2327;
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .drop-down-multilevel {
     display: block !important;
     opacity: 0;
     visibility: hidden;
-    border-top: 0px solid #e93e21;
+    border-top: 0px solid #19a44b;
     box-shadow: 0 0px 0px 1px rgba(0, 0, 0, 0.05);
-    border-bottom: 0px; 
+    border-bottom: 0px;
   }
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .drop-down-multilevel {
     max-width: 100% !important;
@@ -551,6 +631,7 @@
     display: none;
   }
 }
+
 .mega-menu .drop-down-multilevel li {
   margin: 0;
   padding: 0;
@@ -560,60 +641,81 @@
   width: 100%;
   position: relative;
   -webkit-transition: background 200ms ease;
-          transition: background 200ms ease;
+  transition: background 200ms ease;
   z-index: 50;
 }
-.mega-menu .drop-down-multilevel li:last-child { border-bottom: 0px; }
+
+.mega-menu .drop-down-multilevel li:last-child {
+  border-bottom: 0px;
+}
+
 .mega-menu .drop-down-multilevel li:hover {
   background: transparent;
 }
-.mega-menu .drop-down-multilevel li:hover > a {
-  color: #e93e21;
+
+.mega-menu .drop-down-multilevel li:hover>a {
+  color: #19a44b;
 }
-.mega-menu .drop-down-multilevel li:hover > a i.fa {
-  color: #e93e21;
+
+.mega-menu .drop-down-multilevel li:hover>a i.fa {
+  color: #19a44b;
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .drop-down-multilevel li.activeTrigger {
-    background: #e93e21;
+    background: #19a44b;
   }
-  .mega-menu .drop-down-multilevel li.activeTrigger > a {
+
+  .mega-menu .drop-down-multilevel li.activeTrigger>a {
     color: #ffffff;
   }
-  .mega-menu .drop-down-multilevel li.activeTrigger > a i.fa {
+
+  .mega-menu .drop-down-multilevel li.activeTrigger>a i.fa {
     color: #ffffff;
   }
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .drop-down-multilevel li.activeTriggerMobile {
-    background: #e93e21;
+    background: #19a44b;
   }
-  .mega-menu .drop-down-multilevel li.activeTriggerMobile > a {
+
+  .mega-menu .drop-down-multilevel li.activeTriggerMobile>a {
     color: #ffffff;
   }
-  .mega-menu .drop-down-multilevel li.activeTriggerMobile > a i.fa {
+
+  .mega-menu .drop-down-multilevel li.activeTriggerMobile>a i.fa {
     color: #ffffff;
   }
 }
-.mega-menu .menu-links > li.active .drop-down-multilevel a { color: #1e2327; }
-.mega-menu .menu-links > li.active .drop-down-multilevel a:hover { color: #e93e21; }
+
+.mega-menu .menu-links>li.active .drop-down-multilevel a {
+  color: #1e2327;
+}
+
+.mega-menu .menu-links>li.active .drop-down-multilevel a:hover {
+  color: #19a44b;
+}
+
 .mega-menu .drop-down-multilevel a {
   margin: 0;
   padding: 10px 20px;
   font-size: 0.8125em;
   text-transform: capitalize;
-  display: inline-block;  
+  display: inline-block;
   float: left;
   width: 100%;
   color: #1e2327;
   -webkit-transition: color 200ms ease;
-          transition: color 200ms ease;
+  transition: color 200ms ease;
 }
+
 @media screen and (max-width: 992px) {
- /* .mega-menu .drop-down-multilevel a {
+  /* .mega-menu .drop-down-multilevel a {
     width: auto;
   }*/
 }
+
 .mega-menu .drop-down-multilevel i.fa {
   float: left;
   line-height: 1.375em;
@@ -621,8 +723,9 @@
   display: block;
   padding-right: 10px;
   -webkit-transition: color 200ms ease;
-          transition: color 200ms ease;
+  transition: color 200ms ease;
 }
+
 .mega-menu .drop-down-multilevel i.fa.fa-indicator {
   float: right;
   line-height: 1.375em;
@@ -631,6 +734,7 @@
   padding-left: 10px;
   padding-right: 0;
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .drop-down-multilevel i.fa.fa-indicator {
     float: right;
@@ -642,23 +746,27 @@
     z-index: -1;
   }
 }
+
 .mega-menu .drop-down-multilevel .drop-down-multilevel {
   /*------------------------------------------------------ SECOND LEVEL */
   left: 100%;
   top: 0;
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu .drop-down-multilevel .drop-down-multilevel.left-side {
     /*--------------------------------------------------- ALIGN SECOND LEVEL DROP DOWN LEFT SIDE */
     left: -100%;
   }
 }
+
 @media screen and (max-width: 992px) {
   .mega-menu .drop-down-multilevel .drop-down-multilevel {
     left: 0;
     border: 1px solid #cccccc;
   }
 }
+
 .mega-menu .drop-down,
 .mega-menu .drop-down-tab-bar {
   /*--------------------------------------------------------- GRID DROP DOWN */
@@ -675,6 +783,7 @@
   overflow: hidden;
   /*-------------------------------------------------------- 12 COLUMNS FLUID GRID WITH NESTED COLUMNS */
 }
+
 .mega-menu .drop-down *,
 .mega-menu .drop-down-tab-bar * {
   color: #1e2327;
@@ -682,34 +791,58 @@
 
 
 @media screen and (min-width: 993px) {
+
   .mega-menu .drop-down.menu-bg,
   .mega-menu .drop-down-tab-bar {
- 
-  background-repeat: no-repeat;
-  background-position: right;
+
+    background-repeat: no-repeat;
+    background-position: right;
   }
 
-.mega-menu .drop-down.menu-bg [class*="grid-col-"] { 
-   padding:10px 10px 0;
+  .mega-menu .drop-down.menu-bg [class*="grid-col-"] {
+    padding: 10px 10px 0;
   }
- .mega-menu .rev-slider { background: #fff; padding: 7px 12px;  }
- .mega-menu .rev-slider p { display: inline-block; padding: 0px 10px; margin-bottom: 0px !important; line-height: 0px !important; } 
- .mega-menu .rev-slider a { display: inline-block; font-size: 13px !important; color: #01a9da; width: inherit !important; padding: 5px 0px; } 
- .mega-menu .rev-slider a:hover { color: #1e2327 !important; }
- }
+
+  .mega-menu .rev-slider {
+    background: #fff;
+    padding: 7px 12px;
+  }
+
+  .mega-menu .rev-slider p {
+    display: inline-block;
+    padding: 0px 10px;
+    margin-bottom: 0px !important;
+    line-height: 0px !important;
+  }
+
+  .mega-menu .rev-slider a {
+    display: inline-block;
+    font-size: 13px !important;
+    color: #01a9da;
+    width: inherit !important;
+    padding: 5px 0px;
+  }
+
+  .mega-menu .rev-slider a:hover {
+    color: #1e2327 !important;
+  }
+}
 
 @media screen and (min-width: 993px) {
+
   .mega-menu .drop-down,
   .mega-menu .drop-down-tab-bar {
     display: block !important;
     opacity: 0;
     visibility: hidden;
-    border-top:0px solid #e93e21;
+    border-top: 0px solid #19a44b;
     border-radius: 0px !important;
     box-shadow: 0 0px 0px 1px rgba(0, 0, 0, 0.05);
   }
 }
+
 @media screen and (max-width: 992px) {
+
   .mega-menu .drop-down,
   .mega-menu .drop-down-tab-bar {
     width: 100% !important;
@@ -719,6 +852,7 @@
     display: none;
   }
 }
+
 .mega-menu .drop-down .grid-row,
 .mega-menu .drop-down-tab-bar .grid-row {
   margin: 0;
@@ -728,6 +862,7 @@
   float: left;
   clear: both;
 }
+
 .mega-menu .drop-down [class*="grid-col-"],
 .mega-menu .drop-down-tab-bar [class*="grid-col-"] {
   margin: 0;
@@ -858,6 +993,7 @@
 }
 
 @media screen and (max-width: 992px) {
+
   .mega-menu .drop-down [class*="grid-col-"],
   .mega-menu .drop-down-tab-bar [class*="grid-col-"] {
     width: 50%;
@@ -865,6 +1001,7 @@
 }
 
 @media screen and (max-width: 992px) {
+
   .mega-menu .drop-down [class*="grid-col-"],
   .mega-menu .drop-down-tab-bar [class*="grid-col-"] {
     width: 100%;
@@ -905,7 +1042,12 @@
 .mega-menu .drop-down h4,
 .mega-menu .drop-down h5,
 .mega-menu .drop-down h6,
-.mega-menu .drop-down-tab-bar h1, .mega-menu .drop-down-tab-bar h2, .mega-menu .drop-down-tab-bar h3, .mega-menu .drop-down-tab-bar h4, .mega-menu .drop-down-tab-bar h5, .mega-menu .drop-down-tab-bar h6 {
+.mega-menu .drop-down-tab-bar h1,
+.mega-menu .drop-down-tab-bar h2,
+.mega-menu .drop-down-tab-bar h3,
+.mega-menu .drop-down-tab-bar h4,
+.mega-menu .drop-down-tab-bar h5,
+.mega-menu .drop-down-tab-bar h6 {
   margin-top: 0;
   font-weight: 700;
 }
@@ -976,7 +1118,9 @@
 .mega-menu .drop-down ul,
 .mega-menu .drop-down ol,
 .mega-menu .drop-down dl,
-.mega-menu .drop-down-tab-bar ul, .mega-menu .drop-down-tab-bar ol, .mega-menu .drop-down-tab-bar dl {
+.mega-menu .drop-down-tab-bar ul,
+.mega-menu .drop-down-tab-bar ol,
+.mega-menu .drop-down-tab-bar dl {
   padding: 0;
   margin: 0 0 14px;
 }
@@ -1001,7 +1145,8 @@
 
 .mega-menu .drop-down form ul li:before,
 .mega-menu .drop-down form ul li:after,
-.mega-menu .drop-down-tab-bar form ul li:before, .mega-menu .drop-down-tab-bar form ul li:after {
+.mega-menu .drop-down-tab-bar form ul li:before,
+.mega-menu .drop-down-tab-bar form ul li:after {
   content: "";
   display: table;
 }
@@ -1042,7 +1187,20 @@
 .mega-menu .drop-down input[type="datetime-local"],
 .mega-menu .drop-down input[type="tel"],
 .mega-menu .drop-down textarea,
-.mega-menu .drop-down-tab-bar input[type="text"], .mega-menu .drop-down-tab-bar input[type="url"], .mega-menu .drop-down-tab-bar input[type="email"], .mega-menu .drop-down-tab-bar input[type="password"], .mega-menu .drop-down-tab-bar input[type="search"], .mega-menu .drop-down-tab-bar input[type="number"], .mega-menu .drop-down-tab-bar input[type="date"], .mega-menu .drop-down-tab-bar input[type="month"], .mega-menu .drop-down-tab-bar input[type="week"], .mega-menu .drop-down-tab-bar input[type="time"], .mega-menu .drop-down-tab-bar input[type="datetime"], .mega-menu .drop-down-tab-bar input[type="datetime-local"], .mega-menu .drop-down-tab-bar input[type="tel"], .mega-menu .drop-down-tab-bar textarea {
+.mega-menu .drop-down-tab-bar input[type="text"],
+.mega-menu .drop-down-tab-bar input[type="url"],
+.mega-menu .drop-down-tab-bar input[type="email"],
+.mega-menu .drop-down-tab-bar input[type="password"],
+.mega-menu .drop-down-tab-bar input[type="search"],
+.mega-menu .drop-down-tab-bar input[type="number"],
+.mega-menu .drop-down-tab-bar input[type="date"],
+.mega-menu .drop-down-tab-bar input[type="month"],
+.mega-menu .drop-down-tab-bar input[type="week"],
+.mega-menu .drop-down-tab-bar input[type="time"],
+.mega-menu .drop-down-tab-bar input[type="datetime"],
+.mega-menu .drop-down-tab-bar input[type="datetime-local"],
+.mega-menu .drop-down-tab-bar input[type="tel"],
+.mega-menu .drop-down-tab-bar textarea {
   display: block;
   width: 100%;
   margin: 0 0 0.75em;
@@ -1064,7 +1222,8 @@
 
 .mega-menu .drop-down input[type="range"],
 .mega-menu .drop-down input[type="color"],
-.mega-menu .drop-down-tab-bar input[type="range"], .mega-menu .drop-down-tab-bar input[type="color"] {
+.mega-menu .drop-down-tab-bar input[type="range"],
+.mega-menu .drop-down-tab-bar input[type="color"] {
   vertical-align: middle;
   height: 1.5em;
   width: 100%;
@@ -1089,7 +1248,8 @@
 
 .mega-menu .drop-down progress,
 .mega-menu .drop-down meter,
-.mega-menu .drop-down-tab-bar progress, .mega-menu .drop-down-tab-bar meter {
+.mega-menu .drop-down-tab-bar progress,
+.mega-menu .drop-down-tab-bar meter {
   display: block;
   width: 100%;
   height: 1.5em;
@@ -1120,20 +1280,24 @@
 
 .mega-menu .drop-down tfoot td,
 .mega-menu .drop-down tfoot th,
-.mega-menu .drop-down-tab-bar tfoot td, .mega-menu .drop-down-tab-bar tfoot th {
+.mega-menu .drop-down-tab-bar tfoot td,
+.mega-menu .drop-down-tab-bar tfoot th {
   padding: 0.75em 10px;
 }
 
 .mega-menu .drop-down th,
 .mega-menu .drop-down td,
 .mega-menu .drop-down caption,
-.mega-menu .drop-down-tab-bar th, .mega-menu .drop-down-tab-bar td, .mega-menu .drop-down-tab-bar caption {
+.mega-menu .drop-down-tab-bar th,
+.mega-menu .drop-down-tab-bar td,
+.mega-menu .drop-down-tab-bar caption {
   border: 1px solid #cccccc;
 }
 
 .mega-menu .drop-down td,
 .mega-menu .drop-down th,
-.mega-menu .drop-down-tab-bar td, .mega-menu .drop-down-tab-bar th {
+.mega-menu .drop-down-tab-bar td,
+.mega-menu .drop-down-tab-bar th {
   padding: 0 10px 0 10px;
   line-height: 1.45em;
 }
@@ -1175,19 +1339,24 @@
 .mega-menu .drop-down kbd,
 .mega-menu .drop-down pre,
 .mega-menu .drop-down samp,
-.mega-menu .drop-down-tab-bar code, .mega-menu .drop-down-tab-bar kbd, .mega-menu .drop-down-tab-bar pre, .mega-menu .drop-down-tab-bar samp {
+.mega-menu .drop-down-tab-bar code,
+.mega-menu .drop-down-tab-bar kbd,
+.mega-menu .drop-down-tab-bar pre,
+.mega-menu .drop-down-tab-bar samp {
   font-family: "Open Sans", sans-serif;
 }
 
 .mega-menu .drop-down ins,
 .mega-menu .drop-down small,
-.mega-menu .drop-down-tab-bar ins, .mega-menu .drop-down-tab-bar small {
+.mega-menu .drop-down-tab-bar ins,
+.mega-menu .drop-down-tab-bar small {
   line-height: 1.5;
 }
 
 .mega-menu .drop-down kbd,
 .mega-menu .drop-down samp,
-.mega-menu .drop-down-tab-bar kbd, .mega-menu .drop-down-tab-bar samp {
+.mega-menu .drop-down-tab-bar kbd,
+.mega-menu .drop-down-tab-bar samp {
   line-height: 1.4;
 }
 
@@ -1205,8 +1374,9 @@
 
 .mega-menu .drop-down input[type="submit"],
 .mega-menu .drop-down input[type="button"],
-.mega-menu .drop-down-tab-bar input[type="submit"], .mega-menu .drop-down-tab-bar input[type="button"] {
-  background: #e93e21;
+.mega-menu .drop-down-tab-bar input[type="submit"],
+.mega-menu .drop-down-tab-bar input[type="button"] {
+  background: #19a44b;
   padding: 10px 20px;
   margin: 5px 10px 0 0;
   font-family: "Open Sans", sans-serif;
@@ -1218,19 +1388,22 @@
   display: block;
   float: left;
   -webkit-transition: background-color 200ms ease;
-          transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
 }
 
 .mega-menu .drop-down input[type="submit"]:hover,
 .mega-menu .drop-down input[type="button"]:hover,
-.mega-menu .drop-down-tab-bar input[type="submit"]:hover, .mega-menu .drop-down-tab-bar input[type="button"]:hover {
+.mega-menu .drop-down-tab-bar input[type="submit"]:hover,
+.mega-menu .drop-down-tab-bar input[type="button"]:hover {
   background-color: #333333;
 }
 
 @media screen and (max-width: 992px) {
+
   .mega-menu .drop-down input[type="submit"],
   .mega-menu .drop-down input[type="button"],
-  .mega-menu .drop-down-tab-bar input[type="submit"], .mega-menu .drop-down-tab-bar input[type="button"] {
+  .mega-menu .drop-down-tab-bar input[type="submit"],
+  .mega-menu .drop-down-tab-bar input[type="button"] {
     width: 100%;
   }
 }
@@ -1238,28 +1411,30 @@
 .mega-menu .drop-down a,
 .mega-menu .drop-down-tab-bar a {
   -webkit-transition: color 200ms ease;
-          transition: color 200ms ease;
+  transition: color 200ms ease;
 }
 
 .mega-menu .drop-down a:hover,
 .mega-menu .drop-down-tab-bar a:hover {
-  color: #e93e21;
+  color: #19a44b;
 }
+
 .mega-menu .drop-down a i,
 .mega-menu .drop-down-tab-bar a i {
-   transition: all 0.5s ease-in-out;
-   -webkit-transition: all 0.5s ease-in-out;
-   -o-transition: all 0.5s ease-in-out;
-   -ms-transition: all 0.5s ease-in-out;
-   -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
 }
 
 .mega-menu .drop-down a:hover i,
 .mega-menu .drop-down-tab-bar a:hover i {
-  color: #e93e21;
+  color: #19a44b;
 }
 
 @media screen and (max-width: 992px) {
+
   .mega-menu .drop-down a,
   .mega-menu .drop-down-tab-bar a {
     width: auto;
@@ -1328,23 +1503,28 @@
 }
 
 @media screen and (min-width: 993px) {
+
   .mega-menu .drop-down.offset-1,
   .mega-menu .drop-down-tab-bar.offset-1 {
     /*------------------------------------------- OFFSET CLASSES FOR DROP DOWN */
     margin-left: 100px;
   }
+
   .mega-menu .drop-down.offset-2,
   .mega-menu .drop-down-tab-bar.offset-2 {
     margin-left: -150px;
   }
+
   .mega-menu .drop-down.offset-3,
   .mega-menu .drop-down-tab-bar.offset-3 {
     margin-left: -200px;
   }
+
   .mega-menu .drop-down.offset-4,
   .mega-menu .drop-down-tab-bar.offset-4 {
     margin-left: -250px;
   }
+
   .mega-menu .drop-down.offset-5,
   .mega-menu .drop-down-tab-bar.offset-5 {
     margin-left: -300px;
@@ -1412,18 +1592,21 @@
     padding: 0px 10px;
     background: #1e2327;
   }
+
   .mega-menu.desktopTopFixed .menu-list-items .drop-down.grid-col-12,
   .mega-menu.desktopTopFixed .menu-list-items .drop-down-tab-bar.grid-col-12 {
     width: 100%;
     margin: 0px;
   }
-  .mega-menu.desktopTopFixed .menu-list-items .menu-logo > li > a img {
+
+  .mega-menu.desktopTopFixed .menu-list-items .menu-logo>li>a img {
     height: 41px;
     padding-top: 0px;
     margin: 15px 0px;
     /*width: 75%;*/
-   }
-   .mega-menu.desktopTopFixed .menu-list-items .menu-links > li > a { 
+  }
+
+  .mega-menu.desktopTopFixed .menu-list-items .menu-links>li>a {
     line-height: 71px;
   }
 }
@@ -1498,81 +1681,88 @@
 }
 
 @media screen and (min-width: 993px) {
-  .mega-menu .menu-links li.hoverTrigger > .drop-down.effect-scale,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-tab-bar.effect-scale,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-multilevel.effect-scale,
+
+  .mega-menu .menu-links li.hoverTrigger>.drop-down.effect-scale,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-tab-bar.effect-scale,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-multilevel.effect-scale,
   .mega-menu .menu-links li.ClickTrigger .drop-down.effect-scale,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.effect-scale,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.effect-scale {
     /*--------------------------------------------- effect scale */
     -webkit-transform: scale(0.8);
-        -ms-transform: scale(0.8);
-            transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
   }
-  .mega-menu .menu-links li.hoverTrigger > .drop-down.effect-expand-top,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-tab-bar.effect-expand-top,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-multilevel.effect-expand-top,
+
+  .mega-menu .menu-links li.hoverTrigger>.drop-down.effect-expand-top,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-tab-bar.effect-expand-top,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-multilevel.effect-expand-top,
   .mega-menu .menu-links li.ClickTrigger .drop-down.effect-expand-top,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.effect-expand-top,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.effect-expand-top {
     /*--------------------------------------------- effect expand top*/
     -webkit-transform: rotateX(90deg);
-            transform: rotateX(90deg);
+    transform: rotateX(90deg);
     -webkit-transform-origin: 0 0;
-        -ms-transform-origin: 0 0;
-            transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
   }
-  .mega-menu .menu-links li.hoverTrigger > .drop-down.effect-expand-bottom,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-tab-bar.effect-expand-bottom,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-multilevel.effect-expand-bottom,
+
+  .mega-menu .menu-links li.hoverTrigger>.drop-down.effect-expand-bottom,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-tab-bar.effect-expand-bottom,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-multilevel.effect-expand-bottom,
   .mega-menu .menu-links li.ClickTrigger .drop-down.effect-expand-bottom,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.effect-expand-bottom,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.effect-expand-bottom {
     /*--------------------------------------------- effect expand bottom*/
     -webkit-transform: rotateX(90deg);
-            transform: rotateX(90deg);
+    transform: rotateX(90deg);
     -webkit-transform-origin: 0 100%;
-        -ms-transform-origin: 0 100%;
-            transform-origin: 0 100%;
+    -ms-transform-origin: 0 100%;
+    transform-origin: 0 100%;
   }
-  .mega-menu .menu-links li.hoverTrigger > .drop-down.effect-expand-left,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-tab-bar.effect-expand-left,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-multilevel.effect-expand-left,
+
+  .mega-menu .menu-links li.hoverTrigger>.drop-down.effect-expand-left,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-tab-bar.effect-expand-left,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-multilevel.effect-expand-left,
   .mega-menu .menu-links li.ClickTrigger .drop-down.effect-expand-left,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.effect-expand-left,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.effect-expand-left {
     /*--------------------------------------------- effect expand left*/
     -webkit-transform: rotateY(90deg);
-            transform: rotateY(90deg);
+    transform: rotateY(90deg);
     -webkit-transform-origin: 0 0;
-        -ms-transform-origin: 0 0;
-            transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
   }
-  .mega-menu .menu-links li.hoverTrigger > .drop-down.effect-expand-right,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-tab-bar.effect-expand-right,
-  .mega-menu .menu-links li.hoverTrigger > .drop-down-multilevel.effect-expand-right,
+
+  .mega-menu .menu-links li.hoverTrigger>.drop-down.effect-expand-right,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-tab-bar.effect-expand-right,
+  .mega-menu .menu-links li.hoverTrigger>.drop-down-multilevel.effect-expand-right,
   .mega-menu .menu-links li.ClickTrigger .drop-down.effect-expand-right,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.effect-expand-right,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.effect-expand-right {
     /*--------------------------------------------- effect expand right*/
     -webkit-transform: rotateY(90deg);
-            transform: rotateY(90deg);
+    transform: rotateY(90deg);
     -webkit-transform-origin: 100% 0;
-        -ms-transform-origin: 100% 0;
-            transform-origin: 100% 0;
+    -ms-transform-origin: 100% 0;
+    transform-origin: 100% 0;
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active {
     -webkit-transition-delay: 200ms !important;
-            transition-delay: 200ms !important;
+    transition-delay: 200ms !important;
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down.effect-fade,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar.effect-fade,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-fade,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down.effect-fade,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar.effect-fade,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel.effect-fade,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active.effect-fade,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active.effect-fade,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active.effect-fade {
@@ -1580,9 +1770,10 @@
     opacity: 1;
     visibility: visible;
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down.effect-scale,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar.effect-scale,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-scale,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down.effect-scale,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar.effect-scale,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel.effect-scale,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active.effect-scale,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active.effect-scale,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active.effect-scale {
@@ -1590,12 +1781,13 @@
     opacity: 1;
     visibility: visible;
     -webkit-transform: scale(1);
-        -ms-transform: scale(1);
-            transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down.effect-expand-top,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar.effect-expand-top,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-expand-top,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down.effect-expand-top,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar.effect-expand-top,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel.effect-expand-top,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active.effect-expand-top,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active.effect-expand-top,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active.effect-expand-top {
@@ -1603,11 +1795,12 @@
     opacity: 1;
     visibility: visible;
     -webkit-transform: rotateX(0deg);
-            transform: rotateX(0deg);
+    transform: rotateX(0deg);
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down.effect-expand-bottom,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar.effect-expand-bottom,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-expand-bottom,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down.effect-expand-bottom,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar.effect-expand-bottom,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel.effect-expand-bottom,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active.effect-expand-bottom,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active.effect-expand-bottom,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active.effect-expand-bottom {
@@ -1615,11 +1808,12 @@
     opacity: 1;
     visibility: visible;
     -webkit-transform: rotateX(0deg);
-            transform: rotateX(0deg);
+    transform: rotateX(0deg);
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down.effect-expand-left,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar.effect-expand-left,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-expand-left,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down.effect-expand-left,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar.effect-expand-left,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel.effect-expand-left,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active.effect-expand-left,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active.effect-expand-left,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active.effect-expand-left {
@@ -1627,11 +1821,12 @@
     opacity: 1;
     visibility: visible;
     -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
+    transform: rotateY(0deg);
   }
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down.effect-expand-right,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-tab-bar.effect-expand-right,
-  .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-expand-right,
+
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down.effect-expand-right,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-tab-bar.effect-expand-right,
+  .mega-menu .menu-links li.hoverTrigger:hover>.drop-down-multilevel.effect-expand-right,
   .mega-menu .menu-links li.ClickTrigger .drop-down.active.effect-expand-right,
   .mega-menu .menu-links li.ClickTrigger .drop-down-tab-bar.active.effect-expand-right,
   .mega-menu .menu-links li.ClickTrigger .drop-down-multilevel.active.effect-expand-right {
@@ -1639,20 +1834,22 @@
     opacity: 1;
     visibility: visible;
     -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
+    transform: rotateY(0deg);
   }
 }
 
 @media screen and (max-width: 992px) {
+
   .mega-menu .menu-links li .drop-down,
   .mega-menu .menu-links li .drop-down-tab-bar,
   .mega-menu .menu-links li .drop-down-multilevel {
     -webkit-transition: none !important;
-            transition: none !important;
+    transition: none !important;
   }
 }
 
 @media screen and (min-width: 993px) {
+
   .mega-menu.vertical-left,
   .mega-menu.vertical-right {
     /*----------------------------------------------------- VERTICAL LEFT OR VERTICAL RIGHT */
@@ -1661,73 +1858,89 @@
     display: block;
     max-width: 250px;
   }
+
   .mega-menu.vertical-left .menu-logo,
   .mega-menu.vertical-right .menu-logo {
     clear: both;
     width: 100%;
   }
-  .mega-menu.vertical-left .menu-logo > li,
-  .mega-menu.vertical-right .menu-logo > li {
+
+  .mega-menu.vertical-left .menu-logo>li,
+  .mega-menu.vertical-right .menu-logo>li {
     width: 100%;
   }
-  .mega-menu.vertical-left .menu-logo > li > a,
-  .mega-menu.vertical-right .menu-logo > li > a {
+
+  .mega-menu.vertical-left .menu-logo>li>a,
+  .mega-menu.vertical-right .menu-logo>li>a {
     width: 100%;
   }
+
   .mega-menu.vertical-left .menu-links,
   .mega-menu.vertical-right .menu-links {
     clear: both;
     width: 100%;
   }
-  .mega-menu.vertical-left .menu-links > li,
-  .mega-menu.vertical-right .menu-links > li {
+
+  .mega-menu.vertical-left .menu-links>li,
+  .mega-menu.vertical-right .menu-links>li {
     clear: both;
     width: 100%;
     position: relative;
   }
-  .mega-menu.vertical-left .menu-links > li > a,
-  .mega-menu.vertical-right .menu-links > li > a {
+
+  .mega-menu.vertical-left .menu-links>li>a,
+  .mega-menu.vertical-right .menu-links>li>a {
     width: 100%;
     position: relative;
     line-height: 48px;
   }
-  .mega-menu.vertical-left .menu-links > li > a i.fa.fa-indicator,
-  .mega-menu.vertical-right .menu-links > li > a i.fa.fa-indicator {
+
+  .mega-menu.vertical-left .menu-links>li>a i.fa.fa-indicator,
+  .mega-menu.vertical-right .menu-links>li>a i.fa.fa-indicator {
     float: right;
     line-height: 48px;
   }
+
   .mega-menu.vertical-left .menu-social-bar,
   .mega-menu.vertical-right .menu-social-bar {
     width: 100%;
     text-align: center;
   }
-  .mega-menu.vertical-left .menu-social-bar > li,
-  .mega-menu.vertical-right .menu-social-bar > li {
+
+  .mega-menu.vertical-left .menu-social-bar>li,
+  .mega-menu.vertical-right .menu-social-bar>li {
     display: inline-block;
     float: none;
   }
-  .mega-menu.vertical-left .menu-social-bar > li > a,
-  .mega-menu.vertical-right .menu-social-bar > li > a {
+
+  .mega-menu.vertical-left .menu-social-bar>li>a,
+  .mega-menu.vertical-right .menu-social-bar>li>a {
     padding-left: 10px;
     padding-right: 10px;
   }
+
   .mega-menu.vertical-left .drop-down-multilevel,
   .mega-menu.vertical-right .drop-down-multilevel {
     top: 0;
     left: 100%;
   }
+
   .mega-menu.vertical-left .drop-down,
   .mega-menu.vertical-left .drop-down-tab-bar,
-  .mega-menu.vertical-right .drop-down, .mega-menu.vertical-right .drop-down-tab-bar {
+  .mega-menu.vertical-right .drop-down,
+  .mega-menu.vertical-right .drop-down-tab-bar {
     left: 100%;
     top: 0;
     min-width: 600px;
   }
+
   .mega-menu.vertical-left .drop-down.grid-col-12,
   .mega-menu.vertical-left .drop-down-tab-bar.grid-col-12,
-  .mega-menu.vertical-right .drop-down.grid-col-12, .mega-menu.vertical-right .drop-down-tab-bar.grid-col-12 {
+  .mega-menu.vertical-right .drop-down.grid-col-12,
+  .mega-menu.vertical-right .drop-down-tab-bar.grid-col-12 {
     min-width: 1000px;
   }
+
   .mega-menu.vertical-left .offset-1,
   .mega-menu.vertical-left .offset-2,
   .mega-menu.vertical-left .offset-3,
@@ -1740,26 +1953,32 @@
   .mega-menu.vertical-right .offset-5 {
     margin-left: 0;
   }
+
   .mega-menu.vertical-left .offset-1-vertical,
   .mega-menu.vertical-right .offset-1-vertical {
     margin-top: -100px !important;
   }
+
   .mega-menu.vertical-left .offset-2-vertical,
   .mega-menu.vertical-right .offset-2-vertical {
     margin-top: -150px !important;
   }
+
   .mega-menu.vertical-left .offset-3-vertical,
   .mega-menu.vertical-right .offset-3-vertical {
     margin-top: -200px !important;
   }
+
   .mega-menu.vertical-left .offset-4-vertical,
   .mega-menu.vertical-right .offset-4-vertical {
     margin-top: -250px !important;
   }
+
   .mega-menu.vertical-left .offset-5-vertical,
   .mega-menu.vertical-right .offset-5-vertical {
     margin-top: -300px !important;
   }
+
   .mega-menu.vertical-left.desktopTopFixed,
   .mega-menu.vertical-right.desktopTopFixed {
     float: left;
@@ -1767,19 +1986,24 @@
     padding: 0;
     height: 100%;
   }
+
   .mega-menu.vertical-left.desktopTopFixed .menu-list-items,
   .mega-menu.vertical-right.desktopTopFixed .menu-list-items {
     padding: 0;
     height: 100%;
   }
+
   .mega-menu.vertical-left.desktopTopFixed .drop-down,
   .mega-menu.vertical-left.desktopTopFixed .drop-down-tab-bar,
-  .mega-menu.vertical-right.desktopTopFixed .drop-down, .mega-menu.vertical-right.desktopTopFixed .drop-down-tab-bar {
+  .mega-menu.vertical-right.desktopTopFixed .drop-down,
+  .mega-menu.vertical-right.desktopTopFixed .drop-down-tab-bar {
     margin: 0;
   }
+
   .mega-menu.vertical-right {
     float: right;
   }
+
   .mega-menu.vertical-right .drop-down-multilevel {
     left: auto;
     right: 100%;
@@ -1793,10 +2017,13 @@
 }
 
 @media screen and (min-width: 993px) {
-  .mega-menu.vertical-right .drop-down, .mega-menu.vertical-right .drop-down-tab-bar {
+
+  .mega-menu.vertical-right .drop-down,
+  .mega-menu.vertical-right .drop-down-tab-bar {
     left: auto;
     right: 100%;
   }
+
   .mega-menu.vertical-right.desktopTopFixed {
     float: right;
     left: auto;
@@ -1805,40 +2032,50 @@
     height: 100%;
   }
 }
+
 @media screen and (min-width: 993px) {
+
   .mega-menu.vertical-left .menu-search-bar,
   .mega-menu.vertical-right .menu-search-bar {
     width: 100%;
   }
+
   .mega-menu.vertical-left .menu-search-bar input,
   .mega-menu.vertical-left .menu-search-bar li,
   .mega-menu.vertical-left .menu-search-bar form,
   .mega-menu.vertical-left .menu-search-bar label,
-  .mega-menu.vertical-right .menu-search-bar input, .mega-menu.vertical-right .menu-search-bar li, .mega-menu.vertical-right .menu-search-bar form, .mega-menu.vertical-right .menu-search-bar label {
+  .mega-menu.vertical-right .menu-search-bar input,
+  .mega-menu.vertical-right .menu-search-bar li,
+  .mega-menu.vertical-right .menu-search-bar form,
+  .mega-menu.vertical-right .menu-search-bar label {
     width: 100%;
     max-width: 100%;
-    background: #e93e21;
+    background: #19a44b;
     -webkit-transition: none;
-            transition: none;
+    transition: none;
   }
+
   .mega-menu.vertical-left .menu-search-bar input,
   .mega-menu.vertical-right .menu-search-bar input {
     padding-left: 20px;
   }
 }
+
 @media screen and (min-width: 993px) {
   .mega-menu.menuFullWidth {
     /*--------------------------------------------------- make menu full width */
     max-width: 100%;
   }
 }
-.head-info:hover .head-info-content{
+
+.head-info:hover .head-info-content {
   z-index: 999;
 }
+
 /* end navbar */
 
 @media screen and (max-width: 500px) {
- .head-info-content{
-  display: none !important;
- }
+  .head-info-content {
+    display: none !important;
+  }
 }

@@ -1,9 +1,12 @@
-#contactSection main form input, #contactSection main form textarea {
+#contactSection main form input,
+#contactSection main form textarea {
     padding-left: 40px;
     transition: all 1s;
     font-size: 14px;
-}#contactSection button {
-    background: #e93e21;
+}
+
+#contactSection button {
+    background: #19a44b;
     color: #fff;
     border: none !important;
     position: relative;
@@ -11,7 +14,9 @@
     overflow: hidden;
     border-radius: 3px;
     padding: 10px 30px;
-}#contactSection button::after {
+}
+
+#contactSection button::after {
     content: "";
     background: #1e2327;
     position: absolute;
@@ -27,26 +32,36 @@ button.slide_from_bottom::after {
     right: 0;
     top: 100%;
     bottom: -100%;
-}#contactSection button:hover {
+}
+
+#contactSection button:hover {
     color: #fff;
-}#contactSection button[class^="slide"]:hover::after {
+}
+
+#contactSection button[class^="slide"]:hover::after {
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     transition: all 0.35s;
-}#contactSection header h2 {
+}
+
+#contactSection header h2 {
     font-size: 60px;
-}#contactSection main form .form-field i {
+}
+
+#contactSection main form .form-field i {
     position: absolute;
     left: 0;
-    color: #e93e21;
+    color: #19a44b;
     display: inline-block;
     width: 45px;
     height: 45px;
     line-height: 45px;
     text-align: center;
     z-index: 99;
-}#contactSection main form .form-field {
+}
+
+#contactSection main form .form-field {
     position: relative;
 }

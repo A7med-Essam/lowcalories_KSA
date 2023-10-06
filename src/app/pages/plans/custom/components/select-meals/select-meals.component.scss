@@ -5,13 +5,13 @@
     text-align: center;
 
     &.active {
-        background-color: #E93E21 !important;
+        background-color: #19a44b !important;
         color: #fff;
     }
 
     &:hover {
         color: #fff !important;
-        background-color: #E93E21 !important;
+        background-color: #19a44b !important;
         cursor: pointer;
     }
 }
@@ -44,7 +44,7 @@
     .meals,
     .snacks {
         .active {
-            color: #E93E21 !important;
+            color: #19a44b !important;
             cursor: pointer;
         }
     }
@@ -62,7 +62,7 @@
     height: 36px;
     font: 34px/1 Arial, sans-serif;
     text-align: center;
-    background-color: #E93E21;
+    background-color: #19a44b;
 }
 
 .qty .count {

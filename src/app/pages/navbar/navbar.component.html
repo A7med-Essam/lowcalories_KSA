@@ -20,13 +20,12 @@
           <div class="topbar-right text-end">
             <ul>
               <ng-container *ngFor="let social of social$ | async">
-                <li *ngIf="social.type.toLowerCase() == 'facebook'" class="mx-1"><a
-                    [href]="social.link"
+                <li *ngIf="social.type.toLowerCase() == 'facebook'" class="mx-1"><a [href]="social.link"
                     target="_blank"><i class="fab fa-facebook"></i> </a></li>
-                <li *ngIf="social.type.toLowerCase() == 'whatsapp'" class="mx-1"><a [href]="social.link" target="_blank"><i
-                      class="fab fa-whatsapp"></i> </a></li>
-                <li *ngIf="social.type.toLowerCase() == 'instgram'" class="mx-1"><a [href]="social.link" target="_blank"><i
-                      class="fab fa-instagram"></i>
+                <li *ngIf="social.type.toLowerCase() == 'whatsapp'" class="mx-1"><a [href]="social.link"
+                    target="_blank"><i class="fab fa-whatsapp"></i> </a></li>
+                <li *ngIf="social.type.toLowerCase() == 'instgram'" class="mx-1"><a [href]="social.link"
+                    target="_blank"><i class="fab fa-instagram"></i>
                   </a></li>
               </ng-container>
             </ul>
@@ -65,7 +64,7 @@
                             </p>
                           </div>
                         </div>
-                        <div class="info-right pull-right" >
+                        <div class="info-right pull-right">
                           <div class="address">
                             <ng-container *ngFor="let social of social$ | async">
                               <p *ngIf="social.type.toLowerCase() == 'address'">{{social.value}}</p>
@@ -75,24 +74,22 @@
                                   class="fa fa-map-o pr-10"></i> {{"logoMetaData.location.findUs" | translate}}</a>
                             </ng-container>
                             <ul class="list-inline mt-15 d-flex">
-                                <ng-container *ngFor="let social of social$ | async">
+                              <ng-container *ngFor="let social of social$ | async">
                                 <li *ngIf="social.type.toLowerCase() == 'facebook'" class="mx-2"><a target="_blank"
-                                    [href]="social.link"
-                                    data-tooltip="facebook"> <i class="fa fa-facebook-f"></i> </a>
+                                    [href]="social.link" data-tooltip="facebook"> <i class="fa fa-facebook-f"></i> </a>
                                 </li>
                                 <li *ngIf="social.type.toLowerCase() == 'whatsapp'" class="mx-2"><a target="_blank"
-                                    [href]="social.link" data-tooltip="whatsapp"> <i
-                                      class="fa fa-whatsapp"></i> </a>
+                                    [href]="social.link" data-tooltip="whatsapp"> <i class="fa fa-whatsapp"></i> </a>
                                 </li>
                                 <li *ngIf="social.type.toLowerCase() == 'address'" class="mx-2"><a target="_blank"
-                                    [href]="social.link"
-                                    data-tooltip="google-plus"> <i class="fa fa-google-plus"></i> </a> </li>
-                               
-                                    <li *ngIf="social.type.toLowerCase() == 'instgram'" class="mx-2">
-                                      <a target="_blank" [href]="social.link"
-                                    data-tooltip="instagram"> <i class="fa fa-instagram"></i> </a>
+                                    [href]="social.link" data-tooltip="google-plus"> <i class="fa fa-google-plus"></i>
+                                  </a> </li>
+
+                                <li *ngIf="social.type.toLowerCase() == 'instgram'" class="mx-2">
+                                  <a target="_blank" [href]="social.link" data-tooltip="instagram"> <i
+                                      class="fa fa-instagram"></i> </a>
                                 </li>
-                                </ng-container>
+                              </ng-container>
                             </ul>
                           </div>
                         </div>
@@ -105,13 +102,16 @@
                       <li routerLink="home" routerLinkActive="active"><a> {{"pages.home"|translate}} </a></li>
                       <li routerLink="plans" routerLinkActive="active"><a> {{"pages.plans.title"|translate}} </a></li>
                       <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
-                      <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a></li>
+                      <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a>
+                      </li>
                       <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a></li>
                       <!-- <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li> -->
                       <!-- <li routerLink="questions" routerLinkActive="active"><a>FAQ </a></li> -->
-                      <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a></li>
+                      <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a>
+                      </li>
                       <ng-container *ngIf="login$ | async as login">
-                        <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null"><a>{{"pages.login.title"|translate}}</a></li>
+                        <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null">
+                          <a>{{"pages.login.title"|translate}}</a></li>
                         <li (click)="logOut()" *ngIf="login.data != null">
                           <a>
                             {{"pages.logout"|translate}}
@@ -124,10 +124,10 @@
                   </div>
 
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    style="border: 1px solid #e93e21;" data-bs-target="#navbarSupportedContent"
+                    style="border: 1px solid #19a44b;" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"
-                      style="font-family:'Font Awesome 6 Free';font-weight: 900;color: #e93e21;"></i>
+                      style="font-family:'Font Awesome 6 Free';font-weight: 900;color: #19a44b;"></i>
                   </button>
                 </div>
               </nav>
