@@ -10,6 +10,7 @@ export interface INormalPlanResponse {
     snack_types:       MealType[];
     subscription_days: SubscriptionDay[];
     delivery_days:     DeliveryDay[];
+    shortcut_name:     string;
 }
 
 export interface DeliveryDay {
