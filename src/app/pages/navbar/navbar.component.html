@@ -107,9 +107,9 @@
                       <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a></li>
                       <!-- <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li> -->
                       <!-- <li routerLink="questions" routerLinkActive="active"><a>FAQ </a></li> -->
-                      <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a>
-                      </li>
                       <ng-container *ngIf="login$ | async as login">
+                        <li routerLink="register" routerLinkActive="active" *ngIf="login.data == null"><a>{{"pages.register.title"|translate}}</a>
+                        </li>
                         <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null">
                           <a>{{"pages.login.title"|translate}}</a></li>
                         <li (click)="logOut()" *ngIf="login.data != null">
