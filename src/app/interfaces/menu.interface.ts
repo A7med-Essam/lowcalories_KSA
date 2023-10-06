@@ -10,6 +10,8 @@ export interface IMenuResponse {
     item:                string;
     item_ar:             string;
     image:               string;
+    description:         string;
+    description_ar:      string;
     price:               number;
 }
 

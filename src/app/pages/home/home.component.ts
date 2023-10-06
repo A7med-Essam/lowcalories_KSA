@@ -1,15 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AnimationOptions } from 'ngx-lottie';
 import { Image } from 'primeng/image';
+import { IMenuResponse } from 'src/app/interfaces/menu.interface';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { menuSelector } from 'src/app/store/menuStore/menu.selector';
+import { FETCH_MENU_START } from 'src/app/store/menuStore/menu.action';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  constructor() {}
+export class HomeComponent implements OnInit, OnDestroy {
+  menu$: Observable<IMenuResponse[] | null>;
+  private destroyed$: Subject<void> = new Subject();
+
+  constructor(private _Store: Store, public translate:TranslateService
+    ) {
+    this.menu$ = this._Store.select(menuSelector);
+    this.menu$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      res || this._Store.dispatch(FETCH_MENU_START())
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   ngOnInit(): void {
     document.addEventListener('DOMContentLoaded', function () {
       let lazyImages = document.querySelectorAll("img[loading='lazy']");
@@ -64,4 +85,6 @@ export class HomeComponent implements OnInit {
     event.src = newSrc;
     this.imgFlag = true;
   }
+
+
 }
