@@ -2,6 +2,7 @@
   "lang": "Ar",
   "currency": "SAR",
   "deliveryMsg":"We deliver throughout the week, expect Friday.",
+  "checkoutMSG":"You will redirect now to complete the payment process , Please Wait ....",
   "buttons":{
     "read_more":"Read More",
     "contact_us":"Contact Us",

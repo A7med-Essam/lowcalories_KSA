@@ -72,22 +72,25 @@
                                     class="txt-main">{{price.price.toFixed(2)}} <sub class="text-orange">{{"currency" |
                                         translate}}</sub></span>
                             </div>
-                            <div class="d-flex justify-content-between my-3 font-weight-500">
-                                <span>{{"pages.checkout.giftcode.code" | translate}}</span> <span
-                                    class="txt-main">{{price.code_apply.toFixed(2)}}</span>
+                            <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="price.code_apply">
+                                <span>{{"pages.checkout.giftcode.code" | translate}}</span> 
+                                <span>
+                                    <span class="txt-main">{{price.code_apply.toFixed(2)}}</span>
+                                    <sub class="text-orange">{{"currency" | translate}}</sub>
+                                </span>
                             </div>
                             <div class="d-flex justify-content-between my-3 font-weight-500">
                                 <span>{{"pages.checkout.giftcode.vat" | translate}}</span> <span class="txt-main">
                                     {{price.vat*100}}%
                                 </span>
                             </div>
-                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                            <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="price.extra_details.carb.total_price">
                                 <span>{{"pages.checkout.giftcode.extra_carb" | translate}}</span> <span class="txt-main">
                                     <span>{{price.extra_details.carb.total_price}}</span>
                                      <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
-                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                            <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="price.extra_details.protein.total_price">
                                 <span>{{"pages.checkout.giftcode.extra_protein" | translate}}</span> <span class="txt-main">
                                     <span>{{price.extra_details.protein.total_price}}</span>
                                      <sub class="text-orange">{{"currency" | translate}}</sub>
@@ -150,7 +153,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="my-4 text-start">
+                            <div class="my-4 text-start" *ngIf="checkoutForm.value.delivery_status">
                                 <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
                                 <input type="text" pInputText formControlName='address' />
                                 <div class="text-start">
@@ -166,30 +169,35 @@
                                        optionValue="meal_name" optionLabel="meal_name" display="chip" appendTo="body"></p-multiSelect>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-start align-items-center my-1">
-                                <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
-                                    <p-radioButton [inputId]="category.name+1" [value]="category.value" formControlName="delivery_status"></p-radioButton>
-                                    <label [for]="category.name+1" class="mx-2">{{ category.name }}</label>
+                            <div class="d-flex justify-content-between align-items-center my-1 flex-wrap">
+                                <div>
+                                    <div class="d-flex justify-content-start align-items-center my-1">
+                                        <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
+                                        <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                            class="img-fluid mx-1" alt="">
+                                    </div>
+                                    <div class="d-flex justify-content-start align-items-center my-1">
+                                        <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                        <small class="mx-2 font-weight-500">
+                                            {{"pages.checkout.form.terms.desc1" | translate}}<a class="text-orange pointer mx-1" (click)="termsModal = true">
+                                                {{"pages.terms.title2"|translate}} </a> 
+                                                {{"pages.checkout.form.terms.desc2" | translate}}
+                                        </small>
+                                    </div>
+                                    <div class="text-start">
+                                        <small class="text-danger ms-1" *ngIf="checkoutForm.get('terms')?.touched &&
+                                            checkoutForm.get('terms')?.hasError('required')">{{"validations.terms"|translate}}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center my-1">
+                                    <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
+                                        <p-radioButton [inputId]="category.name+1" [value]="category.value" formControlName="delivery_status"></p-radioButton>
+                                        <label [for]="category.name+1" class="mx-2">{{ category.name }}</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-start align-items-center my-1">
-                                <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
-                                <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
-                                    class="img-fluid mx-1" alt="">
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-1">
-                                <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
-                                <small class="mx-2 font-weight-500">
-                                    {{"pages.checkout.form.terms.desc1" | translate}}<a class="text-orange pointer mx-1" (click)="termsModal = true">
-                                        {{"pages.terms.title2"|translate}} </a> 
-                                        {{"pages.checkout.form.terms.desc2" | translate}}
-                                </small>
-                            </div>
-                            <div class="text-start">
-                                <small class="text-danger ms-1" *ngIf="checkoutForm.get('terms')?.touched &&
-                                    checkoutForm.get('terms')?.hasError('required')">{{"validations.terms"|translate}}
-                                </small>
-                            </div>
+                        
                             <button class="btn w-100 border-0" type="submit" [disabled]="checkoutForm.invalid">
                                 <a class="button pointer py-2 px-5 ms-2">
                                     {{"buttons.checkout"|translate}}
@@ -213,20 +221,6 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
-                                        <label class="text-muted">{{"pages.checkout.form.email" | translate}}</label>
-                                        <input type="email" pInputText formControlName='email' />
-                                        <div class="text-start">
-                                            <small class="text-danger ms-1"
-                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
-                                        checkoutForm_without_auth.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
-                                            <small class="text-danger ms-1"
-                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
-                                                checkoutForm_without_auth.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.phone" | translate}}</label>
                                         <input type="text" pInputText formControlName='mobile' maxlength="10"
                                             minlength="10"
@@ -240,6 +234,20 @@
                                             <small class="text-danger ms-1"
                                                 *ngIf="checkoutForm_without_auth.get('mobile')?.touched &&
                                             checkoutForm_without_auth.get('mobile')?.hasError('pattern')">{{"validations.phone"|translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-2 text-start">
+                                        <label class="text-muted">{{"pages.checkout.form.email" | translate}}</label>
+                                        <input type="email" pInputText formControlName='email' />
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                        checkoutForm_without_auth.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                                checkoutForm_without_auth.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +287,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.landline" | translate}}</label>
                                         <input formControlName="landline" pInputText type="text" 
@@ -291,7 +299,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
                                         <input formControlName="address" pInputText type="text">
@@ -310,33 +318,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-start align-items-center my-1">
-                                <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
-                                    <p-radioButton [inputId]="category.name+2" [value]="category.value" formControlName="delivery_status"></p-radioButton>
-                                    <label [for]="category.name+2" class="mx-2">{{ category.name }}</label>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-1">
-                                <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
-                                <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
-                                    class="img-fluid mx-1" alt="">
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-1">
+                            <div class="d-flex justify-content-between align-items-center my-1 flex-wrap">
                                 <div>
-                                    <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
-                                    <small class="mx-2 font-weight-500">
-                                        {{"pages.checkout.form.terms.desc1" | translate}}
-                                        <a class="text-orange pointer mx-1" (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
-                                        {{"pages.checkout.form.terms.desc2" | translate}}
-                                    </small>
+                                    <div class="d-flex justify-content-start align-items-center my-1">
+                                        <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
+                                        <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                            class="img-fluid mx-1" alt="">
+                                    </div>
+                                    <div class="d-flex justify-content-start align-items-center my-1">
+                                        <div>
+                                            <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                            <small class="mx-2 font-weight-500">
+                                                {{"pages.checkout.form.terms.desc1" | translate}}
+                                                <a class="text-orange pointer mx-1" (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
+                                                {{"pages.checkout.form.terms.desc2" | translate}}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="text-start">
+                                        <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('terms')?.touched &&
+                                            checkoutForm_without_auth.get('terms')?.hasError('required')">
+                                            {{"validations.terms"|translate}}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center my-1">
+                                    <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
+                                        <p-radioButton [inputId]="category.name+2" [value]="category.value" formControlName="delivery_status"></p-radioButton>
+                                        <label [for]="category.name+2" class="mx-2">{{ category.name }}</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="text-start">
-                                <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('terms')?.touched &&
-                                    checkoutForm_without_auth.get('terms')?.hasError('required')">
-                                    {{"validations.terms"|translate}}
-                                </small>
-                            </div>
+                          
                             <button class="btn w-100 border-0" type="submit"
                                 [disabled]="checkoutForm_without_auth.invalid">
                                 <a class="button pointer py-2 px-5 ms-2">

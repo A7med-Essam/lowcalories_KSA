@@ -15,7 +15,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromNormalPlanSelector from 'src/app/store/normalPlanStore/normalPlan.selector';
-import { combineLatest, map, Observable, of, Subject, takeUntil } from 'rxjs';
+import {
+  combineLatest,
+  map,
+  Observable,
+  of,
+  Subject,
+  Subscription,
+  takeUntil,
+} from 'rxjs';
 import {
   ICheckout,
   INormalPlanResponse,
@@ -156,47 +164,59 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setCheckoutForm();
     this.setCheckoutForm_Without_Auth();
+    this.onDeliveryStatusChanges();
     this.checkoutForm_without_auth
       .get('area_id')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((area_id) => {
         const states: IStateResponse =
           this.checkoutForm_without_auth.value.state_id;
-        this.getDeliveryFees(area_id, states,this.checkoutForm_without_auth.value.delivery_status);
+        this.getDeliveryFees(
+          area_id,
+          states,
+          this.checkoutForm_without_auth.value.delivery_status
+        );
       });
     this.checkoutForm
       .get('area_id')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((area_id) => {
         const states: IStateResponse = this.checkoutForm.value.state_id;
-        this.getDeliveryFees(area_id, states,this.checkoutForm.value.delivery_status);
+        this.getDeliveryFees(
+          area_id,
+          states,
+          this.checkoutForm.value.delivery_status
+        );
       });
 
     this.checkoutForm
       .get('delivery_status')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((status) => {
-          const states: IStateResponse = this.checkoutForm.value.state_id;
-          this.getDeliveryFees(this.checkoutForm.value.area_id, states,status);
+        const states: IStateResponse = this.checkoutForm.value.state_id;
+        this.getDeliveryFees(this.checkoutForm.value.area_id, states, status);
       });
 
-
-      this.checkoutForm_without_auth
+    this.checkoutForm_without_auth
       .get('delivery_status')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((status) => {
-          const states: IStateResponse =
-            this.checkoutForm_without_auth.value.state_id;
-          this.getDeliveryFees(
-            this.checkoutForm_without_auth.value.area_id,
-            states,
-            status
-          );
+        const states: IStateResponse =
+          this.checkoutForm_without_auth.value.state_id;
+        this.getDeliveryFees(
+          this.checkoutForm_without_auth.value.area_id,
+          states,
+          status
+        );
       });
   }
 
-  getDeliveryFees(area_id: number, states: IStateResponse, delivery_status:boolean) {
-    if (delivery_status) {
+  getDeliveryFees(
+    area_id: number,
+    states: IStateResponse,
+    delivery_status: boolean
+  ) {
+    if (delivery_status && states && area_id) {
       let selectedArea = states.areas.find((e) => e.id == area_id);
       let sub: ISubscriptionData | null;
       this.subscriptionInfo$
@@ -220,26 +240,26 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      delivery_status: new FormControl(false),
+      delivery_status: new FormControl(true),
       dislike_meals: new FormControl(null),
     });
   }
 
   setCheckoutForm_Without_Auth() {
     this.checkoutForm_without_auth = this._FormBuilder.group({
-      name: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
+      name: new FormControl(null),
+      email: new FormControl(null, [Validators.email]),
+      password: new FormControl(null),
       mobile: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[\\d]{10}$'),
       ]),
       address: new FormControl(null, [Validators.required]),
-      landline: new FormControl(null, [Validators.required]),
+      landline: new FormControl(null),
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      delivery_status: new FormControl(false),
+      delivery_status: new FormControl(true),
       dislike_meals: new FormControl(null),
       // cutlery: new FormControl(false),
       // bag: new FormControl(false),
@@ -252,7 +272,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (input.value != '') {
       this.giftcodeButtonMode$ = this._Store.select(giftCodeLoadingSelector);
 
-      let prevPrice$ = this._Store.select(fromNormalPlanSelector.normalPlanPriceSelector);
+      let prevPrice$ = this._Store.select(
+        fromNormalPlanSelector.normalPlanPriceSelector
+      );
 
       this._Store.dispatch(
         FETCH_GIFTCODE_START({
@@ -263,13 +285,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
         })
       );
-      
+
       this.price$ = this._Store.select(giftCodeSelector).pipe(
         map((giftCode) => {
-          return giftCode
+          return giftCode;
         })
       );
-
 
       this.price$ = combineLatest([
         this._Store.select(giftCodeSelector),
@@ -277,17 +298,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ]).pipe(
         map(([giftCode, prevPrice]) => {
           if (giftCode && prevPrice) {
-            const updatedObject = { 
-              ...giftCode, extra_details: prevPrice.extra_details,
-               extra_fifty_carb:prevPrice.extra_fifty_carb,
-               extra_fifty_protein:prevPrice.extra_fifty_protein 
+            const updatedObject = {
+              ...giftCode,
+              extra_details: prevPrice.extra_details,
+              extra_fifty_carb: prevPrice.extra_fifty_carb,
+              extra_fifty_protein: prevPrice.extra_fifty_protein,
             };
             giftCode = updatedObject;
           }
           return giftCode;
         })
       );
-
     }
   }
 
@@ -312,10 +333,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
-        dislike_meals:form.value.dislike_meals,
+        dislike_meals: form.value.dislike_meals,
         // bag: Number(form.value.bag),
         // cutlery: Number(form.value.cutlery),
-        delivery_status:form.value.delivery_status,
+        delivery_status: form.value.delivery_status,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
         total_price: priceinfo?.grand_total,
@@ -353,10 +374,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
-        dislike_meals:form.value.dislike_meals,
+        dislike_meals: form.value.dislike_meals,
         // bag: Number(form.value.bag),
         // cutlery: Number(form.value.cutlery),
-        delivery_status:form.value.delivery_status,
+        delivery_status: form.value.delivery_status,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
         total_price: priceinfo?.grand_total,
@@ -430,11 +451,45 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.paymentSwal.fire({
       html: this.lottie.nativeElement,
+      title: this.translate.instant('checkoutMSG'),
     });
   }
 
   // *****************************************************Terms*****************************************************
   onCheckTermsChange(event: any) {
     event.target.checked && (this.termsModal = true);
+  }
+
+  // *****************************************************check delivery status*****************************************************
+
+  onDeliveryStatusChanges() {
+    this.checkoutForm
+      .get('delivery_status')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((val) => {
+        const address = this.checkoutForm.get('address') as FormControl;
+        if (val) {
+          address.setValidators([Validators.required]);
+          address.updateValueAndValidity();
+        } else {
+          address.clearValidators();
+          address.updateValueAndValidity();
+        }
+      });
+    this.checkoutForm_without_auth
+      .get('delivery_status')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((val) => {
+        const address = this.checkoutForm_without_auth.get(
+          'address'
+        ) as FormControl;
+        if (val) {
+          address.setValidators([Validators.required]);
+          address.updateValueAndValidity();
+        } else {
+          address.clearValidators();
+          address.updateValueAndValidity();
+        }
+      });
   }
 }
