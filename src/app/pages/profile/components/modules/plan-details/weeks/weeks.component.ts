@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPlanWeeks } from 'src/app/shared/interfaces/calendar';
-import { ISubDetails, ISubscriptions } from 'src/app/shared/interfaces/profile';
-import { SharedService } from 'src/app/shared/services/shared.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-weeks',
@@ -9,7 +7,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
   styleUrls: ['./weeks.component.scss'],
 })
 export class WeeksComponent implements OnInit {
-  @Input() plan!: ISubscriptions;
+  @Input() plan!: any;
   @Input() weeks!: any;
   weeksCount: any[] = [];
   currentWeek: number = 1;

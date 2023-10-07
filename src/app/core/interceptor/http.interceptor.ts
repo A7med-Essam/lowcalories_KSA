@@ -26,10 +26,11 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const currentLang: string =
-      this._LocalService.getJsonValue('currentLang') || 'en';
+    const currentLang: string = this._LocalService.getJsonValue('currentLang') || 'en';
+    const baseUrlToCheck = 'http://ksa.lc.dream4soft';
+
     let HttpHeader;
-    if (this._LocalService.getJsonValue('lowcalories_KSA')) {
+    if (this._LocalService.getJsonValue('lowcalories_KSA') && !request.url.startsWith(baseUrlToCheck)) {
       HttpHeader = request.clone({
         setHeaders: {
           Authorization: `Bearer ${

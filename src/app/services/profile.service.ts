@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -80,7 +80,8 @@ export class ProfileService {
   // ===================================================================MY PLANS=====================================================
 
   getMyPlans(phone: string): Observable<any> {
-    const headers = new HttpHeaders().set('company', '1');
+    const headers = new HttpHeaders().set('company', '1')
     return this._ApiService.getReq2(`Subscription/${phone}`, headers);
   }
+
 }

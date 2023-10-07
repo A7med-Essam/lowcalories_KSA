@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ISubscriptions } from 'src/app/shared/interfaces/profile';
 
 export enum MealStatus {
   Pending,
@@ -18,7 +17,7 @@ export enum MealStatus {
 export class CalendarComponent implements OnInit {
   @Output() getDetails: EventEmitter<boolean> = new EventEmitter(false);
   @Output() DayDetails: EventEmitter<string> = new EventEmitter(false);
-  @Input() plan!: ISubscriptions;
+  @Input() plan!: any;
   @Input() weeks!: any;
   MealStatusEnum = MealStatus;
   constructor() {}

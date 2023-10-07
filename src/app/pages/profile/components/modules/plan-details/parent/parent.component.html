@@ -1,82 +1,8 @@
-<section class="bg-img-main">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-3 col-lg-4 ">
-                <div class="list bg-white rounded-lg shadow-lg position-relative text-center">
-                    <div>
-                        <img src="../../../../../assets/images/profile/Group 38953.png" class="img-fluid" alt="">
-                        <img [src]="user?.image" #userImage class="img-fluid rounded-circle" id="profile-img" alt="">
-                        <img src="../../../../../assets/images/profile/camera.png" (click)="importImage(userImage)"
-                            class="img-fluid" id="edit-img" alt="">
-                    </div>
-                    <div class="mt-5">
-                        <h4 class="txt-main m-0">{{user?.name}}</h4>
-                        <span class="txt-font-bold">{{user?.email}}</span>
-                    </div>
-                    <div class="mt-4">
-                        <ul class="txt-font-bold">
-                            <li class="p-3 pointer" routerLink="../../controls/1" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/person_green.png"
-                                    src1="../../../../../assets/images/profile/person_white.png"
-                                    src2="../../../../../assets/images/profile/person_green.png"
-                                    class="img-fluid me-3 pointer" style="width: 18px;" alt="">
-                                <span>{{"profile.personalInformation.title" | translate}}</span>
-                            </li>
-                            <li class="active p-3 pointer" routerLink="../../controls/2" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/plans_white.png"
-                                    src1="../../../../../assets/images/profile/plans_white.png"
-                                    src2="../../../../../assets/images/profile/plans_green.png" class="img-fluid me-3 "
-                                    style="width: 18px;" alt=""> <span>{{"profile.myPlans.title" | translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" routerLink="../../controls/3" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/location_green.png"
-                                    src1="../../../../../assets/images/profile/location_white.png"
-                                    src2="../../../../../assets/images/profile/location_green.png"
-                                    class="img-fluid me-3 " style="width: 18px;" alt="">
-                                <span>{{"profile.myAddresses.title" | translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" routerLink="../../controls/4" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/lock_green.png"
-                                    src1="../../../../../assets/images/profile/lock_white.png"
-                                    src2="../../../../../assets/images/profile/lock_green.png" class="img-fluid me-3 "
-                                    style="width: 18px;" alt=""> <span>{{"profile.changePassword.title" |
-                                    translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" routerLink="../../controls/5" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/menu_green.png"
-                                    src1="../../../../../assets/images/profile/menu_white.png"
-                                    src2="../../../../../assets/images/profile/menu_green.png" class="img-fluid me-3 "
-                                    style="width: 18px;" alt=""> <span>{{"profile.menu.title" | translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" routerLink="../../controls/6" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/chat_green.png"
-                                    src1="../../../../../assets/images/profile/chat_white.png"
-                                    src2="../../../../../assets/images/profile/chat_green.png" class="img-fluid me-3 "
-                                    style="width: 18px;" alt=""> <span>{{"profile.chatWithUs.title" | translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" routerLink="../../controls/7" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/ask_green.png"
-                                    src1="../../../../../assets/images/profile/ask_white.png"
-                                    src2="../../../../../assets/images/profile/ask_green.png" class="img-fluid me-3 "
-                                    style="width: 18px;" alt=""><span>{{"profile.askUs.title" | translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" routerLink="../../controls/8" (click)="scrollToContent()">
-                                <img src="../../../../../assets/images/profile/setting_green.png"
-                                    src1="../../../../../assets/images/profile/setting_white.png"
-                                    src2="../../../../../assets/images/profile/setting_green.png"
-                                    class="img-fluid me-3 " style="width: 18px;" alt=""><span>{{"profile.settings.title"
-                                    | translate}}</span>
-                            </li>
-                            <li class="p-3 pointer" (click)="logout()">
-                                <img src="../../../../../assets/images/profile/power_green.png" class="img-fluid me-3 "
-                                    style="width: 18px;" alt=""><span>{{"profile.logOut" | translate}}</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-9 col-lg-8" #content>
-                <div class="content rounded-lg p-4 pb-3 shadow-lg bg-white" style="height: 775px;overflow: auto;"
+<section class="bg-img-main mb-5 pt-5">
+    <div class="container pt-5">
+        <div class="row mt-5">
+            <div class="col-12" #content>
+                <div class="content rounded-lg p-4 pb-3 shadow-lg bg-white" style="height: 550px;overflow: auto;"
                     *ngIf="!toggleCalendar">
                     <h4 class="txt-main mb-3">{{"buttons.details" | translate}}</h4>
                     <app-calendar [plan]="plan" [weeks]="weeks" *ngIf="currentTap == 1 && planStatus"

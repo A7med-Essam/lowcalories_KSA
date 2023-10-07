@@ -1,4 +1,3 @@
-@import '../../../../../../../assets/styles/variables/colors.scss';
 .categories .weeks, .categories .calendar{
     width: 130px;
     text-align: center;
@@ -7,8 +6,8 @@
 }
 
 .categories .active{
-    background-color: $main !important;
-    color: $white !important;
+    background-color: #19a44b !important;
+    color: #fff !important;
 }
 
 #profile-img{
@@ -41,8 +40,8 @@
 }
 
 .list ul li.active{
-    background-color: $main;
-    color: $white;
+    background-color: #19a44b;
+    color: #fff;
 }
 
 @media all and (max-width:767px){

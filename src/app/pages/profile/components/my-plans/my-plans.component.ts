@@ -41,10 +41,17 @@ export class MyPlansComponent implements OnInit, OnDestroy {
   SubscriptionStatusEnum = SubscriptionStatus;
 
   getPlans(phone: string) {
-    this._ProfileService.getMyPlans(phone).subscribe((res: any) => {
-      res.data && (this.plans = res.data.subscriptions);
-      this.showSkeleton = false;
-    });
+    this._ProfileService.getMyPlans('0505804422').subscribe(
+      {
+        next:(res: any) => {
+          res.data && (this.plans = res.data.subscriptions);
+          this.showSkeleton = false;
+        },
+        error:(res: any)=>{
+          this.showSkeleton = false;
+        }
+      }
+    )
   }
 
   setCurrentPlan(plan: any) {

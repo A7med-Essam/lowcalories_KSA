@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { I18nService } from 'src/app/shared/i18n/i18n.service';
-import { IUser } from 'src/app/shared/interfaces/Auth';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { CalendarService } from 'src/app/shared/services/plans/calendar.service';
-import { ProfileInfoService } from 'src/app/shared/services/profile/profile-info.service';
-import { ISubDetails, ISubscriptions } from 'src/app/shared/interfaces/profile';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
+
 export enum SubscriptionStatus {
   Active,
   Expired,
@@ -22,14 +20,11 @@ export enum SubscriptionStatus {
 export class ParentComponent implements OnInit {
   constructor(
     private _AuthService: AuthService,
-    private _ProfileInfoService: ProfileInfoService,
+    private _ProfileService: ProfileService,
     private _I18nService: I18nService,
-    private _CalendarService: CalendarService,
     private _Router: Router,
     public translate: TranslateService
-  ) {
-    this._I18nService.saveCurrentLang(this.translate);
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -50,16 +45,16 @@ export class ParentComponent implements OnInit {
   };
 
   updateProfileImage(image: File) {
-    this._ProfileInfoService.updateProfileImage(image).subscribe((res) => {
-      this._AuthService.saveUser(res.data);
+    this._ProfileService.updateProfileImage(image).subscribe((res) => {
+      // this._AuthService.saveUser(res.data);
     });
   }
 
-  user!: IUser;
+  user!: any;
   getUser() {
-    this._AuthService.currentUser.subscribe((res: any) => {
-      this.user = res;
-    });
+    // this._AuthService.currentUser.subscribe((res: any) => {
+    //   this.user = res;
+    // });
   }
 
   importImage(userImage: any) {
@@ -92,22 +87,22 @@ export class ParentComponent implements OnInit {
     this._AuthService.logOut();
   }
   // =============================================================================================
-  plan!: ISubscriptions;
+  plan!: any;
   SubscriptionStatusEnum = SubscriptionStatus;
   weeks: any = [];
   planStatus: boolean = true;
   currentTap: number = 1;
 
   getCurrentPlan() {
-    this._CalendarService.currentPlan.subscribe((res) => {
-      if (res) {
-        this.plan = res;
-        this.getPlanStatus();
-        this.setWeekName();
-      } else {
-        this._Router.navigate(['./profile/controls/2']);
-      }
-    });
+    // this._CalendarService.currentPlan.subscribe((res) => {
+    //   if (res) {
+    //     this.plan = res;
+    //     this.getPlanStatus();
+    //     this.setWeekName();
+    //   } else {
+    //     this._Router.navigate(['./profile/controls/2']);
+    //   }
+    // });
   }
 
   getPlanStatus() {
@@ -125,14 +120,14 @@ export class ParentComponent implements OnInit {
     this.toggleCalendar = e;
   }
 
-  DayDetails: ISubDetails[] = [];
+  DayDetails: any[] = [];
   getDayDetails(e: any) {
     this.DayDetails = e;
   }
 
   setWeekName() {
     let firstDeliveryDate: string = '';
-    this.plan.subDetails.forEach((e) => {
+    this.plan.subDetails.forEach((e:any) => {
       if (e.deliveryDate == this.plan.startDate) {
         firstDeliveryDate = e.deliveryDate;
       }
@@ -171,7 +166,7 @@ export class ParentComponent implements OnInit {
   }
 
   groupByDeliveryDate() {
-    let result = this.plan.subDetails.reduce(function (r, a) {
+    let result = this.plan.subDetails.reduce(function (r:any, a:any) {
       r[a.deliveryDate] = r[a.deliveryDate] || [];
       r[a.deliveryDate].push(a);
       return r;
