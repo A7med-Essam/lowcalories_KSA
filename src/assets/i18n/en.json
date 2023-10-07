@@ -110,7 +110,8 @@
         "pass": "Password",
         "confirmPass": "Confirm Password",
         "email": "Email",
-        "phone": "Mobile Number"
+        "phone": "Mobile Number",
+        "birthdate": "Birth Date"
       }
     },
     "login": {

@@ -130,7 +130,7 @@
 
                         <form *ngIf="user.data" [formGroup]='checkoutForm'
                             (ngSubmit)='checkout_With_Auth(checkoutForm)'>
-                            <div class="my-4 text-start">
+                            <div class="my-4 text-start" *ngIf="checkoutForm.value.delivery_status">
                                 {{"pages.checkout.form.state" | translate}}
                                 <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
                                     formControlName='state_id'  placeholder=' '></p-dropdown>
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="my-4 text-start">
-                                <div class="my-2 text-start">
+                                <div class="my-2 text-start" *ngIf="checkoutForm.value.delivery_status">
                                     <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
                                     <p-dropdown [options]="this.checkoutForm.get('state_id')?.value?.['areas']" 
                                     optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}" optionValue="id"
@@ -263,7 +263,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="my-2 text-start">
+                                    <div class="my-2 text-start" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                         <label class="text-muted">{{"pages.checkout.form.state" | translate}}</label>
                                         <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
                                             formControlName='state_id' placeholder=' '></p-dropdown>
@@ -275,7 +275,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="my-2 text-start">
+                                    <div class="my-2 text-start" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                         <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
                                         <p-dropdown [options]="this.checkoutForm_without_auth.get('state_id')?.value?.['areas']" 
                                         optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}" optionValue="id"

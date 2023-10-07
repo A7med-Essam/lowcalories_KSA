@@ -468,27 +468,45 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((val) => {
         const address = this.checkoutForm.get('address') as FormControl;
+        const state_id = this.checkoutForm.get('state_id') as FormControl;
+        const area_id = this.checkoutForm.get('area_id') as FormControl;
         if (val) {
           address.setValidators([Validators.required]);
           address.updateValueAndValidity();
+          state_id.setValidators([Validators.required]);
+          state_id.updateValueAndValidity();
+          area_id.setValidators([Validators.required]);
+          area_id.updateValueAndValidity();
         } else {
           address.clearValidators();
           address.updateValueAndValidity();
+          state_id.clearValidators();
+          state_id.updateValueAndValidity();
+          area_id.clearValidators();
+          area_id.updateValueAndValidity();
         }
       });
     this.checkoutForm_without_auth
       .get('delivery_status')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((val) => {
-        const address = this.checkoutForm_without_auth.get(
-          'address'
-        ) as FormControl;
+        const address = this.checkoutForm_without_auth.get('address') as FormControl;
+        const state_id = this.checkoutForm_without_auth.get('state_id') as FormControl;
+        const area_id = this.checkoutForm_without_auth.get('area_id') as FormControl;
         if (val) {
           address.setValidators([Validators.required]);
           address.updateValueAndValidity();
+          state_id.setValidators([Validators.required]);
+          state_id.updateValueAndValidity();
+          area_id.setValidators([Validators.required]);
+          area_id.updateValueAndValidity();
         } else {
           address.clearValidators();
           address.updateValueAndValidity();
+          state_id.clearValidators();
+          state_id.updateValueAndValidity();
+          area_id.clearValidators();
+          area_id.updateValueAndValidity();
         }
       });
   }

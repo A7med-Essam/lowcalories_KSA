@@ -4,7 +4,8 @@
             <h1 class="text-orange">{{"pages.register.title"|translate}}</h1>
             <p class="text-white">{{"pages.register.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
                 <li><span>{{"pages.register.title"|translate}}</span></li>
             </ul>
         </div>
@@ -29,7 +30,8 @@
                             <input formControlName="name" type="text" required="" name="name" maxlength="20">
                         </div>
                         <div class="text-start">
-                            <small class="text-danger ms-1" *ngIf="registerForm.get('name')?.touched &&
+                            <small class="text-danger ms-1"
+                                *ngIf="registerForm.get('name')?.touched &&
                                 registerForm.get('name')?.hasError('required')">{{"validations.required"|translate}}</small>
                         </div>
                     </div>
@@ -43,7 +45,8 @@
                         <div class="text-start">
                             <small class="text-danger ms-1" *ngIf="registerForm.get('email')?.touched &&
                                 registerForm.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
-                            <small class="text-danger ms-1" *ngIf="registerForm.get('email')?.touched &&
+                            <small class="text-danger ms-1"
+                                *ngIf="registerForm.get('email')?.touched &&
                                 registerForm.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
                         </div>
                     </div>
@@ -55,7 +58,8 @@
                             <input formControlName="password" type="password" required="" name="password">
                         </div>
                         <div class="text-start">
-                            <small class="text-danger ms-1" *ngIf="registerForm.get('password')?.touched &&
+                            <small class="text-danger ms-1"
+                                *ngIf="registerForm.get('password')?.touched &&
                                 registerForm.get('password')?.hasError('required')">{{"validations.required"|translate}}</small>
                         </div>
                     </div>
@@ -69,7 +73,7 @@
                         </div>
                         <small class="text-danger " *ngIf="registerForm.get('confirm_password')?.touched && 
                         registerForm.get('confirm_password')?.invalid">
-                        {{"validations.pass"|translate}}
+                            {{"validations.pass"|translate}}
                         </small>
                     </div>
                 </div>
@@ -77,12 +81,13 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">{{"pages.register.form.phone"|translate}}</label>
-                            <input formControlName="mobile" type="text" required="" name="mobile"
-                                maxlength="10" minlength="10"
+                            <input formControlName="mobile" type="text" required="" name="mobile" maxlength="10"
+                                minlength="10"
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                         </div>
                         <div class="text-start">
-                            <small class="text-danger ms-1" *ngIf="registerForm.get('mobile')?.touched &&
+                            <small class="text-danger ms-1"
+                                *ngIf="registerForm.get('mobile')?.touched &&
                                 registerForm.get('mobile')?.hasError('required')">{{"validations.required"|translate}}</small>
                             <small class="text-danger"
                                 *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.hasError('minlength')">
@@ -90,6 +95,18 @@
                             </small>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <label class="text-muted">{{"pages.register.form.birthdate"|translate}}</label>
+                        <p-calendar view="year" formControlName='birthday' [showIcon]="false" #calendar dateFormat="yy" 
+                        formControlName="birthday"
+                            [showButtonBar]="true" (onClearClick)="onClearClick()" [defaultDate]="minBirthdate" [showIcon]="true"
+                            [minDate]="minBirthdate" [maxDate]="maxBirthdate" (onSelect)="onDateChange($event)">
+                        </p-calendar>
+                    </div>
+                    <small class="text-danger " *ngIf="registerForm.get('birthday')?.touched &&
+                    registerForm.get('birthday')?.invalid">{{"errors.required" | translate}}</small>
                 </div>
                 <div class="col-12 mt-4">
                     <button class="btn border-0 pointer mt-4 w-100 next action-button rounded p-0"
