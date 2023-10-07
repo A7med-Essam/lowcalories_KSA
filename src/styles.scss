@@ -6389,7 +6389,6 @@ input[type=checkbox] {
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
   color: #19a44b !important;
-  background: #fff2ef !important;
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
@@ -6399,9 +6398,5 @@ input[type=checkbox] {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
   border-color: #b2f1ca;
 }
-.btn:hover {
-  color: #19a44b !important; 
-  background-color: #141a1f !important;
-  border-color: #141a1f !important;
-}
+
 @import "./assets/ar_style/styles_ar.scss";

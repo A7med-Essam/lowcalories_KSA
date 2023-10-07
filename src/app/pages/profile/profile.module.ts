@@ -5,43 +5,31 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
-// import { PlansComponent } from './components/plans/plans.component';
-// import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AskUsComponent } from './components/ask-us/ask-us.component';
 import { MyAddressesComponent } from './components/my-addresses/my-addresses.component';
-// import { BranchesComponent } from './components/branches/branches.component';
-// import { BranchDetailsComponent } from './components/branch-details/branch-details.component';
 import { ChatWithUsComponent } from './components/chat-with-us/chat-with-us.component';
-// import { TermsComponent } from './components/terms/terms.component';
-// import { MenuComponent } from './components/menu/menu.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
-import { PasswordModule } from "primeng/password";
+import { PasswordModule } from 'primeng/password';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
-
-
+import { MyPlansComponent } from './components/my-plans/my-plans.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     PersonalInformationComponent,
-    // PlansComponent,
     SettingsComponent,
-    // NotificationsComponent,
-    // TermsComponent,
     ChangePasswordComponent,
     AskUsComponent,
-    // MenuComponent,
     MyAddressesComponent,
-    // BranchesComponent,
-    // BranchDetailsComponent,
     ChatWithUsComponent,
+    MyPlansComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +43,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ConfirmDialogModule,
     SkeletonModule,
     CalendarModule,
-    InputTextModule
-  ]
+    InputTextModule,
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {}

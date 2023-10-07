@@ -15,6 +15,7 @@ export interface ILoginResponse {
   profile:        any;
   addresses:      any[];
   permissions:    any[];
+  system_id :     number;
 }
 
 export interface ISignInData {
@@ -40,6 +41,7 @@ export interface IRegisterResponse {
   profile:        any;
   addresses:      any[];
   permissions:    any[];
+  system_id :     number;
 }
 
 export interface ISignUpData {

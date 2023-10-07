@@ -22,4 +22,12 @@ export class ApiService {
       .pipe(retry(1));
   }
 
+  getReq2(
+    url: string,
+    headers?: HttpHeaders,
+    params?: HttpParams
+  ): Observable<any> {
+    const options = { headers: headers };
+    return this.http.get('https://dashboard.nsyssol.com:75/api/v1/' + url, options).pipe(retry(3));
+  }
 }

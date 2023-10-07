@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
-import { LocalService } from './local.service';
 import { ApiService } from 'src/app/core/services/api.service';
 import {
   ILoginResponse,
