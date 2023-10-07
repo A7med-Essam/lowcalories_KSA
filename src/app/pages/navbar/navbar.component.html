@@ -40,7 +40,7 @@
     <nav id="menu-1" class="mega-menu ">
       <!-- menu list items container -->
       <section class="menu-list-items">
-        <div class="container">
+        <div class="container-fluid px-5">
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <nav class="navbar navbar-expand-lg bg-white">
@@ -98,29 +98,102 @@
                   </ul>
 
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="menu-links ms-auto" style="cursor: pointer;">
-                      <li routerLink="home" routerLinkActive="active"><a> {{"pages.home"|translate}} </a></li>
-                      <li routerLink="plans" routerLinkActive="active"><a> {{"pages.plans.title"|translate}} </a></li>
-                      <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
-                      <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a>
-                      </li>
-                      <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a></li>
-                      <!-- <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li> -->
-                      <!-- <li routerLink="questions" routerLinkActive="active"><a>FAQ </a></li> -->
-                      <ng-container *ngIf="login$ | async as login">
-                        <li routerLink="register" routerLinkActive="active" *ngIf="login.data == null"><a>{{"pages.register.title"|translate}}</a>
+                    <ng-container *ngIf="login$ | async as login">
+                      <ul class="menu-links ms-auto" style="cursor: pointer;">
+                        <li routerLink="home" routerLinkActive="active"><a> {{"pages.home"|translate}} </a></li>
+                        <li routerLink="plans" routerLinkActive="active"><a> {{"pages.plans.title"|translate}} </a></li>
+                        <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
+                        <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a>
+                        </li>
+                        <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a>
+                        </li>
+                        <li routerLink="register" routerLinkActive="active" *ngIf="login.data == null">
+                          <a>{{"pages.register.title"|translate}}</a>
                         </li>
                         <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null">
-                          <a>{{"pages.login.title"|translate}}</a></li>
+                          <a>{{"pages.login.title"|translate}}</a>
+                        </li>
                         <li (click)="logOut()" *ngIf="login.data != null">
                           <a>
                             {{"pages.logout"|translate}}
                             <span *ngIf="login.loading">...</span>
                           </a>
                         </li>
-                      </ng-container>
-                      <li (click)="changeLang()"><a>{{"lang" | translate}}</a></li>
-                    </ul>
+
+                        <li (click)="changeLang()"><a>{{"lang" | translate}}</a></li>
+                      </ul>
+                      <div class="dropdown dropstart" *ngIf="login.data">
+                        <button class="btn dropdown-toggle txt-main d-flex align-items-center" type="button"
+                          id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img [src]="login.data.image" style="width: 40px;height: 40px;order: 2;"
+                            class="img-fluid rounded-circle" alt="">
+                          <span class="text-muted ms-2 me-1 txt-font-bold" style="order: 1">{{login.data.name}}</span>
+                        </button>
+                        <ul class="dropdown-menu p-0 border-0 rounded-md shadow-lg text-start"
+                          aria-labelledby="dropdownMenuButton1">
+                          <div style="border-top-right-radius: 10px;border-top-left-radius: 10px;"
+                            class="menu-header d-flex align-items-center py-3 bg-main rounded-md flex-wrap text-start">
+                            <img [src]="login.data.image" style="height:90px;" class="ms-4 img-fluid rounded-circle" alt="">
+                            <div class="text-white ms-4">
+                              <h5 class="username">{{login.data.name}}</h5>
+                              <span class="useremail">{{login.data.email}}</span>
+                            </div>
+                          </div>
+                          <div class="menu-body bg-white rounded-md" style="border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
+                            <ul class="txt-font-bold ps-0 profileList" style="list-style: none;">
+                              <li class="p-3 pointer" #PersonalInfo routerLink="./profile/controls/1">
+                                <img src="../../../../../assets/images/profile/person_green.png"
+                                  class="img-fluid me-3 pointer" style="width: 18px;" alt="">
+                                <span>{{'pages.navbar.personalInformation' | translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #Plans routerLink="./profile/controls/2">
+                                <img src="../../../../../assets/images/profile/plans_green.png" class="img-fluid me-3 "
+                                  style="width: 18px;" alt=""> <span>{{'pages.navbar.myPlans' |
+                                  translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #Addresses routerLink="./profile/controls/3">
+                                <img src="../../../../../assets/images/profile/location_green.png" class="img-fluid me-3 "
+                                  style="width: 18px;" alt="">
+                                <span>{{'pages.navbar.myAddresses' | translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #ChangePassword routerLink="./profile/controls/4">
+                                <img src="../../../../../assets/images/profile/lock_green.png" class="img-fluid me-3 "
+                                  style="width: 18px;" alt="">
+                                <span>{{'pages.navbar.changePassword' | translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #Menu routerLink="./profile/controls/5">
+                                <img src="../../../../../assets/images/profile/menu_green.png"  class="img-fluid me-3 "
+                                  style="width: 18px;" alt=""> <span>{{'pages.navbar.menu' |
+                                  translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #Chat routerLink="./profile/controls/6">
+                                <img src="../../../../../assets/images/profile/chat_green.png" class="img-fluid me-3 "
+                                  style="width: 18px;" alt=""> <span>{{'pages.navbar.chatWithUs'
+                                  | translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #Ask routerLink="./profile/controls/7">
+                                <img src="../../../../../assets/images/profile/ask_green.png"  class="img-fluid me-3 "
+                                  style="width: 18px;" alt=""> <span>{{'pages.navbar.askUs' |
+                                  translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" #Settings routerLink="./profile/controls/8">
+                                <img src="../../../../../assets/images/profile/setting_green.png"  class="img-fluid me-3 "
+                                  style="width: 18px;" alt=""> <span>{{'pages.navbar.settings' |
+                                  translate}}</span>
+                              </li>
+                              <li class="p-3 pointer" (click)="logOut()">
+                                <img src="../../../../../assets/images/profile/power_green.png" class="img-fluid me-3 "
+                                  style="width: 18px;" alt="">
+                                <span>
+                                  {{'pages.navbar.logout' | translate}}
+                                </span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="over-flow-shadow"></div>
+                        </ul>
+                      </div>
+                    </ng-container>
                   </div>
 
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

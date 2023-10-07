@@ -1,5 +1,5 @@
 *::-webkit-scrollbar-thumb {
-  background-color: #FE9F4B;
+  background-color: #6fa764;
   border-radius: 10px;
   border: 3px solid #ffffff;
 }
@@ -6299,8 +6299,8 @@ button.nav-link.active a {
   border-color: #19a44b;
 
   &:hover {
-    background-color: #af3019 !important;
-    border-color: #af3019 !important;
+    background-color: #19a44b !important;
+    border-color: #19a44b !important;
   }
 }
 
@@ -6323,7 +6323,7 @@ input[type=checkbox] {
 }
 
 .swal2-styled.swal2-confirm:focus {
-  box-shadow: 0 0 0 3px #e93f219e !important;
+  box-shadow: 0 0 0 3px #19a44b !important;
 }
 
 @media all and (max-width:992px) {
@@ -6389,11 +6389,15 @@ input[type=checkbox] {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-  box-shadow: inset 0 0 0 0.15rem #f5c8c0 !important;
+  box-shadow: inset 0 0 0 0.15rem #b2f1ca !important;
 }
 
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
-  border-color: #f5c8c0;
+  border-color: #b2f1ca;
 }
-
+.btn:hover {
+  color: #19a44b !important; 
+  background-color: #141a1f !important;
+  border-color: #141a1f !important;
+}
 @import "./assets/ar_style/styles_ar.scss";

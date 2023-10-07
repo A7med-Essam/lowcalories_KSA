@@ -1,0 +1,86 @@
+<div class="rounded-md p-2 my-3 shadow-lg bg-white">
+    <!-- *ngIf="getDetails" -->
+    <!-- <div class="row mx-2" *ngIf="planDetails.length > 0 ;else other_content">
+        <div class="col px-1 preparing" style="max-width: fit-content;" *ngFor="let plan of planDetails">
+            <div class="subDay text-center rounded-md p-2 pt-1 my-2 shadow-lg bg-white" (click)="getDetailsComponent();getDayDetails(plan?.date)">
+                <div class="text-start mb-2 txt-font f-size-sm">{{plan?.day_name}},{{plan?.date | date: 'MMM d'}}</div>
+                <div class="status"></div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- =============================================================================================== -->
+
+    <div class="row mx-2" *ngIf="weeks.length > 0 ;else other_content">
+        <div class="col px-1" *ngFor="let week of weeks" [class]="MealStatusEnum[week[0].deliveryStatus]"
+            style="max-width: fit-content;">
+            <div class="subDay text-center rounded-md p-2 pt-1 my-2 shadow-lg bg-white"
+                (click)="getDetailsComponent();getDayDetails(week)">
+                <div class="text-start mb-2 txt-font f-size-sm">{{week[0]?.dayName}}, <br> {{week[0]?.deliveryDate |
+                    date:
+                    'MMM d'}}
+                </div>
+                <div class="status"></div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #other_content>
+        <div class="d-flex flex-wrap">
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+        </div>
+    </ng-template>
+</div>

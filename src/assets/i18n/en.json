@@ -1,200 +1,222 @@
 {
   "lang": "Ar",
   "currency": "SAR",
-  "deliveryMsg":"We deliver throughout the week, expect Friday.",
-  "checkoutMSG":"You will redirect now to complete the payment process , Please Wait ....",
-  "buttons":{
-    "read_more":"Read More",
-    "contact_us":"Contact Us",
-    "check_our_plans":"Check Our Plans",
-    "subscribe":"Subscribe Now",
-    "register":"Register",
-    "back":"Back",
-    "next":"Next",
-    "checkout":"Checkout",
-    "here":"Here",
-    "send":"Send",
-    "apply":"Apply",
-    "goHome":"Go to home page",
-    "proceed":"Proceed to checkout",
-    "select":"Select",
-    "details":"Details",
-    "deleteMeal":"Delete Meal",
-    "viewMore":"View More",
-    "close":"Close",
-    "selectAddress":"Select Address",
-    "edit":"Edit Meal"
+  "deliveryMsg": "We deliver throughout the week, expect Friday.",
+  "checkoutMSG": "You will redirect now to complete the payment process , Please Wait ....",
+  "buttons": {
+    "changePassword": "Change Password",
+    "read_more": "Read More",
+    "contact_us": "Contact Us",
+    "check_our_plans": "Check Our Plans",
+    "subscribe": "Subscribe Now",
+    "register": "Register",
+    "back": "Back",
+    "next": "Next",
+    "checkout": "Checkout",
+    "here": "Here",
+    "send": "Send",
+    "apply": "Apply",
+    "goHome": "Go to home page",
+    "proceed": "Proceed to checkout",
+    "select": "Select",
+    "details": "Details",
+    "deleteMeal": "Delete Meal",
+    "viewMore": "View More",
+    "close": "Close",
+    "selectAddress": "Select Address",
+    "edit": "Edit",
+    "delete": "Delete",
+    "addNewAddress": "Add New Address",
+    "editAddress": "Edit Address"
   },
-  "pages":{
-    "home":"Home",
-    "plans":{
+  "pages": {
+    "home": "Home",
+    "plans": {
       "title": "Monthly Plans",
-      "desc":"Choose The Meal Plan For Your Goals",
-      "options":{
-        "meals":"Number Of Meals",
-        "snacks":"Number Of Snacks",
-        "days":"Number Of Days",
-        "date":"Start Date",
-        "type":"Plan Type",
-        "mealsPlaceholder":"Choose number of meals",
-        "snacksPlaceholder":"Choose number of snacks",
-        "daysPlaceholder":"Choose number of days",
-        "typePlaceholder":"Choose Plan Type",
-        "delivery":{
-          "title":"Delivery Days",
-          "desc":"Days you want your meals to be delivered"
+      "desc": "Choose The Meal Plan For Your Goals",
+      "options": {
+        "meals": "Number Of Meals",
+        "snacks": "Number Of Snacks",
+        "days": "Number Of Days",
+        "date": "Start Date",
+        "type": "Plan Type",
+        "mealsPlaceholder": "Choose number of meals",
+        "snacksPlaceholder": "Choose number of snacks",
+        "daysPlaceholder": "Choose number of days",
+        "typePlaceholder": "Choose Plan Type",
+        "delivery": {
+          "title": "Delivery Days",
+          "desc": "Days you want your meals to be delivered"
         }
       },
-      "showMeals":"Show Meals",
-      "selectMeals":"Select Meals",
-      "warning":"You will be charged for each additional grams or pieces in the meal",
-      "labels":{
-        "meals":"Meals",
-        "snacks":"Snacks",
-        "cards":"Your Cards"
+      "showMeals": "Show Meals",
+      "selectMeals": "Select Meals",
+      "warning": "You will be charged for each additional grams or pieces in the meal",
+      "labels": {
+        "meals": "Meals",
+        "snacks": "Snacks",
+        "cards": "Your Cards"
       }
     },
-    "menu":{
+    "menu": {
       "title": "Menu",
-      "desc":"We serve a daily changing menu. We serve our best food"
+      "desc": "We serve a daily changing menu. We serve our best food"
     },
-    "contacts":{
-      "title":"Contact Us",
-      "desc":"Reach Out for Inquiries and Assistance",
-      "form":{
-        "name":"Name",
-        "whats":"WhatsApp",
-        "subject":"Subject",
-        "email":"Email",
-        "phone":"Phone",
-        "message":"Message",
-        "address":{
-          "title":"Address",
-          "desc":"ABU DHABI NEW SHAHAMA-BLOCK 137"
+    "contacts": {
+      "title": "Contact Us",
+      "desc": "Reach Out for Inquiries and Assistance",
+      "form": {
+        "name": "Name",
+        "whats": "WhatsApp",
+        "subject": "Subject",
+        "email": "Email",
+        "phone": "Phone",
+        "message": "Message",
+        "address": {
+          "title": "Address",
+          "desc": "ABU DHABI NEW SHAHAMA-BLOCK 137"
         }
       }
     },
-    "terms":{
+    "terms": {
       "title1": "T & C",
       "title2": "TERMS AND CONDITIONS",
-      "desc":"Read Our Terms Carefully"
+      "desc": "Read Our Terms Carefully"
     },
-    "clinic":{
-      "title":"Clinic",
-      "desc":"Discover Quality Care at Our Clinic",
-      "step1":{
-        "name":"Name",
-        "email":"Email",
-        "mobile":"Mobile",
-        "whats":"WhatsApp",
-        "address":"Address",
-        "emirates":"Emirates"
+    "clinic": {
+      "title": "Clinic",
+      "desc": "Discover Quality Care at Our Clinic",
+      "step1": {
+        "name": "Name",
+        "email": "Email",
+        "mobile": "Mobile",
+        "whats": "WhatsApp",
+        "address": "Address",
+        "emirates": "Emirates"
       },
-      "step2":{
-        "appointments":"Available Appointments",
-        "members":"Members",
-        "inbody":"Inbody Price",
-        "noTimes":"There's no available appointments please contact our customer support"
+      "step2": {
+        "appointments": "Available Appointments",
+        "members": "Members",
+        "inbody": "Inbody Price",
+        "noTimes": "There's no available appointments please contact our customer support"
       }
     },
-    "register":{
-      "title":"Register",
-      "desc":"Create Your Account Now!",
-      "form":{
-        "name":"Username",
-        "pass":"Password",
-        "confirmPass":"Confirm Password",
-        "email":"Email",
-        "phone":"Mobile Number"
+    "register": {
+      "title": "Register",
+      "desc": "Create Your Account Now!",
+      "form": {
+        "name": "Username",
+        "pass": "Password",
+        "confirmPass": "Confirm Password",
+        "email": "Email",
+        "phone": "Mobile Number"
       }
     },
-    "login":{
-      "title":"Login",
-      "desc":"Welcome To Low Calories"
+    "login": {
+      "title": "Login",
+      "desc": "Welcome To Low Calories"
     },
-    "forgetPassword":{
-      "title":"Forget Password",
-      "desc":"The password can be retrieved via your email"
+    "forgetPassword": {
+      "title": "Forget Password",
+      "desc": "The password can be retrieved via your email"
     },
-    "resetPassword":{
-      "title":"Reset Password",
-      "desc":"Enter the new password",
-      "input1":"Password*",
-      "input2":"Confirm Password*"
+    "resetPassword": {
+      "title": "Reset Password",
+      "desc": "Enter the new password",
+      "input1": "Password*",
+      "input2": "Confirm Password*"
     },
-    "checkout":{
-      "title":"Checkout",
-      "desc":"Complete Your Purchase Order",
-      "giftcode":{
-        "title":"Gift Code",
-        "placeholder":"Enter Gift Code",
-        "total":"Total",
-        "code":"Code",
-        "vat":"Vat",
-        "extra_carb":"Extra Carb",
-        "extra_protein":"Extra Protein",
-        "grandTotal":"Grand Total"
+    "checkout": {
+      "title": "Checkout",
+      "desc": "Complete Your Purchase Order",
+      "giftcode": {
+        "title": "Gift Code",
+        "placeholder": "Enter Gift Code",
+        "total": "Total",
+        "code": "Code",
+        "vat": "Vat",
+        "extra_carb": "Extra Carb",
+        "extra_protein": "Extra Protein",
+        "grandTotal": "Grand Total"
       },
-      "form":{
-        "title":"Checkout Form",
-        "name":"Name",
-        "firstName":"First Name",
-        "lastName":"Last Name",
-        "email":"Email",
-        "password":"Password",
-        "area":"Area",
-        "state":"States",
-        "address":"Address",
-        "phone":"Phone Number",
-        "landline":"Landline",
-        "terms":{
-          "title":"We Accept",
-          "desc1":"I accepted the ",
-          "desc2":"of the meals plan"
+      "form": {
+        "title": "Checkout Form",
+        "name": "Name",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "area": "Area",
+        "state": "States",
+        "address": "Address",
+        "phone": "Phone Number",
+        "landline": "Landline",
+        "terms": {
+          "title": "We Accept",
+          "desc1": "I accepted the ",
+          "desc2": "of the meals plan"
         },
-        "cutlery":"Cutlery",
-        "bag":"Safty Bag",
-        "delivery":"Delivery",
-        "pickUp":"Pick Up",
-        "deliveryFees":"Delivery Fees",
-        "dislike":"Select allergic meals"
+        "cutlery": "Cutlery",
+        "bag": "Safty Bag",
+        "delivery": "Delivery",
+        "pickUp": "Pick Up",
+        "deliveryFees": "Delivery Fees",
+        "dislike": "Select allergic meals"
       },
-      "subscription":{
-        "title":"Subscription Info",
-        "selectedPlan":"Selected Plan",
-        "delivery":"Delivery Days",
-        "meals":"Meals",
-        "snacks":"Snacks",
-        "startDate":"Start Date",
-        "subscriptionDays":"Subscription Days"
+      "subscription": {
+        "title": "Subscription Info",
+        "selectedPlan": "Selected Plan",
+        "delivery": "Delivery Days",
+        "meals": "Meals",
+        "snacks": "Snacks",
+        "startDate": "Start Date",
+        "subscriptionDays": "Subscription Days"
       },
-      "selectLocation":{
-        "title":"Select Your Current Location",
-        "modalTitle":"My Addresses",
-        "empty":{
-          "message1":"You don't have any addresses yet!",
-          "message2":"Please enter a new address"
+      "selectLocation": {
+        "title": "Select Your Current Location",
+        "modalTitle": "My Addresses",
+        "empty": {
+          "message1": "You don't have any addresses yet!",
+          "message2": "Please enter a new address"
         }
       }
     },
-    "logout":"Logout"
+    "navbar": {
+      "home": "Home",
+      "monthlyPlans": "Monthly Plans",
+      "menu": "Menu",
+      "contactUs": "Contact Us",
+      "clinicReservation": "Clinic Reservation",
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "personalInformation": "Personal Information",
+      "myPlans": "My Plans",
+      "myAddresses": "My Addresses",
+      "changePassword": "Change Password",
+      "chatWithUs": "Chat With Us",
+      "askUs": "Ask Us",
+      "settings": "Settings",
+      "terms": "Terms & Conditions"
+    },
+    "logout": "Logout"
   },
-  "home":{
-    "section1":{
-      "slide3_title":"Experience The Finest Quality Food",
-      "slide3_sub":"We provide awesome and delicious food"
+  "home": {
+    "section1": {
+      "slide3_title": "Experience The Finest Quality Food",
+      "slide3_sub": "We provide awesome and delicious food"
     },
-    "section2":{
-      "title1":"Welcome to ",
-      "title2":"Low Calories",
-      "desc1":"Whatever your occasion, We makes it one to remember!",
-      "desc2":"One of the best restaurants in the KSA offering healthy food. We believed that healthy or diet food with great taste was possible and each day that is what we deliver to our customers. Low Calories Restaurant offers fresh nutritious food, with new ideas, new flavors and sauces.",
-      "desc3":"OUR GOAL: To let everyone enjoy our healthy delicious meals and gain all the benefits and reap all the rewards that go with it"
+    "section2": {
+      "title1": "Welcome to ",
+      "title2": "Low Calories",
+      "desc1": "Whatever your occasion, We makes it one to remember!",
+      "desc2": "One of the best restaurants in the KSA offering healthy food. We believed that healthy or diet food with great taste was possible and each day that is what we deliver to our customers. Low Calories Restaurant offers fresh nutritious food, with new ideas, new flavors and sauces.",
+      "desc3": "OUR GOAL: To let everyone enjoy our healthy delicious meals and gain all the benefits and reap all the rewards that go with it"
     },
-    "section3":{
-      "title1":"Special",
-      "title2":"Menu",
-      "desc":"We serve a daily changing menu. We serve our best food.",
+    "section3": {
+      "title1": "Special",
+      "title2": "Menu",
+      "desc": "We serve a daily changing menu. We serve our best food.",
       "meal1": {
         "title": "French toast",
         "desc": "A classic breakfast dish made by dipping slices of bread into a mixture of beaten eggs and milk, then frying until golden brown. Often served with toppings like maple syrup, powdered sugar, and fresh fruits."
@@ -228,99 +250,193 @@
         "desc": "A popular type of sushi featuring fresh, high-quality salmon as a topping. The salmon can be served as sashimi (sliced raw fish) on top of bite-sized portions of vinegared rice, often accompanied by soy sauce, wasabi, and pickled ginger."
       }
     },
-    "section4":{
-      "title1":"About",
-      "title2":"Low Calories",
-      "desc":"Leading healthy food company",
-      "overview1":{
-        "title":"PREPARED FRESH",
-        "desc":"Our meals are prepared and delivered fresh daily. We use special bags to preserve the delicious taste and quality of the food."
+    "section4": {
+      "title1": "About",
+      "title2": "Low Calories",
+      "desc": "Leading healthy food company",
+      "overview1": {
+        "title": "PREPARED FRESH",
+        "desc": "Our meals are prepared and delivered fresh daily. We use special bags to preserve the delicious taste and quality of the food."
       },
-      "overview2":{
-        "title":"LOW CALORIES",
-        "desc":"We deliver our meal plans daily, all you have to do is to keep them in the fridge and heat when you are ready for a delicious healthy meal."
+      "overview2": {
+        "title": "LOW CALORIES",
+        "desc": "We deliver our meal plans daily, all you have to do is to keep them in the fridge and heat when you are ready for a delicious healthy meal."
       },
-      "overview3":{
-        "title":"DAILY DELIVERY",
-        "desc":"Our delivery time is from 10AM-10PM daily except Fridays."
+      "overview3": {
+        "title": "DAILY DELIVERY",
+        "desc": "Our delivery time is from 10AM-10PM daily except Fridays."
       }
     },
-    "section5":{
-      "title1":"Download ",
-      "title2":"Our App",
-      "desc1":"Low Calories is a leading healthy food restaurants chain with over 35 branches.",
-      "desc2":"Our goal is to make healthy eating accessible for everyone."
+    "section5": {
+      "title1": "Download ",
+      "title2": "Our App",
+      "desc1": "Low Calories is a leading healthy food restaurants chain with over 35 branches.",
+      "desc2": "Our goal is to make healthy eating accessible for everyone."
     }
   },
-  "logoMetaData":{
-    "workingHours":{
-      "title":"SUN - SAT",
-      "times":"08:00am - 12:00am",
-      "desc":"Closed on public holidays"
+  "logoMetaData": {
+    "workingHours": {
+      "title": "SUN - SAT",
+      "times": "08:00am - 12:00am",
+      "desc": "Closed on public holidays"
     },
-    "suggestions":{
-      "title":"Suggestions",
-      "desc":"We appreciate all your suggestions, ideas and feedback"
+    "suggestions": {
+      "title": "Suggestions",
+      "desc": "We appreciate all your suggestions, ideas and feedback"
     },
-    "location":{
-      "title":"ABU DHABI NEW SHAHAMA-BLOCK 137",
-      "findUs":"Find Us Here"
+    "location": {
+      "title": "ABU DHABI NEW SHAHAMA-BLOCK 137",
+      "findUs": "Find Us Here"
     }
   },
-  "footer":{
-    "desc":"We each have different schedules and life pressures that might affect our nutritional choices. So, living a healthy and balanced lifestyle can be both challenging and time consuming. If you want to commit to a healthier lifestyle, you don't have to devote two hours a day to cooking, and spend all your time figuring out what is healthy and what is not. Instead, simply subscribe to our monthly meal packages and live the healthy lifestyle you deserve...",
-    "section1":{
-      "title":"Newsletter",
-      "desc":"Subscribe to our newsletter keeps you up-to-date!",
-      "input":"Your email*"
+  "footer": {
+    "desc": "We each have different schedules and life pressures that might affect our nutritional choices. So, living a healthy and balanced lifestyle can be both challenging and time consuming. If you want to commit to a healthier lifestyle, you don't have to devote two hours a day to cooking, and spend all your time figuring out what is healthy and what is not. Instead, simply subscribe to our monthly meal packages and live the healthy lifestyle you deserve...",
+    "section1": {
+      "title": "Newsletter",
+      "desc": "Subscribe to our newsletter keeps you up-to-date!",
+      "input": "Your email*"
     },
-    "section2":{
-      "title":"Operation Hours",
-      "days":"SUNDAY - SATURDAY",
-      "times":"08:00am - 12:00am",
-      "subscriptions":"For Subscription Inquiries",
-      "suggestions":"For Suggestions or Complaints",
-      "holidays":"Closed on public holidays"
+    "section2": {
+      "title": "Operation Hours",
+      "days": "SUNDAY - SATURDAY",
+      "times": "08:00am - 12:00am",
+      "subscriptions": "For Subscription Inquiries",
+      "suggestions": "For Suggestions or Complaints",
+      "holidays": "Closed on public holidays"
     },
-    "section3":{
-      "title":"Contact",
-      "desc":"ABU DHABI NEW SHAHAMA-BLOCK 137",
-      "findUs":"Find Us Here"
+    "section3": {
+      "title": "Contact",
+      "desc": "ABU DHABI NEW SHAHAMA-BLOCK 137",
+      "findUs": "Find Us Here"
     },
-    "section4":{
-      "copyright":{
-        "title":"Copyright",
-        "desc":"All right reserved by The Low Calories."
+    "section4": {
+      "copyright": {
+        "title": "Copyright",
+        "desc": "All right reserved by The Low Calories."
       },
-      "logo":{
-        "insta":"Instagram",
-        "face":"Facebook",
-        "whats":"Whatsapp",
-        "google":"Google-Plus"
+      "logo": {
+        "insta": "Instagram",
+        "face": "Facebook",
+        "whats": "Whatsapp",
+        "google": "Google-Plus"
       }
     }
   },
-  "validations":{
-    "required":"This field is required",
-    "phone":"Mobile number must be 10 digit",
-    "whats":"WhatsApp number must be 10 digit",
-    "email":"Email is not valid",
-    "pass":"Password doesn't match",
-    "terms":"Please read and accept our terms and conditions."
+  "validations": {
+    "required": "This field is required",
+    "phone": "Mobile number must be 10 digit",
+    "whats": "WhatsApp number must be 10 digit",
+    "email": "Email is not valid",
+    "pass": "Password doesn't match",
+    "terms": "Please read and accept our terms and conditions."
   },
-  "404":{
-    "title":"Not Found",
-    "desc":"The page does not exist",
-    "content":{
-      "header":"Ooopps:(",
-      "main":"The Page you were looking for, couldn't be found",
-      "footer":"Look like the page you are trying to visit does not exist. Pleace check the URL and try your luck again"
+  "404": {
+    "title": "Not Found",
+    "desc": "The page does not exist",
+    "content": {
+      "header": "Ooopps:(",
+      "main": "The Page you were looking for, couldn't be found",
+      "footer": "Look like the page you are trying to visit does not exist. Pleace check the URL and try your luck again"
     }
   },
-  "nutritions":{
+  "nutritions": {
     "protein": "Protein",
     "fat": "Fat",
     "carb": "Carb",
     "calories": "Calories"
+  },
+  "profile": {
+    "personalInformation": {
+      "title": "Personal Information",
+      "completeYourProfile": "Complete your profile",
+      "mobile": "Mobile",
+      "secondMobile": "Second Mobile",
+      "name": "Name",
+      "email": "Email",
+      "gender": "Gender",
+      "height": "Height",
+      "weight": "Weight"
+    },
+    "myPlans": {
+      "title": "My Plans",
+      "startDate": "Start Date",
+      "cid": "CID",
+      "planTitle": "Plan Title",
+      "status": "Status",
+      "emptyMsg": "You don't have plans yet...",
+      "planStatus": {
+        "deactive": "Deactive",
+        "active": "Active",
+        "expired": "Expired"
+      }
+    },
+    "myAddresses": {
+      "title": "My Addresses",
+      "emirate": "City",
+      "area": "Area",
+      "address": "Address",
+      "government": "governorate",
+      "street": "Street",
+      "block": "Block",
+      "apartment": "Apartment Number",
+      "emptyMsg": "You don't have addresses yet..."
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "desc": "Please enter your new password with at least 8 characters.",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password"
+    },
+    "menu": {
+      "title": "Menu"
+    },
+    "chatWithUs": {
+      "title": "Chat With Us",
+      "desc": "You will be redirect to our customer service in whatsApp.. ",
+      "here": "Here"
+    },
+    "askUs": {
+      "title": "Ask Us"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "menu": "Menu",
+      "ourBranches": "Our Branches",
+      "terms": "Terms & Conditions",
+      "notification": "Notification",
+      "lowCalories": "Low Calories",
+      "chefGourmet": "Chef Gourmet",
+      "facebook": "Facebook",
+      "whatsApp": "WhatsApp",
+      "instegram": "Instegram"
+    },
+    "logOut": "Log Out"
+  },
+  "modals": {
+    "close": "Close",
+    "back": "Back",
+    "delivery": {
+      "msg": "On {{current}} you will receive double order for {{before}} and {{after}}."
+    },
+    "goBackWarning": {
+      "title": "Warning",
+      "msg": "if you want to go back you will lose your data"
+    },
+    "deleteAddressWarning": {
+      "title": "Warning",
+      "msg": "Are you sure that you want to delete this address?"
+    },
+    "subscribtion": {
+      "deliveryDays": "Delivery Days",
+      "numberOfMeals": "Number Of Meals",
+      "numberOfSnacks": "Number Of Snacks",
+      "startDate": "Start Date",
+      "subscriptionDays": "Subscription Days"
+    },
+    "email": {
+      "title": "Email Confirmation Modal"
+    }
   }
 }

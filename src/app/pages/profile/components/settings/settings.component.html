@@ -1,0 +1,61 @@
+<div class="content rounded-lg p-5 pb-0 shadow-lg bg-white" style="height: 550px;overflow: auto;">
+    <h4 class="txt-main mb-3">{{"profile.settings.title" | translate}}</h4>
+    <div class="row">
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" routerLink="../../../menu"
+                (mouseover)="hover(menu, '../../../../../assets/images/profile/settings/menu_white.png');"
+                (mouseout)="unhover(menu, '../../../../../assets/images/profile/settings/menu_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/menu_green.png" #menu class="img-fluid me-2"
+                    alt="" style="width: 18px;">
+                <span class="txt-font">{{"profile.settings.menu" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" (click)="getBranches()"
+                (mouseover)="hover(branch, '../../../../../assets/images/profile/settings/branch_white.png');"
+                (mouseout)="unhover(branch, '../../../../../assets/images/profile/settings/branch_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/branch_green.png" #branch class="img-fluid me-2"
+                    alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.ourBranches" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" routerLink="../../../terms"
+                (mouseover)="hover(mark, '../../../../../assets/images/profile/settings/mark_white.png');"
+                (mouseout)="unhover(mark, '../../../../../assets/images/profile/settings/mark_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/mark_green.png" #mark class="img-fluid me-2"
+                    alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.terms" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <h6 class="txt-main mb-3">{{"profile.settings.lowCalories" | translate}}</h6>
+            <ng-container *ngFor="let sm of social$ |async">
+                <ng-container [ngSwitch]="sm.type.toLowerCase()">
+                    <div *ngSwitchCase="'facebook'" class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer">
+                        <a [href]="sm.link" target="_blank" style="padding: 12px; display: inline-block;" class="text-reset w-100">
+                            <img src="../../../../../assets/images/profile/settings/facebook.png" class="img-fluid me-2"
+                            alt="" style="width: 22px;">
+                        <span class="txt-font">{{"profile.settings.facebook" | translate}}</span>
+                        </a>
+                    </div>
+                    <div *ngSwitchCase="'whatsapp'" class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer">
+                     <a [href]="sm.link" target="_blank" style="padding: 12px; display: inline-block;" class="text-reset w-100">
+                         <img src="../../../../../assets/images/profile/settings/whatsapp.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                         <span class="txt-font">{{"profile.settings.whatsApp" | translate}}</span>
+                     </a>
+                    </div>
+                    <div *ngSwitchCase="'instgram'" class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer">
+                        <a [href]="sm.link" target="_blank" style="padding: 12px; display: inline-block;" class="text-reset w-100">
+                            <img src="../../../../../assets/images/profile/settings/instagram.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                        <span class="txt-font">{{"profile.settings.instegram" | translate}}</span>
+                        </a>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>

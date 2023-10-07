@@ -1,0 +1,54 @@
+<!-- <div class="content rounded-lg p-5 pb-3 shadow-lg bg-white" style="height: 775px;overflow: auto;">
+    <h4 class="txt-main mb-3" *ngIf="plans.length > 0">{{"profile.myPlans.title" | translate}}</h4>
+    <div class="row" *ngIf="plans.length > 0 ">
+        <div class="col-12" *ngFor="let plan of plans">
+            <div class="pointer plans d-flex flex-wrap align-items-center bg-white p-1 rounded-lg shadow-lg my-2"
+                (click)="setCurrentPlan(plan)" routerLink="../../plan">
+                <img [src]="plan.planTitle[0].toUpperCase() == 'L'?'../../../../../assets/images/profile/plans/lw.png':'../../../../../assets/images/profile/plans/gw.png'
+                " alt="" class="img-fluid rounded-lg m-3" style="width: 170px;">
+                <div class="text-start p-1">
+                    <div class="my-1 h5">
+                        <span class="txt-font">{{"profile.myPlans.startDate" | translate}} :</span>
+                        <span class="txt-main header-font">{{plan?.startDate | date}}</span>
+                    </div>
+                    <div class="my-1 h5">
+                        <span class="txt-font">{{"profile.myPlans.planTitle" | translate}} :</span>
+                        <span class="">{{plan?.planTitle}}</span>
+                    </div>
+                    <div class="my-1 h5 d-flex align-items-center">
+                        <span class="txt-font">{{"profile.myPlans.status" | translate}} :</span>
+                        <span class="header-font d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img *ngIf="SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'active'"
+                                    src="../../../../../assets/images/profile/plans/check.png" class="img-fluid mx-1">
+                                <img *ngIf="SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'expired'"
+                                    src="../../../../../assets/images/profile/plans/expired.png" class="img-fluid mx-1">
+                                <img *ngIf="SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'hold'"
+                                    src="../../../../../assets/images/profile/plans/hand.png" class="img-fluid mx-1">
+                                <img *ngIf="SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'restricted'"
+                                    src="../../../../../assets/images/profile/plans/forbidden.png"
+                                    class="img-fluid mx-1">
+                                <span
+                                    [ngClass]="{'txt-main': SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'active',
+                                'text-danger': SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'expired',
+                                'text-muted': SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'hold',
+                                'text-warning': SubscriptionStatusEnum[plan.status].toLocaleLowerCase() == 'restricted'}">
+                                    {{SubscriptionStatusEnum[plan.status] | titlecase}}
+                                </span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5 *ngIf="plans.length == 0">{{"profile.myPlans.emptyMsg" | translate}}</h5>
+    <ng-container *ngIf="showSkeleton">
+        <div>
+            <p-skeleton width="100%" height="8rem" styleClass="my-4"></p-skeleton>
+            <p-skeleton width="100%" height="8rem" styleClass="my-4"></p-skeleton>
+            <p-skeleton width="100%" height="8rem" styleClass="my-4"></p-skeleton>
+            <p-skeleton width="100%" height="8rem" styleClass="my-4"></p-skeleton>
+        </div>
+    </ng-container>
+</div> -->

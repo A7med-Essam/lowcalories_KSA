@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -37,6 +38,16 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'reset', component: ResetPasswordComponent },
+
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then(
+        (m) => m.ProfileModule
+      ),
+    canActivate: [AuthGuard],
+  },
+
   { path: '**', component: NotfoundComponent },
 ];
 
