@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,6 +7,9 @@ import {
 } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
+import { Calendar } from 'primeng/calendar';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -15,116 +18,128 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class PersonalInformationComponent implements OnInit {
   genderType: string[] = ['male', 'female'];
-  // user!: IUserProfile;
-  // faUser = faUser;
-  // faEnvelope = faEnvelope;
-  // faClipboard = faListCheck;
-  // faEdit = faEdit;
-  // faCalendar = faCalendar;
-  // faPhone = faPhone;
-  // faWeight = faWeight;
-  // faVenusMars = faVenusMars;
-  // faBack = faArrowUpFromBracket;
+  user!: any;
   isCompleted: boolean = false;
   isEditable: boolean = false;
   CompleteProfileForm: FormGroup = new FormGroup({});
   EditProfileForm: FormGroup = new FormGroup({});
   isLoaded: boolean = true;
-
+  maxBirthdate: Date;
+  minBirthdate: Date;
   constructor(
-    // private _FormBuilder: FormBuilder,
-    // private _ProfileInfoService: ProfileInfoService,
-    // private _AuthService: AuthService,
-    // public translate: TranslateService
-  ) {}
-
-  ngOnInit(): void {
-    // this.getUserInfo();
-    // this.setCompleteProfileForm();
+    private _FormBuilder: FormBuilder,
+    private _ProfileService: ProfileService,
+    public translate: TranslateService
+  ) {
+    this.maxBirthdate = new Date('2015-12-31');
+    this.minBirthdate = new Date('1940-01-01');
   }
 
-  // getUserInfo() {
-  //   this._ProfileInfoService
-  //     .getUserInfo()
-  //     .subscribe((res: IProfileResponse) => {
-  //       this.user = res.data;
-  //       if (this.translate.currentLang == 'ar') {
-  //         this.user.addresses.map((u) => {
-  //           u.area.area_en = u.area?.area_ar;
-  //           u.area.state.name = u.area?.state?.name_ar;
-  //         });
-  //       }
-  //       this.isLoaded = false;
-  //     });
-  // }
+  ngOnInit(): void {
+    this.getUserInfo();
+    this.setCompleteProfileForm();
+    this.setEditProfileForm();
+  }
 
-  // setCompleteProfileForm() {
-  //   this.CompleteProfileForm = this._FormBuilder.group({
-  //     date_of_birth: new FormControl(null, [Validators.required]),
-  //     height: new FormControl(null, [Validators.required]),
-  //     weight: new FormControl(null, [Validators.required]),
-  //     second_mobile: new FormControl(null, [Validators.required]),
-  //     gender: new FormControl(null, [Validators.required]),
-  //   });
-  // }
+  getUserInfo() {
+    this._ProfileService
+      .getUserInfo()
+      .subscribe((res: any) => {
+        this.user = res.data;
+        if (this.translate.currentLang == 'ar') {
+          this.user.addresses.map((u:any) => {
+            u.area.area_en = u.area?.area_ar;
+            u.area.state.name = u.area?.state?.name_ar;
+          });
+        }
+        this.isLoaded = false;
+      });
+  }
 
-  // setEditProfileForm() {
-  //   this.EditProfileForm = this._FormBuilder.group({
-  //     date_of_birth: new FormControl(
-  //       new Date(this.user.profile.date_of_birth),
-  //       [Validators.required]
-  //     ),
-  //     height: new FormControl(this.user.profile.height, [Validators.required]),
-  //     weight: new FormControl(this.user.profile.weight, [Validators.required]),
-  //     second_mobile: new FormControl(this.user.profile.second_mobile, [
-  //       Validators.required,
-  //     ]),
-  //     gender: new FormControl(this.user.profile.gender, [Validators.required]),
-  //     name: new FormControl(this.user.name, [Validators.required]),
-  //     email: new FormControl(this.user.email, [
-  //       Validators.required,
-  //       Validators.email,
-  //     ]),
-  //     mobile: new FormControl(this.user.mobile, [Validators.required]),
-  //   });
-  // }
+  setCompleteProfileForm() {
+    this.CompleteProfileForm = this._FormBuilder.group({
+      date_of_birth: new FormControl(null, [Validators.required]),
+      height: new FormControl(null, [Validators.required]),
+      weight: new FormControl(null, [Validators.required]),
+      second_mobile: new FormControl(null, [Validators.required]),
+      gender: new FormControl(null, [Validators.required]),
+    });
+  }
 
-  // onSubmit(data: FormGroup) {
-  //   this.CompleteProfileForm.controls['date_of_birth'].setValue(
-  //     new Date(data.get('date_of_birth')?.value).toLocaleDateString('en-CA')
-  //   );
-  //   if (data.valid) {
-  //     this._ProfileInfoService
-  //       .updateProfile(data.value)
-  //       .subscribe((res: IProfileResponse) => {
-  //         this.getUserInfo();
-  //         this.isCompleted = false;
-  //       });
-  //   }
-  // }
+  setEditProfileForm() {
+    this.EditProfileForm = this._FormBuilder.group({
+      date_of_birth: new FormControl(
+        new Date(this.user?.profile.date_of_birth),
+        [Validators.required]
+      ),
+      height: new FormControl(this.user?.profile.height, [Validators.required]),
+      weight: new FormControl(this.user?.profile.weight, [Validators.required]),
+      second_mobile: new FormControl(this.user?.profile.second_mobile, [
+        Validators.required,
+      ]),
+      gender: new FormControl(this.user?.profile.gender, [Validators.required]),
+      name: new FormControl(this.user?.name, [Validators.required]),
+      email: new FormControl(this.user?.email, [
+        Validators.required,
+        Validators.email,
+      ]),
+      mobile: new FormControl(this.user?.mobile, [Validators.required]),
+    });
+  }
 
-  // onSubmitEdit(data: FormGroup) {
-  //   this.EditProfileForm.controls['date_of_birth'].setValue(
-  //     new Date(data.get('date_of_birth')?.value).toLocaleDateString('en-CA')
-  //   );
-  //   if (data.valid) {
-  //     this._ProfileInfoService
-  //       .updateProfile(data.value)
-  //       .subscribe((res: IProfileResponse) => {
-  //         if (res.status == 1) {
-  //           // let userData: IUser = {
-  //           //   mobile: res.data.mobile,
-  //           //   name: res.data.name,
-  //           //   token: res.data.access_token,
-  //           //   email: res.data.email,
-  //           //   id: res.data.id,
-  //           //   image: res.data.image,
-  //           // };
-  //           this._AuthService.saveUser(res.data);
-  //           this.getUserInfo();
-  //           this.isEditable = false;
-  //         }
-  //       });
-  //   }
-  // }
+  onSubmit(data: FormGroup) {
+    this.CompleteProfileForm.controls['date_of_birth'].setValue(
+      new Date(data.get('date_of_birth')?.value).toLocaleDateString('en-CA')
+    );
+    if (data.valid) {
+      this._ProfileService
+        .updateProfile(data.value)
+        .subscribe((res: any) => {
+          this.getUserInfo();
+          this.isCompleted = false;
+        });
+    }
+  }
+
+  onSubmitEdit(data: FormGroup) {
+    this.EditProfileForm.controls['date_of_birth'].setValue(
+      new Date(data.get('date_of_birth')?.value).toLocaleDateString('en-CA')
+    );
+    if (data.valid) {
+      this._ProfileService
+        .updateProfile(data.value)
+        .subscribe((res: any) => {
+          if (res.status == 1) {
+            this.getUserInfo();
+            this.isEditable = false;
+          }
+        });
+    }
+  }
+
+  @ViewChild('calendar') calendar!: Calendar;
+  onDateChange(e: any) {
+    if (this.calendar.view == 'year') {
+      this.calendar.view = 'month';
+      this.calendar.dateFormat = 'yy/mm';
+      this.showDialog();
+    } else if (this.calendar.view == 'month') {
+      this.calendar.view = 'date';
+      this.calendar.dateFormat = 'yy/mm/dd';
+      this.showDialog();
+    }
+  }
+
+  showDialog() {
+    setTimeout(() => {
+      this.calendar.showOverlay();
+      this.calendar.inputfieldViewChild.nativeElement.dispatchEvent(
+        new Event('click')
+      );
+    }, 200);
+  }
+
+  onClearClick() {
+    this.calendar.view = 'year';
+  }
 }

@@ -17,5 +17,22 @@
     ::ng-deep .p-calendar .p-inputtext {
         text-align: center;
     }
+
+    ::ng-deep{
+        .p-dropdown-label{
+            justify-content: center;
+        }
+    }
 }
 
+.icon-controller{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    z-index: 99;
+    color: #19a44b;
+    left: 5px;
+    padding: 0px 20px;
+    width: 20px;
+}

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ProfileComponent } from './components/profile/profile.component';
-// import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
+import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
 // import { PlansComponent } from './components/plans/plans.component';
 // import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
@@ -22,13 +22,15 @@ import { PasswordModule } from "primeng/password";
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
 @NgModule({
   declarations: [
     ProfileComponent,
-    // PersonalInformationComponent,
+    PersonalInformationComponent,
     // PlansComponent,
     SettingsComponent,
     // NotificationsComponent,
@@ -51,7 +53,9 @@ import { SkeletonModule } from 'primeng/skeleton';
     DialogModule,
     ReactiveFormsModule,
     ConfirmDialogModule,
-    SkeletonModule
+    SkeletonModule,
+    CalendarModule,
+    InputTextModule
   ]
 })
 export class ProfileModule { }

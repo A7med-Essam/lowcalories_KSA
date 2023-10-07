@@ -13,6 +13,10 @@
   color: #19a44b;
 }
 
+.txt-main{
+  color: #19a44b;
+}
+
 .disabled-bg {
   background-color: #bbb !important;
 }
@@ -6268,12 +6272,12 @@ button.nav-link.active a {
 }
 
 .p-inputtext:enabled:focus {
-  box-shadow: 0 0 0 0.2rem #e93f213b;
+  box-shadow: 0 0 0 0.2rem #9bd5b4;
   border-color: #19a44b;
 }
 
 .p-dropdown:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #e93f213b;
+  box-shadow: 0 0 0 0.2rem #9bd5b4;
   border-color: #19a44b;
 }
 
@@ -6360,7 +6364,7 @@ input[type=checkbox] {
 }
 
 .p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #19a44b;
+  box-shadow: 0 0 0 0.2rem #9bd5b4;
   border-color: #19a44b;
 }
 

@@ -27,7 +27,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "addNewAddress": "Add New Address",
-    "editAddress": "Edit Address"
+    "editAddress": "Edit Address",
+    "save":"Save"
   },
   "pages": {
     "home": "Home",
@@ -410,7 +411,8 @@
       "chefGourmet": "Chef Gourmet",
       "facebook": "Facebook",
       "whatsApp": "WhatsApp",
-      "instegram": "Instegram"
+      "instegram": "Instegram",
+      "contact": "Contact Us"
     },
     "logOut": "Log Out"
   },
@@ -438,5 +440,13 @@
     "email": {
       "title": "Email Confirmation Modal"
     }
+  },
+  "errors": {
+    "required": "This field is required.",
+    "email": "Please enter a valid email address.",
+    "confirm": "Please enter the same password as above.",
+    "password_pattern": "Password must be at least 8 characters.",
+    "minMeals": "Minimum meals",
+    "mobile": "This field must be 11 digits."
   }
 }

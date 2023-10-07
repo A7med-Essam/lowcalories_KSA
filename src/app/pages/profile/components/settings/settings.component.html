@@ -11,7 +11,7 @@
                 <span class="txt-font">{{"profile.settings.menu" | translate}}</span>
             </div>
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
             <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" (click)="getBranches()"
                 (mouseover)="hover(branch, '../../../../../assets/images/profile/settings/branch_white.png');"
                 (mouseout)="unhover(branch, '../../../../../assets/images/profile/settings/branch_green.png');"
@@ -19,6 +19,16 @@
                 <img src="../../../../../assets/images/profile/settings/branch_green.png" #branch class="img-fluid me-2"
                     alt="" style="width: 22px;">
                 <span class="txt-font">{{"profile.settings.ourBranches" | translate}}</span>
+            </div>
+        </div> -->
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" routerLink="../../../contacts"
+                (mouseover)="hover(branch, '../../../../../assets/images/profile/ask_white.png');"
+                (mouseout)="unhover(branch, '../../../../../assets/images/profile/ask_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/ask_green.png" #branch class="img-fluid me-2"
+                    alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.contact" | translate}}</span>
             </div>
         </div>
         <div class="col-12">
