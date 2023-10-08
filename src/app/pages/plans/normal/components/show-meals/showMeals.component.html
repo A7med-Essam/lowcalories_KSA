@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<section class="bg-img-main my-5" *ngIf="ProgramMeals |async as programMeals">
+<section class="bg-img-main my-5" style="position: relative;" *ngIf="ProgramMeals |async as programMeals">
     <div class="container">
         <div *ngIf="ProgramDetails | async as program">
             <h1 class="fa-rx">
@@ -84,6 +84,40 @@
                 </div>
         </div>
     </div>
+    <div id="options_container">
+         <i class="fas fa-plus-square fa-3x txt-main pointer" (click)="sidebarOptions = true"></i>
+        <!-- <p-button type="button" class="mr-2 txt-main" (click)="sidebarOptions = true" icon="pi pi-arrow-right"></p-button> -->
+    </div>
+    <p-sidebar [(visible)]="sidebarOptions" position="right">
+        <div class="my-5">
+            <div class="my-5">
+                <h6 class="text-orange">Extra Grams</h6>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                    <span class="minus" (click)="calcExtraGramOverAll(false)">-</span>
+                    <input type="text" class="count" [value]="ExtraGramOverAll" disabled readonly>
+                    <span class="plus" (click)="calcExtraGramOverAll(true)">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        GM
+                    </span>
+                </div>
+            </div>
+    
+            <div class="my-5">
+                <h6 class="text-orange">Extra Piece</h6>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                    <span class="minus"  (click)="calcExtraPieceOverAll(false)">-</span>
+                    <input type="text" class="count" [value]="ExtraPieceOverAll" disabled readonly>
+                    <span class="plus"  (click)="calcExtraPieceOverAll(true)">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        Piece
+                    </span>
+                </div>
+            </div>
+        </div>
+        <small>
+            Some meals are not subject to increase or decrease in quantity
+        </small>
+    </p-sidebar>
 </section>
 
 <p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="mealDetailsModal"
@@ -244,3 +278,4 @@
         </div>
     </div>
 </p-dialog>
+

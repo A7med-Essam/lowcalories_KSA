@@ -94,16 +94,18 @@ export class SetPlanComponent
   }
 
   ngAfterContentChecked() {
-    this.cdref.detectChanges();
+    // this.cdref.detectChanges();
   }
 
   createPlanForm() {
     this.ProgramDetailsForm = this._FormBuilder.group({
       Start_Date: new FormControl(null, [Validators.required]),
       subscription_days: new FormControl(null, [Validators.required]),
-      meal_types: new FormArray([], [this.atLeastOneCheckedValidator()]),
+      // meal_types: new FormArray([], [this.atLeastOneCheckedValidator()]),
+      meal_types: new FormControl(null, [Validators.required]),
       snack_types: new FormArray([]),
       CheckDays: new FormControl(null),
+      addBreakFast: new FormControl(null),
     });
   }
 
@@ -125,6 +127,7 @@ export class SetPlanComponent
   }
 
   meal_types: MealType[] = [];
+  meal_count:string[] = [];
   snack_types: MealType[] = [];
   subscription_days: SubscriptionDay[] = [];
   delivery_days: DeliveryDay[] = [];
@@ -140,14 +143,14 @@ export class SetPlanComponent
           res.subscription_days[0].day_count
         );
         this.meal_types = res.meal_types;
-        this.meal_types.forEach(() => {
-          const meal_types_FormArray: any =
-            this.ProgramDetailsForm.get('meal_types');
-          let condition = meal_types_FormArray.controls.length == 0;
-          (this.ProgramDetailsForm.get('meal_types') as FormArray).push(
-            new FormControl(condition)
-          );
-        });
+        // this.meal_types.forEach(() => {
+        //   const meal_types_FormArray: any =
+        //     this.ProgramDetailsForm.get('meal_types');
+        //   let condition = meal_types_FormArray.controls?.length == 0;
+        //   (this.ProgramDetailsForm.get('meal_types') as FormArray).push(
+        //     new FormControl(condition)
+        //   );
+        // });
         this.snack_types = res.snack_types;
         this.snack_types.forEach(() => {
           (this.ProgramDetailsForm.get('snack_types') as FormArray).push(
@@ -201,15 +204,30 @@ export class SetPlanComponent
       delivery_days: this.getSelectedDeliveryDays(),
       meal_types: [
         ...this.getMealTypes(form.value.meal_types, this.meal_types),
-        ...this.getMealTypes(form.value.snack_types, this.snack_types),
+        ...this.getSnackTypes(form.value.snack_types, this.snack_types),
       ],
       meals: this.getMealTypes(form.value.meal_types, this.meal_types),
-      snacks: this.getMealTypes(form.value.snack_types, this.snack_types),
+      snacks: this.getSnackTypes(form.value.snack_types, this.snack_types),
     };
     return SubscriptionData;
   }
 
-  getMealTypes(meals: boolean[], meal_types: MealType[]) {
+  getMealTypes(meals: number, meal_types: MealType[]) {
+    let selectedMeals: string[] = [];
+    if (this.ProgramDetailsForm.value.addBreakFast) {
+      for (let i = 0; i <= meals; i++) {
+        selectedMeals.push(meal_types[i].meal_name_backend);
+      }
+    } 
+    else {
+      for (let i = 1; i <= meals; i++) {
+        selectedMeals.push(meal_types[i].meal_name_backend);
+      }
+    }
+    return selectedMeals;
+  }
+
+  getSnackTypes(meals: boolean[], meal_types: MealType[]) {
     let selectedMeals: string[] = [];
     meals.forEach((status, index) => {
       if (status) {
@@ -265,5 +283,17 @@ export class SetPlanComponent
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+// ================================================new logic===========================================
+  getSelectedMealTypes(){
+    
+  }
+
+  getMealTypesCount(num: number) {
+    const count = [];
+    for (let i = 1; i <= num; i++) {
+      count.push(`${i}`);
+    }
+    return count;
   }
 }

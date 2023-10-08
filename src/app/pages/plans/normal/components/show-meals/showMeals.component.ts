@@ -32,6 +32,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   nextButtonMode$: Observable<boolean | null> = of(false);
   mealDetailsModal: boolean = false;
   carouselVisible: boolean = true;
+  sidebarOptions: boolean = false;
+  ExtraGramOverAll:number = 0;
+  ExtraPieceOverAll:number = 0;
   customOptions: OwlOptions = {
     loop: false,
     autoplay: false,
@@ -287,4 +290,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     return total
   }
 
+  // ============== new logic
+
+  calcExtraGramOverAll(increase: boolean) {
+    this.ExtraGramOverAll = increase ? Math.min(this.ExtraGramOverAll + 50)
+    : Math.max(this.ExtraGramOverAll - 50, 0);
+  }
+
+  calcExtraPieceOverAll(increase: boolean) {
+    this.ExtraPieceOverAll = increase ? Math.min(this.ExtraPieceOverAll + 1)
+    : Math.max(this.ExtraPieceOverAll - 1, 0);
+  }
 }

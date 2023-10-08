@@ -62,13 +62,9 @@
                         <div class="col-12 my-2">
                             <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}<span
                                         class="text-danger">*</span></label></div>
-                            <div class=" d-flex flex-wrap gap-4" formArrayName="meal_types">
-                                <div *ngFor="let meal of meal_types; let i = index">
-                                    <label>
-                                        <input type="checkbox" [formControlName]="i" />
-                                        {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
-                                    </label>
-                                </div>
+                            <div class=" d-flex flex-wrap gap-4">
+                                <p-dropdown [options]="getMealTypesCount(meal_types.length -1)"
+                                 formControlName='meal_types' ngClass="w-100"  placeholder=' '></p-dropdown>
                             </div>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.hasError('atLeastOneChecked', 'meal_types') && 
                                 ProgramDetailsForm.get('meal_types')?.dirty">
@@ -76,8 +72,16 @@
                             </small>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}<span
-                                        class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.breakfast"|translate}}</label></div>
+                            <div class=" d-flex flex-wrap gap-4">
+                                <label>
+                                    <input type="checkbox" formControlName="addBreakFast" />
+                                    {{ translate.currentLang == 'ar' ? "الأفطار":"BreakFast" }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2">
+                            <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}</label></div>
                             <div class=" d-flex flex-wrap gap-4" formArrayName="snack_types">
                                 <div *ngFor="let meal of snack_types; let i = index">
                                     <label>

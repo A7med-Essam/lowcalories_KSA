@@ -55,6 +55,7 @@ import { I18nService } from 'src/app/core/i18n/i18n.service';
 import { FETCH_DISLIKE_START } from 'src/app/store/dislikeStore/dislike.action';
 import { IDislikeResponse } from 'src/app/interfaces/dislike.interface';
 import { dislikeSelector } from 'src/app/store/dislikeStore/dislike.selector';
+import { Calendar } from 'primeng/calendar';
 
 @Component({
   selector: 'app-checkout',
@@ -91,6 +92,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     { name: 'Pick Up', value: false },
   ];
   deliveryFees: number = 0;
+  maxBirthdate:Date;
+  minBirthdate: Date;
   constructor(
     private _Store: Store,
     private _Router: Router,
@@ -100,6 +103,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
     private cdref: ChangeDetectorRef
   ) {
+    this.maxBirthdate = new Date("2015-12-31")
+    this.minBirthdate = new Date('1940-01-01')
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
     this.dislike$ = _Store.select(dislikeSelector);
@@ -247,20 +252,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   setCheckoutForm_Without_Auth() {
     this.checkoutForm_without_auth = this._FormBuilder.group({
-      name: new FormControl(null),
-      email: new FormControl(null, [Validators.email]),
-      password: new FormControl(null),
+      name: new FormControl(null,[Validators.required]),
+      email: new FormControl(null, [Validators.email,Validators.required]),
+      password: new FormControl(null,[Validators.required]),
       mobile: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[\\d]{10}$'),
       ]),
       address: new FormControl(null, [Validators.required]),
-      landline: new FormControl(null),
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(true),
       dislike_meals: new FormControl(null),
+      birthday: new FormControl(null),
       // cutlery: new FormControl(false),
       // bag: new FormControl(false),
     });
@@ -509,5 +514,32 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           area_id.updateValueAndValidity();
         }
       });
+  }
+
+  // =========================== DOB
+  @ViewChild('calendar') calendar!: Calendar;
+  onDateChange(e: any) {
+    if (this.calendar.view == 'year') {
+      this.calendar.view = 'month';
+      this.calendar.dateFormat = 'yy/mm';
+      this.showDialog();
+    } else if (this.calendar.view == 'month') {
+      this.calendar.view = 'date';
+      this.calendar.dateFormat = 'yy/mm/dd';
+      this.showDialog();
+    }
+  }
+
+  showDialog() {
+    setTimeout(() => {
+      this.calendar.showOverlay();
+      this.calendar.inputfieldViewChild.nativeElement.dispatchEvent(
+        new Event('click')
+      );
+    }, 200);
+  }
+
+  onClearClick() {
+    this.calendar.view = 'year';
   }
 }
