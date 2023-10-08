@@ -7,6 +7,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import {
   Dish,
   INormalPlanResponse,
+  INormalProgramPriceResponse,
   IShowMealsResponse,
   Meal,
 } from 'src/app/interfaces/normal-plan.interface';
@@ -32,9 +33,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   nextButtonMode$: Observable<boolean | null> = of(false);
   mealDetailsModal: boolean = false;
   carouselVisible: boolean = true;
-  sidebarOptions: boolean = false;
-  ExtraGramOverAll:number = 0;
-  ExtraPieceOverAll:number = 0;
+  sidebarOptions: boolean = true;
+  ExtraGramOverAll: number = 0;
+  ExtraPieceOverAll: number = 0;
   customOptions: OwlOptions = {
     loop: false,
     autoplay: false,
@@ -58,6 +59,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   };
   currentMeal!: Meal;
   currentMealIndex: number = 0;
+  price$: Observable<INormalProgramPriceResponse | null> = of(null);
 
   constructor(
     private _SharedService: SharedService,
@@ -74,6 +76,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res) {
           this.userMeals = res;
+          this.price$ = _Store.select(
+            fromNormalPlanSelector.normalPlanPriceSelector
+          );
 
           this.ProgramDetails = _Store.select(
             fromNormalPlanSelector.normalPlanSelector
@@ -178,13 +183,20 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     if (meal.mainDish.tag) {
       // const modifiedMeal: Meal = { ...meal };
       const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
-      const mainDish: Dish = modifiedMeal.mainDish
+      const mainDish: Dish = modifiedMeal.mainDish;
       const newQty = increase
         ? Math.min(mainDish.qty + mainDish.counter)
         : Math.max(mainDish.qty - mainDish.counter, mainDish.min_qty);
       mainDish.qty = newQty;
-      mainDish.tag == 'p' ? (mainDish.extra.protein = (mainDish.qty-mainDish.defaultQty) > 0 ?  mainDish.qty-mainDish.defaultQty : 0) : 
-      mainDish.extra.carb =  (mainDish.qty-mainDish.defaultQty) > 0 ? mainDish.qty-mainDish.defaultQty:0
+      mainDish.tag == 'p'
+        ? (mainDish.extra.protein =
+            mainDish.qty - mainDish.defaultQty > 0
+              ? mainDish.qty - mainDish.defaultQty
+              : 0)
+        : (mainDish.extra.carb =
+            mainDish.qty - mainDish.defaultQty > 0
+              ? mainDish.qty - mainDish.defaultQty
+              : 0);
       mainDish.calories = this.calcNutrition(mainDish, meal, 'calories');
       mainDish.fat = this.calcNutrition(mainDish, meal, 'fat');
       mainDish.carb = this.calcNutrition(mainDish, meal, 'carb');
@@ -208,9 +220,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
         // Update the quantity for the specific side dish
         sideDish.qty = newQty;
-        sideDish.tag == 'p' ? 
-        (sideDish.extra.protein =  (sideDish.qty-sideDish.defaultQty) > 0 ?sideDish.qty-sideDish.defaultQty : 0)
-         : sideDish.extra.carb =  (sideDish.qty-sideDish.defaultQty > 0 ? sideDish.qty-sideDish.defaultQty:0)
+        sideDish.tag == 'p'
+          ? (sideDish.extra.protein =
+              sideDish.qty - sideDish.defaultQty > 0
+                ? sideDish.qty - sideDish.defaultQty
+                : 0)
+          : (sideDish.extra.carb =
+              sideDish.qty - sideDish.defaultQty > 0
+                ? sideDish.qty - sideDish.defaultQty
+                : 0);
 
         // Recalculate nutrition information for all side dishes
         modifiedMeal.sideDish.forEach((e, i) => {
@@ -240,15 +258,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   calcExtra(meal: Meal, increase: boolean, type: 'p' | 'c') {
     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
     const mainDish: Dish = modifiedMeal.mainDish;
-    
+
     const extraProperty = type === 'p' ? 'protein' : 'carb';
     const currentExtraValue = mainDish.extra[extraProperty];
     const newExtra = increase
       ? Math.min(currentExtraValue + mainDish.counter)
       : Math.max(currentExtraValue - mainDish.counter, 0);
-    
+
     mainDish.extra[extraProperty] = newExtra;
-    mainDish.qty = (mainDish.defaultQty+this.sumExtra(mainDish.extra))
+    mainDish.qty = mainDish.defaultQty + this.sumExtra(mainDish.extra);
     mainDish.calories = this.calcNutrition(mainDish, meal, 'calories');
     mainDish.fat = this.calcNutrition(mainDish, meal, 'fat');
     mainDish.carb = this.calcNutrition(mainDish, meal, 'carb');
@@ -257,7 +275,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     this.currentMeal = modifiedMeal;
   }
 
-  calcExtra2(meal: Meal, increase: boolean, type: 'p' | 'c', index:number) {
+  calcExtra2(meal: Meal, increase: boolean, type: 'p' | 'c', index: number) {
     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
     const extraProperty = type === 'p' ? 'protein' : 'carb';
     if (index >= 0 && index < modifiedMeal.sideDish.length) {
@@ -265,10 +283,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       const currentExtraValue = sideDish.extra[extraProperty];
 
       const newExtra = increase
-      ? Math.min(currentExtraValue + sideDish.counter)
-      : Math.max(currentExtraValue - sideDish.counter, 0);
+        ? Math.min(currentExtraValue + sideDish.counter)
+        : Math.max(currentExtraValue - sideDish.counter, 0);
       sideDish.extra[extraProperty] = newExtra;
-      sideDish.qty = (sideDish.defaultQty+this.sumExtra(sideDish.extra))
+      sideDish.qty = sideDish.defaultQty + this.sumExtra(sideDish.extra);
       modifiedMeal.sideDish.forEach((e, i) => {
         e.calories = this.calcNutrition2(e, modifiedMeal, 'calories', i);
         e.fat = this.calcNutrition2(e, modifiedMeal, 'fat', i);
@@ -280,25 +298,134 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     }
   }
 
-  sumExtra(extra:any){
+  sumExtra(extra: any) {
     let total = 0;
     for (const key in extra) {
       if (extra.hasOwnProperty(key)) {
         total += extra[key];
       }
     }
-    return total
+    return total;
   }
 
-  // ============== new logic
+  // ======================================================== new logic ========================================================
 
   calcExtraGramOverAll(increase: boolean) {
-    this.ExtraGramOverAll = increase ? Math.min(this.ExtraGramOverAll + 50)
-    : Math.max(this.ExtraGramOverAll - 50, 0);
+    this.ExtraGramOverAll = increase
+      ? Math.min(this.ExtraGramOverAll + 50)
+      : Math.max(this.ExtraGramOverAll - 50, 0);
+    this.addExtraGramsToMeals(this.ExtraGramOverAll, 'gm');
   }
 
   calcExtraPieceOverAll(increase: boolean) {
-    this.ExtraPieceOverAll = increase ? Math.min(this.ExtraPieceOverAll + 1)
-    : Math.max(this.ExtraPieceOverAll - 1, 0);
+    this.ExtraPieceOverAll = increase
+      ? Math.min(this.ExtraPieceOverAll + 1)
+      : Math.max(this.ExtraPieceOverAll - 1, 0);
+    this.addExtraGramsToMeals(this.ExtraPieceOverAll, 'pcs');
+  }
+
+  // addExtraGramsToMeals(shouldAdd: boolean,extra:number, isPieceUnit:boolean) {
+  //   const modifiedMeals = JSON.parse(JSON.stringify(this.userMeals));
+
+  //   // Iterate through the meal data
+  //   for (const meal of modifiedMeals) {
+  //     for (const dish of meal.meals) {
+  //       // Determine if it's a 'piece' unit based on dish type
+  //       const isPieceItem = dish.mainDish.unit === "PCS";
+  //       const isNotPieceItem = dish.mainDish.unit != "PCS";
+  //       if (isPieceUnit == isPieceItem) {
+  //         if (dish.mainDish.tag === 'c') {
+  //           dish.mainDish.extra.carb = extra
+  //         } else if (dish.mainDish.tag === 'p') {
+  //           dish.mainDish.extra.protein = extra
+  //         } else if (dish.mainDish.tag === 'cp') {
+  //           dish.mainDish.extra.carb = extra
+  //           dish.mainDish.extra.protein = extra
+  //         }
+  //       }else if(isPieceUnit == isNotPieceItem){
+  //         if (dish.mainDish.tag === 'c') {
+  //           dish.mainDish.extra.carb = extra
+  //         } else if (dish.mainDish.tag === 'p') {
+  //           dish.mainDish.extra.protein = extra
+  //         } else if (dish.mainDish.tag === 'cp') {
+  //           dish.mainDish.extra.carb = extra
+  //           dish.mainDish.extra.protein = extra
+  //         }
+  //       }
+
+  //       // Iterate through side dishes
+  //       if (dish.sideDish) {
+  //         for (const side of dish.sideDish) {
+  //           // Determine if it's a 'piece' unit based on side dish type
+  //           const isPieceItem = side.unit === "PCS";
+  //           const isNotPieceItem = side.unit != "PCS";
+  //           if (isPieceUnit == isPieceItem) {
+  //             if (side.tag === 'c') {
+  //               side.extra.carb = extra
+  //             } else if (side.tag === 'p') {
+  //               side.extra.protein = extra
+  //             } else if (side.tag === 'cp') {
+  //               side.extra.carb = extra
+  //               side.extra.protein = extra
+  //             }
+  //           }
+  //           else if(isPieceUnit == isNotPieceItem){
+  //             if (side.tag === 'c') {
+  //               side.extra.carb = extra
+  //             } else if (side.tag === 'p') {
+  //               side.extra.protein = extra
+  //             } else if (side.tag === 'cp') {
+  //               side.extra.carb = extra
+  //               side.extra.protein = extra
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   // Now, the 'extra.carb' and 'extra.protein' values have been updated based on the 'tag' and 'isPieceUnit' parameters, and they won't go below 0
+
+  //   console.log(modifiedMeals);
+  // }
+
+  addExtraGramsToMeals( extra: number , type:string) {
+    const modifiedMeals: IShowMealsResponse[] = JSON.parse(
+      JSON.stringify(this.userMeals)
+    );
+    for (const meal of modifiedMeals) {
+      for (const dish of meal.meals) {
+        if (dish.mainDish.unit.toLowerCase() == type) {
+          switch (dish.mainDish.tag) {
+            case 'c':
+              dish.mainDish.extra.carb = extra
+              break;
+            case 'p':
+              dish.mainDish.extra.protein = extra 
+              break;
+            case 'cp':
+              dish.mainDish.extra.protein = extra 
+              dish.mainDish.extra.carb = extra
+              break;
+          }
+        }
+        else {
+          switch (dish.mainDish.tag) {
+            case 'c':
+              dish.mainDish.extra.carb = extra
+              break;
+            case 'p':
+              dish.mainDish.extra.protein =extra 
+              break;
+            case 'cp':
+              dish.mainDish.extra.protein = extra
+              dish.mainDish.extra.carb =extra 
+              break;
+          }
+        }
+      }
+    }
+
+    console.log(modifiedMeals);
   }
 }

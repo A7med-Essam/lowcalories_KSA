@@ -37,7 +37,8 @@ export interface SubscriptionDay {
     id:         number;
     day_count:  string;
     program_id: number;
-    deleted_at: null;
+    deleted_at: any;
+    displayName: string;
 }
 
 export interface IShowMealsResponse {
@@ -114,7 +115,7 @@ export interface INormalSubscriptionPrice{
     meal_count:     number;
     subscription_day_count:      number;
     snack_count:    number;
-    list_days:  IShowMealsResponse[]
+    list_days?:  IShowMealsResponse[]
 }
 
 export interface IGiftCodeData{

@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, of, Subject, takeUntil } from 'rxjs';
+import { map, Observable, of, Subject, takeUntil } from 'rxjs';
 import {
   DeliveryDay,
   INormalPlanResponse,
@@ -25,6 +25,7 @@ import {
   SubscriptionDay,
 } from 'src/app/interfaces/normal-plan.interface';
 import {
+  FETCH_NORMALPLAN_PRICE_START,
   FETCH_NORMALPLAN_START,
   FETCH_SHOWMEALS_START,
   SAVE_NORMAL_SUBSCRIPTION,
@@ -107,6 +108,7 @@ export class SetPlanComponent
       CheckDays: new FormControl(null),
       addBreakFast: new FormControl(null),
     });
+    this.onMealsChange();
   }
 
   atLeastOneCheckedValidator(): ValidatorFn {
@@ -131,9 +133,29 @@ export class SetPlanComponent
   snack_types: MealType[] = [];
   subscription_days: SubscriptionDay[] = [];
   delivery_days: DeliveryDay[] = [];
-
+  meals:any[] = []
   getProgramDetails() {
-    this.ProgramDetails.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+    this.ProgramDetails.pipe(takeUntil(this.destroyed$))
+    .pipe(
+      map(res=>{
+        if (res) {
+          let modifiedDays: SubscriptionDay[] = JSON.parse(
+            JSON.stringify(res.subscription_days)
+          );
+          modifiedDays.forEach(e => {
+            e.displayName = e.day_count + ' Days'
+            return e
+          })
+          const updatedObject = {
+            ...res,
+            subscription_days: modifiedDays
+          };
+          res = updatedObject;
+        }
+        return res
+      })
+    )
+    .subscribe((res) => {
       if (res) {
         this.delivery_days = res.delivery_days.filter(
           (day) => day.closed !== 1
@@ -143,14 +165,12 @@ export class SetPlanComponent
           res.subscription_days[0].day_count
         );
         this.meal_types = res.meal_types;
-        // this.meal_types.forEach(() => {
-        //   const meal_types_FormArray: any =
-        //     this.ProgramDetailsForm.get('meal_types');
-        //   let condition = meal_types_FormArray.controls?.length == 0;
-        //   (this.ProgramDetailsForm.get('meal_types') as FormArray).push(
-        //     new FormControl(condition)
-        //   );
-        // });
+        this.meals = this.getMealTypesCount(res.meal_types.length -1)
+        this.translate.onLangChange
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(lang=>{
+          this.meals = this.getMealTypesCount(res.meal_types.length -1)
+        })
         this.snack_types = res.snack_types;
         this.snack_types.forEach(() => {
           (this.ProgramDetailsForm.get('snack_types') as FormArray).push(
@@ -187,6 +207,15 @@ export class SetPlanComponent
   onSubmit(data: FormGroup) {
     if (data.valid) {
       const subData = this.getSubscriptionData(data);
+      this._Store.dispatch(
+        FETCH_NORMALPLAN_PRICE_START({
+          data: {
+            subscription_day_count: subData.subscription_days,
+            meal_count: subData.meals.length,
+            program_id: subData.program_id,
+            snack_count: subData.snacks.length,
+          },
+        }))
       this._Store.dispatch(SAVE_NORMAL_SUBSCRIPTION({ data: subData }));
       this._Store.dispatch(FETCH_SHOWMEALS_START({ data: subData }));
     }
@@ -285,15 +314,58 @@ export class SetPlanComponent
     this.destroyed$.complete();
   }
 // ================================================new logic===========================================
-  getSelectedMealTypes(){
-    
-  }
 
   getMealTypesCount(num: number) {
     const count = [];
-    for (let i = 1; i <= num; i++) {
-      count.push(`${i}`);
+    for (let i = 0; i <= num; i++) {
+      if (i == 0) {
+        count.push({
+          displayName:`${this.translate.currentLang == 'ar' ? 'بدون وجبات' : 'No Meals'}`,
+          value :i
+        });
+      } else if(i == 1) {
+        count.push({
+          displayName:`${i} ${this.translate.currentLang == 'ar' ? 'وجبه' : 'Meal'}`,
+          value:i
+        });
+      }
+      else {
+        count.push({
+          displayName:`${i} ${this.translate.currentLang == 'ar' ? 'وجبات' : 'Meals'}`,
+          value:i
+        });
+      }
     }
     return count;
+  }
+
+
+  onMealsChange() {
+    // this.ProgramDetailsForm
+    //   .get('addBreakFast')
+    //   ?.valueChanges.pipe(takeUntil(this.destroyed$))
+    //   .subscribe((val) => {
+    //     const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
+    //     if (val) {
+    //       meal_types.clearValidators();
+    //       meal_types.updateValueAndValidity();
+    //     } else {
+    //       meal_types.setValidators([Validators.required]);
+    //       meal_types.updateValueAndValidity();
+    //     }
+    //   });
+    const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
+    const breakFast = this.ProgramDetailsForm.get('addBreakFast') as FormControl;
+    meal_types.patchValue(0)
+    breakFast.patchValue(true)
+    
+      this.ProgramDetailsForm
+      .get('meal_types')
+      ?.valueChanges.pipe(takeUntil(this.destroyed$))
+      .subscribe((val) => {
+        if (val == 0) {
+          breakFast.patchValue(true)
+        }
+      });
   }
 }

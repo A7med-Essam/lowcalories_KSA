@@ -185,7 +185,7 @@
 // ================================================================== new counter
 
 #options_container{
-    padding: 20px;
+    padding: 10px;
     background-color: rgb(16, 21, 15);
     position: absolute;
     right: 0;
@@ -193,6 +193,9 @@
     border-bottom-left-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
+    i{
+        font-size: 35px;
+    }
 }
 
 

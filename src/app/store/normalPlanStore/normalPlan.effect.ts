@@ -90,10 +90,12 @@ export class NormalPlanEffects {
               if (res.status == 0) {
                 this._Router.navigate(['/plans']);
               } else {
-                const currentUrl = this._Router.url.replace('show-meals', '');
-                const otherPath = 'checkout';
-                const newUrl = `${currentUrl}${otherPath}`;
-                this._Router.navigateByUrl(newUrl);
+                if (!Array.isArray(res.data.extra_details)) {
+                  const currentUrl = this._Router.url.replace('show-meals', '');
+                  const otherPath = 'checkout';
+                  const newUrl = `${currentUrl}${otherPath}`;
+                  this._Router.navigateByUrl(newUrl);
+                }
               }
             }),
             catchError((error: HttpErrorResponse) =>

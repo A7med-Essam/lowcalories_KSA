@@ -37,7 +37,7 @@
       "desc": "Choose The Meal Plan For Your Goals",
       "options": {
         "meals": "Number Of Meals",
-        "breakfast": "Add Breakfast",
+        "breakfast": "Include Breakfast",
         "snacks": "Number Of Snacks",
         "days": "Number Of Days",
         "date": "Start Date",
