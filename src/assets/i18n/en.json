@@ -1,6 +1,7 @@
 {
   "lang": "Ar",
   "currency": "SAR",
+  "extra":"additional",
   "deliveryMsg": "We deliver throughout the week, expect Friday.",
   "checkoutMSG": "You will redirect now to complete the payment process , Please Wait ....",
   "buttons": {

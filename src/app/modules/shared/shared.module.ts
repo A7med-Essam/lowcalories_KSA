@@ -7,14 +7,28 @@ import { MealNameTranslatePipe } from 'src/app/core/pipes/meal-name-translate.pi
 import { SumPipe } from 'src/app/core/pipes/sum.pipe';
 import { SumExtraPipe } from 'src/app/core/pipes/sum-extra.pipe';
 import { NutritionTotalPipe } from 'src/app/core/pipes/nutrition-total.pipe';
+import { SumMealExtraPricePipe } from 'src/app/core/pipes/sum-meal-extra-price.pipe';
 
 @NgModule({
-  declarations: [WeekdayTranslatePipe,MealUnitTranslatePipe,MealNameTranslatePipe,SumPipe,SumExtraPipe,NutritionTotalPipe],
-  imports: [
-    CommonModule,I18nModule
+  declarations: [
+    WeekdayTranslatePipe,
+    MealUnitTranslatePipe,
+    MealNameTranslatePipe,
+    SumPipe,
+    SumExtraPipe,
+    NutritionTotalPipe,
+    SumMealExtraPricePipe,
   ],
-  exports:[
-    WeekdayTranslatePipe,MealUnitTranslatePipe,I18nModule,MealNameTranslatePipe,SumPipe,SumExtraPipe,NutritionTotalPipe
-  ]
+  imports: [CommonModule, I18nModule],
+  exports: [
+    WeekdayTranslatePipe,
+    MealUnitTranslatePipe,
+    I18nModule,
+    MealNameTranslatePipe,
+    SumPipe,
+    SumExtraPipe,
+    NutritionTotalPipe,
+    SumMealExtraPricePipe,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

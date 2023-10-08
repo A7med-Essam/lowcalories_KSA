@@ -18,6 +18,7 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
+import { TagModule } from 'primeng/tag';
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -37,7 +38,8 @@ export function playerFactory() {
     RadioButtonModule,
     MultiSelectModule,
     SidebarModule,
-    ToastModule
+    ToastModule,
+    TagModule
   ],
 })
 export class NormalModule {}
