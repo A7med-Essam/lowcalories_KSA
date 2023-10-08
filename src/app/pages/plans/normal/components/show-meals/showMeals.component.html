@@ -80,37 +80,37 @@
          <i class="fas fa-cog txt-main"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
-        <h5>Extra Options</h5>
+        <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
         <div class="my-2">
             <div class="my-4">
-                <h6 class="text-orange">Extra Protein</h6>
+                <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraProtein" | translate}}</h6>
                 <div class="qty d-flex align-items-center justify-content-center disable-selection">
                     <span class="minus" (click)="calcExtraGramOverAll(false)">-</span>
                     <input type="text" class="count" [value]="ExtraGramOverAll" disabled readonly>
                     <span class="plus" (click)="calcExtraGramOverAll(true)">+</span>
                     <span class="txt-main txt-font ms-2">
-                        GM
+                        {{"pages.plans.sidebar.section1.gm" | translate}}
                     </span>
                 </div>
             </div>
     
             <div class="my-4">
-                <h6 class="text-orange">Extra Carb</h6>
+                <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraCarb" | translate}}</h6>
                 <div class="qty d-flex align-items-center justify-content-center disable-selection">
                     <span class="minus"  (click)="calcExtraPieceOverAll(false)">-</span>
                     <input type="text" class="count" [value]="ExtraPieceOverAll" disabled readonly>
                     <span class="plus"  (click)="calcExtraPieceOverAll(true)">+</span>
                     <span class="txt-main txt-font ms-2">
-                        GM
+                        {{"pages.plans.sidebar.section1.gm" | translate}}
                     </span>
                 </div>
             </div>
         </div>
         <small>
-            Some meals are not subject to increase or decrease in quantity
+            {{"pages.plans.sidebar.section1.warning" | translate}}
         </small>
         <hr>
-        <h5>Order Summary</h5>
+        <h5>{{"pages.plans.sidebar.section2.title" | translate}}</h5>
         <div class="mt-3" *ngIf="price$ |async as price"> 
             <div class="d-flex justify-content-between my-1 font-weight-500">
                 <span>{{"pages.checkout.giftcode.total" | translate}}</span> <span class="txt-main">
@@ -145,14 +145,14 @@
             </div>
         </div>
         <hr>
-        <h5>Nutrition Summary</h5>
+        <h5>{{"pages.plans.sidebar.section3.title" | translate}}</h5>
         <div class="mt-3" *ngFor="let meal of userMeals">
             <div *ngFor="let nutrition of meal | nutritionTotal">
-                <small class="txt-main">{{ nutrition.date }} / {{ nutrition.day }}</small> <br>
-                <small><span class="mx-2">Total Protein</span> <span>{{ nutrition.totalProtein }}</span></small> <br>
-                <small><span class="mx-2">Total Calories</span> <span>{{ nutrition.totalCalories }}</span></small> <br>
-                <small><span class="mx-2">Total Carbs</span> <span>{{ nutrition.totalCarbs }}</span></small> <br>
-                <small><span class="mx-2">Total Fat</span> <span>{{ nutrition.totalFat }}</span></small>
+                <small class="txt-main">{{ nutrition.date }} / {{ translate.currentLang == 'ar' ? (nutrition.day | weekdayTranslate ):nutrition.day }}</small> <br>
+                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span> <span>{{ nutrition.totalProtein.toFixed(2) }}</span></small> <br>
+                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span> <span>{{ nutrition.totalCalories.toFixed(2) }}</span></small> <br>
+                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCarb" | translate}}</span> <span>{{ nutrition.totalCarbs.toFixed(2) }}</span></small> <br>
+                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalFat" | translate}}</span> <span>{{ nutrition.totalFat.toFixed(2) }}</span></small>
             </div>
             <hr>
         </div>

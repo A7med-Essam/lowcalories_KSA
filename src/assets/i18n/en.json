@@ -58,6 +58,25 @@
         "meals": "Meals",
         "snacks": "Snacks",
         "cards": "Your Cards"
+      },
+      "sidebar":{
+        "section1":{
+          "title":"Extra Options",
+          "extraCarb":"Extra Carb",
+          "extraProtein":"Extra Protein",
+          "gm":"GM",
+          "warning":"Note: Some meals are not subject to increase or decrease in quantity"
+        },
+        "section2":{
+          "title":"Order Summary"
+        },
+        "section3":{
+          "title":"Nutrition Summary",
+          "totalProtein": "Total Protein",
+          "totalFat": "Total Fat",
+          "totalCarb": "Total Carb",
+          "totalCalories": "Total Calories"
+        }
       }
     },
     "menu": {
