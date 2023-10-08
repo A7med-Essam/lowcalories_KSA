@@ -17,6 +17,7 @@ import { LottieModule } from 'ngx-lottie';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SidebarModule } from 'primeng/sidebar';
+import { ToastModule } from 'primeng/toast';
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -36,6 +37,7 @@ export function playerFactory() {
     RadioButtonModule,
     MultiSelectModule,
     SidebarModule,
+    ToastModule
   ],
 })
 export class NormalModule {}

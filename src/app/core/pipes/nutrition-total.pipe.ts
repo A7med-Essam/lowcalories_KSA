@@ -25,6 +25,16 @@ export class NutritionTotalPipe implements PipeTransform {
         totalCalories += mealItem.mainDish.calories || 0;
         totalCarbs += mealItem.mainDish.carb || 0;
         totalFat += mealItem.mainDish.fat || 0;
+
+              // Side Dish (assuming sideDish is an array)
+      if (mealItem.sideDish && Array.isArray(mealItem.sideDish)) {
+        mealItem.sideDish.forEach((sideDishItem: any) => {
+          totalProtein += sideDishItem.protein || 0;
+          totalCalories += sideDishItem.calories || 0;
+          totalCarbs += sideDishItem.carb || 0;
+          totalFat += sideDishItem.fat || 0;
+        });
+      }
       });
 
       // Create an object with date, day, and total nutrition values

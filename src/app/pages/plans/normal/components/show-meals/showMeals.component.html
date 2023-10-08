@@ -86,7 +86,7 @@
                 <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraProtein" | translate}}</h6>
                 <div class="qty d-flex align-items-center justify-content-center disable-selection">
                     <span class="minus" (click)="calcExtraGramOverAll(false)">-</span>
-                    <input type="text" class="count" [value]="ExtraGramOverAll" disabled readonly>
+                    <input type="text" class="count" [value]="ExtraProteinOverAll" disabled readonly>
                     <span class="plus" (click)="calcExtraGramOverAll(true)">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{"pages.plans.sidebar.section1.gm" | translate}}
@@ -98,7 +98,7 @@
                 <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraCarb" | translate}}</h6>
                 <div class="qty d-flex align-items-center justify-content-center disable-selection">
                     <span class="minus"  (click)="calcExtraPieceOverAll(false)">-</span>
-                    <input type="text" class="count" [value]="ExtraPieceOverAll" disabled readonly>
+                    <input type="text" class="count" [value]="ExtraCarbOverAll" disabled readonly>
                     <span class="plus"  (click)="calcExtraPieceOverAll(true)">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{"pages.plans.sidebar.section1.gm" | translate}}
@@ -178,18 +178,18 @@
         <hr>
         <div class="row text-center">
             <div class="col-sm-6 border-end my-3">
-                <h6 class="txt-main mb-3 me-4">
+                <h6 class="txt-main mb-3 me-4"*ngIf="currentMeal.mainDish.tag != 'cp'&& currentMeal.mainDish.tag != null">
                     {{translate.currentLang == 'ar' ?currentMeal.mainDish.meal_name_ar:currentMeal.mainDish.meal_name_en}}
                 </h6>
-                <div class="qty d-flex align-items-center justify-content-center disable-selection" *ngIf="currentMeal.mainDish.tag != 'cp'">
+                <div class="qty d-flex align-items-center justify-content-center disable-selection" *ngIf="currentMeal.mainDish.tag != 'cp'&& currentMeal.mainDish.tag != null">
                     <span class="minus" (click)="changeMainDishNutrition(currentMeal,false)" [class.disabled-bg]="!currentMeal.mainDish.tag">-</span>
-                    <input type="text" class="count" [value]="currentMeal.mainDish.qty" disabled readonly>
+                    <input type="text" class="count" [value]="currentMeal.mainDish.qty+currentMeal.mainDish.extra.carb+currentMeal.mainDish.extra.protein" disabled readonly>
                     <span class="plus" (click)="changeMainDishNutrition(currentMeal,true)" [class.disabled-bg]="!currentMeal.mainDish.tag">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
                     </span>
                 </div>
-                <div *ngIf="currentMeal.mainDish.tag == 'cp'">
+                <!-- <div *ngIf="currentMeal.mainDish.tag == 'cp'">
                     <div class="my-3">
                         <small class="text-orange">Extra Protien</small>
                         <div class="qty d-flex align-items-center justify-content-center disable-selection">
@@ -213,22 +213,22 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <ng-container *ngIf="currentMeal.sideDish">
                 <div class="col-sm-6 my-3" *ngFor="let item of currentMeal.sideDish; let i = index">
-                    <h6 class="txt-main mb-3 me-4">
+                    <h6 class="txt-main mb-3 me-4" *ngIf="item.tag != 'cp' && item.tag != null">
                         {{translate.currentLang == 'ar' ?item.meal_name_ar:item.meal_name_en}}
                     </h6>
-                    <div class="qty d-flex align-items-center justify-content-center disable-selection" *ngIf="item.tag != 'cp'">
+                    <div class="qty d-flex align-items-center justify-content-center disable-selection" *ngIf="item.tag != 'cp' && item.tag != null">
                         <span class="minus" (click)="changeSideDishNutrition(currentMeal,false,i)" [class.disabled-bg]="!item.tag">-</span>
-                        <input type="text" class="count" [value]="item.qty" disabled readonly>
+                        <input type="text" class="count" [value]="item.qty+item.extra.carb+item.extra.protein" disabled readonly>
                         <span class="plus" (click)="changeSideDishNutrition(currentMeal,true,i)" [class.disabled-bg]="!item.tag">+</span>
                         <span class="txt-main txt-font ms-2">
                             {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
                         </span>
                     </div>
-                    <div *ngIf="item.tag == 'cp'">
+                    <!-- <div *ngIf="item.tag == 'cp'">
                        <div class="my-3">
                         <small class="text-orange">Extra Protien</small>
                         <div  class="qty d-flex align-items-center justify-content-center disable-selection">
@@ -251,13 +251,13 @@
                             </span>
                         </div>
                        </div>
-                    </div>
+                    </div> -->
                 </div>
             </ng-container>
         </div>
-        <div class="text-center">
+        <!-- <div class="text-center">
             <small class="text-orange">{{"pages.plans.warning"|translate}}</small>
-        </div>
+        </div> -->
         <hr>
         <div class="row">
             <div class="col-md-3 col-6 my-2 postion-relative">
@@ -318,3 +318,5 @@
     </div>
 </p-dialog>
 
+<p-toast position="top-left" [showTransformOptions]="'translateY(-100%)'" [showTransitionOptions]="'300ms'"
+    [hideTransitionOptions]="'300ms'" [showTransformOptions]="'translateX(-100%)'"></p-toast>
