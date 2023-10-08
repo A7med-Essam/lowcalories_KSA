@@ -39,6 +39,7 @@ export interface SubscriptionDay {
     program_id: number;
     deleted_at: any;
     displayName: string;
+    displayName_ar: string;
 }
 
 export interface IShowMealsResponse {

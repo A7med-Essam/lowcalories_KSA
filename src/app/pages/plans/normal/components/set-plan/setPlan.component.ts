@@ -144,6 +144,7 @@ export class SetPlanComponent
           );
           modifiedDays.forEach(e => {
             e.displayName = e.day_count + ' Days'
+            e.displayName_ar = e.day_count + ' أيام'
             return e
           })
           const updatedObject = {

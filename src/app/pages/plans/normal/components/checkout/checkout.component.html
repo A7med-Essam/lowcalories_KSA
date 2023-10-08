@@ -316,7 +316,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.register.form.birthdate"|translate}}</label>
                                         <p-calendar view="year" formControlName='birthday' [showIcon]="false" #calendar dateFormat="yy" 

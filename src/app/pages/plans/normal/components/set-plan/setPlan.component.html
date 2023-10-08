@@ -53,7 +53,8 @@
                             <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span
                                         class="text-danger">*</span></label></div>
                             <p-dropdown [options]="subscription_days" formControlName='subscription_days'
-                                ngClass="w-100" optionLabel="displayName" optionValue="day_count" placeholder='{{"pages.plans.options.days"|translate}}'>
+                                ngClass="w-100" [optionLabel]="translate.currentLang == 'ar' ? 'displayName_ar':'displayName'"
+                                 optionValue="day_count" placeholder='{{"pages.plans.options.days"|translate}}'>
                             </p-dropdown>
                             <small class="text-danger "
                                 *ngIf="ProgramDetailsForm.get('subscription_days')?.touched &&
