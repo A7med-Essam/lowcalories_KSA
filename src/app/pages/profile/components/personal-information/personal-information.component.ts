@@ -46,12 +46,6 @@ export class PersonalInformationComponent implements OnInit {
       .getUserInfo()
       .subscribe((res: any) => {
         this.user = res.data;
-        if (this.translate.currentLang == 'ar') {
-          this.user.addresses.map((u:any) => {
-            u.area.area_en = u.area?.area_ar;
-            u.area.state.name = u.area?.state?.name_ar;
-          });
-        }
         this.isLoaded = false;
       });
   }

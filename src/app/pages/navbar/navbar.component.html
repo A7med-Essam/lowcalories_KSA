@@ -1,7 +1,7 @@
 <header id="header" class="header">
   <div class="topbar">
     <div class="container">
-      <div class="row">
+      <div class="row" *ngIf="social$ | async; else noSocial">
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="topbar-left text-left">
             <ul>
@@ -32,6 +32,9 @@
           </div>
         </div>
       </div>
+      <ng-template #noSocial>
+        .
+      </ng-template>
     </div>
   </div>
   <!-- mega menu -->

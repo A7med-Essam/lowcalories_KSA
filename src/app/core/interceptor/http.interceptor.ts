@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const currentLang: string = this._LocalService.getJsonValue('currentLang') || 'en';
-    const baseUrlToCheck = 'http://ksa.lc.dream4soft';
+    const baseUrlToCheck = 'http://thelowcalories.com:73';
 
     let HttpHeader;
     if (this._LocalService.getJsonValue('lowcalories_KSA') && !request.url.startsWith(baseUrlToCheck)) {
