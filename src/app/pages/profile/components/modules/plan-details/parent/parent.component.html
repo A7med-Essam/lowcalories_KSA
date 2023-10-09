@@ -1,21 +1,27 @@
 <section class="bg-img-main mb-5 pt-5">
     <div class="container pt-5">
         <div class="row mt-5">
-            <div class="col-12" #content>
-                <div class="content rounded-lg p-4 pb-3 shadow-lg bg-white" style="height: 550px;overflow: auto;"
+            <div class="col-12">
+                <div class="content rounded-lg p-4 pb-3 shadow-lg bg-white" style="height: 600px;overflow: auto;"
                     *ngIf="!toggleCalendar">
-                    <h4 class="txt-main mb-3">{{"buttons.details" | translate}}</h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="txt-main mb-3">{{"buttons.details" | translate}}</h4>
+                        <h6 class="txt-main pointer m-0" routerLink="../../controls/2">
+                            <i class="fas fa-backward txt-main pointer mx-2"></i>
+                            <span>{{"buttons.back" | translate}}</span>
+                        </h6>
+                    </div>
                     <app-calendar [plan]="plan" [weeks]="weeks" *ngIf="currentTap == 1 && planStatus"
                         (getDetails)="getDetails($event)" (DayDetails)="getDayDetails($event)"></app-calendar>
                     <app-weeks *ngIf="currentTap == 2 && !planStatus" [plan]="plan" [weeks]="weeks"></app-weeks>
                 </div>
 
                 <div class="content rounded-lg p-5 pb-3 shadow-lg bg-white" *ngIf="toggleCalendar"
-                    style="height: 775px;overflow: auto;">
+                    style="height: 600px;overflow: auto;">
 
                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                         <h4 class="txt-main my-3">
-                            {{DayDetails[0].dayName}},{{DayDetails[0].deliveryDate | date: 'MMMd'}}
+                            {{DayDetails[0].dayName | weekdayTranslate}},{{DayDetails[0].deliveryDate | date: 'MMMd'}}
                         </h4>
                         <button (click)="toggleCalendar = false"
                             class="btn bg-main px-5 py-2 text-white">{{"buttons.back" | translate}}</button>
@@ -31,66 +37,32 @@
                                     *ngIf="nutrition.nutrationName == 'CALORIES'">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
+                                        style="top: 0;font-size:12px ;">{{"nutritions.calories" | translate}}</span>
                                     <span class="font-weight-600 txt-font">{{nutrition?.value.toFixed(2)}}</span>
                                 </div>
                                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
                                     *ngIf="nutrition.nutrationName == 'FAT'">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
+                                        style="top: 0;font-size:12px ;">{{"nutritions.fat" | translate}}</span>
                                     <span class="font-weight-600 txt-font">{{nutrition?.value.toFixed(2)}}</span>
                                 </div>
                                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
                                     *ngIf="nutrition.nutrationName == 'PROTIN'">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
+                                        style="top: 0;font-size:12px ;">{{"nutritions.protein" | translate}}</span>
                                     <span class="font-weight-600 txt-font">{{nutrition?.value.toFixed(2)}}</span>
                                 </div>
                                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
                                     *ngIf="nutrition.nutrationName == 'CARB'">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
+                                        style="top: 0;font-size:12px ;">{{"nutritions.carb" | translate}}</span>
                                     <span class="font-weight-600 txt-font">{{nutrition?.value.toFixed(2)}}</span>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row">
-                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
-                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
-                                    <span
-                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
-                                    <span class="font-weight-600 txt-font">{{meal?.calories}}</span>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
-                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
-                                    <span
-                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
-                                    <span class="font-weight-600 txt-font">{{meal?.fats}}</span>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
-                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
-                                    <span
-                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
-                                    <span class="font-weight-600 txt-font">{{meal?.protiens}}</span>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
-                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
-                                    <span
-                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main"
-                                        style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
-                                    <span class="font-weight-600 txt-font">{{meal?.carb}}</span>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>

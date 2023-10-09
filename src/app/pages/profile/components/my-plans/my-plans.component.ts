@@ -55,6 +55,6 @@ export class MyPlansComponent implements OnInit, OnDestroy {
   }
 
   setCurrentPlan(plan: any) {
-    // this._CalendarService.currentPlan.next(plan);
+    this._ProfileService.currentPlan.next(plan);
   }
 }

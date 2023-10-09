@@ -3,7 +3,7 @@
     <div class="row" *ngIf="plans.length > 0 ">
         <div class="col-12" *ngFor="let plan of plans">
             <div class="pointer plans d-flex flex-wrap align-items-center bg-white p-1 rounded-lg shadow-lg my-2"
-                (click)="setCurrentPlan(plan)" routerLink="../../plan">
+                (click)="setCurrentPlan(plan)" routerLink="../../plan/details">
                 <img [src]="plan.planTitle[0].toUpperCase() == 'L'?'../../../../../assets/images/profile/plans/lw.png':'../../../../../assets/images/profile/plans/gw.png'
                 " alt="" class="img-fluid rounded-lg m-3" style="width: 170px;">
                 <div class="text-start p-1">

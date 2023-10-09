@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 
 @Injectable({
@@ -83,5 +83,15 @@ export class ProfileService {
     const headers = new HttpHeaders().set('company', '1')
     return this._ApiService.getReq2(`Subscription/${phone}`, headers);
   }
+
+  // ===================================================================Calender=====================================================
+
+ 
+  currentPlan: BehaviorSubject<any> = new BehaviorSubject(null);
+
+
+  // planStatus: BehaviorSubject<string> = new BehaviorSubject('');
+
+
 
 }

@@ -27,7 +27,7 @@ export class WeeksComponent implements OnInit {
 
   getWeeksCount() {
     let output: any[] = [];
-    this.plan.subDetails.forEach(function (item: any) {
+    this.plan?.subDetails.forEach(function (item: any) {
       var existing = output.filter(function (v, i) {
         return v.weekName == item.weekName;
       });

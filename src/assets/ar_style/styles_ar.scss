@@ -1,4 +1,4 @@
-[lang="ar"] {
+html[lang="ar"] {
     @font-face {
         font-family: "Cairo";
         src: url("../ar-font/Cairo-VariableFont_wght.ttf");
@@ -408,4 +408,47 @@
       }
    
 
+    .Hold .subDay .status:after {
+        left: -45px !important;
+    }
+    .Deliveried .subDay .status:after {
+        left: -70px !important;
+    }
+    .Pending .subDay .status:after {
+        content: 'Pending';
+        left: -70px !important;
+    }
+    .Restricited .subDay .status:after {
+        left: -40px !important;
+    }
+    .Canceld .subDay .status:after {
+        left: -40px !important;
+    }
+    .NotDelivered .subDay .status:after {
+        left: -70px !important;
+    }
+    
+    .Deliveried .subDay .status:after {
+        content: 'تم التوصيل' !important;
+    }
+
+    .Pending .subDay .status:after {
+        content: 'قيد الانتظار' !important;
+    }
+
+    .Hold .subDay .status:after {
+        content: 'توقفت' !important;
+    }
+
+    .Canceld .subDay .status:after {
+        content: 'ألغيت' !important;
+    }
+
+    .NotDelivered .subDay .status:after {
+        content: 'يتم التحضير' !important;
+    }
+
+    .Restricited .subDay .status:after {
+        content: 'مقيده' !important;
+    }
 }

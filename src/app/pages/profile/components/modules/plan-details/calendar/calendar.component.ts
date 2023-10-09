@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 export enum MealStatus {
   Pending,
@@ -20,7 +21,8 @@ export class CalendarComponent implements OnInit {
   @Input() plan!: any;
   @Input() weeks!: any;
   MealStatusEnum = MealStatus;
-  constructor() {}
+  constructor(public translate: TranslateService
+    ) {}
 
   ngOnInit(): void {}
 

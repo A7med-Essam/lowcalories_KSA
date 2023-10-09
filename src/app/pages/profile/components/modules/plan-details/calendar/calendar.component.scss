@@ -10,7 +10,7 @@
 
 
 .Deliveried .subDay .status {
-    // background-image: url('../../../../../../../assets/images/profile/calendar/delivered.png');
+    background-image: url('../../../../../../../assets/images/profile/calendar/delivered.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -21,7 +21,7 @@
 }
 
 .Deliveried .subDay .status:after {
-    content: 'Deliveried';
+    content: 'Delivered';
     position: absolute;
     font-size: 14px;
     top: -2px;
@@ -30,8 +30,10 @@
     font-family: "Lato Regular", sans-serif;
 }
 
+
+
 .Pending .subDay .status {
-    // background-image: url('../../../../../../../assets/images/profile/calendar/Pending.png');
+    background-image: url('../../../../../../../assets/images/profile/calendar/Pending.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -52,7 +54,7 @@
 }
 
 .Hold .subDay .status {
-    // background-image: url('../../../../../../../assets/images/profile/calendar/hold.png');
+    background-image: url('../../../../../../../assets/images/profile/calendar/hold.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -72,7 +74,7 @@
 }
 
 .Canceld .subDay .status {
-    // background-image: url('../../../../../../../assets/images/profile/calendar/off.png');
+    background-image: url('../../../../../../../assets/images/profile/calendar/off.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -82,17 +84,17 @@
 }
 
 .Canceld .subDay .status:after {
-    content: 'Canceld';
+    content: 'Canceled';
     position: absolute;
     font-size: 14px;
     top: 0px;
     left: 24px;
-    color: rgb(101, 14, 4);;
+    color: rgb(101, 14, 4);
     font-family: "Lato Regular", sans-serif;
 }
 
 .NotDelivered .subDay .status {
-    // background-image: url('../../../../../../../assets/images/profile/calendar/preparing.png');
+    background-image: url('../../../../../../../assets/images/profile/calendar/preparing.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -107,12 +109,12 @@
     font-size: 14px;
     top: 1px;
     left: 24px;
-    color: rgb(86, 86, 86);;
+    color: rgb(86, 86, 86);
     font-family: "Lato Regular", sans-serif;
 }
 
 .Restricited .subDay .status {
-    // background-image: url('../../../../../../../assets/images/profile/calendar/restricted.png');
+    background-image: url('../../../../../../../assets/images/profile/calendar/restricted.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -122,7 +124,7 @@
 }
 
 .Restricited .subDay .status:after {
-    content: 'Restricited';
+    content: 'Restricted';
     position: absolute;
     font-size: 14px;
     top: -1px;
@@ -167,3 +169,9 @@
 //     text-align: center;
 //     vertical-align: top;
 // }
+
+.btn:hover {
+    color: #19a44b !important; 
+    background-color: #141a1f !important;
+    border-color: #141a1f !important;
+}

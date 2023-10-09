@@ -16,7 +16,7 @@
             style="max-width: fit-content;">
             <div class="subDay text-center rounded-md p-2 pt-1 my-2 shadow-lg bg-white"
                 (click)="getDetailsComponent();getDayDetails(week)">
-                <div class="text-start mb-2 txt-font f-size-sm">{{week[0]?.dayName}}, <br> {{week[0]?.deliveryDate |
+                <div class="text-start mb-2 txt-font f-size-sm">{{translate.currentLang == 'ar' ? (week[0]?.dayName|weekdayTranslate):week[0]?.dayName}}, <br> {{week[0]?.deliveryDate |
                     date:
                     'MMM d'}}
                 </div>

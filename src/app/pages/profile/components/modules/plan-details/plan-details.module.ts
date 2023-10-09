@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { I18nModule } from 'src/app/core/i18n/i18n.module';
 import { PlanDetailsRoutingModule } from './plan-details-routing.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { WeeksComponent } from './weeks/weeks.component';
 import { ParentComponent } from './parent/parent.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 
 @NgModule({
@@ -17,8 +17,8 @@ import { SkeletonModule } from 'primeng/skeleton';
   imports: [
     CommonModule,
     PlanDetailsRoutingModule,
-    I18nModule,
-    SkeletonModule
+    SkeletonModule,
+    SharedModule
   ]
 })
 export class PlanDetailsModule { }
