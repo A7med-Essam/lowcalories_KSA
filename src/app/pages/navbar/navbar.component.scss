@@ -2116,9 +2116,9 @@
     }
 
     .dropdown-menu[data-bs-popper] {
-      top: 100% !important;
+      top: 50% !important;
       // transform: translateX(-50%);
-      left: -119% ;
+      left: -80% ;
       margin-top: 0.125rem !important;
     }
   }

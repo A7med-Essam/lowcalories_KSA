@@ -384,4 +384,28 @@
         margin-right: 0px !important;
         margin-left: auto !important;
     }
+
+    @media all and (max-width:991.5px){
+        .dropdown-menu[data-bs-popper] {
+          left: 0 !important;
+        }
+      }
+
+
+ 
+
+    @media all and (max-width:1035px) and (min-width: 992px){
+        .mega-menu .menu-links li a {
+            font-size: 0.833em !important;
+        }
+    }
+
+
+    @media all and (max-width:770px){
+        nav.mega-menu .navbar {
+            margin-top: 30px;
+        }
+      }
+   
+
 }
