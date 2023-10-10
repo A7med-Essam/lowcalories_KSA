@@ -334,14 +334,14 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
   calcExtraGramOverAll(increase: boolean) {
     this.ExtraProteinOverAll = increase
-    ? Math.min(this.ExtraProteinOverAll + 50)
+    ? Math.min(this.ExtraProteinOverAll + 50,500)
     : Math.max(this.ExtraProteinOverAll - 50, 0);
     this.addExtraGramsToMeals();
   }
 
   calcExtraPieceOverAll(increase: boolean) {
     this.ExtraCarbOverAll = increase
-    ? Math.min(this.ExtraCarbOverAll + 50)
+    ? Math.min(this.ExtraCarbOverAll + 50,500)
     : Math.max(this.ExtraCarbOverAll - 50, 0);
     this.addExtraGramsToMeals();
   }  
@@ -384,10 +384,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
               meal.mainDish.extra.protein +
               meal.mainDish.extra.carb
           );
-        // Check if the dish has unit "GM"
+
         if (meal.mainDish.unit === 'GM') {
           meal.mainDish.extra = { carb: 0, protein: 0 };
-          // Check the tag and update the "extra" object accordingly
           if (meal.mainDish.tag === 'c') {
             meal.mainDish.extra.carb = this.ExtraCarbOverAll;
           } else if (meal.mainDish.tag === 'p') {
@@ -399,7 +398,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           }
         }else{
           meal.mainDish.extra = { carb: 0, protein: 0 };
-          // Check the tag and update the "extra" object accordingly
           if (meal.mainDish.tag === 'c') {
             meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
           } else if (meal.mainDish.tag === 'p') {
@@ -414,27 +412,30 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
         // Check if there are side dishes and they have unit "GM"
         if (meal.sideDish && meal.sideDish.length > 0) {
           for (const sideDish of meal.sideDish) {
+
+            const percentage11 =
+            Number(sideDish.calories) /
+            Number(
+              sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+            );
+          const percentage22 =
+            Number(sideDish.fat) /
+            Number(
+              sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+            );
+          const percentage33 =
+            Number(sideDish.carb) /
+            Number(
+              sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+            );
+          const percentage44 =
+            Number(sideDish.protein) /
+            Number(
+              sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+            );
+
             if (sideDish.unit === 'GM') {
-              // const percentage1 =
-              //   Number(sideDish.calories) /
-              //   Number(
-              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-              //   );
-              // const percentage2 =
-              //   Number(sideDish.fat) /
-              //   Number(
-              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-              //   );
-              // const percentage3 =
-              //   Number(sideDish.carb) /
-              //   Number(
-              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-              //   );
-              // const percentage4 =
-              //   Number(sideDish.protein) /
-              //   Number(
-              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-              //   );
+
               // Reset the "extra" object for the side dish
               sideDish.extra = { carb: 0, protein: 0 };
 
@@ -448,26 +449,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
                 sideDish.extra.protein = this.ExtraProteinOverAll;
                 sideDish.extra.carb = this.ExtraCarbOverAll;
               }
-              // sideDish.calories =
-              //   Number(percentage1 || 0) *
-              //   Number(
-              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-              //   );
-              // sideDish.fat =
-              //   Number(percentage2 || 0) *
-              //   Number(
-              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-              //   );
-              // sideDish.carb =
-              //   Number(percentage3 || 0) *
-              //   Number(
-              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-              //   );
-              // sideDish.protein =
-              //   Number(percentage4 || 0) *
-              //   Number(
-              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-              //   );
+     
             }
             else{
               if (sideDish.tag === 'c') {
@@ -480,6 +462,27 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
                 sideDish.extra.carb = this.ExtraCarbOverAll/50;
               }
             }
+
+            sideDish.calories =
+            Number(percentage11 || 0) *
+            Number(
+              sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+            );
+          sideDish.fat =
+            Number(percentage22 || 0) *
+            Number(
+              sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+            );
+          sideDish.carb =
+            Number(percentage33 || 0) *
+            Number(
+              sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+            );
+          sideDish.protein =
+            Number(percentage44 || 0) *
+            Number(
+              sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+            );
           }
         }
 

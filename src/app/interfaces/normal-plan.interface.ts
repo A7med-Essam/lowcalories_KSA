@@ -155,5 +155,7 @@ export interface ICheckout {
     subscription_from :string,
     address_id: number,
     address?: string,
-    list_days:  IShowMealsResponse[]
+    list_days:  IShowMealsResponse[];
+    global_extra_carb:number
+    global_extra_protein:number
 }

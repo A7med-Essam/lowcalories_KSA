@@ -323,6 +323,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (form.valid) {
       let sub: any;
       let priceinfo: any;
+      let extra_prices: any;
+
       this.subscriptionInfo$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (sub = res));
@@ -330,6 +332,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.price$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
+
+        this.ProgramDetails
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(res=> extra_prices = res?.extra_prices)
+
+        const c = (((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50;
+        const p = (((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50;
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
@@ -352,6 +361,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         address_id: form.value.address,
         address: form.value.address,
         list_days: this.userMeals ? this.userMeals : [],
+        global_extra_carb:c,
+        global_extra_protein:p
       };
       checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
@@ -364,6 +375,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (form.valid) {
       let sub: any;
       let priceinfo: any;
+      let extra_prices: any;
       this.subscriptionInfo$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (sub = res));
@@ -371,6 +383,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.price$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
+      this.ProgramDetails
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(res=> extra_prices = res?.extra_prices)
+
+      // sub.subscription_days * sub.meal_types 
+      // 6  * 1 * 6
+      // 72/6/6/1*50
+
+      const c = (((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50;
+      const p = (((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50;
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
@@ -397,6 +419,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         subscription_from: 'web',
         address_id: form.value.state_id,
         list_days: this.userMeals ? this.userMeals : [],
+        global_extra_carb:c,
+        global_extra_protein:p
       };
       checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
