@@ -63,7 +63,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   currentMeal!: Meal;
   currentMealIndex: number = 0;
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
-
+  program_extra_prices:{carb:number,protein:number} = {carb:0,protein:0}
   constructor(
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
@@ -87,6 +87,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           this.ProgramDetails = _Store.select(
             fromNormalPlanSelector.normalPlanSelector
           );
+          this.ProgramDetails
+          .pipe(takeUntil(this.destroyed$))
+          .subscribe(res=>{
+            if (res) {
+              this.program_extra_prices = res.extra_prices
+            }else{
+              this.program_extra_prices = {carb:2,protein:6}
+            }
+          })
           this.ProgramMeals = _Store.select(
             fromNormalPlanSelector.showMealsSelector
           );
@@ -243,7 +252,12 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       );
       modifiedMeal.mainDish = mainDish;
       this.currentMeal = modifiedMeal;
+      const allMeals: IShowMealsResponse[] = JSON.parse(JSON.stringify(this.userMeals));
+      allMeals[this.category_index].meals[this.currentMealIndex] = this.currentMeal
+      this.userMeals = allMeals
+      this.sumTotalExtra(this.userMeals);
     }
+
   }
 
   // changeSideDishNutrition(meal: Meal, increase: boolean, index: number) {
@@ -320,6 +334,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
         });
         this.currentMeal = modifiedMeal;
       }
+      const allMeals: IShowMealsResponse[] = JSON.parse(JSON.stringify(this.userMeals));
+      allMeals[this.category_index].meals[this.currentMealIndex] = this.currentMeal
+      this.userMeals = allMeals
+      this.sumTotalExtra(this.userMeals);
     }
   }
 
@@ -613,6 +631,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
     let totalExtraProteinCost = 0;
     let totalExtraCarbCost = 0;
+
     // Iterate through each day's meals
     for (const day of mealPlanData) {
       for (const meal of day.meals) {
@@ -621,9 +640,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           const extraProtein = meal.mainDish.extra.protein || 0; // Get extra protein (default to 0 if not present)
           const extraCarb = meal.mainDish.extra.carb || 0; // Get extra carb (default to 0 if not present)
 
-          // Calculate the cost based on pricing rules
-          totalExtraProteinCost += (extraProtein / 50) * 6; // $6 for every 50 grams of extra protein
-          totalExtraCarbCost += (extraCarb / 50) * 2; // $2 for every 50 grams of extra carb
+          if (meal.mainDish.unit.toLowerCase() == 'gm') {
+            // Calculate the cost based on pricing rules
+          totalExtraProteinCost += (extraProtein / 50) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+          totalExtraCarbCost += (extraCarb / 50) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+          } else {
+            // Calculate the cost based on pricing rules
+          totalExtraProteinCost += (extraProtein / 1) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+          totalExtraCarbCost += (extraCarb / 1) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+          }
         }
         // Check if there are side dishes
         if (meal.sideDish && meal.sideDish.length > 0) {
@@ -632,9 +657,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
               const extraProtein = sideDish.extra.protein || 0; // Get extra protein (default to 0 if not present)
               const extraCarb = sideDish.extra.carb || 0; // Get extra carb (default to 0 if not present)
 
-              // Calculate the cost based on pricing rules for side dishes
-              totalExtraProteinCost += (extraProtein / 50) * 6; // $6 for every 50 grams of extra protein
-              totalExtraCarbCost += (extraCarb / 50) * 2; // $2 for every 50 grams of extra carb
+              if (sideDish.unit.toLowerCase() == 'gm') {
+                   // Calculate the cost based on pricing rules for side dishes
+              totalExtraProteinCost += (extraProtein / 50) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+              totalExtraCarbCost += (extraCarb / 50) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+              } else {
+                   // Calculate the cost based on pricing rules for side dishes
+              totalExtraProteinCost += (extraProtein / 1) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+              totalExtraCarbCost += (extraCarb / 1) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+              }
             }
           }
         }

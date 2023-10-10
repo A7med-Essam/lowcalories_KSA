@@ -11,6 +11,10 @@ export interface INormalPlanResponse {
     subscription_days: SubscriptionDay[];
     delivery_days:     DeliveryDay[];
     shortcut_name:     string;
+    extra_prices:       {
+        carb:number
+        protein:number
+    }
 }
 
 export interface DeliveryDay {

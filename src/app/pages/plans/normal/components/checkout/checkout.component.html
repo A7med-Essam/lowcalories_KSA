@@ -130,7 +130,8 @@
                         <form *ngIf="user.data" [formGroup]='checkoutForm'
                             (ngSubmit)='checkout_With_Auth(checkoutForm)'>
                             <div class="my-4 text-start" *ngIf="checkoutForm.value.delivery_status">
-                                {{"pages.checkout.form.state" | translate}}
+                                {{"pages.checkout.form.state" | translate}}<span
+                                class="text-danger">*</span>
                                 <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
                                     formControlName='state_id'  placeholder=' '></p-dropdown>
                                 <div class="text-start">
@@ -141,7 +142,8 @@
                             </div>
                             <div class="my-4 text-start">
                                 <div class="my-2 text-start" *ngIf="checkoutForm.value.delivery_status">
-                                    <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label>
+                                    <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label><span
+                                    class="text-danger">*</span>
                                     <p-dropdown [options]="this.checkoutForm.get('state_id')?.value?.['areas']" 
                                     optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}" optionValue="id"
                                         formControlName='area_id' placeholder=' '></p-dropdown>
@@ -153,7 +155,8 @@
                                 </div>
                             </div>
                             <div class="my-4 text-start" *ngIf="checkoutForm.value.delivery_status">
-                                <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label>
+                                <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label><span
+                                class="text-danger">*</span>
                                 <input type="text" pInputText formControlName='address' />
                                 <div class="text-start">
                                     <small class="text-danger ms-1"
@@ -164,8 +167,9 @@
                             <div class="my-4 text-start">
                                 <div class="my-2 text-start">
                                     <label class="text-muted">{{"pages.checkout.form.dislike" | translate}}</label>
-                                    <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals" defaultLabel="Select Allergic Meals" 
-                                       optionValue="meal_name" optionLabel="meal_name" display="chip" appendTo="body"></p-multiSelect>
+                                    <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals"
+                                    defaultLabel="{{translate.currentLang == 'ar' ?'اختر الوجبات':'Select Meals'}}" 
+                                    optionValue="meal_name" optionLabel="{{translate.currentLang == 'ar' ?'meal_name_ar':'meal_name'}}" display="chip" appendTo="body"></p-multiSelect>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center my-1 flex-wrap">
@@ -331,8 +335,10 @@
                                 <div class="col-12">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.dislike" | translate}}</label>
-                                        <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals" defaultLabel="Select Allergic Meals" 
-                                           optionValue="meal_name" optionLabel="meal_name" display="chip" appendTo="body"></p-multiSelect>
+                                        <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals"
+                                         defaultLabel="{{translate.currentLang == 'ar' ?'اختر الوجبات ':'Select Meals'}}" 
+                                           optionValue="meal_name" optionLabel="{{translate.currentLang == 'ar' ?'meal_name_ar':'meal_name'}}"
+                                            display="chip" appendTo="body"></p-multiSelect>
                                     </div>
                                 </div>
                             </div>
@@ -437,11 +443,11 @@
                 <i class="fas fa-map-marker-alt mx-2"></i>
                 <div class="text-start">
                     <u class="txt-font-bold">
-                        {{translate.currentLang == 'ar' ? address.area.state.name_ar:address.area.state.name}},
-                        {{translate.currentLang == 'ar' ? address.area.area_ar:address.area.area_en}}
+                        {{translate.currentLang == 'ar' ? address?.area?.state?.name_ar:address?.area?.state?.name}},
+                        {{translate.currentLang == 'ar' ? address?.area?.area_ar:address?.area?.area_en}}
                     </u>
                     <div class="text-muted">
-                        <u>{{address.address}}</u>
+                        <u>{{address?.address}}</u>
                     </div>
                 </div>
             </div>

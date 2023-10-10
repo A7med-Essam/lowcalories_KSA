@@ -72,8 +72,8 @@
                                         <i class="fas fa-info-circle txt-main"></i>
                                         {{ meal.mainDish.meal_type | mealNameTranslate :translate.currentLang}}
                                     </p>
-                                    <small *ngIf="meal | sumMealExtraPrice" class="text-danger">
-                                        {{ meal | sumMealExtraPrice}} {{"currency" | translate}} {{"extra" | translate}}
+                                    <small *ngIf="meal | sumMealExtraPrice :program_extra_prices" class="text-danger">
+                                        {{ meal | sumMealExtraPrice:program_extra_prices}} {{"currency" | translate}} {{"extra" | translate}}
                                     </small>
                                 </div>
                                 <button class="btn py-2 px-4 editBtn" (click)="openDetails(meal,i)">
