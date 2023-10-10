@@ -11,9 +11,9 @@ export interface IGiftCodeResponse{
     vat:         number;
     grand_total: number;
     bag_price :  number;
-    extra_fifty_carb: number;
-    extra_fifty_protein:number;
     extra_details:Extra;
+    global_extra_carb:number
+    global_extra_protein:number
 }
 
 export interface Extra {

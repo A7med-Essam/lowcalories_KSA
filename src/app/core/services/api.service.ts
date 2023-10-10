@@ -28,7 +28,7 @@ export class ApiService {
     params?: HttpParams
   ): Observable<any> {
     const options = { headers: headers };
-    return this.http.get('http://thelowcalories.com:73/api/v1/' + url, options).pipe(retry(2));
+    return this.http.get('https://thelowcalories.com:74/api/v1/' + url, options).pipe(retry(2));
   }
   
 }

@@ -99,8 +99,8 @@ export interface INormalProgramPriceResponse{
     vat:         number;
     grand_total: number;
     bag_price :  number;
-    extra_fifty_carb: number;
-    extra_fifty_protein:number;
+    global_extra_carb:number
+    global_extra_protein:number
     extra_details:Extra;
 }
 
@@ -120,7 +120,9 @@ export interface INormalSubscriptionPrice{
     meal_count:     number;
     subscription_day_count:      number;
     snack_count:    number;
-    list_days?:  IShowMealsResponse[]
+    list_days?:  IShowMealsResponse[];
+    global_extra_carb? :number
+    global_extra_protein? :number
 }
 
 export interface IGiftCodeData{

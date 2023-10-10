@@ -9,6 +9,7 @@ import {
   INormalPlanResponse,
   INormalProgramPriceResponse,
   IShowMealsResponse,
+  ISubscriptionData,
   Meal,
 } from 'src/app/interfaces/normal-plan.interface';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -63,7 +64,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   currentMeal!: Meal;
   currentMealIndex: number = 0;
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
-  program_extra_prices:{carb:number,protein:number} = {carb:0,protein:0}
+  program_extra_prices:{carb:number,protein:number} = {carb:0,protein:0};
+  selected_program!:ISubscriptionData;
   constructor(
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
@@ -122,6 +124,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           this.carouselVisible = true;
         });
       });
+
+      this._Store
+      .select(fromNormalPlanSelector.normalSubscriptionSelector)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        if (res) {
+          this.selected_program = res
+        }
+      });
   }
 
   ngOnInit(): void {}
@@ -150,6 +161,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
                 program_id: res.program_id,
                 snack_count: res.snacks.length,
                 list_days: this.userMeals,
+                global_extra_carb:this.ExtraCarbOverAll,
+                global_extra_protein:this.ExtraProteinOverAll
               },
             })
           );
@@ -192,32 +205,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // changeMainDishNutrition(meal: Meal, increase: boolean) {
-  //   if (meal.mainDish.tag) {
-  //     // const modifiedMeal: Meal = { ...meal };
-  //     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
-  //     const mainDish: Dish = modifiedMeal.mainDish;
-  //     const newQty = increase
-  //       ? Math.min(mainDish.qty + mainDish.counter)
-  //       : Math.max(mainDish.qty - mainDish.counter, mainDish.min_qty);
-  //     mainDish.qty = newQty;
-  //     mainDish.tag == 'p'
-  //       ? (mainDish.extra.protein =
-  //           mainDish.qty - mainDish.defaultQty > 0
-  //             ? mainDish.qty - mainDish.defaultQty
-  //             : 0)
-  //       : (mainDish.extra.carb =
-  //           mainDish.qty - mainDish.defaultQty > 0
-  //             ? mainDish.qty - mainDish.defaultQty
-  //             : 0);
-  //     mainDish.calories = this.calcNutrition(mainDish, meal, 'calories');
-  //     mainDish.fat = this.calcNutrition(mainDish, meal, 'fat');
-  //     mainDish.carb = this.calcNutrition(mainDish, meal, 'carb');
-  //     mainDish.protein = this.calcNutrition(mainDish, meal, 'protein');
-  //     modifiedMeal.mainDish = mainDish;
-  //     this.currentMeal = modifiedMeal;
-  //   }
-  // }
+
 
   changeMainDishNutrition(originalMeal: Meal, increase: boolean) {
     if (originalMeal.mainDish.tag) {
@@ -260,41 +248,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
   }
 
-  // changeSideDishNutrition(meal: Meal, increase: boolean, index: number) {
-  //   if (meal.sideDish[index].tag) {
-  //     // Clone the entire meal object to ensure mutability
-  //     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
 
-  //     // Ensure that the specified index is within the bounds of the sideDish array
-  //     if (index >= 0 && index < modifiedMeal.sideDish.length) {
-  //       const sideDish: Dish = modifiedMeal.sideDish[index];
-  //       const newQty = increase
-  //         ? Math.min(sideDish.qty + sideDish.counter)
-  //         : Math.max(sideDish.qty - sideDish.counter, sideDish.min_qty);
-
-  //       // Update the quantity for the specific side dish
-  //       sideDish.qty = newQty;
-  //       sideDish.tag == 'p'
-  //         ? (sideDish.extra.protein =
-  //             sideDish.qty - sideDish.defaultQty > 0
-  //               ? sideDish.qty - sideDish.defaultQty
-  //               : 0)
-  //         : (sideDish.extra.carb =
-  //             sideDish.qty - sideDish.defaultQty > 0
-  //               ? sideDish.qty - sideDish.defaultQty
-  //               : 0);
-
-  //       // Recalculate nutrition information for all side dishes
-  //       modifiedMeal.sideDish.forEach((e, i) => {
-  //         e.calories = this.calcNutrition2(e, modifiedMeal, 'calories', i);
-  //         e.fat = this.calcNutrition2(e, modifiedMeal, 'fat', i);
-  //         e.carb = this.calcNutrition2(e, modifiedMeal, 'carb', i);
-  //         e.protein = this.calcNutrition2(e, modifiedMeal, 'protein', i);
-  //       });
-  //       this.currentMeal = modifiedMeal;
-  //     }
-  //   }
-  // }
 
   changeSideDishNutrition(
     originalMeal: Meal,
@@ -374,6 +328,225 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     );
   }
 
+
+
+  // ======================================================== new logic ========================================================
+
+  calcExtraGramOverAll(increase: boolean) {
+    this.ExtraProteinOverAll = increase
+    ? Math.min(this.ExtraProteinOverAll + 50)
+    : Math.max(this.ExtraProteinOverAll - 50, 0);
+    this.addExtraGramsToMeals();
+  }
+
+  calcExtraPieceOverAll(increase: boolean) {
+    this.ExtraCarbOverAll = increase
+    ? Math.min(this.ExtraCarbOverAll + 50)
+    : Math.max(this.ExtraCarbOverAll - 50, 0);
+    this.addExtraGramsToMeals();
+  }  
+
+
+
+  addExtraGramsToMeals() {
+    const modifiedMeals: IShowMealsResponse[] = JSON.parse(
+      JSON.stringify(this.userMeals)
+    );
+
+    for (const day of modifiedMeals) {
+      for (const meal of day.meals) {
+        // Reset the "extra" object for the dish
+        const percentage1 =
+          Number(meal.mainDish.calories) /
+          Number(
+            meal.mainDish.qty +
+              meal.mainDish.extra.protein +
+              meal.mainDish.extra.carb
+          );
+        const percentage2 =
+          Number(meal.mainDish.fat) /
+          Number(
+            meal.mainDish.qty +
+              meal.mainDish.extra.protein +
+              meal.mainDish.extra.carb
+          );
+        const percentage3 =
+          Number(meal.mainDish.carb) /
+          Number(
+            meal.mainDish.qty +
+              meal.mainDish.extra.protein +
+              meal.mainDish.extra.carb
+          );
+        const percentage4 =
+          Number(meal.mainDish.protein) /
+          Number(
+            meal.mainDish.qty +
+              meal.mainDish.extra.protein +
+              meal.mainDish.extra.carb
+          );
+        // Check if the dish has unit "GM"
+        if (meal.mainDish.unit === 'GM') {
+          meal.mainDish.extra = { carb: 0, protein: 0 };
+          // Check the tag and update the "extra" object accordingly
+          if (meal.mainDish.tag === 'c') {
+            meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+          } else if (meal.mainDish.tag === 'p') {
+            meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+          }
+          else if (meal.mainDish.tag === 'cp'){
+            meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+            meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+          }
+        }else{
+          meal.mainDish.extra = { carb: 0, protein: 0 };
+          // Check the tag and update the "extra" object accordingly
+          if (meal.mainDish.tag === 'c') {
+            meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
+          } else if (meal.mainDish.tag === 'p') {
+            meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
+          }
+          else if (meal.mainDish.tag === 'cp'){
+            meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
+            meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
+          }
+        }
+
+        // Check if there are side dishes and they have unit "GM"
+        if (meal.sideDish && meal.sideDish.length > 0) {
+          for (const sideDish of meal.sideDish) {
+            if (sideDish.unit === 'GM') {
+              // const percentage1 =
+              //   Number(sideDish.calories) /
+              //   Number(
+              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+              //   );
+              // const percentage2 =
+              //   Number(sideDish.fat) /
+              //   Number(
+              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+              //   );
+              // const percentage3 =
+              //   Number(sideDish.carb) /
+              //   Number(
+              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+              //   );
+              // const percentage4 =
+              //   Number(sideDish.protein) /
+              //   Number(
+              //     sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
+              //   );
+              // Reset the "extra" object for the side dish
+              sideDish.extra = { carb: 0, protein: 0 };
+
+              // Check the tag and update the "extra" object accordingly for the side dish
+              if (sideDish.tag === 'c') {
+                sideDish.extra.carb = this.ExtraCarbOverAll;
+              } else if (sideDish.tag === 'p') {
+                sideDish.extra.protein = this.ExtraProteinOverAll;
+              }
+              else if (meal.mainDish.tag === 'cp'){
+                sideDish.extra.protein = this.ExtraProteinOverAll;
+                sideDish.extra.carb = this.ExtraCarbOverAll;
+              }
+              // sideDish.calories =
+              //   Number(percentage1 || 0) *
+              //   Number(
+              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+              //   );
+              // sideDish.fat =
+              //   Number(percentage2 || 0) *
+              //   Number(
+              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+              //   );
+              // sideDish.carb =
+              //   Number(percentage3 || 0) *
+              //   Number(
+              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+              //   );
+              // sideDish.protein =
+              //   Number(percentage4 || 0) *
+              //   Number(
+              //     sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
+              //   );
+            }
+            else{
+              if (sideDish.tag === 'c') {
+                sideDish.extra.carb = this.ExtraCarbOverAll/50;
+              } else if (sideDish.tag === 'p') {
+                sideDish.extra.protein = this.ExtraProteinOverAll/50;
+              }
+              else if (meal.mainDish.tag === 'cp'){
+                sideDish.extra.protein = this.ExtraProteinOverAll/50;
+                sideDish.extra.carb = this.ExtraCarbOverAll/50;
+              }
+            }
+          }
+        }
+
+        meal.mainDish.calories =
+        Number(percentage1 || 0) *
+        Number(
+          meal.mainDish.qty +
+            meal.mainDish.extra.carb +
+            meal.mainDish.extra.protein
+        );
+      meal.mainDish.fat =
+        Number(percentage2 || 0) *
+        Number(
+          meal.mainDish.qty +
+            meal.mainDish.extra.carb +
+            meal.mainDish.extra.protein
+        );
+      meal.mainDish.carb =
+        Number(percentage3 || 0) *
+        Number(
+          meal.mainDish.qty +
+            meal.mainDish.extra.carb +
+            meal.mainDish.extra.protein
+        );
+      meal.mainDish.protein =
+        Number(percentage4 || 0) *
+        Number(
+          meal.mainDish.qty +
+            meal.mainDish.extra.carb +
+            meal.mainDish.extra.protein
+        );
+      }
+    }
+
+    this.userMeals = modifiedMeals;
+    this.sumTotalExtra(this.userMeals);
+  }
+
+
+
+  sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
+    const meals_count = this.selected_program.subscription_days * this.selected_program.meal_types.length;
+    const protein_price = this.program_extra_prices.protein
+    const carb_price = this.program_extra_prices.carb
+    const extra_protein_count = this.ExtraProteinOverAll / 50
+    const extra_carb_count = this.ExtraCarbOverAll / 50
+
+    const program_extra_protein_price = extra_protein_count * meals_count * protein_price
+    const program_extra_carb_price = extra_carb_count * meals_count * carb_price
+    this.price$ = this.price$.pipe(
+      map((res) => {
+        if (res) {
+          const updatedPrice:INormalProgramPriceResponse = { ...res,
+            global_extra_carb:program_extra_carb_price,global_extra_protein:program_extra_protein_price};
+          return (res = updatedPrice);
+        }
+        return res;
+      })
+    );
+  }
+}
+
+
+
+
+  // ======================================================== old logic ========================================================
+
   // calcExtra(meal: Meal, increase: boolean, type: 'p' | 'c') {
   //   const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
   //   const mainDish: Dish = modifiedMeal.mainDish;
@@ -427,269 +600,195 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   //   return total;
   // }
 
-  // ======================================================== new logic ========================================================
 
-  calcExtraGramOverAll(increase: boolean) {
-    const hasMealWithTagP = this.userMeals.some((mealPlan) => {
-      return mealPlan.meals.some((meal) => {
-        const mainDish = meal.mainDish || {};
-        const tag = mainDish.tag || '';
-        return tag === 'p';
-      });
-    });
+  // changeMainDishNutrition(meal: Meal, increase: boolean) {
+  //   if (meal.mainDish.tag) {
+  //     // const modifiedMeal: Meal = { ...meal };
+  //     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
+  //     const mainDish: Dish = modifiedMeal.mainDish;
+  //     const newQty = increase
+  //       ? Math.min(mainDish.qty + mainDish.counter)
+  //       : Math.max(mainDish.qty - mainDish.counter, mainDish.min_qty);
+  //     mainDish.qty = newQty;
+  //     mainDish.tag == 'p'
+  //       ? (mainDish.extra.protein =
+  //           mainDish.qty - mainDish.defaultQty > 0
+  //             ? mainDish.qty - mainDish.defaultQty
+  //             : 0)
+  //       : (mainDish.extra.carb =
+  //           mainDish.qty - mainDish.defaultQty > 0
+  //             ? mainDish.qty - mainDish.defaultQty
+  //             : 0);
+  //     mainDish.calories = this.calcNutrition(mainDish, meal, 'calories');
+  //     mainDish.fat = this.calcNutrition(mainDish, meal, 'fat');
+  //     mainDish.carb = this.calcNutrition(mainDish, meal, 'carb');
+  //     mainDish.protein = this.calcNutrition(mainDish, meal, 'protein');
+  //     modifiedMeal.mainDish = mainDish;
+  //     this.currentMeal = modifiedMeal;
+  //   }
+  // }
 
-    if (hasMealWithTagP) {
-      this.ExtraProteinOverAll = increase
-        ? Math.min(this.ExtraProteinOverAll + 50)
-        : Math.max(this.ExtraProteinOverAll - 50, 0);
-      this.addExtraGramsToMeals();
-    } else {
-      this._MessageService.clear();
-      this._MessageService.add({
-        severity: 'warn',
-        summary:
-          this.translate.currentLang == 'ar'
-            ? 'لا يمكنك الأضافة'
-            : 'You cannot add',
-        detail:
-          this.translate.currentLang == 'ar'
-            ? 'لا يوجد لديك وجبة تصنيفها بروتين في خطتك'
-            : `you don't have meal labeled as protein in your plan`,
-        life: 3000,
-      });
-    }
-  }
+  // changeSideDishNutrition(meal: Meal, increase: boolean, index: number) {
+  //   if (meal.sideDish[index].tag) {
+  //     // Clone the entire meal object to ensure mutability
+  //     const modifiedMeal: Meal = JSON.parse(JSON.stringify(meal));
 
-  calcExtraPieceOverAll(increase: boolean) {
-    const hasMealWithTagC = this.userMeals.some((mealPlan) => {
-      return mealPlan.meals.some((meal) => {
-        const mainDish = meal.mainDish || {};
-        const tag = mainDish.tag || '';
-        return tag === 'c';
-      });
-    });
-    if (hasMealWithTagC) {
-      this.ExtraCarbOverAll = increase
-        ? Math.min(this.ExtraCarbOverAll + 50)
-        : Math.max(this.ExtraCarbOverAll - 50, 0);
-      this.addExtraGramsToMeals();
-    } else {
-      this._MessageService.clear();
-      this._MessageService.add({
-        severity: 'warn',
-        summary:
-          this.translate.currentLang == 'ar'
-            ? 'لا يمكنك الأضافة'
-            : 'You cannot add',
-        detail:
-          this.translate.currentLang == 'ar'
-            ? 'لا يوجد لديك وجبة تصنيفها كارب في خطتك'
-            : `you don't have meal labeled as carb in your plan`,
-        life: 3000,
-      });
-    }
-  }
+  //     // Ensure that the specified index is within the bounds of the sideDish array
+  //     if (index >= 0 && index < modifiedMeal.sideDish.length) {
+  //       const sideDish: Dish = modifiedMeal.sideDish[index];
+  //       const newQty = increase
+  //         ? Math.min(sideDish.qty + sideDish.counter)
+  //         : Math.max(sideDish.qty - sideDish.counter, sideDish.min_qty);
 
-  addExtraGramsToMeals() {
-    const modifiedMeals: IShowMealsResponse[] = JSON.parse(
-      JSON.stringify(this.userMeals)
-    );
+  //       // Update the quantity for the specific side dish
+  //       sideDish.qty = newQty;
+  //       sideDish.tag == 'p'
+  //         ? (sideDish.extra.protein =
+  //             sideDish.qty - sideDish.defaultQty > 0
+  //               ? sideDish.qty - sideDish.defaultQty
+  //               : 0)
+  //         : (sideDish.extra.carb =
+  //             sideDish.qty - sideDish.defaultQty > 0
+  //               ? sideDish.qty - sideDish.defaultQty
+  //               : 0);
 
-    for (const day of modifiedMeals) {
-      for (const meal of day.meals) {
-        // Check if the dish has unit "GM"
-        if (meal.mainDish.unit === 'GM') {
-          // Reset the "extra" object for the dish
-          const percentage1 =
-            Number(meal.mainDish.calories) /
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.protein +
-                meal.mainDish.extra.carb
-            );
-          const percentage2 =
-            Number(meal.mainDish.fat) /
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.protein +
-                meal.mainDish.extra.carb
-            );
-          const percentage3 =
-            Number(meal.mainDish.carb) /
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.protein +
-                meal.mainDish.extra.carb
-            );
-          const percentage4 =
-            Number(meal.mainDish.protein) /
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.protein +
-                meal.mainDish.extra.carb
-            );
-          meal.mainDish.extra = { carb: 0, protein: 0 };
-          // Check the tag and update the "extra" object accordingly
-          if (meal.mainDish.tag === 'c') {
-            meal.mainDish.extra.carb = this.ExtraCarbOverAll;
-          } else if (meal.mainDish.tag === 'p') {
-            meal.mainDish.extra.protein = this.ExtraProteinOverAll;
-          }
-          meal.mainDish.calories =
-            Number(percentage1 || 0) *
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.carb +
-                meal.mainDish.extra.protein
-            );
-          meal.mainDish.fat =
-            Number(percentage2 || 0) *
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.carb +
-                meal.mainDish.extra.protein
-            );
-          meal.mainDish.carb =
-            Number(percentage3 || 0) *
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.carb +
-                meal.mainDish.extra.protein
-            );
-          meal.mainDish.protein =
-            Number(percentage4 || 0) *
-            Number(
-              meal.mainDish.qty +
-                meal.mainDish.extra.carb +
-                meal.mainDish.extra.protein
-            );
-        }
+  //       // Recalculate nutrition information for all side dishes
+  //       modifiedMeal.sideDish.forEach((e, i) => {
+  //         e.calories = this.calcNutrition2(e, modifiedMeal, 'calories', i);
+  //         e.fat = this.calcNutrition2(e, modifiedMeal, 'fat', i);
+  //         e.carb = this.calcNutrition2(e, modifiedMeal, 'carb', i);
+  //         e.protein = this.calcNutrition2(e, modifiedMeal, 'protein', i);
+  //       });
+  //       this.currentMeal = modifiedMeal;
+  //     }
+  //   }
+  // }
 
-        // Check if there are side dishes and they have unit "GM"
-        if (meal.sideDish && meal.sideDish.length > 0) {
-          for (const sideDish of meal.sideDish) {
-            if (sideDish.unit === 'GM') {
-              const percentage1 =
-                Number(sideDish.calories) /
-                Number(
-                  sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-                );
-              const percentage2 =
-                Number(sideDish.fat) /
-                Number(
-                  sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-                );
-              const percentage3 =
-                Number(sideDish.carb) /
-                Number(
-                  sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-                );
-              const percentage4 =
-                Number(sideDish.protein) /
-                Number(
-                  sideDish.qty + sideDish.extra.protein + sideDish.extra.carb
-                );
-              // Reset the "extra" object for the side dish
-              sideDish.extra = { carb: 0, protein: 0 };
 
-              // Check the tag and update the "extra" object accordingly for the side dish
-              if (sideDish.tag === 'c') {
-                sideDish.extra.carb = this.ExtraCarbOverAll;
-              } else if (sideDish.tag === 'p') {
-                sideDish.extra.protein = this.ExtraProteinOverAll;
-              }
-              sideDish.calories =
-                Number(percentage1 || 0) *
-                Number(
-                  sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-                );
-              sideDish.fat =
-                Number(percentage2 || 0) *
-                Number(
-                  sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-                );
-              sideDish.carb =
-                Number(percentage3 || 0) *
-                Number(
-                  sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-                );
-              sideDish.protein =
-                Number(percentage4 || 0) *
-                Number(
-                  sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
-                );
-            }
-          }
-        }
-      }
-    }
+  // sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
+  //   let totalExtraProteinCost = 0;
+  //   let totalExtraCarbCost = 0;
 
-    this.userMeals = modifiedMeals;
-    this.sumTotalExtra(this.userMeals);
-  }
+  //   // Iterate through each day's meals
+  //   for (const day of mealPlanData) {
+  //     for (const meal of day.meals) {
+  //       // Check if there is an "extra" object for the main dish
+  //       if (meal.mainDish.extra) {
+  //         const extraProtein = meal.mainDish.extra.protein || 0; // Get extra protein (default to 0 if not present)
+  //         const extraCarb = meal.mainDish.extra.carb || 0; // Get extra carb (default to 0 if not present)
 
-  sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
-    let totalExtraProteinCost = 0;
-    let totalExtraCarbCost = 0;
+  //         if (meal.mainDish.unit.toLowerCase() == 'gm') {
+  //           // Calculate the cost based on pricing rules
+  //         totalExtraProteinCost += (extraProtein / 50) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+  //         totalExtraCarbCost += (extraCarb / 50) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+  //         } else {
+  //           // Calculate the cost based on pricing rules
+  //         totalExtraProteinCost += (extraProtein / 1) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+  //         totalExtraCarbCost += (extraCarb / 1) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+  //         }
+  //       }
+  //       // Check if there are side dishes
+  //       if (meal.sideDish && meal.sideDish.length > 0) {
+  //         for (const sideDish of meal.sideDish) {
+  //           if (sideDish.extra) {
+  //             const extraProtein = sideDish.extra.protein || 0; // Get extra protein (default to 0 if not present)
+  //             const extraCarb = sideDish.extra.carb || 0; // Get extra carb (default to 0 if not present)
 
-    // Iterate through each day's meals
-    for (const day of mealPlanData) {
-      for (const meal of day.meals) {
-        // Check if there is an "extra" object for the main dish
-        if (meal.mainDish.extra) {
-          const extraProtein = meal.mainDish.extra.protein || 0; // Get extra protein (default to 0 if not present)
-          const extraCarb = meal.mainDish.extra.carb || 0; // Get extra carb (default to 0 if not present)
+  //             if (sideDish.unit.toLowerCase() == 'gm') {
+  //                  // Calculate the cost based on pricing rules for side dishes
+  //             totalExtraProteinCost += (extraProtein / 50) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+  //             totalExtraCarbCost += (extraCarb / 50) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+  //             } else {
+  //                  // Calculate the cost based on pricing rules for side dishes
+  //             totalExtraProteinCost += (extraProtein / 1) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
+  //             totalExtraCarbCost += (extraCarb / 1) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
 
-          if (meal.mainDish.unit.toLowerCase() == 'gm') {
-            // Calculate the cost based on pricing rules
-          totalExtraProteinCost += (extraProtein / 50) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
-          totalExtraCarbCost += (extraCarb / 50) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
-          } else {
-            // Calculate the cost based on pricing rules
-          totalExtraProteinCost += (extraProtein / 1) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
-          totalExtraCarbCost += (extraCarb / 1) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
-          }
-        }
-        // Check if there are side dishes
-        if (meal.sideDish && meal.sideDish.length > 0) {
-          for (const sideDish of meal.sideDish) {
-            if (sideDish.extra) {
-              const extraProtein = sideDish.extra.protein || 0; // Get extra protein (default to 0 if not present)
-              const extraCarb = sideDish.extra.carb || 0; // Get extra carb (default to 0 if not present)
+  //   this.price$ = this.price$.pipe(
+  //     map((res) => {
+  //       if (res) {
+  //         const extraDetails: Extra = {
+  //           protein: {
+  //             ...res.extra_details.protein,
+  //             total_price: totalExtraProteinCost,
+  //           },
+  //           carb: {
+  //             ...res.extra_details.carb,
+  //             total_price: totalExtraCarbCost,
+  //           },
+  //         };
+  //         const updatedPrice = { ...res, extra_details: extraDetails };
+  //         return (res = updatedPrice);
+  //       }
+  //       return res;
+  //     })
+  //   );
+  // }
 
-              if (sideDish.unit.toLowerCase() == 'gm') {
-                   // Calculate the cost based on pricing rules for side dishes
-              totalExtraProteinCost += (extraProtein / 50) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
-              totalExtraCarbCost += (extraCarb / 50) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
-              } else {
-                   // Calculate the cost based on pricing rules for side dishes
-              totalExtraProteinCost += (extraProtein / 1) * this.program_extra_prices.protein; // $6 for every 50 grams of extra protein
-              totalExtraCarbCost += (extraCarb / 1) * this.program_extra_prices.carb; // $2 for every 50 grams of extra carb
-              }
-            }
-          }
-        }
-      }
-    }
 
-    this.price$ = this.price$.pipe(
-      map((res) => {
-        if (res) {
-          const extraDetails: Extra = {
-            protein: {
-              ...res.extra_details.protein,
-              total_price: totalExtraProteinCost,
-            },
-            carb: {
-              ...res.extra_details.carb,
-              total_price: totalExtraCarbCost,
-            },
-          };
-          const updatedPrice = { ...res, extra_details: extraDetails };
-          return (res = updatedPrice);
-        }
-        return res;
-      })
-    );
-  }
-}
+
+    // calcExtraGramOverAll(increase: boolean) {
+  //   const hasMealWithTagP = this.userMeals.some((mealPlan) => {
+  //     return mealPlan.meals.some((meal) => {
+  //       const mainDish = meal.mainDish || {};
+  //       const tag = mainDish.tag || '';
+  //       return tag === 'p';
+  //     });
+  //   });
+
+  //   if (hasMealWithTagP) {
+  //     this.ExtraProteinOverAll = increase
+  //       ? Math.min(this.ExtraProteinOverAll + 50)
+  //       : Math.max(this.ExtraProteinOverAll - 50, 0);
+  //     this.addExtraGramsToMeals();
+  //   } else {
+  //     this._MessageService.clear();
+  //     this._MessageService.add({
+  //       severity: 'warn',
+  //       summary:
+  //         this.translate.currentLang == 'ar'
+  //           ? 'لا يمكنك الأضافة'
+  //           : 'You cannot add',
+  //       detail:
+  //         this.translate.currentLang == 'ar'
+  //           ? 'لا يوجد لديك وجبة تصنيفها بروتين في خطتك'
+  //           : `you don't have meal labeled as protein in your plan`,
+  //       life: 3000,
+  //     });
+  //   }
+  // }
+
+    // calcExtraPieceOverAll(increase: boolean) {
+  //   const hasMealWithTagC = this.userMeals.some((mealPlan) => {
+  //     return mealPlan.meals.some((meal) => {
+  //       const mainDish = meal.mainDish || {};
+  //       const tag = mainDish.tag || '';
+  //       return tag === 'c';
+  //     });
+  //   });
+  //   if (hasMealWithTagC) {
+  //     this.ExtraCarbOverAll = increase
+  //       ? Math.min(this.ExtraCarbOverAll + 50)
+  //       : Math.max(this.ExtraCarbOverAll - 50, 0);
+  //     this.addExtraGramsToMeals();
+  //   } else {
+  //     this._MessageService.clear();
+  //     this._MessageService.add({
+  //       severity: 'warn',
+  //       summary:
+  //         this.translate.currentLang == 'ar'
+  //           ? 'لا يمكنك الأضافة'
+  //           : 'You cannot add',
+  //       detail:
+  //         this.translate.currentLang == 'ar'
+  //           ? 'لا يوجد لديك وجبة تصنيفها كارب في خطتك'
+  //           : `you don't have meal labeled as carb in your plan`,
+  //       life: 3000,
+  //     });
+  //   }
+  // }

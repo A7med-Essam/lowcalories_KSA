@@ -306,8 +306,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             const updatedObject = {
               ...giftCode,
               extra_details: prevPrice.extra_details,
-              extra_fifty_carb: prevPrice.extra_fifty_carb,
-              extra_fifty_protein: prevPrice.extra_fifty_protein,
+              global_extra_carb: prevPrice.global_extra_carb,
+              global_extra_protein: prevPrice.global_extra_protein,
             };
             giftCode = updatedObject;
           }
