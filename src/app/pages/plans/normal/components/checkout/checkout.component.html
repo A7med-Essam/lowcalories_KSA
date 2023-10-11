@@ -197,7 +197,7 @@
                                 <div class="d-flex justify-content-start align-items-center my-1">
                                     <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
                                         <p-radioButton [inputId]="category.name+1" [value]="category.value" formControlName="delivery_status"></p-radioButton>
-                                        <label [for]="category.name+1" class="mx-2">{{ category.name }}</label>
+                                        <label [for]="category.name+1" class="mx-2">{{translate.currentLang == 'ar' ? category.name_ar: category.name }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -481,3 +481,4 @@
         <ng-lottie height="350px" [options]="options"></ng-lottie>
     </div>
 </div>
+

@@ -397,16 +397,16 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
             meal.mainDish.extra.carb = this.ExtraCarbOverAll;
           }
         }else{
-          meal.mainDish.extra = { carb: 0, protein: 0 };
-          if (meal.mainDish.tag === 'c') {
-            meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
-          } else if (meal.mainDish.tag === 'p') {
-            meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
-          }
-          else if (meal.mainDish.tag === 'cp'){
-            meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
-            meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
-          }
+          // meal.mainDish.extra = { carb: 0, protein: 0 };
+          // if (meal.mainDish.tag === 'c') {
+          //   meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
+          // } else if (meal.mainDish.tag === 'p') {
+          //   meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
+          // }
+          // else if (meal.mainDish.tag === 'cp'){
+          //   meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
+          //   meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
+          // }
         }
 
         // Check if there are side dishes and they have unit "GM"
@@ -452,15 +452,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
      
             }
             else{
-              if (sideDish.tag === 'c') {
-                sideDish.extra.carb = this.ExtraCarbOverAll/50;
-              } else if (sideDish.tag === 'p') {
-                sideDish.extra.protein = this.ExtraProteinOverAll/50;
-              }
-              else if (meal.mainDish.tag === 'cp'){
-                sideDish.extra.protein = this.ExtraProteinOverAll/50;
-                sideDish.extra.carb = this.ExtraCarbOverAll/50;
-              }
+              // if (sideDish.tag === 'c') {
+              //   sideDish.extra.carb = this.ExtraCarbOverAll/50;
+              // } else if (sideDish.tag === 'p') {
+              //   sideDish.extra.protein = this.ExtraProteinOverAll/50;
+              // }
+              // else if (meal.mainDish.tag === 'cp'){
+              //   sideDish.extra.protein = this.ExtraProteinOverAll/50;
+              //   sideDish.extra.carb = this.ExtraCarbOverAll/50;
+              // }
             }
 
             sideDish.calories =

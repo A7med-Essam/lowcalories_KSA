@@ -50,10 +50,10 @@
                                 <div>
                                     <h6>
                                         {{translate.currentLang == 'ar'? meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
-                                        <!-- {{meal.mainDish.qty + meal.mainDish.extra.protein + meal.mainDish.extra.carb}} -->
-                                        <!-- {{translate.currentLang == 'ar' ? (meal.mainDish.unit | mealUnitTranslate):meal.mainDish.unit}} -->
+                                        {{meal.mainDish.qty + meal.mainDish.extra.protein + meal.mainDish.extra.carb}}
+                                        {{translate.currentLang == 'ar' ? (meal.mainDish.unit | mealUnitTranslate):meal.mainDish.unit}}
 
-                                         <!-- <span *ngIf="meal.mainDish.tag == 'p'">
+                                         <span *ngIf="meal.mainDish.tag == 'p'">
                                             <p-tag class="mx-2" [severity]="'primary'"
                                             value="{{(translate.currentLang == 'ar' ?'بروتين':'Protein')}}"></p-tag>
                                          </span>
@@ -64,16 +64,16 @@
                                          <span *ngIf="meal.mainDish.tag == 'cp'">
                                             <p-tag class="mx-2" [severity]="'warning'"
                                             value="{{(translate.currentLang == 'ar' ?'بروتين وكارب':'Protein & Carb')}}"></p-tag>
-                                         </span> -->
+                                         </span>
                                          
                                     </h6>
                                     <ng-container *ngIf="meal.sideDish">
                                         <h6 *ngFor="let sideDish of meal.sideDish">
                                             {{translate.currentLang == 'ar' ?sideDish.meal_name_ar:sideDish.meal_name_en}}
-                                            <!-- {{sideDish.qty + sideDish.extra.protein + sideDish.extra.carb}} -->
-                                            <!-- {{translate.currentLang == 'ar' ? (sideDish.unit | mealUnitTranslate):sideDish.unit}} -->
+                                            {{sideDish.qty + sideDish.extra.protein + sideDish.extra.carb}}
+                                            {{translate.currentLang == 'ar' ? (sideDish.unit | mealUnitTranslate):sideDish.unit}}
                           
-                                            <!-- <span *ngIf="sideDish.tag == 'p'">
+                                            <span *ngIf="sideDish.tag == 'p'">
                                                 <p-tag class="mx-2" [severity]="'primary'"
                                                 value="{{(translate.currentLang == 'ar' ?'بروتين':'Protein')}}"></p-tag>
                                              </span>
@@ -84,7 +84,7 @@
                                              <span *ngIf="sideDish.tag == 'cp'">
                                                 <p-tag class="mx-2" [severity]="'warning'"
                                                 value="{{(translate.currentLang == 'ar' ?'بروتين وكارب':'Protein & Carb')}}"></p-tag>
-                                             </span> -->
+                                             </span>
                                         </h6>
                                     </ng-container>
                                     <div class="d-flex justify-content-between">
@@ -174,8 +174,8 @@
             </div>
         </div>
     </div>
-    <div id="options_container" class="pointer" (click)="sidebarOptions = true">
-        <i class="fas fa-cog txt-main"></i>
+    <div id="options_container" class="pointer" attr.data-content="{{translate.currentLang == 'ar' ? 'ملخص':'SUMMARY'}}" (click)="sidebarOptions = true">
+        <i class="fas fa-info-circle"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
        <div *ngIf="!(selected_program.meal_types.length === 1 && selected_program.meal_types[0] === 'breakfast')">
@@ -205,8 +205,8 @@
                 </div>
             </div>
         </div>
-        <small>
-            {{"pages.plans.sidebar.section1.warning" | translate}}
+        <small class="text-danger">
+            *{{"pages.plans.sidebar.section1.warning" | translate}}
         </small>
         <hr>
        </div>

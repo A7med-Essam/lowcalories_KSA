@@ -91,8 +91,10 @@
                             </div>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>{{"pages.plans.options.date"|translate}} <span
-                                        class="text-danger">*</span></label></div>
+                            <div class="mb-2">
+                                <label>{{"pages.plans.options.date"|translate}} <span class="text-danger">*</span></label>
+                                <div class="text-danger mt-2">{{"calendarMsg"|translate}}</div>
+                            </div>
                             <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" [minDate]="ksaDate"
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
                                 formControlName='Start_Date'  [disabledDays]="[5]"></p-calendar>

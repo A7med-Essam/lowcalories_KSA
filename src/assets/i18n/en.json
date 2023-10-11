@@ -3,7 +3,9 @@
   "currency": "SAR",
   "extra":"additional",
   "deliveryMsg": "We deliver throughout the week, expect Friday.",
+  "delivery_status_msg":"Delivery Fees will be applied on selected location",
   "checkoutMSG": "You will redirect now to complete the payment process , Please Wait ....",
+  "calendarMsg":"Delivery will start 48 hours after subscribing, and there is no delivery on Friday",
   "buttons": {
     "changePassword": "Change Password",
     "read_more": "Read More",
@@ -66,7 +68,7 @@
           "extraCarb":"Extra Carb",
           "extraProtein":"Extra Protein",
           "gm":"GM",
-          "warning":"Note: Some meals are not subject to increase or decrease in quantity"
+          "warning":"Note: Some meals are not subject to an increase or decrease in quantity, and the customer may replace them with other meals."
         },
         "section2":{
           "title":"Order Summary"
@@ -313,7 +315,10 @@
     }
   },
   "footer": {
-    "desc": "We each have different schedules and life pressures that might affect our nutritional choices. So, living a healthy and balanced lifestyle can be both challenging and time consuming. If you want to commit to a healthier lifestyle, you don't have to devote two hours a day to cooking, and spend all your time figuring out what is healthy and what is not. Instead, simply subscribe to our monthly meal packages and live the healthy lifestyle you deserve...",
+    "desc1": "HOW IT STARTED",
+    "desc2": "Having just started as a brunch in Abu Dhabi in 2016, Low Calories is now the biggest group of healthy food restaurants with over 35 locations around the UAE and currently expanding in the Middle East, Oman, Saudi Arabia, Qatar, Egypt, coming soon in London, UK and Sydney, Australia.",
+    "desc3": "OUR CONCEPT",
+    "desc4": "We believed that healthy or diet food with great taste is possible and each day that is what we deliver to our customers. Low Calories Restaurants offer fresh nutritious food, with new ideas and flavors",
     "section1": {
       "title": "Newsletter",
       "desc": "Subscribe to our newsletter keeps you up-to-date!",

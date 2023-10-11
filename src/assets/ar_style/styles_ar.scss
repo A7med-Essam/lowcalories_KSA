@@ -451,4 +451,9 @@ html[lang="ar"] {
     .Restricited .subDay .status:after {
         content: 'مقيده' !important;
     }
+
+    #options_container::after {
+        left: 100% !important;
+        text-align: left !important;
+    }
 }

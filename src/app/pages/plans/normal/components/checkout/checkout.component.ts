@@ -88,8 +88,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   userMeals: IShowMealsResponse[] | null = [];
   areas: Area[] = [];
   deliveryStatus: any[] = [
-    { name: 'Delivery', value: true },
-    { name: 'Pick Up', value: false },
+    { name: 'Delivery',name_ar:'توصيل', value: true },
+    { name: 'Pick Up',name_ar:'ألتقاط من المطعم', value: false },
   ];
   deliveryFees: number = 0;
   maxBirthdate:Date;
@@ -245,7 +245,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      delivery_status: new FormControl(true),
+      delivery_status: new FormControl(false),
       dislike_meals: new FormControl(null),
     });
   }
@@ -263,7 +263,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       state_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
-      delivery_status: new FormControl(true),
+      delivery_status: new FormControl(false),
       dislike_meals: new FormControl(null),
       birthday: new FormControl(null),
       // cutlery: new FormControl(false),
@@ -508,6 +508,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           state_id.updateValueAndValidity();
           area_id.setValidators([Validators.required]);
           area_id.updateValueAndValidity();
+          this.displayWarning()
         } else {
           address.clearValidators();
           address.updateValueAndValidity();
@@ -531,6 +532,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           state_id.updateValueAndValidity();
           area_id.setValidators([Validators.required]);
           area_id.updateValueAndValidity();
+          this.displayWarning()
         } else {
           address.clearValidators();
           address.updateValueAndValidity();
@@ -542,6 +544,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
   }
 
+  displayWarning(){
+    Swal.fire({
+      title: this.translate.instant('delivery_status_msg'),
+      confirmButtonText:
+      this.translate.currentLang == 'ar' ? 'الرجاء المتابعة' : 'Please Proceed',
+    })
+  }
   // =========================== DOB
   @ViewChild('calendar') calendar!: Calendar;
   onDateChange(e: any) {
