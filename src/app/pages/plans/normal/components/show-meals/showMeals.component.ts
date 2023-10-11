@@ -524,7 +524,12 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
 
   sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
-    const meals_count = this.selected_program.subscription_days * this.selected_program.meal_types.length;
+    let meals_count = 0;
+    if (this.selected_program.meal_types.includes("breakfast")) {
+       meals_count = (this.selected_program.meal_types.length -1)*this.selected_program.subscription_days 
+    } else {
+       meals_count = (this.selected_program.meal_types.length)*this.selected_program.subscription_days 
+    }
     const protein_price = this.program_extra_prices.protein
     const carb_price = this.program_extra_prices.carb
     const extra_protein_count = this.ExtraProteinOverAll / 50

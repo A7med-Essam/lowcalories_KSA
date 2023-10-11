@@ -178,6 +178,7 @@
         <i class="fas fa-cog txt-main"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
+       <div *ngIf="!(selected_program.meal_types.length === 1 && selected_program.meal_types[0] === 'breakfast')">
         <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
         <div class="my-2">
             <div class="my-4">
@@ -208,6 +209,7 @@
             {{"pages.plans.sidebar.section1.warning" | translate}}
         </small>
         <hr>
+       </div>
         <h5>{{"pages.plans.sidebar.section2.title" | translate}}</h5>
         <div class="mt-3" *ngIf="price$ |async as price">
             <div class="d-flex justify-content-between my-1 font-weight-500">
