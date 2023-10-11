@@ -337,8 +337,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$))
         .subscribe(res=> extra_prices = res?.extra_prices)
 
-        const c = (((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50;
-        const p = (((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50;
+        const c = ((((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50)/sub.meal_types.length;
+        const p = ((((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50) /sub.meal_types.length;
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
@@ -392,8 +392,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       // 6  * 1 * 6
       // 72/6/6/1*50
 
-      const c = (((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50;
-      const p = (((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50;
+      const c = ((((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50)/sub.meal_types.length;
+      const p = ((((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50) /sub.meal_types.length;
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
