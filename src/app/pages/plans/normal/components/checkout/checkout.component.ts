@@ -342,7 +342,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
-        meal_backend_types: sub?.meal_types,
+        meal_backend_types: sub?.meal_types.filter((item:any) => !item.startsWith("snack")),
+        snack_backend_types: sub?.meal_types.filter((item:any) => item.startsWith("snack")),
         no_snacks: sub?.no_snacks,
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
@@ -396,7 +397,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
-        meal_backend_types: sub?.meal_types,
+        meal_backend_types: sub?.meal_types.filter((item:any) => !item.startsWith("snack")),
+        snack_backend_types: sub?.meal_types.filter((item:any) => item.startsWith("snack")),
         no_snacks: sub?.no_snacks,
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,

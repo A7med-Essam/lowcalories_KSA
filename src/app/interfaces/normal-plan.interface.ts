@@ -136,14 +136,13 @@ export interface ICheckout {
     start_date:     string;
     delivery_days:  string[];
     meal_backend_types:     string[];
+    snack_backend_types:     string[];
     program_id:     number;
     no_snacks:      number;
     total_price:    number;
     price:          number;
     code_id:        number;
     dislike_meals:  [];
-    // bag:            number;
-    // cutlery:        number;
     delivery_status: boolean
     subscription_days: number;
     state_id:     number;

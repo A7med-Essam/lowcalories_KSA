@@ -11,17 +11,17 @@ export class MealNameTranslatePipe implements PipeTransform {
       case 'breakfast':
         return lang === 'en' ? 'Breakfast' : 'فطور';
       case 'meal_one':
-        return lang === 'en' ? 'Lunch' : 'غداء';
+        return lang === 'en' ? 'Meal One' : 'وجبة أولي';
       case 'meal_two':
-        return lang === 'en' ? 'Dinner' : 'عشاء';
+        return lang === 'en' ? 'Meal Two' : 'وجبة ثانية';
       case 'meal_three':
-        return lang === 'en' ? 'PRE-WORKOUT' : 'وجبة ما قبل التمرين';
+        return lang === 'en' ? 'Meal Three' : 'وجبة ثالثة';
       case 'meal_four':
-        return lang === 'en' ? 'AFTER-WORKOUT' : 'وجبة بعد التمرين';
+        return lang === 'en' ? 'Meal Four' : 'وجبة رابعه';
       case 'snack_one':
-        return lang === 'en' ? value : `وجبة خفيفة 1`;
+        return lang === 'en' ? 'Snack One' : `وجبة خفيفة 1`;
       case 'snack_two':
-        return lang === 'en' ? value : `وجبة خفيفة 2`;
+        return lang === 'en' ? 'Snack Two' : `وجبة خفيفة 2`;
       default:
         return value;
     }
