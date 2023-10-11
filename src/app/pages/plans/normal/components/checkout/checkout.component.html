@@ -122,11 +122,11 @@
                                 <u *ngIf="user.data" (click)="displayUserAddressModal()">{{"pages.checkout.selectLocation.title" | translate}}</u>
                             </h6>
                         </div>
-                        <div *ngIf="checkoutResponse$ | async as res">
+                        <!-- <div *ngIf="checkoutResponse$ | async as res">
                             <span *ngIf="res.status == 0" class="text-danger">
                                 {{res.message}}
                             </span>
-                        </div>
+                        </div> -->
 
                         <form *ngIf="user.data" [formGroup]='checkoutForm'
                             (ngSubmit)='checkout_With_Auth(checkoutForm)'>
