@@ -441,7 +441,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           Swal.fire({
             icon: 'error',
             title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
-            text: res.message,
+            text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
             confirmButtonText:
               this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
           });
