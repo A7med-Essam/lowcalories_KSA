@@ -123,6 +123,7 @@ export interface INormalSubscriptionPrice{
     list_days?:  IShowMealsResponse[];
     global_extra_carb? :number
     global_extra_protein? :number
+    include_breakfast:boolean
 }
 
 export interface IGiftCodeData{
@@ -157,4 +158,5 @@ export interface ICheckout {
     list_days:  IShowMealsResponse[];
     global_extra_carb:number
     global_extra_protein:number
+    include_breakfast:boolean
 }

@@ -215,6 +215,7 @@ export class SetPlanComponent
             meal_count: subData.meals.length,
             program_id: subData.program_id,
             snack_count: subData.snacks.length,
+            include_breakfast: subData.meal_types.includes("breakfast")
           },
         }))
       this._Store.dispatch(SAVE_NORMAL_SUBSCRIPTION({ data: subData }));

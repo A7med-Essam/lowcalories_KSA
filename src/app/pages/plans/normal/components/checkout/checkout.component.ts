@@ -56,6 +56,7 @@ import { FETCH_DISLIKE_START } from 'src/app/store/dislikeStore/dislike.action';
 import { IDislikeResponse } from 'src/app/interfaces/dislike.interface';
 import { dislikeSelector } from 'src/app/store/dislikeStore/dislike.selector';
 import { Calendar } from 'primeng/calendar';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-checkout',
@@ -94,6 +95,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   deliveryFees: number = 0;
   maxBirthdate:Date;
   minBirthdate: Date;
+  global_extra_carb:any;
+  global_extra_protein:any;
+
   constructor(
     private _Store: Store,
     private _Router: Router,
@@ -101,7 +105,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _ActivatedRoute: ActivatedRoute,
     private _I18nService: I18nService,
     public translate: TranslateService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private _SharedService:SharedService
   ) {
     this.maxBirthdate = new Date("2015-12-31")
     this.minBirthdate = new Date('1940-01-01')
@@ -214,6 +219,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           status
         );
       });
+
+    this._SharedService.global_extra_protein
+    .pipe(takeUntil(this.destroyed$))
+    .subscribe(res=>{
+      this.global_extra_protein = res
+    })
+
+    this._SharedService.global_extra_carb
+    .pipe(takeUntil(this.destroyed$))
+    .subscribe(res=>{
+      this.global_extra_carb = res
+    })
   }
 
   getDeliveryFees(
@@ -241,9 +258,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   setCheckoutForm() {
     this.checkoutForm = this._FormBuilder.group({
-      address: new FormControl(null, [Validators.required]),
-      state_id: new FormControl(null, [Validators.required]),
-      area_id: new FormControl(null, [Validators.required]),
+      address: new FormControl(null),
+      state_id: new FormControl(null),
+      area_id: new FormControl(null),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(false),
       dislike_meals: new FormControl(null),
@@ -259,9 +276,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.pattern('^[\\d]{10}$'),
       ]),
-      address: new FormControl(null, [Validators.required]),
-      state_id: new FormControl(null, [Validators.required]),
-      area_id: new FormControl(null, [Validators.required]),
+      address: new FormControl(null),
+      state_id: new FormControl(null),
+      area_id: new FormControl(null),
       terms: new FormControl(false, [Validators.requiredTrue]),
       delivery_status: new FormControl(false),
       dislike_meals: new FormControl(null),
@@ -323,7 +340,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (form.valid) {
       let sub: any;
       let priceinfo: any;
-      let extra_prices: any;
 
       this.subscriptionInfo$
         .pipe(takeUntil(this.destroyed$))
@@ -333,12 +349,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-        this.ProgramDetails
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe(res=> extra_prices = res?.extra_prices)
-
-        const c = ((((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50)/sub.meal_types.length;
-        const p = ((((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50) /sub.meal_types.length;
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
@@ -349,8 +359,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
         dislike_meals: form.value.dislike_meals,
-        // bag: Number(form.value.bag),
-        // cutlery: Number(form.value.cutlery),
         delivery_status: form.value.delivery_status,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
@@ -362,8 +370,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         address_id: form.value.address,
         address: form.value.address,
         list_days: this.userMeals ? this.userMeals : [],
-        global_extra_carb:c,
-        global_extra_protein:p
+        global_extra_carb:this.global_extra_carb,
+        global_extra_protein:this.global_extra_protein,
+        include_breakfast: sub.meal_types.includes("breakfast")
       };
       checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
@@ -376,7 +385,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (form.valid) {
       let sub: any;
       let priceinfo: any;
-      let extra_prices: any;
       this.subscriptionInfo$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (sub = res));
@@ -384,16 +392,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.price$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
-      this.ProgramDetails
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(res=> extra_prices = res?.extra_prices)
 
-      // sub.subscription_days * sub.meal_types 
-      // 6  * 1 * 6
-      // 72/6/6/1*50
-
-      const c = ((((priceinfo.global_extra_carb / extra_prices.carb) / sub.subscription_days) ) * 50)/sub.meal_types.length;
-      const p = ((((priceinfo.global_extra_protein / extra_prices.protein) / sub.subscription_days) ) * 50) /sub.meal_types.length;
 
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
@@ -404,8 +403,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
         dislike_meals: form.value.dislike_meals,
-        // bag: Number(form.value.bag),
-        // cutlery: Number(form.value.cutlery),
         delivery_status: form.value.delivery_status,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
@@ -421,8 +418,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         subscription_from: 'web',
         address_id: form.value.state_id,
         list_days: this.userMeals ? this.userMeals : [],
-        global_extra_carb:c,
-        global_extra_protein:p
+        global_extra_carb:this.global_extra_carb,
+        global_extra_protein:this.global_extra_protein,
+        include_breakfast: sub.meal_types.includes("breakfast")
       };
       checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));

@@ -152,6 +152,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
+          this._SharedService.global_extra_carb.next(this.ExtraCarbOverAll)
+          this._SharedService.global_extra_protein.next(this.ExtraProteinOverAll)
           this._Store.dispatch(SAVE_NORMAL_MEALS({ data: this.userMeals }));
           this._Store.dispatch(
             FETCH_NORMALPLAN_PRICE_START({
@@ -162,7 +164,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
                 snack_count: res.snacks.length,
                 list_days: this.userMeals,
                 global_extra_carb:this.ExtraCarbOverAll,
-                global_extra_protein:this.ExtraProteinOverAll
+                global_extra_protein:this.ExtraProteinOverAll,
+                include_breakfast: res.meal_types.includes("breakfast")
               },
             })
           );

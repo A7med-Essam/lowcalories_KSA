@@ -13,7 +13,7 @@ export class NormalPlanService {
   ) { }
 
   getMeals(SubscriptionForm:ISubscriptionData): Observable<{ status: number; data: IShowMealsResponse[]; message: string }> {
-    return this._ApiService.postReq('showMealInDetails',SubscriptionForm);
+    return this._ApiService.postReq('showMealInDetailV2',SubscriptionForm);
   }
 
   getNormalProgramDetails(program_id:number): Observable<{ status: number; data: INormalPlanResponse; message: string }> {

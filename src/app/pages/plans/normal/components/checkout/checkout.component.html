@@ -118,7 +118,7 @@
                     <div class="container" *ngIf="login$ | async as user">
                         <div class="d-flex justify-content-between flex-wrap">
                             <h5>{{"pages.checkout.form.title" | translate}}</h5>
-                            <h6 class="txt-main pointer ms-4">
+                            <h6 class="txt-main pointer ms-4" *ngIf="checkoutForm.value.delivery_status">
                                 <u *ngIf="user.data" (click)="displayUserAddressModal()">{{"pages.checkout.selectLocation.title" | translate}}</u>
                             </h6>
                         </div>
@@ -202,8 +202,8 @@
                                 </div>
                             </div>
                         
-                            <button class="btn w-100 border-0" type="submit" [disabled]="checkoutForm.invalid">
-                                <a class="button pointer py-2 px-5 ms-2">
+                            <button class="btn w-auto p-0 border-0" type="submit" [disabled]="checkoutForm.invalid">
+                                <a class="button pointer py-2 px-5">
                                     {{"buttons.checkout"|translate}}
                                 </a>
                             </button>
@@ -375,9 +375,9 @@
                                 </div>
                             </div>
                           
-                            <button class="btn w-100 border-0" type="submit"
+                            <button class="btn border-0 w-auto p-0" type="submit"
                                 [disabled]="checkoutForm_without_auth.invalid">
-                                <a class="button pointer py-2 px-5 ms-2">
+                                <a class="button pointer py-2 px-5">
                                     {{"buttons.checkout"|translate}}
                                 </a>
                             </button>

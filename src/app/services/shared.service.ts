@@ -1,5 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,8 @@ import { FormGroup } from '@angular/forms';
 export class SharedService {
   constructor() {}
   ksaDate!: Date;
-
+  global_extra_carb: BehaviorSubject<any> = new BehaviorSubject(null);
+  global_extra_protein: BehaviorSubject<any> = new BehaviorSubject(null);
   getFormData(object: any) {
     const formData = new FormData();
     Object.keys(object).forEach((key) => formData.append(key, object[key]));
