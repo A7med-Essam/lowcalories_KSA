@@ -68,7 +68,7 @@
           "extraCarb":"Extra Carb",
           "extraProtein":"Extra Protein",
           "gm":"GM",
-          "warning":"Note: Some meals are not subject to an increase or decrease in quantity, and the customer may replace them with other meals."
+          "warning":"Note: Some meals are not subject to an increase or decrease in quantity, and the customer may replace them with other meals ... like sandwich"
         },
         "section2":{
           "title":"Order Summary"

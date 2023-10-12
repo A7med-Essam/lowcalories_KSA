@@ -201,7 +201,7 @@ export class SetPlanComponent
       this.ProgramDetailsForm.get('Start_Date')?.setValue(new Date(firstDate));
       const DeliveredDays: HTMLElement[] =
         this._ElementRef.nativeElement.querySelectorAll('.deliveredDays');
-      this._SharedService.onSelectedDate(new Date(firstDate), DeliveredDays[0]);
+        this._SharedService.onSelectedDate(new Date(firstDate), DeliveredDays[0]);
     }, 1);
   }
 

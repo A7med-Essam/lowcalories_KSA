@@ -81,6 +81,7 @@ export class SharedService {
         deliveredDays.children[i].children[0].classList.add('active');
         deliveredDays.children[i].children[0].classList.add('zindex_minus');
       }
+      deliveredDays.children[i].children[0].classList.add('active');
     }
   }
 
