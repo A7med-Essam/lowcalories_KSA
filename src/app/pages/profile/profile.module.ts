@@ -19,6 +19,10 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { MyPlansComponent } from './components/my-plans/my-plans.component';
+import { LottieModule } from 'ngx-lottie';
+export function playerFactory() {
+  return import('lottie-web');
+}
 
 @NgModule({
   declarations: [
@@ -44,6 +48,8 @@ import { MyPlansComponent } from './components/my-plans/my-plans.component';
     SkeletonModule,
     CalendarModule,
     InputTextModule,
+    LottieModule.forRoot({ player: playerFactory }),
+
   ],
 })
 export class ProfileModule {}

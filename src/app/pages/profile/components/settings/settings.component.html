@@ -2,6 +2,13 @@
     <h4 class="txt-main mb-3">{{"profile.settings.title" | translate}}</h4>
     <div class="row">
         <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;"
+            (click)="importImage()">
+                <i class="fas fa-upload me-2 txt-main"></i>
+                <span class="txt-font">{{"profile.settings.upload" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12">
             <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" routerLink="../../../menu"
                 (mouseover)="hover(menu, '../../../../../assets/images/profile/settings/menu_white.png');"
                 (mouseout)="unhover(menu, '../../../../../assets/images/profile/settings/menu_green.png');"
@@ -40,7 +47,7 @@
                     alt="" style="width: 22px;">
                 <span class="txt-font">{{"profile.settings.terms" | translate}}</span>
             </div>
-        </div>
+        </div>     
         <div class="col-12 mt-3">
             <h6 class="txt-main mb-3">{{"profile.settings.lowCalories" | translate}}</h6>
             <ng-container *ngFor="let sm of social$ |async">
@@ -67,5 +74,11 @@
                 </ng-container>
             </ng-container>
         </div>
+    </div>
+</div>
+
+<div style="display: none;">
+    <div #lottie>
+        <ng-lottie height="350px" [options]="options"></ng-lottie>
     </div>
 </div>

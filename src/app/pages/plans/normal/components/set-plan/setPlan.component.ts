@@ -111,18 +111,18 @@ export class SetPlanComponent
     this.onMealsChange();
   }
 
-  atLeastOneCheckedValidator(): ValidatorFn {
-    return (formArray: AbstractControl): { [key: string]: boolean } | null => {
-      if (formArray && formArray instanceof FormArray) {
-        const values = formArray.value as boolean[];
-        const hasChecked = values.some((value) => value === true);
+  // atLeastOneCheckedValidator(): ValidatorFn {
+  //   return (formArray: AbstractControl): { [key: string]: boolean } | null => {
+  //     if (formArray && formArray instanceof FormArray) {
+  //       const values = formArray.value as boolean[];
+  //       const hasChecked = values.some((value) => value === true);
 
-        return hasChecked ? null : { atLeastOneChecked: true };
-      }
+  //       return hasChecked ? null : { atLeastOneChecked: true };
+  //     }
 
-      return null;
-    };
-  }
+  //     return null;
+  //   };
+  // }
 
   onSelectedDate(SelectedDate: Date, deliveredDays: HTMLElement) {
     this._SharedService.onSelectedDate(SelectedDate, deliveredDays);
@@ -347,14 +347,14 @@ export class SetPlanComponent
     //   .get('addBreakFast')
     //   ?.valueChanges.pipe(takeUntil(this.destroyed$))
     //   .subscribe((val) => {
-    //     const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
-    //     if (val) {
-    //       meal_types.clearValidators();
-    //       meal_types.updateValueAndValidity();
-    //     } else {
-    //       meal_types.setValidators([Validators.required]);
-    //       meal_types.updateValueAndValidity();
-    //     }
+        // const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
+        // if (val) {
+        //   meal_types.clearValidators();
+        //   meal_types.updateValueAndValidity();
+        // } else {
+        //   meal_types.setValidators([Validators.required]);
+        //   meal_types.updateValueAndValidity();
+        // }
     //   });
     const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
     const breakFast = this.ProgramDetailsForm.get('addBreakFast') as FormControl;
@@ -369,5 +369,11 @@ export class SetPlanComponent
           breakFast.patchValue(true)
         }
       });
+  }
+
+  onBreakfastChange(e:any){
+    const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
+    meal_types.setValidators(e.target.checked ? Validators.required : null);
+    meal_types.updateValueAndValidity();
   }
 }

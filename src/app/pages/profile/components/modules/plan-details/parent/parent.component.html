@@ -21,7 +21,7 @@
 
                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                         <h4 class="txt-main my-3">
-                            {{DayDetails[0].dayName | weekdayTranslate}},{{DayDetails[0].deliveryDate | date: 'MMMd'}}
+                            {{translate.currentLang == 'ar' ? (DayDetails[0].dayName | weekdayTranslate):DayDetails[0].dayName}},{{DayDetails[0].deliveryDate | date}}
                         </h4>
                         <button (click)="toggleCalendar = false"
                             class="btn bg-main px-5 py-2 text-white">{{"buttons.back" | translate}}</button>

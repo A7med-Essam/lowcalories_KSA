@@ -1,29 +1,33 @@
-
-.settings:hover{
+.settings:hover {
     background-color: #19a44b !important;
     color: #fff !important;
+
+    i {
+        color: #fff !important;
+    }
 }
 
-:host{
-    ::ng-deep .p-dropdown{
+:host {
+    ::ng-deep .p-dropdown {
         border: 0;
-        &:hover{
+
+        &:hover {
             border: 0;
         }
     }
 
-    ::ng-deep .p-dropdown:not(.p-disabled).p-focus{
+    ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
         border: 0;
     }
-    
-    ::ng-deep .p-dropdown:not(.p-disabled):hover{
+
+    ::ng-deep .p-dropdown:not(.p-disabled):hover {
         border: 0;
     }
 
 }
 
 .btn:hover {
-    color: #19a44b !important; 
+    color: #19a44b !important;
     background-color: #141a1f !important;
     border-color: #141a1f !important;
 }

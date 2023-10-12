@@ -2173,3 +2173,12 @@
 .btn.show{
   border:1px solid transparent !important;
 }
+
+@media all and (max-width:350px){
+  .menu-logo{
+    display: none !important;
+  }
+  .navbar-collapse .menu-links, .navbar-toggler{
+    margin-top: 20px;
+  }
+}

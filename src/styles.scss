@@ -3615,8 +3615,9 @@ table tr td a {
 }
 
 .special-menu .menu-body .menu-thumbnail img {
-  width: 150px;
-  height: 100%;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
 
 .our-menu .middle-image {
@@ -3643,7 +3644,7 @@ table tr td a {
 
 .menu-body .menu-thumbnail img {
   width: 100px;
-  height: 100%;
+  height: 100px;
 }
 
 .menu-body .menu-thumbnail {
@@ -6398,5 +6399,6 @@ input[type=checkbox] {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
   border-color: #b2f1ca;
 }
+
 
 @import "./assets/ar_style/styles_ar.scss";

@@ -9,3 +9,15 @@ main ol li {
         font-size: 35px;
     }
 }
+
+@media (max-width:767px){
+    .inner-intro h1 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width:300px){
+    .inner-intro h1 {
+        font-size: 14px;
+    }
+}
