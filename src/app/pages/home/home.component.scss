@@ -26,17 +26,17 @@
 }
 
 #slider-1 {
-    background-image: url('../../../assets/images/slider/slider1.png');
+    background-image: url('../../../assets/images/slider/Website-01.jpg');
     background-size: 100% 100%;
     height: 700px;
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
-    justify-content: end;
     align-items: end;
 }
 
 #slider-2 {
-    background-image: url('../../../assets/images/slider/slider2.png');
+    background-image: url('../../../assets/images/slider/Website-02.jpg');
     background-size: 100% 100%;
     height: 700px;
     display: flex;
