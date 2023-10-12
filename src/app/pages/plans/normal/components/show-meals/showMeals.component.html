@@ -178,7 +178,8 @@
         <i class="fas fa-info-circle"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
-       <div *ngIf="!(selected_program.meal_types.length === 1 && selected_program.meal_types[0] === 'breakfast')">
+        {{check_meal_types()}}
+       <div *ngIf="!check_meal_types()">
         <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
         <div class="my-2">
             <div class="my-4">
@@ -244,21 +245,26 @@
             </div>
         </div>
         <hr>
-        <h5>{{"pages.plans.sidebar.section3.title" | translate}}</h5>
-        <div class="mt-3" *ngFor="let meal of userMeals">
-            <div *ngFor="let nutrition of meal | nutritionTotal">
-                <small class="txt-main">{{ nutrition.date }} / {{ translate.currentLang == 'ar' ? (nutrition.day |
-                    weekdayTranslate ):nutrition.day }}</small> <br>
-                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span> <span>{{
-                        nutrition.totalProtein.toFixed(2) }}</span></small> <br>
-                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span> <span>{{
-                        nutrition.totalCalories.toFixed(2) }}</span></small> <br>
-                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCarb" | translate}}</span> <span>{{
-                        nutrition.totalCarbs.toFixed(2) }}</span></small> <br>
-                <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalFat" | translate}}</span> <span>{{
-                        nutrition.totalFat.toFixed(2) }}</span></small>
+        <button class="btn summary-toggle-btn mb-3 w-100" (click)="showNutritionSummary = !showNutritionSummary">
+            {{ showNutritionSummary ? ("buttons.hideSummary"|translate) : "buttons.showSummary"|translate}}
+        </button>
+        <h5 *ngIf="showNutritionSummary">{{"pages.plans.sidebar.section3.title" | translate}}</h5>
+        <div *ngIf="showNutritionSummary">
+            <div class="mt-3" *ngFor="let meal of userMeals">
+                <div *ngFor="let nutrition of meal | nutritionTotal">
+                    <small class="txt-main">{{ nutrition.date }} / {{ translate.currentLang == 'ar' ? (nutrition.day |
+                        weekdayTranslate ):nutrition.day }}</small> <br>
+                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span> <span>{{
+                            nutrition.totalProtein.toFixed(2) }}</span></small> <br>
+                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span> <span>{{
+                            nutrition.totalCalories.toFixed(2) }}</span></small> <br>
+                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCarb" | translate}}</span> <span>{{
+                            nutrition.totalCarbs.toFixed(2) }}</span></small> <br>
+                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalFat" | translate}}</span> <span>{{
+                            nutrition.totalFat.toFixed(2) }}</span></small>
+                </div>
+                <hr>
             </div>
-            <hr>
         </div>
     </p-sidebar>
 </section>

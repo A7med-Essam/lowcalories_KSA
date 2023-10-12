@@ -37,7 +37,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   nextButtonMode$: Observable<boolean | null> = of(false);
   mealDetailsModal: boolean = false;
   carouselVisible: boolean = true;
-  sidebarOptions: boolean = true;
+  sidebarOptions: boolean = false;
+  showNutritionSummary :boolean = false;
   ExtraProteinOverAll: number = 0;
   ExtraCarbOverAll: number = 0;
   customOptions: OwlOptions = {
@@ -388,18 +389,23 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
               meal.mainDish.extra.carb
           );
 
-        if (meal.mainDish.unit === 'GM') {
-          meal.mainDish.extra = { carb: 0, protein: 0 };
-          if (meal.mainDish.tag === 'c') {
-            meal.mainDish.extra.carb = this.ExtraCarbOverAll;
-          } else if (meal.mainDish.tag === 'p') {
-            meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+          if (meal.mainDish.meal_type != 'breakfast' && meal.mainDish.meal_type !='snack_one'&& meal.mainDish.meal_type !='snack_two') {
+            if (meal.mainDish.unit === 'GM') {
+              meal.mainDish.extra = { carb: 0, protein: 0 };
+              if (meal.mainDish.tag === 'c') {
+                meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+              } else if (meal.mainDish.tag === 'p') {
+                meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+              }
+              else if (meal.mainDish.tag === 'cp'){
+                meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+              }
+            }
           }
-          else if (meal.mainDish.tag === 'cp'){
-            meal.mainDish.extra.protein = this.ExtraProteinOverAll;
-            meal.mainDish.extra.carb = this.ExtraCarbOverAll;
-          }
-        }else{
+          
+       
+        // else{
           // meal.mainDish.extra = { carb: 0, protein: 0 };
           // if (meal.mainDish.tag === 'c') {
           //   meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
@@ -410,12 +416,12 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           //   meal.mainDish.extra.protein = this.ExtraProteinOverAll/50;
           //   meal.mainDish.extra.carb = this.ExtraCarbOverAll/50;
           // }
-        }
+        // }
 
         // Check if there are side dishes and they have unit "GM"
         if (meal.sideDish && meal.sideDish.length > 0) {
           for (const sideDish of meal.sideDish) {
-
+            if (sideDish.meal_type != 'breakfast' && sideDish.meal_type !='snack_one'&& sideDish.meal_type !='snack_two') {
             const percentage11 =
             Number(sideDish.calories) /
             Number(
@@ -465,6 +471,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
               //   sideDish.extra.carb = this.ExtraCarbOverAll/50;
               // }
             }
+            
 
             sideDish.calories =
             Number(percentage11 || 0) *
@@ -487,6 +494,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
               sideDish.qty + sideDish.extra.carb + sideDish.extra.protein
             );
           }
+        }
         }
 
         meal.mainDish.calories =
@@ -527,12 +535,18 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
 
   sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
-    let meals_count = 0;
-    if (this.selected_program.meal_types.includes("breakfast")) {
-       meals_count = (this.selected_program.meal_types.length -1)*this.selected_program.subscription_days 
-    } else {
-       meals_count = (this.selected_program.meal_types.length)*this.selected_program.subscription_days 
-    }
+    // let meals_count = 0;
+    // if (this.selected_program.meal_types.includes("breakfast")) {
+    //    meals_count = (this.selected_program.meal_types.length -1)*this.selected_program.subscription_days 
+    // } else {
+    //    meals_count = (this.selected_program.meal_types.length)*this.selected_program.subscription_days 
+    // }
+    // const filteredMealTypes = this.selected_program.meal_types.filter(type => type !== "breakfast");
+
+    const excludedMealTypes = ["breakfast", "snack_one", "snack_two"];
+    const filteredMealTypes = this.selected_program.meal_types.filter(type => !excludedMealTypes.includes(type));
+    const meals_count = (filteredMealTypes.length) * this.selected_program.subscription_days;
+
     const protein_price = this.program_extra_prices.protein
     const carb_price = this.program_extra_prices.carb
     const extra_protein_count = this.ExtraProteinOverAll / 50
@@ -551,6 +565,29 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+
+  check_meal_types(): boolean {
+    const mealTypes = this.selected_program.meal_types;
+  
+    // Check Condition 1: Length is 3, and it contains "breakfast," "snack_one," and "snack_two"
+    const isCondition1Met = mealTypes.length === 3
+      && mealTypes.includes("breakfast")
+      && mealTypes.includes("snack_one")
+      && mealTypes.includes("snack_two");
+  
+    // Check Condition 2: Length is 2, and it contains "breakfast" and one of "snack_one" or "snack_two"
+    const isCondition2Met = mealTypes.length === 2
+      && mealTypes.includes("breakfast")
+      && (mealTypes.includes("snack_one") || mealTypes.includes("snack_two"));
+  
+    // Check Condition 3: Length is 1, and it contains "breakfast"
+    const isCondition3Met = mealTypes.length === 1 && mealTypes[0] === "breakfast";
+  
+    // Return true if any of the conditions are met
+    return isCondition1Met || isCondition2Met || isCondition3Met;
+  }
+  
 }
 
 

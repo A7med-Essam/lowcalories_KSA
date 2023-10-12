@@ -31,7 +31,9 @@
     "delete": "Delete",
     "addNewAddress": "Add New Address",
     "editAddress": "Edit Address",
-    "save":"Save"
+    "save":"Save",
+    "showSummary":"Show Nutrition Summary",
+    "hideSummary":"Hide Nutrition Summary"
   },
   "pages": {
     "home": "Home",
@@ -289,7 +291,7 @@
       },
       "overview3": {
         "title": "DAILY DELIVERY",
-        "desc": "Our delivery time is from 10AM-10PM daily except Fridays."
+        "desc": "Our delivery time is from 9AM-6PM daily except Fridays."
       }
     },
     "section5": {
