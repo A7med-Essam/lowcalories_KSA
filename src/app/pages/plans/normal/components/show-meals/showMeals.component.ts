@@ -70,7 +70,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   constructor(
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
-    private _MessageService: MessageService,
+    // private _MessageService: MessageService,
     private _Router: Router,
     private _Store: Store,
     private _I18nService: I18nService,
@@ -134,6 +134,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           this.selected_program = res
         }
       });
+
+      this.ExtraProteinOverAll = this._SharedService.global_extra_protein.value || 0
+      this.ExtraCarbOverAll = this._SharedService.global_extra_carb.value || 0
+      this.sumTotalExtra();
   }
 
   ngOnInit(): void {}
@@ -156,22 +160,26 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           this._SharedService.global_extra_carb.next(this.ExtraCarbOverAll)
           this._SharedService.global_extra_protein.next(this.ExtraProteinOverAll)
           this._Store.dispatch(SAVE_NORMAL_MEALS({ data: this.userMeals }));
-          this._Store.dispatch(
-            FETCH_NORMALPLAN_PRICE_START({
-              data: {
-                subscription_day_count: res.subscription_days,
-                meal_count: res.meals.length,
-                program_id: res.program_id,
-                snack_count: res.snacks.length,
-                list_days: this.userMeals,
-                global_extra_carb:this.ExtraCarbOverAll,
-                global_extra_protein:this.ExtraProteinOverAll,
-                include_breakfast: res.meal_types.includes("breakfast")
-              },
-            })
-          );
+          this.getPrice(res)
         }
       });
+  }
+
+  getPrice(res:ISubscriptionData){
+    this._Store.dispatch(
+      FETCH_NORMALPLAN_PRICE_START({
+        data: {
+          subscription_day_count: res.subscription_days,
+          meal_count: res.meals.length,
+          program_id: res.program_id,
+          snack_count: res.snacks.length,
+          list_days: this.userMeals,
+          global_extra_carb:this.ExtraCarbOverAll,
+          global_extra_protein:this.ExtraProteinOverAll,
+          include_breakfast: res.meal_types.includes("breakfast")
+        },
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -209,8 +217,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   changeMainDishNutrition(originalMeal: Meal, increase: boolean) {
     if (originalMeal.mainDish.tag) {
       const modifiedMeal: Meal = JSON.parse(JSON.stringify(originalMeal));
@@ -247,12 +253,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       const allMeals: IShowMealsResponse[] = JSON.parse(JSON.stringify(this.userMeals));
       allMeals[this.category_index].meals[this.currentMealIndex] = this.currentMeal
       this.userMeals = allMeals
-      this.sumTotalExtra(this.userMeals);
+      this.sumTotalExtra();
     }
 
   }
-
-
 
   changeSideDishNutrition(
     originalMeal: Meal,
@@ -295,7 +299,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       const allMeals: IShowMealsResponse[] = JSON.parse(JSON.stringify(this.userMeals));
       allMeals[this.category_index].meals[this.currentMealIndex] = this.currentMeal
       this.userMeals = allMeals
-      this.sumTotalExtra(this.userMeals);
+      this.sumTotalExtra();
     }
   }
 
@@ -332,8 +336,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     );
   }
 
-
-
   // ======================================================== new logic ========================================================
 
   calcExtraGramOverAll(increase: boolean) {
@@ -349,8 +351,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     : Math.max(this.ExtraCarbOverAll - 50, 0);
     this.addExtraGramsToMeals();
   }  
-
-
 
   addExtraGramsToMeals() {
     const modifiedMeals: IShowMealsResponse[] = JSON.parse(
@@ -529,12 +529,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     }
 
     this.userMeals = modifiedMeals;
-    this.sumTotalExtra(this.userMeals);
+    this.sumTotalExtra();
   }
 
-
-
-  sumTotalExtra(mealPlanData: IShowMealsResponse[]) {
+  sumTotalExtra() {
     // let meals_count = 0;
     // if (this.selected_program.meal_types.includes("breakfast")) {
     //    meals_count = (this.selected_program.meal_types.length -1)*this.selected_program.subscription_days 
@@ -566,7 +564,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     );
   }
 
-
   check_meal_types(): boolean {
     const mealTypes = this.selected_program.meal_types;
   
@@ -587,7 +584,6 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     // Return true if any of the conditions are met
     return isCondition1Met || isCondition2Met || isCondition3Met;
   }
-  
 }
 
 

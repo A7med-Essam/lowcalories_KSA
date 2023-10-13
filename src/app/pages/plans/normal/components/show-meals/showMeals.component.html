@@ -178,7 +178,6 @@
         <i class="fas fa-info-circle"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
-        {{check_meal_types()}}
        <div *ngIf="!check_meal_types()">
         <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
         <div class="my-2">
