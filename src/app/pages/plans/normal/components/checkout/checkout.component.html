@@ -105,7 +105,8 @@
                                 <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span> 
                                 <span class="txt-main">
                                         <!-- {{(price.grand_total+deliveryFees+(price.extra_details | sumExtra)).toFixed(2)}} -->
-                                        {{(price.grand_total+deliveryFees).toFixed(2)}}
+                                        <!-- {{(price.grand_total+deliveryFees).toFixed(2)}} -->
+                                        {{(price.grand_total+deliveryFees+price.global_extra_protein+price.global_extra_carb).toFixed(2)}}
                                     <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>

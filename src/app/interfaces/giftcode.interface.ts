@@ -2,6 +2,8 @@ export interface IGiftCodeData{
     program_id:     number;
     price:          number;
     code:           string;
+    global_extra_carb:number;
+    global_extra_protein:number;
 }
 
 export interface IGiftCodeResponse{

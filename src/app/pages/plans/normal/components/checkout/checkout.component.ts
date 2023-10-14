@@ -304,6 +304,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             code: input.value,
             price: this.price,
             program_id: this.program_id,
+            global_extra_protein:this.global_extra_protein,
+            global_extra_carb:this.global_extra_carb,
           },
         })
       );
