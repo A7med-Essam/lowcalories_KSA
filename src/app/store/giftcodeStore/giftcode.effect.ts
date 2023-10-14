@@ -21,11 +21,7 @@ export class GiftcodeEffects {
       ofType(fromGiftcodeActions.FETCH_GIFTCODE_START),
       exhaustMap((action) =>
         this._GiftcodeService
-          .applyGiftCode({
-            code: action.data.code,
-            price: action.data.price,
-            program_id: action.data.program_id,
-          })
+          .applyGiftCode(action.data)
           .pipe(
             map((res) =>
               fromGiftcodeActions.FETCH_GIFTCODE_SUCCESS({
