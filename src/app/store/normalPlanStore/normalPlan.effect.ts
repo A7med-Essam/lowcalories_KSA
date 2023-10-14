@@ -5,6 +5,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, of, catchError, tap } from 'rxjs';
 import { NormalPlanService } from 'src/app/services/plans/normal-plan.service';
 import * as fromNormalPlanActions from '../normalPlanStore/normalPlan.action';
+import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class NormalPlanEffects {
@@ -12,6 +14,7 @@ export class NormalPlanEffects {
     private actions$: Actions,
     private _NormalPlanService: NormalPlanService,
     private _Router: Router,
+    private translate:TranslateService
   ) {}
 
   // GET PROGRAM
@@ -29,6 +32,13 @@ export class NormalPlanEffects {
           ),
           tap((res) => {
             if (res.status == 0) {
+              Swal.fire({
+                icon: 'error',
+                title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
+                text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
+                confirmButtonText:
+                  this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+              });
               this._Router.navigate(['/plans']);
             }
           }),
@@ -55,6 +65,13 @@ export class NormalPlanEffects {
           ),
           tap((res) => {
             if (res.status == 0) {
+              Swal.fire({
+                icon: 'error',
+                title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
+                text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
+                confirmButtonText:
+                this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+              });
               this._Router.navigate(['/plans']);
             } else {
               const currentUrl = this._Router.url.replace('set-plan', '');
@@ -88,6 +105,13 @@ export class NormalPlanEffects {
             ),
             tap((res) => {
               if (res.status == 0) {
+                Swal.fire({
+                  icon: 'error',
+                  title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
+                  text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
+                  confirmButtonText:
+                    this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+                });
                 this._Router.navigate(['/plans']);
               } else {
                 if (!Array.isArray(res.data.extra_details)) {

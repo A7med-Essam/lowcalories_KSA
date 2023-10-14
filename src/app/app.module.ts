@@ -27,6 +27,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_STORE, APP_EFFECTS } from './store/appStore';
 import { AuthInterceptor } from './core/interceptor/http.interceptor';
+import { ErrorHandlerInterceptor } from './core/interceptor/error-handler.interceptor';
 import { LottieModule } from 'ngx-lottie';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -88,6 +89,11 @@ const APP_PRIMENG_MODULE = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
       multi: true,
     },
   ],

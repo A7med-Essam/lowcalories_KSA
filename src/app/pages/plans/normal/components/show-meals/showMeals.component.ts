@@ -340,15 +340,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
   calcExtraGramOverAll(increase: boolean) {
     this.ExtraProteinOverAll = increase
-    ? Math.min(this.ExtraProteinOverAll + 50,500)
-    : Math.max(this.ExtraProteinOverAll - 50, 0);
+    ? Math.min(this.ExtraProteinOverAll + 50)
+    : Math.max(this.ExtraProteinOverAll - 50, -50);
     this.addExtraGramsToMeals();
   }
 
   calcExtraPieceOverAll(increase: boolean) {
     this.ExtraCarbOverAll = increase
-    ? Math.min(this.ExtraCarbOverAll + 50,500)
-    : Math.max(this.ExtraCarbOverAll - 50, 0);
+    ? Math.min(this.ExtraCarbOverAll + 50)
+    : Math.max(this.ExtraCarbOverAll - 50, -50);
     this.addExtraGramsToMeals();
   }  
 
@@ -581,6 +581,10 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     // Check Condition 3: Length is 1, and it contains "breakfast"
     const isCondition3Met = mealTypes.length === 1 && mealTypes[0] === "breakfast";
   
+    if (isCondition1Met || isCondition2Met || isCondition3Met) {
+      this.ExtraCarbOverAll = 0
+      this.ExtraProteinOverAll = 0
+    }
     // Return true if any of the conditions are met
     return isCondition1Met || isCondition2Met || isCondition3Met;
   }
