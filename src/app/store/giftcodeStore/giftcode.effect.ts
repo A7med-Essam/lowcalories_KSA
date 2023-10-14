@@ -33,7 +33,7 @@ export class GiftcodeEffects {
             tap((res) => {
               Swal.fire({
                 title: res.message,
-                text: this.translate.currentLang == 'ar'? "تم تطبيق كود الهدية!":'Gift Code Applied!',
+                text: this.translate.currentLang == 'ar'? "تم تطبيق كود الخصم!":'Gift Code Applied!',
                 icon: res.status == 1 ? 'success' : 'error',
                 confirmButtonText: this.translate.currentLang == 'ar'? "حسنا":'OK',
               });
