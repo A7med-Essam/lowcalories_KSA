@@ -28,7 +28,10 @@
                     </div>
 
                     <div class="rounded-md p-3 pb-3 my-3 shadow-lg bg-white" *ngFor="let meal of DayDetails">
-                        <h5 class="meal_name">{{meal?.mealName}}</h5>
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <h5 class="meal_name">{{meal?.mealName}}</h5>
+                            <img class="img-fluid" style=" height: 70px;"  [src]="img" alt="" *ngFor="let img of meal.images">
+                        </div>
                         <small class="txt-main"><b><i>{{meal.typeName}}</i></b></small>
                         <div class="row">
                             <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative"

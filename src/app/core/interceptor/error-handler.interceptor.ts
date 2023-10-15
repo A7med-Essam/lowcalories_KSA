@@ -26,19 +26,26 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 500) {
-          Swal.fire({
-            icon: 'error',
-            title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
-            text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
-            confirmButtonText:
-              this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
-          });
-        }
-        return throwError(() => new Error('UnExpected Error!'));
-      })
-    );
+    const baseUrlToCheck = 'https://thelowcalories.com:74';
+
+    if(!request.url.startsWith(baseUrlToCheck)){
+      return next.handle(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 500) {
+            Swal.fire({
+              icon: 'error',
+              title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
+              html: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> أضغط هنا </a> ':`There's an issue. Please call our Customer Service 
+              <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> Here </a>`,
+              confirmButtonText:
+                this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+            });
+          }
+          return throwError(() => new Error('UnExpected Error!'));
+        })
+      );
+    }else{
+      return next.handle(request);
+    }
   }
 }

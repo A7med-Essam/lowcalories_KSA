@@ -63,11 +63,24 @@ export class ParentComponent implements OnInit {
   DayDetails: any[] = [];
   getDayDetails(e: any) {
     this.DayDetails = e;
+    this._ProfileService
+      .getPlanImages({
+        meal_names: this.DayDetails.map((meal) => meal.mealName),
+      })
+      .subscribe((res) => {
+        const imageMap = new Map(
+          res.data.map((imageObj: any) => [imageObj.meal_name, imageObj.images])
+        );
+        this.DayDetails = this.DayDetails.map((dayDetail) => ({
+          ...dayDetail,
+          images: imageMap.get(dayDetail.mealName) || [],
+        }));
+      });
   }
 
   setWeekName() {
     let firstDeliveryDate: string = '';
-    this.plan.subDetails.forEach((e:any) => {
+    this.plan.subDetails.forEach((e: any) => {
       if (e.deliveryDate == this.plan.startDate) {
         firstDeliveryDate = e.deliveryDate;
       }
@@ -96,7 +109,7 @@ export class ParentComponent implements OnInit {
   }
 
   groupByDeliveryDate() {
-    let result = this.plan.subDetails.reduce(function (r:any, a:any) {
+    let result = this.plan.subDetails.reduce(function (r: any, a: any) {
       r[a.deliveryDate] = r[a.deliveryDate] || [];
       r[a.deliveryDate].push(a);
       return r;

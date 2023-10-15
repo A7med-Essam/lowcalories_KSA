@@ -85,13 +85,12 @@ export class ProfileService {
   }
 
   // ===================================================================Calender=====================================================
-
- 
   currentPlan: BehaviorSubject<any> = new BehaviorSubject(null);
 
+  getPlanImages(meals: any): Observable<any> {
+    return this._ApiService.postReq(`getImagesByMealNames`, meals);
+  }
 
   // planStatus: BehaviorSubject<string> = new BehaviorSubject('');
-
-
 
 }
