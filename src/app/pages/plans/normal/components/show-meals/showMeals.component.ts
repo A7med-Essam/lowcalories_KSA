@@ -8,6 +8,7 @@ import {
   Dish,
   INormalPlanResponse,
   INormalProgramPriceResponse,
+  IReplacement,
   IShowMealsResponse,
   ISubscriptionData,
   Meal,
@@ -16,6 +17,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import {
   FETCH_NORMALPLAN_PRICE_START,
   SAVE_NORMAL_MEALS,
+  FETCH_REPLACE_MEAL_START
 } from 'src/app/store/normalPlanStore/normalPlan.action';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,9 +35,13 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   category_index: number = 0;
   ProgramMeals!: Observable<IShowMealsResponse[] | null>;
   userMeals: IShowMealsResponse[] = [];
+  userMealsClone: IShowMealsResponse[] = [];
   ProgramDetails!: Observable<INormalPlanResponse | null>;
   nextButtonMode$: Observable<boolean | null> = of(false);
+  ReplacementButtonMode$: Observable<boolean | null> = of(false);
   mealDetailsModal: boolean = false;
+  mealDetailsModal1: boolean = false;
+  replacementModal: boolean = false;
   carouselVisible: boolean = true;
   sidebarOptions: boolean = false;
   showNutritionSummary :boolean = false;
@@ -64,13 +70,15 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   };
   currentMeal!: Meal;
   currentMealIndex: number = 0;
+  program_id:number = 0
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
+  replacementMeals$: Observable<IReplacement[] | null> = of(null);
   program_extra_prices:{carb:number,protein:number} = {carb:0,protein:0};
   selected_program!:ISubscriptionData;
   constructor(
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
-    // private _MessageService: MessageService,
+    private _MessageService: MessageService,
     private _Router: Router,
     private _Store: Store,
     private _I18nService: I18nService,
@@ -83,6 +91,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res) {
           this.userMeals = res;
+          this.userMealsClone = res;
           this.price$ = _Store.select(
             fromNormalPlanSelector.normalPlanPriceSelector
           );
@@ -94,6 +103,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.destroyed$))
           .subscribe(res=>{
             if (res) {
+              this.program_id = res.id
               this.program_extra_prices = res.extra_prices
             }else{
               this.program_extra_prices = {carb:2,protein:6}
@@ -190,7 +200,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   openDetails(meal: Meal, index: number) {
     this.currentMealIndex = index;
     this.currentMeal = meal;
-    this.mealDetailsModal = true;
+    this.mealDetailsModal1 = true;
   }
 
   editMeal(meal: Meal) {
@@ -392,16 +402,54 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           if (meal.mainDish.meal_type != 'breakfast' && meal.mainDish.meal_type !='snack_one'&& meal.mainDish.meal_type !='snack_two') {
             if (meal.mainDish.unit === 'GM') {
               meal.mainDish.extra = { carb: 0, protein: 0 };
-              if (meal.mainDish.tag === 'c') {
-                meal.mainDish.extra.carb = this.ExtraCarbOverAll;
-              } else if (meal.mainDish.tag === 'p') {
-                meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                if (meal.mainDish.tag === 'c') {
+                  if (this.ExtraCarbOverAll + meal.mainDish.defaultQty >= meal.mainDish.min_qty) {
+                    meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                  }
+                  // if (this.ExtraCarbOverAll >= 0) {
+                  //   meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                  // } else {
+                  //   if (meal.mainDish.defaultQty > meal.mainDish.min_qty) {
+                  //     meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                  //   }
+                  // }
+                  // meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                } else if (meal.mainDish.tag === 'p') {
+                  if (this.ExtraProteinOverAll + meal.mainDish.defaultQty >= meal.mainDish.min_qty) {
+                    meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                  }
+                  // if (this.ExtraProteinOverAll >= 0) {
+                  //   meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                  // } else {
+                  //   if (meal.mainDish.defaultQty > meal.mainDish.min_qty) {
+                  //     meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                  //   }
+                  // }
+                  // meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                }
+                else if (meal.mainDish.tag === 'cp'){
+                  if (this.ExtraProteinOverAll+this.ExtraCarbOverAll + meal.mainDish.defaultQty >= meal.mainDish.min_qty) {
+                    meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                    meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                  }
+
+                  // if (this.ExtraCarbOverAll >= 0) {
+                  //   meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                  // } else {
+                  //   if (meal.mainDish.defaultQty >= Number(meal.mainDish.min_qty)+100) {
+                  //     meal.mainDish.extra.carb = this.ExtraCarbOverAll;
+                  //   }
+                  // }
+
+                  // if (this.ExtraProteinOverAll >= 0) {
+                  //   meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                  // } else {
+                  //   if (meal.mainDish.defaultQty >= Number(meal.mainDish.min_qty)+100) {
+                  //     meal.mainDish.extra.protein = this.ExtraProteinOverAll;
+                  //   }
+                  // }
+                }
               }
-              else if (meal.mainDish.tag === 'cp'){
-                meal.mainDish.extra.protein = this.ExtraProteinOverAll;
-                meal.mainDish.extra.carb = this.ExtraCarbOverAll;
-              }
-            }
           }
           
        
@@ -450,17 +498,23 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
               // Check the tag and update the "extra" object accordingly for the side dish
               if (sideDish.tag === 'c') {
-                sideDish.extra.carb = this.ExtraCarbOverAll;
+                if (this.ExtraCarbOverAll + sideDish.defaultQty >= sideDish.min_qty) {
+                  sideDish.extra.carb = this.ExtraCarbOverAll;
+                }
               } else if (sideDish.tag === 'p') {
-                sideDish.extra.protein = this.ExtraProteinOverAll;
+                if (this.ExtraProteinOverAll + sideDish.defaultQty >= sideDish.min_qty) {
+                  sideDish.extra.protein = this.ExtraProteinOverAll;
+                }
               }
-              else if (meal.mainDish.tag === 'cp'){
-                sideDish.extra.protein = this.ExtraProteinOverAll;
-                sideDish.extra.carb = this.ExtraCarbOverAll;
+              else if (sideDish.tag === 'cp'){
+                if (this.ExtraProteinOverAll+this.ExtraCarbOverAll + sideDish.defaultQty >= sideDish.min_qty) {
+                  sideDish.extra.protein = this.ExtraProteinOverAll;
+                  sideDish.extra.carb = this.ExtraCarbOverAll;
+                }
               }
      
             }
-            else{
+            // else{
               // if (sideDish.tag === 'c') {
               //   sideDish.extra.carb = this.ExtraCarbOverAll/50;
               // } else if (sideDish.tag === 'p') {
@@ -470,7 +524,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
               //   sideDish.extra.protein = this.ExtraProteinOverAll/50;
               //   sideDish.extra.carb = this.ExtraCarbOverAll/50;
               // }
-            }
+            // }
             
 
             sideDish.calories =
@@ -588,6 +642,114 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     // Return true if any of the conditions are met
     return isCondition1Met || isCondition2Met || isCondition3Met;
   }
+
+
+  replaced_item_id:number = 0;
+  replaced_type:string = 'meal';
+  replaceMeal(dish_type:string,item_name:string, meal:Dish){
+    if (meal.is_replaced) {
+      this.resetMeal(meal.meal_id)
+      this.mealDetailsModal1 = false;
+    }
+    else{
+      this.replaced_type = dish_type
+      this.replaced_item_id = meal.meal_id;
+      this.ReplacementButtonMode$ = this._Store.select(
+        fromNormalPlanSelector.normalPlanReplacementLoadingSelector
+      );
+      this._Store.dispatch(FETCH_REPLACE_MEAL_START(
+        {data:{dish_type,item:item_name,date:this.userMeals[this.category_index].date,meal_type:meal.meal_type,program_id:this.program_id}}))
+      this.replacementMeals$ = this._Store.select(
+        fromNormalPlanSelector.normalPlanReplacementSelector
+      )
+      this._Store.select(
+        fromNormalPlanSelector.normalPlanReplacementSelector
+      )
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(res=>{
+        if (res) {
+          if (res.length) {
+            this.replacementModal = true;
+            this.mealDetailsModal1 = false;
+          } else {
+            this._MessageService.clear();
+            this._MessageService.add({
+              severity: 'warn',
+              summary:
+                this.translate.currentLang == 'ar'
+                  ? 'لا يمكنك التبديل'
+                  : 'You cannot replace',
+              detail:
+                this.translate.currentLang == 'ar'
+                  ? `لا يوجد وجبات بديله عن ${item_name}`
+                  : `There are no alternative meals for ${item_name}`,
+              life: 3000,
+            });
+          }
+        }
+      })
+    }
+  }
+
+  replace(replaced_item: Meal) {
+    let modifiedMeals: IShowMealsResponse[] = JSON.parse(
+      JSON.stringify(this.userMeals)
+    );
+    modifiedMeals[this.category_index].meals = modifiedMeals[this.category_index].meals.map((meal) => {
+      if (meal.mainDish.meal_id === this.replaced_item_id) {
+        const mainDish = { ...meal.mainDish, ...replaced_item.mainDish };
+
+        if (replaced_item.sideDish) {
+          for (let i = 0; i < replaced_item.sideDish.length; i++) {
+            let currentSideDish = meal.sideDish[i];
+            const replacedSideDish = replaced_item.sideDish[i];
+    
+            if (Object.keys(replacedSideDish).length !== 0) {
+              currentSideDish = { ...currentSideDish, ...replacedSideDish };
+            }
+    
+            // If 'extra' is not defined, set it to some default values
+            if (!currentSideDish.extra) {
+              currentSideDish.extra = {
+                carb: this.ExtraCarbOverAll,
+                protein: this.ExtraProteinOverAll,
+              };
+            }
+    
+            meal.sideDish[i] = currentSideDish;
+          }
+        }
+
+        meal.mainDish = mainDish;
+      }
+      return meal;
+    });
+
+    this.userMeals = modifiedMeals;
+  }
+
+  resetMeal(meal_id:number) {
+    let modifiedMeals: IShowMealsResponse[] = JSON.parse(
+      JSON.stringify(this.userMeals)
+    );
+
+    for (let i = 0; i < modifiedMeals[this.category_index].meals.length; i++) {
+      if (modifiedMeals[this.category_index].meals[i].mainDish && modifiedMeals[this.category_index].meals[i].mainDish.meal_id === meal_id) {
+        for (let j = 0; j < this.userMealsClone[this.category_index].meals.length; j++) {
+          if (this.userMealsClone[this.category_index].meals[j].mainDish && this.userMealsClone[this.category_index].meals[j].mainDish.meal_id === meal_id) {
+            // Replace the meal in the first object with the one from the second object
+            modifiedMeals[this.category_index].meals[i] = this.userMealsClone[this.category_index].meals[j];
+            break; // Exit the inner loop once replaced
+          }
+        }
+      }
+    }
+
+    this.userMeals = modifiedMeals;
+  }
+
+
+
 }
 
 
@@ -795,19 +957,19 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   //       : Math.max(this.ExtraProteinOverAll - 50, 0);
   //     this.addExtraGramsToMeals();
   //   } else {
-  //     this._MessageService.clear();
-  //     this._MessageService.add({
-  //       severity: 'warn',
-  //       summary:
-  //         this.translate.currentLang == 'ar'
-  //           ? 'لا يمكنك الأضافة'
-  //           : 'You cannot add',
-  //       detail:
-  //         this.translate.currentLang == 'ar'
-  //           ? 'لا يوجد لديك وجبة تصنيفها بروتين في خطتك'
-  //           : `you don't have meal labeled as protein in your plan`,
-  //       life: 3000,
-  //     });
+      // this._MessageService.clear();
+      // this._MessageService.add({
+      //   severity: 'warn',
+      //   summary:
+      //     this.translate.currentLang == 'ar'
+      //       ? 'لا يمكنك الأضافة'
+      //       : 'You cannot add',
+      //   detail:
+      //     this.translate.currentLang == 'ar'
+      //       ? 'لا يوجد لديك وجبة تصنيفها بروتين في خطتك'
+      //       : `you don't have meal labeled as protein in your plan`,
+      //   life: 3000,
+      // });
   //   }
   // }
 

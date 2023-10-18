@@ -50,8 +50,9 @@ export interface AppState {
   customCheckout: fromCustomPlanStore.ICheckoutState;
   giftCode: fromGiftcodeStore.IGiftCodeState;
   menu: fromMenuStore.IMenuState;
-  socialMedia: fromSocialMediaStore.ISocialMediaState
-  dislike: fromDislikeStore.IDislikeState
+  socialMedia: fromSocialMediaStore.ISocialMediaState;
+  dislike: fromDislikeStore.IDislikeState;
+  replacement: fromNormalPlanStore.IReplacementState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -79,7 +80,8 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   giftCode: fromGiftcodeStore.GiftCodeReducer,
   menu: fromMenuStore.MenuReducer,
   socialMedia: fromSocialMediaStore.socialMediaReducer,
-  dislike: fromDislikeStore.DislikeReducer
+  dislike: fromDislikeStore.DislikeReducer,
+  replacement: fromNormalPlanStore.NormalPlanReplacementReducer
 };
 
 export const APP_EFFECTS = [

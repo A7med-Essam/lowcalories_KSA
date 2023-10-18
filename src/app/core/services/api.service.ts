@@ -13,13 +13,13 @@ export class ApiService {
   getReq(endPoint: string, params?: HttpParams): Observable<any> {
     return this.http
       .get(environment.BaseUrl + endPoint, { params: params })
-      .pipe(retry(1));
+      // .pipe(retry(1));
   }
 
   postReq(endPoint: string, body: any, params?: HttpParams): Observable<any> {
     return this.http
       .post(environment.BaseUrl + endPoint, body, { params: params })
-      .pipe(retry(1));
+      // .pipe(retry(1));
   }
 
   getReq2(

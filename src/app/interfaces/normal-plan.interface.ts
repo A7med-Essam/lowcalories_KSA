@@ -75,6 +75,7 @@ export interface Dish {
     tag:             string|null;
     counter:         number;
     extra:           extra
+    is_replaced:      boolean
 }
 
 interface extra {
@@ -159,4 +160,17 @@ export interface ICheckout {
     global_extra_carb:number
     global_extra_protein:number
     include_breakfast:boolean
+}
+
+export interface IReplacement {
+    mainDish: Dish;
+    sideDish: Dish[];
+}
+
+export interface IReplacementData {
+    program_id:      number;
+    item:            string;
+    dish_type:       string;
+    date:            Date;
+    meal_type:       string;
 }

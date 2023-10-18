@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store";
-import { INormalPlanResponse, INormalProgramPriceResponse, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
+import { INormalPlanResponse, INormalProgramPriceResponse, IReplacement, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 import { IHttpResponse } from "../appStore";
 import * as fromNormalPlanActions from "../normalPlanStore/normalPlan.action";
 
@@ -199,6 +199,48 @@ export const NormalPlanCheckoutReducer = createReducer(
     status: action.status,
   })),
   on(fromNormalPlanActions.FETCH_CHECKOUT_FAILED, (state, action) => ({
+    ...state,
+    error: action.error,
+    data: null,
+    loading: false,
+    message: null,
+    status: 0,
+  }))
+);
+
+// ==========================================================PRICE===================================================================
+
+export interface IReplacementState extends IHttpResponse {
+  data: IReplacement[] | null;
+}
+
+const normalPlanReplacementInitialState: IReplacementState = {
+  error: null,
+  loading: null,
+  data: null,
+  message: null,
+  status: null,
+};
+
+export const NormalPlanReplacementReducer = createReducer(
+  normalPlanReplacementInitialState,
+  on(fromNormalPlanActions.FETCH_REPLACE_MEAL_START, (state) => ({
+    ...state,
+    loading: true,
+    data: null,
+    error: null,
+    message: null,
+    status: 0,
+  })),
+  on(fromNormalPlanActions.FETCH_REPLACE_MEAL_SUCCESS, (state, action) => ({
+    ...state,
+    error: null,
+    loading: false,
+    data: action.status == 1 ? action.data : null,
+    message: action.message,
+    status: action.status,
+  })),
+  on(fromNormalPlanActions.FETCH_REPLACE_MEAL_FAILED, (state, action) => ({
     ...state,
     error: action.error,
     data: null,

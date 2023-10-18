@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { ApiService } from 'src/app/core/services/api.service';
-import { ICheckout, INormalProgramPriceResponse, INormalSubscriptionPrice } from 'src/app/interfaces/normal-plan.interface';
+import { ICheckout, INormalProgramPriceResponse, INormalSubscriptionPrice, IReplacement, IReplacementData } from 'src/app/interfaces/normal-plan.interface';
 import { INormalPlanResponse, IShowMealsResponse, ISubscriptionData } from 'src/app/interfaces/normal-plan.interface';
 
 @Injectable({
@@ -31,5 +31,9 @@ export class NormalPlanService {
     else{
       return this._ApiService.postReq('checkOutWithAuth', checkout);
     }
+  }
+
+  replaceMeal(data:IReplacementData) : Observable<{status:number,data:IReplacement[], message:string}>{
+    return this._ApiService.postReq('replacementMeals', data);
   }
 }

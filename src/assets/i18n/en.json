@@ -33,7 +33,8 @@
     "editAddress": "Edit Address",
     "save":"Save",
     "showSummary":"Show Nutrition Summary",
-    "hideSummary":"Hide Nutrition Summary"
+    "hideSummary":"Hide Nutrition Summary",
+    "replace":"Replace"
   },
   "pages": {
     "home": "Home",

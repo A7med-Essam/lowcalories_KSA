@@ -161,4 +161,45 @@ export class NormalPlanEffects {
       )
     )
   );
+
+   // GET REPLACEMENT MEAL
+   replacementEffect = createEffect(() =>
+   this.actions$.pipe(
+     ofType(fromNormalPlanActions.FETCH_REPLACE_MEAL_START),
+     exhaustMap((action) =>
+       this._NormalPlanService
+         .replaceMeal(action.data)
+         .pipe(
+           map((res) =>
+             fromNormalPlanActions.FETCH_REPLACE_MEAL_SUCCESS({
+               data: res.data,
+               message: res.message,
+               status: res.status,
+             })
+           ),
+           tap((res) => {
+             if (res.status == 0) {
+               Swal.fire({
+                 icon: 'error',
+                 title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
+                 // text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
+                 html: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> أضغط هنا </a> ':`There's an issue. Please call our Customer Service 
+                 <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> Here </a>`,
+                 confirmButtonText:
+                   this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+               });
+               this._Router.navigate(['/plans']);
+             }
+           }),
+           catchError((error: HttpErrorResponse) =>
+             of(
+               fromNormalPlanActions.FETCH_REPLACE_MEAL_FAILED({
+                 error: error,
+               })
+             )
+           )
+         )
+     )
+   )
+ );
 }

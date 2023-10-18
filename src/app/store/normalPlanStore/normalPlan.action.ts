@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createAction, props } from "@ngrx/store";
-import { ICheckout, INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
+import { ICheckout, INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IReplacement, IReplacementData, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 
 export const FETCH_NORMALPLAN_START = createAction('[Normal Plan] FETCH_NORMALPLAN_START', props<{program_id:number}>())
 export const FETCH_NORMALPLAN_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_SUCCESS', props<{data:INormalPlanResponse,message:string,status:number}>())
@@ -20,3 +20,7 @@ export const FETCH_NORMALPLAN_PRICE_FAILED = createAction('[Normal Plan] FETCH_N
 export const FETCH_CHECKOUT_START = createAction('[Normal Plan] FETCH_CHECKOUT_START', props<{data:ICheckout}>())
 export const FETCH_CHECKOUT_SUCCESS = createAction('[Normal Plan] FETCH_CHECKOUT_SUCCESS', props<{data:string,message:string,status:number}>())
 export const FETCH_CHECKOUT_FAILED = createAction('[Normal Plan] FETCH_CHECKOUT_FAILED', props<{error:HttpErrorResponse}>())
+
+export const FETCH_REPLACE_MEAL_START = createAction('[Normal Plan] FETCH_REPLACE_MEAL_START', props<{data:IReplacementData}>())
+export const FETCH_REPLACE_MEAL_SUCCESS = createAction('[Normal Plan] FETCH_REPLACE_MEAL_SUCCESS', props<{data:IReplacement[],message:string,status:number}>())
+export const FETCH_REPLACE_MEAL_FAILED = createAction('[Normal Plan] FETCH_REPLACE_MEAL_FAILED', props<{error:HttpErrorResponse}>())
