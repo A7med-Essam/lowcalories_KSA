@@ -99,13 +99,13 @@
                                                 </button>
                                             </ng-container>
                                             <ng-template #elseBlock>
-                                                <button class="btn py-2 px-4 editBtn" (click)="getReplacementMeals(meal.mainDish.meal_name,meal.mainDish.meal_type,meal.mainDish.meal_id)">
+                                                <button class="btn py-2 px-4 editBtn" (click)="getReplacementMeals(meal.mainDish.meal_name,meal.mainDish.meal_type)">
                                                     <i class="far fa-edit p-0"></i>
                                                 </button>
                                             </ng-template>
                                         </div>
                                         <div *ngIf="meal.mainDish.is_replaced">
-                                            <button class="btn py-2 px-4 editBtn" (click)="resetMeal(meal.mainDish.meal_id)">
+                                            <button class="btn py-2 px-4 editBtn" (click)="resetMeal(meal.mainDish.old_name)">
                                                 <i class="fas fa-times p-0"></i>
                                             </button>
                                         </div>
@@ -293,9 +293,9 @@
 </section>
 
 <p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="replacementModal"
-    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }"  header='{{"replaceModal"|translate}}'>
+    [transitionOptions]="'200ms'" [style]="{ width: '40vw' }"  header='{{"replaceModal"|translate}}'>
     <div class="row">
-        <div class="col-xl-6 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
+        <div class="col-12 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
             <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
               
                 <div class="col-12 d-flex justify-content-between flex-column" id="replacement_container">
@@ -320,6 +320,7 @@
                                         {{translate.currentLang == 'ar' ?sideDish.meal_name_ar:sideDish.meal_name_en}}
                                         {{sideDish.qty + sideDish.extra.protein + sideDish.extra.carb}}
                                         {{translate.currentLang == 'ar' ? (sideDish.unit | mealUnitTranslate):sideDish.unit}}
+                                        <br>
                                     </span>
                                 </h6>
                               

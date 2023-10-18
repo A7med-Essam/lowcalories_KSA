@@ -681,9 +681,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     return isCondition1Met || isCondition2Met || isCondition3Met;
   }
 
-  replaced_item_id: number = 0;
-  getReplacementMeals(meal_name: string, meal_type: string,id:number) {
-    this.replaced_item_id = id;
+  replaced_item: string = '';
+  getReplacementMeals(meal_name: string, meal_type: string) {
+    this.replaced_item = meal_name;
     this.ReplacementButtonMode$ = this._Store.select(
       fromNormalPlanSelector.normalPlanReplacementLoadingSelector
     );
@@ -720,9 +720,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     modifiedMeals[this.category_index].meals = modifiedMeals[
       this.category_index
     ].meals.map((meal) => {
-      if (meal.mainDish.meal_id === this.replaced_item_id) {
+      if (meal.mainDish.meal_name === this.replaced_item) {
         const mainDish = { ...meal.mainDish, ...replaced_item.mainDish };
-
+        mainDish.old_name = meal.mainDish.meal_name
         if (replaced_item.sideDish) {
           for (let i = 0; i < replaced_item.sideDish.length; i++) {
             let currentSideDish = meal.sideDish[i];
@@ -753,41 +753,20 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     this.addExtraGramsToMeals();
   }
 
-  resetMeal(meal_id: number) {
+  resetMeal(name: string) {
     let modifiedMeals: IShowMealsResponse[] = JSON.parse(
       JSON.stringify(this.userMeals)
     );
 
-    for (let i = 0; i < modifiedMeals[this.category_index].meals.length; i++) {
-      if (
-        modifiedMeals[this.category_index].meals[i].mainDish &&
-        modifiedMeals[this.category_index].meals[i].mainDish.meal_id === meal_id
-      ) {
-        for (
-          let j = 0;
-          j < this.userMealsClone[this.category_index].meals.length;
-          j++
-        ) {
-          if (
-            this.userMealsClone[this.category_index].meals[j].mainDish &&
-            this.userMealsClone[this.category_index].meals[j].mainDish
-              .meal_id === meal_id
-          ) {
-            // Replace the meal in the first object with the one from the second object
-            modifiedMeals[this.category_index].meals[i] =
-              this.userMealsClone[this.category_index].meals[j];
-            break; // Exit the inner loop once replaced
-          }
-        }
-      }
-    }
-
+    const currentMealIndex = modifiedMeals[this.category_index].meals.findIndex(e=>e.mainDish.old_name == name)
+    const orignalMealIndex = this.userMealsClone[this.category_index].meals.findIndex(e=>e.mainDish.meal_name == name)
+    modifiedMeals[this.category_index].meals[currentMealIndex] = this.userMealsClone[this.category_index].meals[orignalMealIndex];
     this.userMeals = modifiedMeals;
+    this.addExtraGramsToMeals();
   }
 
   calcReplacementMeals(meals: Meal[]) {
     for (const meal of meals) {
-      debugger
       meal.mainDish.extra = { carb: 0, protein: 0 };
       const percentage1 =
         Number(meal.mainDish.calories) /

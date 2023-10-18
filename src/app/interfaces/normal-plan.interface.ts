@@ -76,7 +76,8 @@ export interface Dish {
     counter:         number;
     extra:           extra
     is_replaced:      boolean
-    has_replaced:      boolean
+    has_replaced:      boolean;
+    old_name:           string;
 }
 
 interface extra {
