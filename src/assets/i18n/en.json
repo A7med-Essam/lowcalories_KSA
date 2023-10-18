@@ -6,6 +6,7 @@
   "delivery_status_msg":"Delivery Fees will be applied on selected location",
   "checkoutMSG": "You will redirect now to complete the payment process , Please Wait ....",
   "calendarMsg":"Delivery will start 48 hours after subscribing, and there is no delivery on Friday",
+  "replaceModal":"Replacement Model",
   "buttons": {
     "changePassword": "Change Password",
     "read_more": "Read More",

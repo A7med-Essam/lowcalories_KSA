@@ -92,12 +92,24 @@
                                             <i class="fas fa-info-circle txt-main"></i>
                                             {{ meal.mainDish.meal_type | mealNameTranslate :translate.currentLang}}
                                         </p>
-                                        <!-- <span *ngIf="meal | sumMealExtraPrice :program_extra_prices" class="text-danger">
-                                            <b>{{ meal | sumMealExtraPrice:program_extra_prices}} {{"currency" | translate}} {{"extra" | translate}}</b>
-                                        </span> -->
-                                        <button class="btn py-2 px-4 editBtn" (click)="openDetails(meal,i)">
-                                            <i class="far fa-edit p-0"></i>
-                                        </button>
+                                        <div *ngIf="meal.mainDish.has_replaced">
+                                            <ng-container *ngIf="ReplacementButtonMode$ | async; else elseBlock">
+                                                <button class="btn py-2 px-4 editBtn">
+                                                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                                </button>
+                                            </ng-container>
+                                            <ng-template #elseBlock>
+                                                <button class="btn py-2 px-4 editBtn" (click)="getReplacementMeals(meal.mainDish.meal_name,meal.mainDish.meal_type,meal.mainDish.meal_id)">
+                                                    <i class="far fa-edit p-0"></i>
+                                                </button>
+                                            </ng-template>
+                                        </div>
+                                        <div *ngIf="meal.mainDish.is_replaced">
+                                            <button class="btn py-2 px-4 editBtn" (click)="resetMeal(meal.mainDish.meal_id)">
+                                                <i class="fas fa-times p-0"></i>
+                                            </button>
+                                        </div>
+                                  
                                         <!-- <div *ngIf="!meal.mainDish.is_replaced">
                                             <button *ngIf="meal.mainDish.meal_name.includes('W/')" class="btn py-2 px-4 editBtn" (click)="openDetails(meal,i)">
                                             </button>
@@ -280,325 +292,13 @@
     </p-sidebar>
 </section>
 
-<!-- <p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="mealDetailsModal"
-    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
-    <div *ngIf="currentMeal">
-        <div class="text-center">
-            <img [src]="currentMeal.mainDish.meal_name_image" class="img-fluid mb-4" alt="" width="300px">
-            <h5 class="text-orange" *ngIf="!currentMeal.sideDish">
-                {{translate.currentLang == 'ar' ?currentMeal.mainDish.meal_name_ar:currentMeal.mainDish.meal_name_en}}
-            </h5>
-            <h5 *ngIf="currentMeal.sideDish">
-                <span>{{ translate.currentLang == 'ar' ? currentMeal.mainDish.meal_name_ar :
-                    currentMeal.mainDish.meal_name_en }} & </span>
-                <ng-container *ngFor="let item of currentMeal.sideDish; let lastItem = last">
-                    {{ translate.currentLang == 'ar' ? item.meal_name_ar : item.meal_name_en }}
-                    <span *ngIf="!lastItem"> & </span>
-                </ng-container>
-            </h5>
-        </div>
-        <hr>
-        <div class="row text-center">
-            <div class="col-sm-6 border-end my-3">
-                <h6 class="txt-main mb-3 me-4"
-                    *ngIf="currentMeal.mainDish.tag != 'cp'&& currentMeal.mainDish.tag != null">
-                    {{translate.currentLang == 'ar'
-                    ?currentMeal.mainDish.meal_name_ar:currentMeal.mainDish.meal_name_en}}
-                </h6>
-                <div class="qty d-flex align-items-center justify-content-center disable-selection"
-                    *ngIf="currentMeal.mainDish.tag != 'cp'&& currentMeal.mainDish.tag != null">
-                    <span class="minus" (click)="changeMainDishNutrition(currentMeal,false)"
-                        [class.disabled-bg]="!currentMeal.mainDish.tag">-</span>
-                    <input type="text" class="count"
-                        [value]="currentMeal.mainDish.qty+currentMeal.mainDish.extra.carb+currentMeal.mainDish.extra.protein"
-                        disabled readonly>
-                    <span class="plus" (click)="changeMainDishNutrition(currentMeal,true)"
-                        [class.disabled-bg]="!currentMeal.mainDish.tag">+</span>
-                    <span class="txt-main txt-font ms-2">
-                        {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit |
-                        mealUnitTranslate):currentMeal.mainDish.unit}}
-                    </span>
-                </div>
-                <div *ngIf="currentMeal.mainDish.tag == 'cp'">
-                    <div class="my-3">
-                        <small class="text-orange">Extra Protien</small>
-                        <div class="qty d-flex align-items-center justify-content-center disable-selection">
-                            <span class="minus" (click)="calcExtra(currentMeal,false,'p')">-</span>
-                            <input type="text" class="count" [value]="currentMeal.mainDish.extra.protein" disabled readonly>
-                            <span class="plus" (click)="calcExtra(currentMeal,true,'p')">+</span>
-                            <span class="txt-main txt-font ms-2">
-                                {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="my-3">
-                        <small class="text-orange">Extra Carb</small>
-                        <div class="qty d-flex align-items-center justify-content-center disable-selection">
-                            <span class="minus" (click)="calcExtra(currentMeal,false,'c')">-</span>
-                            <input type="text" class="count" [value]="currentMeal.mainDish.extra.carb" disabled readonly>
-                            <span class="plus" (click)="calcExtra(currentMeal,true,'c')">+</span>
-                            <span class="txt-main txt-font ms-2">
-                                {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ng-container *ngIf="currentMeal.sideDish">
-                <div class="col-sm-6 my-3" *ngFor="let item of currentMeal.sideDish; let i = index">
-                    <h6 class="txt-main mb-3 me-4" *ngIf="item.tag != 'cp' && item.tag != null">
-                        {{translate.currentLang == 'ar' ?item.meal_name_ar:item.meal_name_en}}
-                    </h6>
-                    <div class="qty d-flex align-items-center justify-content-center disable-selection"
-                        *ngIf="item.tag != 'cp' && item.tag != null">
-                        <span class="minus" (click)="changeSideDishNutrition(currentMeal,false,i)"
-                            [class.disabled-bg]="!item.tag">-</span>
-                        <input type="text" class="count" [value]="item.qty+item.extra.carb+item.extra.protein" disabled
-                            readonly>
-                        <span class="plus" (click)="changeSideDishNutrition(currentMeal,true,i)"
-                            [class.disabled-bg]="!item.tag">+</span>
-                        <span class="txt-main txt-font ms-2">
-                            {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
-                        </span>
-                    </div>
-                    <div *ngIf="item.tag == 'cp'">
-                       <div class="my-3">
-                        <small class="text-orange">Extra Protien</small>
-                        <div  class="qty d-flex align-items-center justify-content-center disable-selection">
-                            <span class="minus" (click)="calcExtra2(currentMeal,false,'p',i)">-</span>
-                            <input type="text" class="count" [value]="item?.extra?.protein" disabled readonly>
-                            <span class="plus" (click)="calcExtra2(currentMeal,true,'p',i)">+</span>
-                            <span class="txt-main txt-font ms-2">
-                                {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
-                            </span>
-                        </div>
-                       </div>
-                       <div class="my-3">
-                        <small class="text-orange">Extra Carb</small>
-                        <div  class="qty d-flex align-items-center justify-content-center disable-selection">
-                            <span class="minus" (click)="calcExtra2(currentMeal,false,'c',i)">-</span>
-                            <input type="text" class="count" [value]="item?.extra?.carb" disabled readonly>
-                            <span class="plus" (click)="calcExtra2(currentMeal,true,'c',i)">+</span>
-                            <span class="txt-main txt-font ms-2">
-                                {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
-                            </span>
-                        </div>
-                       </div>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-        <div class="text-center">
-            <small class="text-orange">{{"pages.plans.warning"|translate}}</small>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.calories).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'calories':currentMeal.mainDish.calories).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.fat).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'fat':currentMeal.mainDish.fat).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.protein).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'protein':currentMeal.mainDish.protein).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.carb).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'carb':currentMeal.mainDish.carb).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-        </div>
-        <div class="mt-4 text-center">
-            <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-5 font-weight-600"
-                (click)="mealDetailsModal=false;editMeal(currentMeal);">
-                {{"buttons.edit"|translate}}
-            </button>
-        </div>
-    </div>
-</p-dialog> -->
-
-<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="mealDetailsModal1"
-    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
-    <div *ngIf="currentMeal">
-        <div class="text-center">
-            <img [src]="currentMeal.mainDish.meal_name_image" class="img-fluid mb-4" alt="" width="300px">
-            <h5 class="text-orange" *ngIf="!currentMeal.sideDish">
-                {{translate.currentLang == 'ar' ?currentMeal.mainDish.meal_name_ar:currentMeal.mainDish.meal_name_en}}
-            </h5>
-            <h5 *ngIf="currentMeal.sideDish">
-                <span>{{ translate.currentLang == 'ar' ? currentMeal.mainDish.meal_name_ar :
-                    currentMeal.mainDish.meal_name_en }} & </span>
-                <ng-container *ngFor="let item of currentMeal.sideDish; let lastItem = last">
-                    {{ translate.currentLang == 'ar' ? item.meal_name_ar : item.meal_name_en }}
-                    <span *ngIf="!lastItem"> & </span>
-                </ng-container>
-            </h5>
-            <ng-container *ngIf="(ReplacementButtonMode$ | async); else elseBlock">
-                <ng-container *ngIf="replaced_type == 'meal'; else elseIcon">
-                    <i class="fas fa-sync-alt fa-3x txt-main fa-spin"></i>
-                </ng-container>
-                <ng-template #elseIcon>
-                    <i class="fas fa-sync-alt fa-3x txt-main"></i>
-                </ng-template>
-            </ng-container>
-            <ng-template #elseBlock>
-                <i *ngIf="currentMeal.mainDish.is_replaced" class="fas fa-recycle fa-3x txt-main pointer" (click)="replaceMeal('meal',currentMeal.mainDish.meal_name,currentMeal.mainDish)"></i>
-                <i *ngIf="!currentMeal.mainDish.is_replaced" class="fas fa-sync-alt fa-3x txt-main pointer" (click)="replaceMeal('meal',currentMeal.mainDish.meal_name,currentMeal.mainDish)"></i>
-            </ng-template>
-        </div>
-        <hr *ngIf="currentMeal.mainDish.meal_name.includes('W/')">
-        <div class="row text-center" *ngIf="currentMeal.mainDish.meal_name.includes('W/')">
-            <div class="col-sm-6 border-end my-3">
-                <h6 class="txt-main mb-3 me-4">
-                    {{translate.currentLang == 'ar'?currentMeal.mainDish.meal_name_ar:currentMeal.mainDish.meal_name_en}}
-                    {{currentMeal.mainDish.qty+currentMeal.mainDish.extra.carb+currentMeal.mainDish.extra.protein}} 
-                    {{translate.currentLang == 'ar' ? (currentMeal.mainDish.unit | mealUnitTranslate):currentMeal.mainDish.unit}}
-                </h6>
-                <div>
-                    <ng-container *ngIf="(ReplacementButtonMode$ | async); else elseBlock">
-                        <ng-container *ngIf="replaced_type == 'main'; else elseIcon">
-                            <i class="fas fa-sync-alt fa-3x txt-main fa-spin"></i>
-                        </ng-container>
-                        <ng-template #elseIcon>
-                            <i class="fas fa-sync-alt fa-3x txt-main"></i>
-                        </ng-template>
-                    </ng-container>
-                    <ng-template #elseBlock>
-                        <!-- <i *ngIf="currentMeal.mainDish.is_replaced" class="fas fa-recycle txt-main pointer" (click)="replaceMeal('main',currentMeal.mainDish.meal_name_en,currentMeal.mainDish)"></i> -->
-                        <i *ngIf="!currentMeal.mainDish.is_replaced" class="fas fa-sync-alt fa-3x txt-main pointer" (click)="replaceMeal('main',currentMeal.mainDish.meal_name_en,currentMeal.mainDish)"></i>
-                    </ng-template>
-                </div>
-            </div>
-            <ng-container *ngIf="currentMeal.sideDish">
-                <div class="col-sm-6 my-3" *ngFor="let item of currentMeal.sideDish; let i = index">
-                    <h6 class="txt-main mb-3 me-4">
-                        {{translate.currentLang == 'ar' ?item.meal_name_ar:item.meal_name_en}}
-                        {{item.qty+item.extra.carb+item.extra.protein}} 
-                        {{translate.currentLang == 'ar' ? (item.unit | mealUnitTranslate):item.unit}}
-                    </h6>
-                    <div>
-                        <ng-container *ngIf="(ReplacementButtonMode$ | async); else elseBlock">
-                            <ng-container *ngIf="replaced_type == 'side'; else elseIcon">
-                                <i class="fas fa-sync-alt fa-3x txt-main fa-spin"></i>
-                            </ng-container>
-                            <ng-template #elseIcon>
-                                <i class="fas fa-sync-alt fa-3x txt-main"></i>
-                            </ng-template>
-                        </ng-container>
-                        <ng-template #elseBlock>
-                            <i *ngIf="!currentMeal.mainDish.is_replaced" class="fas fa-sync-alt fa-3x txt-main pointer" (click)="replaceMeal('side',item.meal_name_en,item)"></i>
-                        </ng-template>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.calories).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'calories':currentMeal.mainDish.calories).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.fat).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'fat':currentMeal.mainDish.fat).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.protein).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'protein':currentMeal.mainDish.protein).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 my-2 postion-relative">
-                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
-                    style="border-radius: 30%;">
-                    <span
-                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
-                    <span *ngIf="!currentMeal.sideDish">{{(currentMeal.mainDish.carb).toFixed(2)}}</span>
-                    <ng-container *ngIf="currentMeal.sideDish">
-                        <span>
-                            {{(currentMeal.sideDish | sum:'carb':currentMeal.mainDish.carb).toFixed(2)}}
-                        </span>
-                    </ng-container>
-                </div>
-            </div>
-        </div>
-    </div>
-</p-dialog>
-
 <p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="replacementModal"
-    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
+    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }"  header='{{"replaceModal"|translate}}'>
     <div class="row">
-        <div class="col-xl-6 my-2" *ngFor="let replaced_item of replacementMeals$ | async; let i = index">
+        <div class="col-xl-6 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
             <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
-                <!-- <div class="col-3 d-flex">
-                    <img [src]="replaced_item.mainDish.meal_name_image" alt="" class="img-fluid rounded menuImage"
-                        style="width: 100px;height: 100px;object-fit: contain;">
-                </div> -->
-                <div class="col-12 d-flex justify-content-between flex-column">
+              
+                <div class="col-12 d-flex justify-content-between flex-column" id="replacement_container">
                     <div class="content mt-xl-3 mt-md-0 mt-3">
                         <div class="text-center">
                             <img [src]="replaced_item.mainDish.meal_name_image" alt="" class="img-fluid rounded menuImage"
@@ -610,21 +310,80 @@
                                         {{ replaced_item.mainDish.meal_type | mealNameTranslate :translate.currentLang}}
                                     </p>
                                 </div>
-                                <h6>
-                                    {{translate.currentLang == 'ar'? replaced_item?.mainDish?.meal_name_ar:replaced_item?.mainDish?.meal_name_en}}
+                                <h6 class="text-orange">
+                                    {{translate.currentLang == 'ar' ?replaced_item.mainDish.meal_name_ar:replaced_item.mainDish.meal_name_en}}
+                                    {{replaced_item.mainDish.qty + replaced_item.mainDish.extra.protein + replaced_item.mainDish.extra.carb}}
+                                    {{translate.currentLang == 'ar' ? (replaced_item.mainDish.unit | mealUnitTranslate):replaced_item.mainDish.unit}}
                                 </h6>
-                                <ng-container *ngIf="replaced_item.sideDish">
-                                    <h6 *ngFor="let sideDish of replaced_item.sideDish">
+                                <h6 class="text-orange" *ngIf="replaced_item.sideDish">
+                                    <span *ngFor="let sideDish of replaced_item.sideDish">
                                         {{translate.currentLang == 'ar' ?sideDish.meal_name_ar:sideDish.meal_name_en}}
-                                    </h6>
-                                </ng-container>
-                                
+                                        {{sideDish.qty + sideDish.extra.protein + sideDish.extra.carb}}
+                                        {{translate.currentLang == 'ar' ? (sideDish.unit | mealUnitTranslate):sideDish.unit}}
+                                    </span>
+                                </h6>
+                              
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6 col-12 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
+                                    style="border-radius: 30%;">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
+                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.calories).toFixed(2)}}</span>
+                                    <ng-container *ngIf="replaced_item.sideDish">
+                                        <span>
+                                            {{(replaced_item.sideDish | sum:'calories':replaced_item.mainDish.calories).toFixed(2)}}
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
+                                    style="border-radius: 30%;">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
+                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.fat).toFixed(2)}}</span>
+                                    <ng-container *ngIf="replaced_item.sideDish">
+                                        <span>
+                                            {{(replaced_item.sideDish | sum:'fat':replaced_item.mainDish.fat).toFixed(2)}}
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
+                                    style="border-radius: 30%;">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
+                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.protein).toFixed(2)}}</span>
+                                    <ng-container *ngIf="replaced_item.sideDish">
+                                        <span>
+                                            {{(replaced_item.sideDish | sum:'protein':replaced_item.mainDish.protein).toFixed(2)}}
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
+                                    style="border-radius: 30%;">
+                                    <span
+                                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
+                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.carb).toFixed(2)}}</span>
+                                    <ng-container *ngIf="replaced_item.sideDish">
+                                        <span>
+                                            {{(replaced_item.sideDish | sum:'carb':replaced_item.mainDish.carb).toFixed(2)}}
+                                        </span>
+                                    </ng-container>
+                                </div>
                             </div>
                         </div>
                         <hr>
                         <div class="text-center">
                             <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-4 font-weight-600"
-                                (click)="replace(replaced_item);replacementModal=false">
+                                (click)="replaceMeal(replaced_item);replacementModal=false">
                                 {{"buttons.replace"|translate}}
                             </button>
                         </div>
@@ -634,6 +393,3 @@
         </div>
     </div>
 </p-dialog>
-
-<p-toast position="top-left" [showTransformOptions]="'translateY(-100%)'" [showTransitionOptions]="'300ms'"
-    [hideTransitionOptions]="'300ms'" [showTransformOptions]="'translateX(-100%)'"></p-toast>

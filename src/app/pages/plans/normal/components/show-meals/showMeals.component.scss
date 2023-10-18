@@ -172,7 +172,7 @@
         }
 
         .p-dialog .p-dialog-header {
-            padding: 10px 15px 0px;
+            padding: 10px 15px;
         }
 
         .p-dialog .p-dialog-header-icons button {
@@ -243,3 +243,15 @@
     background-color: #19a44b;
     color: #fff;
 }
+
+// #replacement_container .content{
+//     position: relative;
+//     cursor: pointer;
+// }
+// #replacement_container .content.active:after{
+//     content: 'OK';
+//     position: absolute;
+//     top: 0;
+//     right:0;
+//     color: #19a44b;
+// }
