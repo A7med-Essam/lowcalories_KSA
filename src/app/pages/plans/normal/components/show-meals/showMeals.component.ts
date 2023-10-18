@@ -681,9 +681,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     return isCondition1Met || isCondition2Met || isCondition3Met;
   }
 
-  replaced_item: string = '';
-  getReplacementMeals(meal_name: string, meal_type: string) {
-    this.replaced_item = meal_name;
+  replaced_item_index: number = 0;
+  getReplacementMeals(meal_name: string, meal_type: string,index:number) {
+    this.replaced_item_index = index;
     this.ReplacementButtonMode$ = this._Store.select(
       fromNormalPlanSelector.normalPlanReplacementLoadingSelector
     );
@@ -717,50 +717,40 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     let modifiedMeals: IShowMealsResponse[] = JSON.parse(
       JSON.stringify(this.userMeals)
     );
-    modifiedMeals[this.category_index].meals = modifiedMeals[
-      this.category_index
-    ].meals.map((meal) => {
-      if (meal.mainDish.meal_name === this.replaced_item) {
-        const mainDish = { ...meal.mainDish, ...replaced_item.mainDish };
-        mainDish.old_name = meal.mainDish.meal_name
-        if (replaced_item.sideDish) {
-          for (let i = 0; i < replaced_item.sideDish.length; i++) {
-            let currentSideDish = meal.sideDish[i];
-            const replacedSideDish = replaced_item.sideDish[i];
+      const oldMeal = modifiedMeals[this.category_index].meals[this.replaced_item_index]
+      const mainDish = { ...oldMeal.mainDish, ...replaced_item.mainDish };
+      mainDish.old_name = oldMeal.mainDish.meal_name
+      if (replaced_item.sideDish) {
+        for (let i = 0; i < replaced_item.sideDish.length; i++) {
+          let currentSideDish = oldMeal.sideDish[i];
+          const replacedSideDish = replaced_item.sideDish[i];
 
-            if (Object.keys(replacedSideDish).length !== 0) {
-              currentSideDish = { ...currentSideDish, ...replacedSideDish };
-            }
-
-            // If 'extra' is not defined, set it to some default values
-            if (!currentSideDish.extra) {
-              currentSideDish.extra = {
-                carb: this.ExtraCarbOverAll,
-                protein: this.ExtraProteinOverAll,
-              };
-            }
-
-            meal.sideDish[i] = currentSideDish;
+          if (Object.keys(replacedSideDish).length !== 0) {
+            currentSideDish = { ...currentSideDish, ...replacedSideDish };
           }
-        }
 
-        meal.mainDish = mainDish;
+          // If 'extra' is not defined, set it to some default values
+          if (!currentSideDish.extra) {
+            currentSideDish.extra = {
+              carb: this.ExtraCarbOverAll,
+              protein: this.ExtraProteinOverAll,
+            };
+          }
+
+          oldMeal.sideDish[i] = currentSideDish;
+        }
       }
-      return meal;
-    });
+      oldMeal.mainDish = mainDish;
 
     this.userMeals = modifiedMeals;
     this.addExtraGramsToMeals();
   }
 
-  resetMeal(name: string) {
+  resetMeal(index:number) {
     let modifiedMeals: IShowMealsResponse[] = JSON.parse(
       JSON.stringify(this.userMeals)
     );
-
-    const currentMealIndex = modifiedMeals[this.category_index].meals.findIndex(e=>e.mainDish.old_name == name)
-    const orignalMealIndex = this.userMealsClone[this.category_index].meals.findIndex(e=>e.mainDish.meal_name == name)
-    modifiedMeals[this.category_index].meals[currentMealIndex] = this.userMealsClone[this.category_index].meals[orignalMealIndex];
+    modifiedMeals[this.category_index].meals[index] = this.userMealsClone[this.category_index].meals[index];
     this.userMeals = modifiedMeals;
     this.addExtraGramsToMeals();
   }
