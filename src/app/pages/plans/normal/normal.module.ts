@@ -19,6 +19,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
 import { TagModule } from 'primeng/tag';
+import { ImageModule } from 'primeng/image';
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -39,7 +40,8 @@ export function playerFactory() {
     MultiSelectModule,
     SidebarModule,
     ToastModule,
-    TagModule
+    TagModule,
+    ImageModule
   ],
 })
 export class NormalModule {}

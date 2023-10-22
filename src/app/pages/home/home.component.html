@@ -226,7 +226,7 @@
             <div class="menu-thumbnail">
               <p-image [src]="meal.image" alt="{{translate.currentLang == 'ar' ? meal?.item_ar :meal?.item}}"  [preview]="true"></p-image>
             </div>
-            <div class="menu-details">
+            <div class="menu-details" style="width: 500px;">
               <div class="menu-title clearfix">
                 <h4>{{translate.currentLang == 'ar' ? meal?.item_ar :meal?.item}}</h4>
                 <!-- <span class="price">{{meal.price}} <sub>{{"currency"|translate}}</sub></span> -->
@@ -240,7 +240,11 @@
           </div>
         </div>
 
-
+        <div class="text-center">
+          <a class="button mt-10" routerLink="../menu">
+            {{"buttons.check_our_menu"|translate}}
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -291,7 +295,7 @@
             <h4>{{"home.section4.overview3.title"|translate}}</h4>
             <p>{{"home.section4.overview3.desc"|translate}}</p>
           </div>
-          <div class="service-img" style="background-image: url('../../../assets/images/home/image-3.jpg');"></div>
+          <div class="service-img" style="background-image: url('../../../assets/images/home/image-3.jpg');background-size: 100% 100%;background-position: center;"></div>
         </div>
       </div>
 

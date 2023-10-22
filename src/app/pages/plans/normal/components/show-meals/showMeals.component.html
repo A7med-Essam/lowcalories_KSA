@@ -3,10 +3,14 @@
         <div class="row text-center intro-title">
             <h1 class="text-orange">{{"pages.plans.showMeals"|translate}}</h1>
             <p class="text-white">{{"pages.plans.desc"|translate}}</p>
-            <ul class="page-breadcrumb">
+            <ul class="page-breadcrumb" *ngIf="ProgramDetails | async as program">
                 <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
                         class="fa fa-angle-double-right"></i></li>
-                <li><span>{{"pages.plans.title"|translate}}</span></li>
+                <li><a routerLink="../../plans">{{"pages.plans.title"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink="../">{{translate.currentLang == 'ar' ? program.name_ar:program.name}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.plans.showMeals"|translate}}</span></li>
             </ul>
         </div>
     </div>
@@ -42,49 +46,61 @@
                 <div class="col-xl-6 my-3" *ngFor="let meal of userMeals[category_index]?.meals; let i = index">
                     <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
                         <div class="col-3 d-flex">
-                            <img [src]="meal.mainDish.meal_name_image" alt="" class="img-fluid rounded menuImage"
-                                style="width: 100px;height: 100px;object-fit: contain;">
+                            <!-- <img [src]="meal.meal_image" alt="" class="img-fluid rounded menuImage"
+                                style="width: 100px;height: 100px;object-fit: contain;"> -->
+                                <p-image class="img-fluid rounded menuImage img-responsive center-block" [src]="meal.meal_image" 
+                                alt="{{translate.currentLang == 'ar' ? 'صوره الوجبة' :'meal name'}}"
+                                style="width: 100px;height: 100px;object-fit: contain"
+                                [preview]="true"></p-image>
+
                         </div>
                         <div class="col-9 d-flex justify-content-between flex-column">
                             <div class="content mt-xl-3 mt-md-0 mt-3">
                                 <div>
                                     <h6>
-                                        {{translate.currentLang == 'ar'? meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
+                                        {{translate.currentLang == 'ar'?
+                                        meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
                                         {{meal.mainDish.qty + meal.mainDish.extra.protein + meal.mainDish.extra.carb}}
-                                        {{translate.currentLang == 'ar' ? (meal.mainDish.unit | mealUnitTranslate):meal.mainDish.unit}}
+                                        {{translate.currentLang == 'ar' ? (meal.mainDish.unit |
+                                        mealUnitTranslate):meal.mainDish.unit}}
 
-                                         <span *ngIf="meal.mainDish.tag == 'p'">
+                                        <span *ngIf="meal.mainDish.tag == 'p'">
                                             <p-tag class="mx-2" [severity]="'primary'"
-                                            value="{{(translate.currentLang == 'ar' ?'بروتين':'Protein')}}"></p-tag>
-                                         </span>
-                                         <span *ngIf="meal.mainDish.tag == 'c'">
+                                                value="{{(translate.currentLang == 'ar' ?'بروتين':'Protein')}}"></p-tag>
+                                        </span>
+                                        <span *ngIf="meal.mainDish.tag == 'c'">
                                             <p-tag class="mx-2" [severity]="'success'"
-                                            value="{{(translate.currentLang == 'ar' ?'كارب':'Carb')}}"></p-tag>
-                                         </span>
-                                         <span *ngIf="meal.mainDish.tag == 'cp'">
+                                                value="{{(translate.currentLang == 'ar' ?'كارب':'Carb')}}"></p-tag>
+                                        </span>
+                                        <span *ngIf="meal.mainDish.tag == 'cp'">
                                             <p-tag class="mx-2" [severity]="'warning'"
-                                            value="{{(translate.currentLang == 'ar' ?'بروتين وكارب':'Protein & Carb')}}"></p-tag>
-                                         </span>
-                                         
+                                                value="{{(translate.currentLang == 'ar' ?'بروتين وكارب':'Protein & Carb')}}">
+                                            </p-tag>
+                                        </span>
+
                                     </h6>
                                     <ng-container *ngIf="meal.sideDish">
                                         <h6 *ngFor="let sideDish of meal.sideDish">
-                                            {{translate.currentLang == 'ar' ?sideDish.meal_name_ar:sideDish.meal_name_en}}
+                                            {{translate.currentLang == 'ar'
+                                            ?sideDish.meal_name_ar:sideDish.meal_name_en}}
                                             {{sideDish.qty + sideDish.extra.protein + sideDish.extra.carb}}
-                                            {{translate.currentLang == 'ar' ? (sideDish.unit | mealUnitTranslate):sideDish.unit}}
-                          
+                                            {{translate.currentLang == 'ar' ? (sideDish.unit |
+                                            mealUnitTranslate):sideDish.unit}}
+
                                             <span *ngIf="sideDish.tag == 'p'">
                                                 <p-tag class="mx-2" [severity]="'primary'"
-                                                value="{{(translate.currentLang == 'ar' ?'بروتين':'Protein')}}"></p-tag>
-                                             </span>
-                                             <span *ngIf="sideDish.tag == 'c'">
+                                                    value="{{(translate.currentLang == 'ar' ?'بروتين':'Protein')}}">
+                                                </p-tag>
+                                            </span>
+                                            <span *ngIf="sideDish.tag == 'c'">
                                                 <p-tag class="mx-2" [severity]="'success'"
-                                                value="{{(translate.currentLang == 'ar' ?'كارب':'Carb')}}"></p-tag>
-                                             </span>
-                                             <span *ngIf="sideDish.tag == 'cp'">
+                                                    value="{{(translate.currentLang == 'ar' ?'كارب':'Carb')}}"></p-tag>
+                                            </span>
+                                            <span *ngIf="sideDish.tag == 'cp'">
                                                 <p-tag class="mx-2" [severity]="'warning'"
-                                                value="{{(translate.currentLang == 'ar' ?'بروتين وكارب':'Protein & Carb')}}"></p-tag>
-                                             </span>
+                                                    value="{{(translate.currentLang == 'ar' ?'بروتين وكارب':'Protein & Carb')}}">
+                                                </p-tag>
+                                            </span>
                                         </h6>
                                     </ng-container>
                                     <div class="d-flex justify-content-between align-items-center">
@@ -99,7 +115,8 @@
                                                 </button>
                                             </ng-container>
                                             <ng-template #elseBlock>
-                                                <button class="btn py-2 px-4 editBtn" (click)="getReplacementMeals(meal.mainDish.meal_name,meal.mainDish.meal_type,i)">
+                                                <button class="btn py-2 px-4 editBtn"
+                                                    (click)="getReplacementMeals(meal.mainDish.meal_name,meal.mainDish.meal_type,i)">
                                                     <i class="far fa-edit p-0"></i>
                                                 </button>
                                             </ng-template>
@@ -121,7 +138,8 @@
                                             <span *ngIf="!meal.sideDish">{{(meal.mainDish.calories).toFixed(2)}}</span>
                                             <ng-container *ngIf="meal.sideDish">
                                                 <span>
-                                                    {{(meal.sideDish | sum:'calories':meal.mainDish.calories).toFixed(2)}}
+                                                    {{(meal.sideDish |
+                                                    sum:'calories':meal.mainDish.calories).toFixed(2)}}
                                                 </span>
                                             </ng-container>
                                         </div>
@@ -172,7 +190,6 @@
                 </div>
             </div>
         </div>
-
         <div class="text-end">
             <div class="text-center">
                 <a class="button mt-20 pointer py-1 px-5" (click)="getCheckout()">
@@ -185,42 +202,43 @@
             </div>
         </div>
     </div>
-    <div id="options_container" class="pointer" attr.data-content="{{translate.currentLang == 'ar' ? 'ملخص':'SUMMARY'}}" (click)="sidebarOptions = true">
+    <div id="options_container" class="pointer" attr.data-content="{{translate.currentLang == 'ar' ? 'ملخص':'SUMMARY'}}"
+        (click)="sidebarOptions = true">
         <i class="fas fa-info-circle"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
-       <div *ngIf="!check_meal_types()">
-        <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
-        <div class="my-2">
-            <div class="my-4">
-                <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraProtein" | translate}}</h6>
-                <div class="qty d-flex align-items-center justify-content-center disable-selection">
-                    <span class="minus" (click)="calcExtraGramOverAll(false)">-</span>
-                    <input type="text" class="count" [value]="ExtraProteinOverAll" disabled readonly>
-                    <span class="plus" (click)="calcExtraGramOverAll(true)">+</span>
-                    <!-- <span class="txt-main txt-font ms-2">
+        <div *ngIf="!check_meal_types()">
+            <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
+            <div class="my-2">
+                <div class="my-4">
+                    <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraProtein" | translate}}</h6>
+                    <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                        <span class="minus" (click)="calcExtraGramOverAll(false)">-</span>
+                        <input type="text" class="count" [value]="ExtraProteinOverAll" disabled readonly>
+                        <span class="plus" (click)="calcExtraGramOverAll(true)">+</span>
+                        <!-- <span class="txt-main txt-font ms-2">
                         {{"pages.plans.sidebar.section1.gm" | translate}}
                     </span> -->
+                    </div>
                 </div>
-            </div>
 
-            <div class="my-4">
-                <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraCarb" | translate}}</h6>
-                <div class="qty d-flex align-items-center justify-content-center disable-selection">
-                    <span class="minus" (click)="calcExtraPieceOverAll(false)">-</span>
-                    <input type="text" class="count" [value]="ExtraCarbOverAll" disabled readonly>
-                    <span class="plus" (click)="calcExtraPieceOverAll(true)">+</span>
-                    <!-- <span class="txt-main txt-font ms-2">
+                <div class="my-4">
+                    <h6 class="text-orange">{{"pages.plans.sidebar.section1.extraCarb" | translate}}</h6>
+                    <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                        <span class="minus" (click)="calcExtraPieceOverAll(false)">-</span>
+                        <input type="text" class="count" [value]="ExtraCarbOverAll" disabled readonly>
+                        <span class="plus" (click)="calcExtraPieceOverAll(true)">+</span>
+                        <!-- <span class="txt-main txt-font ms-2">
                         {{"pages.plans.sidebar.section1.gm" | translate}}
                     </span> -->
+                    </div>
                 </div>
             </div>
+            <small class="text-danger">
+                *{{"pages.plans.sidebar.section1.warning" | translate}}
+            </small>
+            <hr>
         </div>
-        <small class="text-danger">
-            *{{"pages.plans.sidebar.section1.warning" | translate}}
-        </small>
-        <hr>
-       </div>
         <h5>{{"pages.plans.sidebar.section2.title" | translate}}</h5>
         <div class="mt-3" *ngIf="price$ |async as price">
             <div class="d-flex justify-content-between my-1 font-weight-500">
@@ -236,13 +254,13 @@
             <div class="d-flex justify-content-between my-1 font-weight-500" *ngIf="price.global_extra_carb">
                 <span>{{"pages.checkout.giftcode.extra_carb" | translate}}</span> <span class="txt-main">
                     <span>{{price.global_extra_carb}}</span>
-                     <sub class="text-orange">{{"currency" | translate}}</sub>
+                    <sub class="text-orange">{{"currency" | translate}}</sub>
                 </span>
             </div>
             <div class="d-flex justify-content-between my-1 font-weight-500" *ngIf="price.global_extra_protein">
                 <span>{{"pages.checkout.giftcode.extra_protein" | translate}}</span> <span class="txt-main">
                     <span>{{price.global_extra_protein}}</span>
-                     <sub class="text-orange">{{"currency" | translate}}</sub>
+                    <sub class="text-orange">{{"currency" | translate}}</sub>
                 </span>
             </div>
             <div class="d-flex justify-content-between mt-1 font-weight-500">
@@ -264,9 +282,11 @@
                 <div *ngFor="let nutrition of meal | nutritionTotal">
                     <small class="txt-main">{{ nutrition.date }} / {{ translate.currentLang == 'ar' ? (nutrition.day |
                         weekdayTranslate ):nutrition.day }}</small> <br>
-                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span> <span>{{
+                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span>
+                        <span>{{
                             nutrition.totalProtein.toFixed(2) }}</span></small> <br>
-                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span> <span>{{
+                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span>
+                        <span>{{
                             nutrition.totalCalories.toFixed(2) }}</span></small> <br>
                     <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCarb" | translate}}</span> <span>{{
                             nutrition.totalCarbs.toFixed(2) }}</span></small> <br>
@@ -280,16 +300,17 @@
 </section>
 
 <p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="replacementModal"
-    [transitionOptions]="'200ms'" [style]="{ width: '40vw' }"  header='{{"replaceModal"|translate}}'>
+    [transitionOptions]="'200ms'" [style]="{ width: '40vw' }" header='{{"replaceModal"|translate}}'>
     <div class="row">
         <div class="col-12 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
             <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
-              
+
                 <div class="col-12 d-flex justify-content-between flex-column" id="replacement_container">
                     <div class="content mt-xl-3 mt-md-0 mt-3">
                         <div class="text-center">
-                            <img [src]="replaced_item.mainDish.meal_name_image" alt="" class="img-fluid rounded menuImage"
-                            style="width: 100px;height: 100px;object-fit: contain;">
+                            <img [src]="replaced_item.mainDish.meal_name_image" alt=""
+                                class="img-fluid rounded menuImage"
+                                style="width: 100px;height: 100px;object-fit: contain;">
                             <div>
                                 <div class="d-flex justify-content-center align-items-center mb-3">
                                     <p class="text-muted m-0">
@@ -298,19 +319,23 @@
                                     </p>
                                 </div>
                                 <h6 class="text-orange">
-                                    {{translate.currentLang == 'ar' ?replaced_item.mainDish.meal_name_ar:replaced_item.mainDish.meal_name_en}}
-                                    {{replaced_item.mainDish.qty + replaced_item.mainDish.extra.protein + replaced_item.mainDish.extra.carb}}
-                                    {{translate.currentLang == 'ar' ? (replaced_item.mainDish.unit | mealUnitTranslate):replaced_item.mainDish.unit}}
+                                    {{translate.currentLang == 'ar'
+                                    ?replaced_item.mainDish.meal_name_ar:replaced_item.mainDish.meal_name_en}}
+                                    {{replaced_item.mainDish.qty + replaced_item.mainDish.extra.protein +
+                                    replaced_item.mainDish.extra.carb}}
+                                    {{translate.currentLang == 'ar' ? (replaced_item.mainDish.unit |
+                                    mealUnitTranslate):replaced_item.mainDish.unit}}
                                 </h6>
                                 <h6 class="text-orange" *ngIf="replaced_item.sideDish">
                                     <span *ngFor="let sideDish of replaced_item.sideDish">
                                         {{translate.currentLang == 'ar' ?sideDish.meal_name_ar:sideDish.meal_name_en}}
                                         {{sideDish.qty + sideDish.extra.protein + sideDish.extra.carb}}
-                                        {{translate.currentLang == 'ar' ? (sideDish.unit | mealUnitTranslate):sideDish.unit}}
+                                        {{translate.currentLang == 'ar' ? (sideDish.unit |
+                                        mealUnitTranslate):sideDish.unit}}
                                         <br>
                                     </span>
                                 </h6>
-                              
+
                             </div>
                         </div>
                         <hr>
@@ -320,10 +345,12 @@
                                     style="border-radius: 30%;">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.calories"|translate}}</span>
-                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.calories).toFixed(2)}}</span>
+                                    <span
+                                        *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.calories).toFixed(2)}}</span>
                                     <ng-container *ngIf="replaced_item.sideDish">
                                         <span>
-                                            {{(replaced_item.sideDish | sum:'calories':replaced_item.mainDish.calories).toFixed(2)}}
+                                            {{(replaced_item.sideDish |
+                                            sum:'calories':replaced_item.mainDish.calories).toFixed(2)}}
                                         </span>
                                     </ng-container>
                                 </div>
@@ -333,10 +360,12 @@
                                     style="border-radius: 30%;">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.fat"|translate}}</span>
-                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.fat).toFixed(2)}}</span>
+                                    <span
+                                        *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.fat).toFixed(2)}}</span>
                                     <ng-container *ngIf="replaced_item.sideDish">
                                         <span>
-                                            {{(replaced_item.sideDish | sum:'fat':replaced_item.mainDish.fat).toFixed(2)}}
+                                            {{(replaced_item.sideDish |
+                                            sum:'fat':replaced_item.mainDish.fat).toFixed(2)}}
                                         </span>
                                     </ng-container>
                                 </div>
@@ -346,10 +375,12 @@
                                     style="border-radius: 30%;">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.protein"|translate}}</span>
-                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.protein).toFixed(2)}}</span>
+                                    <span
+                                        *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.protein).toFixed(2)}}</span>
                                     <ng-container *ngIf="replaced_item.sideDish">
                                         <span>
-                                            {{(replaced_item.sideDish | sum:'protein':replaced_item.mainDish.protein).toFixed(2)}}
+                                            {{(replaced_item.sideDish |
+                                            sum:'protein':replaced_item.mainDish.protein).toFixed(2)}}
                                         </span>
                                     </ng-container>
                                 </div>
@@ -359,10 +390,12 @@
                                     style="border-radius: 30%;">
                                     <span
                                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutritions.carb"|translate}}</span>
-                                    <span *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.carb).toFixed(2)}}</span>
+                                    <span
+                                        *ngIf="!replaced_item.sideDish">{{(replaced_item.mainDish.carb).toFixed(2)}}</span>
                                     <ng-container *ngIf="replaced_item.sideDish">
                                         <span>
-                                            {{(replaced_item.sideDish | sum:'carb':replaced_item.mainDish.carb).toFixed(2)}}
+                                            {{(replaced_item.sideDish |
+                                            sum:'carb':replaced_item.mainDish.carb).toFixed(2)}}
                                         </span>
                                     </ng-container>
                                 </div>

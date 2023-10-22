@@ -72,9 +72,18 @@
     background-color: #19a44b;
     border: 2px solid #fff;
     color: #fff;
-    i{
+
+    i {
         color: #fff;
     }
+}
+
+:host {
+    ::ng-deep .p-image-preview-container img{
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+      }
 }
 
 // *********************************************************** EDIT MEAL ****************************************************************
@@ -184,7 +193,7 @@
 
 // ================================================================== new counter
 
-#options_container{
+#options_container {
     padding: 10px;
     background-color: #19a44b;
     position: fixed;
@@ -193,13 +202,14 @@
     border-bottom-left-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
-    i{
+
+    i {
         font-size: 35px;
         color: #fff;
     }
 }
 
-#options_container::after{
+#options_container::after {
     content: attr(data-content);
     width: 98px;
     height: 100%;
@@ -212,11 +222,12 @@
     padding-top: 15px;
 }
 
-@media all and (max-width:767.5px){
-    #options_container{
+@media all and (max-width:767.5px) {
+    #options_container {
         right: 0;
     }
-    #options_container::after{
+
+    #options_container::after {
         content: '';
         width: 0;
         height: 0;
@@ -224,25 +235,28 @@
     }
 }
 
-:host{
-    ::ng-deep{
-        .p-sidebar .p-sidebar-header{
+:host {
+    ::ng-deep {
+        .p-sidebar .p-sidebar-header {
             padding: 0px;
         }
-        .p-tag-value{
+
+        .p-tag-value {
             font-size: 8px;
         }
     }
 }
 
-.fs-12{
+.fs-12 {
     font-size: 12px;
 }
 
-.summary-toggle-btn{
+.summary-toggle-btn {
     background-color: #19a44b;
     color: #fff;
 }
+
+
 
 // #replacement_container .content{
 //     position: relative;

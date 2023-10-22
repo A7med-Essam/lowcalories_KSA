@@ -1,14 +1,15 @@
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
     <div class="container">
-        <div class="row text-center intro-title">
-            <h1 class="text-orange" *ngIf="ProgramDetails | async as program">
+        <div class="row text-center intro-title" *ngIf="ProgramDetails | async as program">
+            <h1 class="text-orange">
                 {{translate.currentLang == 'ar' ?program.name_ar:program.name}}
             </h1>
             <p class="text-white">{{"pages.plans.desc"|translate}}</p>
             <ul class="page-breadcrumb">
                 <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
                         class="fa fa-angle-double-right"></i></li>
-                <li><span>{{"pages.plans.title"|translate}}</span></li>
+                        <li><a routerLink="../../plans">{{"pages.plans.title"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{translate.currentLang == 'ar' ? program.name_ar:program.name}}</span></li>
             </ul>
         </div>
     </div>

@@ -182,7 +182,9 @@
             <div class="col-lg-6" *ngFor="let item of menu">
                 <div class="menu-body menu-left menu-white">
                     <div class="menu-thumbnail">
-                        <img class="img-responsive center-block" [src]="item.image" alt="{{translate.currentLang == 'ar' ? item?.item_ar :item?.item}}">
+                        <p-image class="img-responsive center-block" [src]="item.image" alt="{{translate.currentLang == 'ar' ? item?.item_ar :item?.item}}"  [preview]="true"></p-image>
+
+                        <!-- <img class="img-responsive center-block" [src]="item.image" alt="{{translate.currentLang == 'ar' ? item?.item_ar :item?.item}}"> -->
                     </div>
                     <div class="menu-details">
                         <div class="menu-title clearfix">

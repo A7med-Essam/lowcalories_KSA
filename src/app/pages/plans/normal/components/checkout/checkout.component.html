@@ -3,8 +3,14 @@
         <div class="row text-center intro-title">
             <h1 class="text-orange">{{"pages.checkout.title" | translate}}</h1>
             <p class="text-white">{{"pages.checkout.desc" | translate}}</p>
-            <ul class="page-breadcrumb">
+            <ul class="page-breadcrumb" *ngIf="ProgramDetails | async as program">
                 <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home" | translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink="../../plans">{{"pages.plans.title"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink="../set-plan">{{translate.currentLang == 'ar' ? program.name_ar:program.name}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink="../show-meals">{{"pages.plans.showMeals"|translate}}</a> <i
                         class="fa fa-angle-double-right"></i></li>
                 <li><span>{{"pages.checkout.title" | translate}}</span></li>
             </ul>
@@ -22,7 +28,8 @@
                     *ngIf="subscriptionInfo$ | async as sub">
                     <div>
                         <img [src]="program.image" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
-                        <h6 class="text-orange">{{translate.currentLang == 'ar' ? program.name_ar:program.name| titlecase}}</h6>
+                        <h6 class="text-orange">{{translate.currentLang == 'ar' ? program.name_ar:program.name|
+                            titlecase}}</h6>
                     </div>
                     <div>
                         <span>
@@ -36,7 +43,8 @@
                         </span>
                     </div>
                     <div class="mt-3">
-                        <a class="txt-main pointer" (click)="subscribtionModal=true">{{"buttons.viewMore" | translate}}</a>
+                        <a class="txt-main pointer" (click)="subscribtionModal=true">{{"buttons.viewMore" |
+                            translate}}</a>
                     </div>
                 </div>
             </div>
@@ -72,7 +80,7 @@
                                         translate}}</sub></span>
                             </div>
                             <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="price.code_apply">
-                                <span>{{"pages.checkout.giftcode.code" | translate}}</span> 
+                                <span>{{"pages.checkout.giftcode.code" | translate}}</span>
                                 <span>
                                     <span class="txt-main">{{price.code_apply.toFixed(2)}}</span>
                                     <sub class="text-orange">{{"currency" | translate}}</sub>
@@ -83,16 +91,20 @@
                                     {{price.vat*100}}%
                                 </span>
                             </div>
-                            <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="price.global_extra_carb">
-                                <span>{{"pages.checkout.giftcode.extra_carb" | translate}}</span> <span class="txt-main">
+                            <div class="d-flex justify-content-between my-3 font-weight-500"
+                                *ngIf="price.global_extra_carb">
+                                <span>{{"pages.checkout.giftcode.extra_carb" | translate}}</span> <span
+                                    class="txt-main">
                                     <span>{{price.global_extra_carb}}</span>
-                                     <sub class="text-orange">{{"currency" | translate}}</sub>
+                                    <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
-                            <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="price.global_extra_protein">
-                                <span>{{"pages.checkout.giftcode.extra_protein" | translate}}</span> <span class="txt-main">
+                            <div class="d-flex justify-content-between my-3 font-weight-500"
+                                *ngIf="price.global_extra_protein">
+                                <span>{{"pages.checkout.giftcode.extra_protein" | translate}}</span> <span
+                                    class="txt-main">
                                     <span>{{price.global_extra_protein}}</span>
-                                     <sub class="text-orange">{{"currency" | translate}}</sub>
+                                    <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between my-3 font-weight-500" *ngIf="deliveryFees">
@@ -102,11 +114,11 @@
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between mt-3 font-weight-500">
-                                <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span> 
+                                <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span>
                                 <span class="txt-main">
-                                        <!-- {{(price.grand_total+deliveryFees+(price.extra_details | sumExtra)).toFixed(2)}} -->
-                                        <!-- {{(price.grand_total+deliveryFees).toFixed(2)}} -->
-                                        {{(price.grand_total+deliveryFees+price.global_extra_protein+price.global_extra_carb).toFixed(2)}}
+                                    <!-- {{(price.grand_total+deliveryFees+(price.extra_details | sumExtra)).toFixed(2)}} -->
+                                    <!-- {{(price.grand_total+deliveryFees).toFixed(2)}} -->
+                                    {{(price.grand_total+deliveryFees+price.global_extra_protein+price.global_extra_carb).toFixed(2)}}
                                     <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
                             </div>
@@ -120,7 +132,9 @@
                         <div class="d-flex justify-content-between flex-wrap">
                             <h5>{{"pages.checkout.form.title" | translate}}</h5>
                             <h6 class="txt-main pointer ms-4" *ngIf="checkoutForm.value.delivery_status">
-                                <u *ngIf="user.data" (click)="displayUserAddressModal()">{{"pages.checkout.selectLocation.title" | translate}}</u>
+                                <u *ngIf="user.data"
+                                    (click)="displayUserAddressModal()">{{"pages.checkout.selectLocation.title" |
+                                    translate}}</u>
                             </h6>
                         </div>
                         <!-- <div *ngIf="checkoutResponse$ | async as res">
@@ -132,10 +146,10 @@
                         <form *ngIf="user.data" [formGroup]='checkoutForm'
                             (ngSubmit)='checkout_With_Auth(checkoutForm)'>
                             <div class="my-4 text-start" *ngIf="checkoutForm.value.delivery_status">
-                                {{"pages.checkout.form.state" | translate}}<span
-                                class="text-danger">*</span>
-                                <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
-                                    formControlName='state_id'  placeholder=' '></p-dropdown>
+                                {{"pages.checkout.form.state" | translate}}<span class="text-danger">*</span>
+                                <p-dropdown [options]="states$ | async"
+                                    optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
+                                    formControlName='state_id' placeholder=' '></p-dropdown>
                                 <div class="text-start">
                                     <small class="text-danger ms-1"
                                         *ngIf="checkoutForm.get('state_id')?.touched &&
@@ -145,10 +159,10 @@
                             <div class="my-4 text-start">
                                 <div class="my-2 text-start" *ngIf="checkoutForm.value.delivery_status">
                                     <label class="text-muted">{{"pages.checkout.form.area" | translate}}</label><span
-                                    class="text-danger">*</span>
-                                    <p-dropdown [options]="this.checkoutForm.get('state_id')?.value?.['areas']" 
-                                    optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}" optionValue="id"
-                                        formControlName='area_id' placeholder=' '></p-dropdown>
+                                        class="text-danger">*</span>
+                                    <p-dropdown [options]="this.checkoutForm.get('state_id')?.value?.['areas']"
+                                        optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}"
+                                        optionValue="id" formControlName='area_id' placeholder=' '></p-dropdown>
                                     <div class="text-start">
                                         <small class="text-danger ms-1"
                                             *ngIf="checkoutForm.get('area_id')?.touched &&
@@ -158,7 +172,7 @@
                             </div>
                             <div class="my-4 text-start" *ngIf="checkoutForm.value.delivery_status">
                                 <label class="text-muted">{{"pages.checkout.form.address" | translate}}</label><span
-                                class="text-danger">*</span>
+                                    class="text-danger">*</span>
                                 <input type="text" pInputText formControlName='address' />
                                 <div class="text-start">
                                     <small class="text-danger ms-1"
@@ -170,39 +184,47 @@
                                 <div class="my-2 text-start">
                                     <label class="text-muted">{{"pages.checkout.form.dislike" | translate}}</label>
                                     <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals"
-                                    defaultLabel="{{translate.currentLang == 'ar' ?'اختر الوجبات':'Select Meals'}}" 
-                                    optionValue="meal_name" optionLabel="{{translate.currentLang == 'ar' ?'meal_name_ar':'meal_name'}}" display="chip" appendTo="body"></p-multiSelect>
+                                        defaultLabel="{{translate.currentLang == 'ar' ?'اختر الوجبات':'Select Meals'}}"
+                                        optionValue="meal_name"
+                                        optionLabel="{{translate.currentLang == 'ar' ?'meal_name_ar':'meal_name'}}"
+                                        display="chip" appendTo="body"></p-multiSelect>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center my-1 flex-wrap">
                                 <div>
                                     <div class="d-flex justify-content-start align-items-center my-1">
-                                        <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
-                                        <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
-                                            class="img-fluid mx-1" alt="">
+                                        <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" |
+                                            translate}}:</p>
+                                        <img src="../../../../../../assets/images/check-out/payment-method.png"
+                                            id="visa_img" class="img-fluid mx-1" alt="">
                                     </div>
                                     <div class="d-flex justify-content-start align-items-center my-1">
-                                        <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                        <input type="checkbox" formControlName='terms'
+                                            (change)="onCheckTermsChange($event)">
                                         <small class="mx-2 font-weight-500">
-                                            {{"pages.checkout.form.terms.desc1" | translate}}<a class="text-orange pointer mx-1" (click)="termsModal = true">
-                                                {{"pages.terms.title2"|translate}} </a> 
-                                                {{"pages.checkout.form.terms.desc2" | translate}}
+                                            {{"pages.checkout.form.terms.desc1" | translate}}<a
+                                                class="text-orange pointer mx-1" (click)="termsModal = true">
+                                                {{"pages.terms.title2"|translate}} </a>
+                                            {{"pages.checkout.form.terms.desc2" | translate}}
                                         </small>
                                     </div>
                                     <div class="text-start">
-                                        <small class="text-danger ms-1" *ngIf="checkoutForm.get('terms')?.touched &&
+                                        <small class="text-danger ms-1"
+                                            *ngIf="checkoutForm.get('terms')?.touched &&
                                             checkoutForm.get('terms')?.hasError('required')">{{"validations.terms"|translate}}
                                         </small>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start align-items-center my-1">
                                     <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
-                                        <p-radioButton [inputId]="category.name+1" [value]="category.value" formControlName="delivery_status"></p-radioButton>
-                                        <label [for]="category.name+1" class="mx-2">{{translate.currentLang == 'ar' ? category.name_ar: category.name }}</label>
+                                        <p-radioButton [inputId]="category.name+1" [value]="category.value"
+                                            formControlName="delivery_status"></p-radioButton>
+                                        <label [for]="category.name+1" class="mx-2">{{translate.currentLang == 'ar' ?
+                                            category.name_ar: category.name }}</label>
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <button class="btn w-auto p-0 border-0" type="submit" [disabled]="checkoutForm.invalid">
                                 <a class="button pointer py-2 px-5">
                                     {{"buttons.checkout"|translate}}
@@ -216,7 +238,7 @@
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.name" | translate}}<span
-                                            class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input type="text" pInputText formControlName='name' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
@@ -228,7 +250,7 @@
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.phone" | translate}}<span
-                                            class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input type="text" pInputText formControlName='mobile' maxlength="10"
                                             minlength="10"
                                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
@@ -247,7 +269,7 @@
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.email" | translate}}<span
-                                            class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input type="email" pInputText formControlName='email' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
@@ -262,7 +284,7 @@
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.password" | translate}}<span
-                                            class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input type="password" pInputText formControlName='password' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
@@ -272,10 +294,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="my-2 text-start" *ngIf="checkoutForm_without_auth.value.delivery_status">
+                                    <div class="my-2 text-start"
+                                        *ngIf="checkoutForm_without_auth.value.delivery_status">
                                         <label class="text-muted">{{"pages.checkout.form.state" | translate}}<span
-                                            class="text-danger">*</span></label>
-                                        <p-dropdown [options]="states$ | async" optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
+                                                class="text-danger">*</span></label>
+                                        <p-dropdown [options]="states$ | async"
+                                            optionLabel="{{translate.currentLang == 'ar' ? 'name_ar' : 'name'}}"
                                             formControlName='state_id' placeholder=' '></p-dropdown>
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
@@ -285,12 +309,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="my-2 text-start" *ngIf="checkoutForm_without_auth.value.delivery_status">
+                                    <div class="my-2 text-start"
+                                        *ngIf="checkoutForm_without_auth.value.delivery_status">
                                         <label class="text-muted">{{"pages.checkout.form.area" | translate}}<span
-                                            class="text-danger">*</span></label>
-                                        <p-dropdown [options]="this.checkoutForm_without_auth.get('state_id')?.value?.['areas']" 
-                                        optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}" optionValue="id"
-                                            formControlName='area_id' placeholder=' '></p-dropdown>
+                                                class="text-danger">*</span></label>
+                                        <p-dropdown
+                                            [options]="this.checkoutForm_without_auth.get('state_id')?.value?.['areas']"
+                                            optionLabel="{{translate.currentLang == 'ar' ? 'area_ar' : 'area_en'}}"
+                                            optionValue="id" formControlName='area_id' placeholder=' '></p-dropdown>
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
                                                 *ngIf="checkoutForm_without_auth.get('area_id')?.touched &&
@@ -313,7 +339,7 @@
                                 <div class="col-md-6" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.address" | translate}}<span
-                                            class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input formControlName="address" pInputText type="text">
                                         <div class="text-start">
                                             <small class="text-danger ms-1"
@@ -325,21 +351,24 @@
                                 <div class="col-lg-6" *ngIf="checkoutForm_without_auth.value.delivery_status">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.register.form.birthdate"|translate}}</label>
-                                        <p-calendar view="year" formControlName='birthday' [showIcon]="false" #calendar dateFormat="yy" 
-                                        formControlName="birthday"
-                                            [showButtonBar]="true" (onClearClick)="onClearClick()" [defaultDate]="minBirthdate" [showIcon]="true"
-                                            [minDate]="minBirthdate" [maxDate]="maxBirthdate" (onSelect)="onDateChange($event)">
+                                        <p-calendar view="year" formControlName='birthday' [showIcon]="false" #calendar
+                                            dateFormat="yy" formControlName="birthday" [showButtonBar]="true"
+                                            (onClearClick)="onClearClick()" [defaultDate]="minBirthdate"
+                                            [showIcon]="true" [minDate]="minBirthdate" [maxDate]="maxBirthdate"
+                                            (onSelect)="onDateChange($event)">
                                         </p-calendar>
                                     </div>
                                     <small class="text-danger " *ngIf="checkoutForm_without_auth.get('birthday')?.touched &&
-                                    checkoutForm_without_auth.get('birthday')?.invalid">{{"errors.required" | translate}}</small>
+                                    checkoutForm_without_auth.get('birthday')?.invalid">{{"errors.required" |
+                                        translate}}</small>
                                 </div>
                                 <div class="col-12">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">{{"pages.checkout.form.dislike" | translate}}</label>
                                         <p-multiSelect [options]="dislike$ | async" formControlName="dislike_meals"
-                                         defaultLabel="{{translate.currentLang == 'ar' ?'اختر الوجبات ':'Select Meals'}}" 
-                                           optionValue="meal_name" optionLabel="{{translate.currentLang == 'ar' ?'meal_name_ar':'meal_name'}}"
+                                            defaultLabel="{{translate.currentLang == 'ar' ?'اختر الوجبات ':'Select Meals'}}"
+                                            optionValue="meal_name"
+                                            optionLabel="{{translate.currentLang == 'ar' ?'meal_name_ar':'meal_name'}}"
                                             display="chip" appendTo="body"></p-multiSelect>
                                     </div>
                                 </div>
@@ -347,16 +376,19 @@
                             <div class="d-flex justify-content-between align-items-center my-1 flex-wrap">
                                 <div>
                                     <div class="d-flex justify-content-start align-items-center my-1">
-                                        <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
-                                        <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
-                                            class="img-fluid mx-1" alt="">
+                                        <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" |
+                                            translate}}:</p>
+                                        <img src="../../../../../../assets/images/check-out/payment-method.png"
+                                            id="visa_img" class="img-fluid mx-1" alt="">
                                     </div>
                                     <div class="d-flex justify-content-start align-items-center my-1">
                                         <div>
-                                            <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                            <input type="checkbox" formControlName='terms'
+                                                (change)="onCheckTermsChange($event)">
                                             <small class="mx-2 font-weight-500">
                                                 {{"pages.checkout.form.terms.desc1" | translate}}
-                                                <a class="text-orange pointer mx-1" (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
+                                                <a class="text-orange pointer mx-1"
+                                                    (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
                                                 {{"pages.checkout.form.terms.desc2" | translate}}
                                             </small>
                                         </div>
@@ -370,12 +402,13 @@
                                 </div>
                                 <div class="d-flex justify-content-start align-items-center my-1">
                                     <div *ngFor="let category of deliveryStatus" class="field-checkbox mx-2">
-                                        <p-radioButton [inputId]="category.name+2" [value]="category.value" formControlName="delivery_status"></p-radioButton>
+                                        <p-radioButton [inputId]="category.name+2" [value]="category.value"
+                                            formControlName="delivery_status"></p-radioButton>
                                         <label [for]="category.name+2" class="mx-2">{{ category.name }}</label>
                                     </div>
                                 </div>
                             </div>
-                          
+
                             <button class="btn border-0 w-auto p-0" type="submit"
                                 [disabled]="checkoutForm_without_auth.invalid">
                                 <a class="button pointer py-2 px-5">
@@ -436,8 +469,8 @@
     </div>
 </p-dialog>
 
-<p-dialog header='{{"pages.checkout.selectLocation.modalTitle" | translate}}' [(visible)]="addressesModal" [modal]="true" [style]="{ width: '50vw' }"
-    [draggable]="false" [resizable]="false">
+<p-dialog header='{{"pages.checkout.selectLocation.modalTitle" | translate}}' [(visible)]="addressesModal"
+    [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <div *ngIf="addresses$ | async as addresses;">
         <div *ngFor="let address of addresses"
             class="d-flex flex-wrap justify-content-between py-3 px-2 bg-white shadow rounded align-items-center my-3 text-center">
@@ -467,8 +500,8 @@
     </div>
 </p-dialog>
 
-<p-dialog header='{{"pages.terms.title2"|translate}}' [(visible)]="termsModal" [modal]="true" [style]="{ width: '50vw' }"
-    [draggable]="false" [resizable]="false">
+<p-dialog header='{{"pages.terms.title2"|translate}}' [(visible)]="termsModal" [modal]="true"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <div class="section-group text-start my-4" *ngFor="let terms of terms$ | async">
         <h2 class="text-orange mb-3">{{translate.currentLang == 'ar' ? terms?.header_ar :terms?.header}}</h2>
         <div [innerHTML]="translate.currentLang == 'ar' ? terms?.description_ar:terms?.description"
@@ -482,4 +515,3 @@
         <ng-lottie height="350px" [options]="options"></ng-lottie>
     </div>
 </div>
-

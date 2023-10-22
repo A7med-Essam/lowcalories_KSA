@@ -55,6 +55,9 @@ export interface IShowMealsResponse {
 export interface Meal {
     mainDish: Dish;
     sideDish: Dish[];
+    meal_name : string
+    meal_name_ar : string
+    meal_image : string
 }
 
 export interface Dish {
@@ -167,6 +170,9 @@ export interface ICheckout {
 export interface IReplacement {
     mainDish: Dish;
     sideDish: Dish[];
+    meal_name : string
+    meal_name_ar : string
+    meal_image : string
 }
 
 export interface IReplacementData {
