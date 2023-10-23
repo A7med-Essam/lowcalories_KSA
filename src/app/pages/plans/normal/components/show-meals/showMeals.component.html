@@ -296,10 +296,10 @@
     </p-sidebar>
 </section>
 
-<p-sidebar [(visible)]="replacementModal" position="bottom">
+<p-sidebar [(visible)]="replacementModal" position="left">
     <div class="row" #replaced_items>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
-            <div class="replaced_item item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2" (click)="toggleItems(i,replaced_item)">
+        <div class="col-12 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
+            <div class="replaced_item item bg-white row px-2 flex-center rounded shadow-lg" (click)="toggleItems(i,replaced_item)">
                 <div class="content mt-xl-3 mt-md-0 mt-3">
                         <div class="text-center">
                             <img [src]="replaced_item.meal_image" alt=""
@@ -332,7 +332,7 @@
 
                             </div>
                         </div>
-                        <hr>
+                        <!-- <hr>
                         <div class="row">
                             <div class="col-xl-3 col-lg-6 px-1 col-6 my-2 postion-relative">
                                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
@@ -394,7 +394,7 @@
                                     </ng-container>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                 </div>
             </div>
         </div>
