@@ -54,6 +54,7 @@
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+              "node_modules/shepherd.js/dist/css/shepherd.css",
               "src/styles.scss"
             ],
             "scripts": [

@@ -1,6 +1,8 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
+  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -36,6 +38,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
 import Swal from 'sweetalert2';
+import { ShepherdService } from 'angular-shepherd';
 
 @Component({
   selector: 'app-setPlan',
@@ -43,7 +46,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./setPlan.component.scss'],
 })
 export class SetPlanComponent
-  implements OnInit, OnDestroy, AfterContentChecked
+  implements OnInit, OnDestroy 
 {
   private destroyed$: Subject<void> = new Subject();
   @ViewChild('AllWeek') AllWeek!: ElementRef;
@@ -55,19 +58,219 @@ export class SetPlanComponent
   ProgramDetailsForm: FormGroup = new FormGroup({});
   skeletonMode$: Observable<boolean | null> = of(false);
   nextButtonMode$: Observable<boolean | null> = of(false);
-
+  tour: any;
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
     private _FormBuilder: FormBuilder,
     private _Store: Store,
-    private cdref: ChangeDetectorRef,
     private _SharedService: SharedService,
     private _ElementRef: ElementRef,
     private _I18nService: I18nService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private shepherdService: ShepherdService
   ) {
     this._I18nService.getCurrentLang(this.translate);
+  }
+
+  createTour(){
+    this.shepherdService.defaultStepOptions = {
+      cancelIcon: {
+        enabled: true
+      },
+      classes: 'class-1 class-2',
+      scrollTo: { behavior: 'smooth', block: 'center' }
+    }
+    this.shepherdService.modal = true;
+    this.shepherdService.confirmCancel = false;
+    this.shepherdService.addSteps([
+      {
+        title: 'Welcome',
+        text: `follow me to build your plan`,
+        // attachTo: {
+        //   element: '.tour0',
+        //   on: 'bottom'
+        // },
+        buttons: [
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Number Of Days',
+        text: `select how many days in your plan`,
+        attachTo: {
+          element: '.tour1',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Number Of Meals',
+        text: `select how many meals in your plan`,
+        attachTo: {
+          element: '.tour2',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Include Breakfast',
+        text: `you can remove breakfast if only you select 1 or more meals`,
+        attachTo: {
+          element: '.tour3',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Number Of Snacks',
+        text: `select how many snacks in your plan`,
+        attachTo: {
+          element: '.tour4',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Start Date',
+        text: `select plan date start`,
+        attachTo: {
+          element: '.tour5',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Delivery Days',
+        text: `select plan delivery days`,
+        attachTo: {
+          element: '.tour6',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Next'
+          }
+        ],
+        id: 'creating'
+      },
+      {
+        title: 'Confirm your plan',
+        text: `go to next step`,
+        attachTo: {
+          element: '.tour7',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            action() {
+              return this.back();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back'
+          },
+          {
+            action() {
+              return this.next();
+            },
+            text: 'Finish Tutorial'
+          }
+        ],
+        id: 'creating'
+      }
+    ]);
+    this.shepherdService.start();
   }
 
   ngOnInit(): void {
@@ -96,9 +299,7 @@ export class SetPlanComponent
 
   }
 
-  ngAfterContentChecked() {
-    // this.cdref.detectChanges();
-  }
+
 
   createPlanForm() {
     this.ProgramDetailsForm = this._FormBuilder.group({
@@ -181,6 +382,9 @@ export class SetPlanComponent
           );
         });
         this.setDefaultDate();
+        setTimeout(() => {
+          this.createTour();
+        }, 1);
       }
     });
   }

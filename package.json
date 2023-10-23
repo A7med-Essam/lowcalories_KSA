@@ -22,6 +22,7 @@
     "@ngrx/store": "^15.4.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "angular-shepherd": "^16.0.0",
     "bootstrap": "^5.2.3",
     "crypto-js": "^4.1.1",
     "ngx-lottie": "^10.0.0",
