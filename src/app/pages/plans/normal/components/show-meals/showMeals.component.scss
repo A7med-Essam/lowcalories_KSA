@@ -86,6 +86,14 @@
       }
 }
 
+:host {
+    ::ng-deep .p-sidebar-bottom{
+        height: 35rem;
+      }
+}
+
+
+
 // *********************************************************** EDIT MEAL ****************************************************************
 .categories .item {
     transition: all .5s;
@@ -257,15 +265,20 @@
 }
 
 
-
-// #replacement_container .content{
-//     position: relative;
-//     cursor: pointer;
-// }
-// #replacement_container .content.active:after{
-//     content: 'OK';
-//     position: absolute;
-//     top: 0;
-//     right:0;
-//     color: #19a44b;
-// }
+.replaced_item{
+    transition: all .5s ease-in-out;
+    position: relative;
+    cursor: pointer;
+}
+.replaced_item:hover{
+    transform: scale(1.05);
+}
+.replaced_item .content.active:after{
+    content: '\f058';
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 20px;
+    right:20px;
+    color: #19a44b;
+}

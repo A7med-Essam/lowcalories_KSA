@@ -36,7 +36,8 @@
     "save":"Save",
     "showSummary":"Show Nutrition Summary",
     "hideSummary":"Hide Nutrition Summary",
-    "replace":"Replace"
+    "replace":"Replace",
+    "confirm":"Confirm"
   },
   "pages": {
     "home": "Home",

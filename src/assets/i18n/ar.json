@@ -36,7 +36,8 @@
     "save":"حفظ",
     "showSummary":"عرض ملخص التغذية",
     "hideSummary":"إخفاء ملخص التغذية",
-    "replace":"تبديل"
+    "replace":"تبديل",
+    "confirm":"تأكيد"
   },
   "pages": {
     "home": "الصفحة الرئيسية",

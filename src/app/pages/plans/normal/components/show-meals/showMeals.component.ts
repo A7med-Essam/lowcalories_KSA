@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil, of, map } from 'rxjs';
@@ -78,6 +78,8 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     protein: 0,
   };
   selected_program!: ISubscriptionData;
+  @ViewChild('replaced_items') replaced_items!: ElementRef;
+
   constructor(
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
@@ -159,6 +161,14 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   toggleCategories(e: Event, index: number) {
     this.category_index = index;
     this._SharedService.toggleCategories(e);
+  }
+
+  toggleItems(index:number,replaced_item: Meal) {
+    for (let i = 0; i < this.replaced_items.nativeElement.children.length; i++) {
+      this.replaced_items.nativeElement.children[i].children[0].children[0].classList.remove('active');
+      this.replaced_items.nativeElement.children[index].children[0].children[0].classList.add('active');
+    }
+    this.replaceMeal(replaced_item)
   }
 
   getCheckout() {
@@ -682,7 +692,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   }
 
   replaced_item_index: number = 0;
-  getReplacementMeals(meal_name: string, meal_type: string,index:number) {
+  getReplacementMeals(item:Dish, index:number) {
+  const destroyed$: Subject<void> = new Subject();
+
     this.replaced_item_index = index;
     this.ReplacementButtonMode$ = this._Store.select(
       fromNormalPlanSelector.normalPlanReplacementLoadingSelector
@@ -691,9 +703,9 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       FETCH_REPLACE_MEAL_START({
         data: {
           dish_type: 'meal',
-          item: meal_name,
+          item: item.is_replaced ? item.old_name:item.meal_name,
           date: this.userMeals[this.category_index].date,
-          meal_type,
+          meal_type:item.meal_type,
           program_id: this.program_id,
         },
       })
@@ -701,14 +713,24 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
 
     this._Store
       .select(fromNormalPlanSelector.normalPlanReplacementSelector)
-      .pipe(takeUntil(this.destroyed$))
+      .pipe(takeUntil(destroyed$))
       .subscribe((res) => {
         if (res) {
+          if (item.is_replaced) {
+            let modifiedMeals: Meal[] = JSON.parse(
+              JSON.stringify(res)
+            );
+            modifiedMeals = modifiedMeals.filter(e => e.mainDish.meal_name_en != item.meal_name_en)
+            modifiedMeals.push(this.userMealsClone[this.category_index].meals[index])
+            res = modifiedMeals
+          }
           let modifiedMeals: Meal[] = JSON.parse(JSON.stringify(res));
           modifiedMeals = this.calcReplacementMeals(modifiedMeals)
           res = modifiedMeals
           this.replacementModal = true;
           this.replacementMeals = res;
+          destroyed$.next();
+          destroyed$.complete();
         }
       });
   }
@@ -717,7 +739,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     let modifiedMeals: IShowMealsResponse[] = JSON.parse(
       JSON.stringify(this.userMeals)
     );
-    replaced_item.mainDish.old_name = modifiedMeals[this.category_index].meals[this.replaced_item_index].mainDish.meal_name
+    replaced_item.mainDish.old_name = this.userMealsClone[this.category_index].meals[this.replaced_item_index].mainDish.meal_name
     modifiedMeals[this.category_index].meals[this.replaced_item_index] = replaced_item
     this.userMeals = modifiedMeals;
     this.addExtraGramsToMeals();

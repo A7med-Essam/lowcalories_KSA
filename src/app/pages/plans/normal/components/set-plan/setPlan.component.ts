@@ -48,6 +48,7 @@ export class SetPlanComponent
   private destroyed$: Subject<void> = new Subject();
   @ViewChild('AllWeek') AllWeek!: ElementRef;
   @ViewChild('deliveredDays') deliveredDays!: ElementRef;
+
   ksaDate!: Date;
   ProgramDetails!: Observable<INormalPlanResponse | null>;
   program_id: number = 0;
@@ -92,6 +93,7 @@ export class SetPlanComponent
         this.getKsaDate();
       }
     });
+
   }
 
   ngAfterContentChecked() {

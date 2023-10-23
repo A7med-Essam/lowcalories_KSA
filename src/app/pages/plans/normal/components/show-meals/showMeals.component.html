@@ -46,11 +46,8 @@
                 <div class="col-xl-6 my-3" *ngFor="let meal of userMeals[category_index]?.meals; let i = index">
                     <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
                         <div class="col-3 d-flex">
-                            <!-- <img [src]="meal.meal_image" alt="" class="img-fluid rounded menuImage"
-                                style="width: 100px;height: 100px;object-fit: contain;"> -->
                                 <p-image class="img-fluid rounded menuImage img-responsive center-block" [src]="meal.meal_image" 
                                 alt="{{translate.currentLang == 'ar' ? 'صوره الوجبة' :'meal name'}}"
-                                style="width: 100px;height: 100px;object-fit: contain"
                                 [preview]="true"></p-image>
 
                         </div>
@@ -108,7 +105,7 @@
                                             <i class="fas fa-info-circle txt-main"></i>
                                             {{ meal.mainDish.meal_type | mealNameTranslate :translate.currentLang}}
                                         </p>
-                                        <div *ngIf="meal.mainDish.has_replaced">
+                                        <div *ngIf="meal.mainDish.has_replaced || meal.mainDish.is_replaced">
                                             <ng-container *ngIf="ReplacementButtonMode$ | async; else elseBlock">
                                                 <button class="btn py-2 px-4 editBtn">
                                                     <i class="fa-solid fa-circle-notch fa-spin"></i>
@@ -116,16 +113,16 @@
                                             </ng-container>
                                             <ng-template #elseBlock>
                                                 <button class="btn py-2 px-4 editBtn"
-                                                    (click)="getReplacementMeals(meal.mainDish.meal_name,meal.mainDish.meal_type,i)">
+                                                    (click)="getReplacementMeals(meal.mainDish,i)">
                                                     <i class="far fa-edit p-0"></i>
                                                 </button>
                                             </ng-template>
                                         </div>
-                                        <div *ngIf="meal.mainDish.is_replaced">
+                                        <!-- <div *ngIf="meal.mainDish.is_replaced">
                                             <button class="btn py-2 px-4 editBtn" (click)="resetMeal(i)">
                                                 <i class="fas fa-times p-0"></i>
                                             </button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <hr>
@@ -299,14 +296,11 @@
     </p-sidebar>
 </section>
 
-<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="replacementModal"
-    [transitionOptions]="'200ms'" [style]="{ width: '40vw' }" header='{{"replaceModal"|translate}}'>
-    <div class="row">
-        <div class="col-12 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
-            <div class="item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2">
-
-                <div class="col-12 d-flex justify-content-between flex-column" id="replacement_container">
-                    <div class="content mt-xl-3 mt-md-0 mt-3">
+<p-sidebar [(visible)]="replacementModal" position="bottom">
+    <div class="row" #replaced_items>
+        <div class="col-xl-3 col-lg-4 col-sm-6 col-12 my-2" *ngFor="let replaced_item of replacementMeals ; let i = index">
+            <div class="replaced_item item bg-white row px-2 flex-center rounded shadow-lg w-100 h-100 py-2" (click)="toggleItems(i,replaced_item)">
+                <div class="content mt-xl-3 mt-md-0 mt-3">
                         <div class="text-center">
                             <img [src]="replaced_item.mainDish.meal_name_image" alt=""
                                 class="img-fluid rounded menuImage"
@@ -401,16 +395,23 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
+                        <!-- <hr>
                         <div class="text-center">
                             <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-4 font-weight-600"
                                 (click)="replaceMeal(replaced_item);replacementModal=false">
                                 {{"buttons.replace"|translate}}
                             </button>
-                        </div>
-                    </div>
+                        </div> -->
                 </div>
             </div>
         </div>
+        <!-- <div class="col-12">
+            <div class="text-center">
+                <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-4 font-weight-600"
+                    (click)="replacementModal=false">
+                    {{"buttons.confirm"|translate}}
+                </button>
+            </div>
+        </div> -->
     </div>
-</p-dialog>
+</p-sidebar>
