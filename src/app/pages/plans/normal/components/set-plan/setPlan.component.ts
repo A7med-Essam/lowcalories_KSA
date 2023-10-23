@@ -79,58 +79,31 @@ export class SetPlanComponent
         enabled: true
       },
       classes: 'class-1 class-2',
-      scrollTo: { behavior: 'smooth', block: 'center' }
+      scrollTo: { behavior: 'smooth', block: 'center' },
     }
     this.shepherdService.modal = true;
-    this.shepherdService.confirmCancel = false;
     this.shepherdService.addSteps([
       {
-        title: 'Welcome',
-        text: `follow me to build your plan`,
-        // attachTo: {
-        //   element: '.tour0',
-        //   on: 'bottom'
-        // },
-        buttons: [
-          {
-            action() {
-              return this.next();
-            },
-            text: 'Next'
-          }
-        ],
-        id: 'creating'
-      },
-      {
-        title: 'Number Of Days',
-        text: `select how many days in your plan`,
+        text:  this.translate.currentLang == 'ar' ?'ما هو عدد الايام المناسب لك في خطتك الشهرية؟':'What is the appropriate number of days for you in your monthly plan?',
         attachTo: {
           element: '.tour1',
-          on: 'bottom'
+          on: 'right'
         },
         buttons: [
           {
             action() {
-              return this.back();
-            },
-            classes: 'shepherd-button-secondary',
-            text: 'Back'
-          },
-          {
-            action() {
               return this.next();
             },
-            text: 'Next'
+            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
           }
         ],
         id: 'creating'
       },
       {
-        title: 'Number Of Meals',
-        text: `select how many meals in your plan`,
+        text: this.translate.currentLang == 'ar' ?'ماذا تحب ان نحضر لك من الوجبات اليومية؟':'What would you like us to prepare for your daily meals?',
         attachTo: {
           element: '.tour2',
-          on: 'bottom'
+          on: 'right'
         },
         buttons: [
           {
@@ -138,23 +111,23 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: 'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
           },
           {
             action() {
               return this.next();
             },
-            text: 'Next'
+            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
+
           }
         ],
         id: 'creating'
       },
       {
-        title: 'Include Breakfast',
-        text: `you can remove breakfast if only you select 1 or more meals`,
+        text:  this.translate.currentLang == 'ar' ?'هل تريد أضافة وجبة الافطار':'Do you want to add breakfast?',
         attachTo: {
           element: '.tour3',
-          on: 'bottom'
+          on: 'right'
         },
         buttons: [
           {
@@ -162,23 +135,22 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: 'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
           },
           {
             action() {
               return this.next();
             },
-            text: 'Next'
+            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
           }
         ],
         id: 'creating'
       },
       {
-        title: 'Number Of Snacks',
-        text: `select how many snacks in your plan`,
+        text:  this.translate.currentLang == 'ar' ?'هل تريد أضافة سناكس؟':'Do you want to add snacks?',
         attachTo: {
           element: '.tour4',
-          on: 'bottom'
+          on: 'right'
         },
         buttons: [
           {
@@ -186,23 +158,22 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: 'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
           },
           {
             action() {
               return this.next();
             },
-            text: 'Next'
+            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
           }
         ],
         id: 'creating'
       },
       {
-        title: 'Start Date',
-        text: `select plan date start`,
+        text:  this.translate.currentLang == 'ar' ?'ستبدأ خطتك بداية من؟':'When will your plan start?',
         attachTo: {
           element: '.tour5',
-          on: 'bottom'
+          on: 'right'
         },
         buttons: [
           {
@@ -210,23 +181,22 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: 'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
           },
           {
             action() {
               return this.next();
             },
-            text: 'Next'
+            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
           }
         ],
         id: 'creating'
       },
       {
-        title: 'Delivery Days',
-        text: `select plan delivery days`,
+        text:  this.translate.currentLang == 'ar' ?'ما هي الايام التي سوف تستلم فيها وجباتك؟':'On what days will you receive your meals?',
         attachTo: {
           element: '.tour6',
-          on: 'bottom'
+          on: 'right'
         },
         buttons: [
           {
@@ -234,37 +204,13 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: 'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
           },
           {
             action() {
               return this.next();
             },
-            text: 'Next'
-          }
-        ],
-        id: 'creating'
-      },
-      {
-        title: 'Confirm your plan',
-        text: `go to next step`,
-        attachTo: {
-          element: '.tour7',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            action() {
-              return this.back();
-            },
-            classes: 'shepherd-button-secondary',
-            text: 'Back'
-          },
-          {
-            action() {
-              return this.next();
-            },
-            text: 'Finish Tutorial'
+            text: this.translate.currentLang == 'ar' ? 'أنهاء':'Finish'
           }
         ],
         id: 'creating'

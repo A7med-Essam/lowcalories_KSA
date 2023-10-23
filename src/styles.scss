@@ -6403,6 +6403,25 @@ input[type=checkbox] {
 
 .shepherd-button{
   background-color: #19a44b !important;
+  color: #fff !important;
 } 
+
+.shepherd-footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shepherd-button-secondary{
+  background-color: #404040 !important;
+  color: #fff !important;
+}
+
+.shepherd-enabled.shepherd-element{
+  transform: translateX(-22px);
+}
+.shepherd-modal-overlay-container{
+  z-index: 1000 !important;
+}
 
 @import "./assets/ar_style/styles_ar.scss";

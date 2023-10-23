@@ -53,7 +53,7 @@
                         <div class="col-12 py-2 tour1">
                             <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span
                                         class="text-danger">*</span></label></div>
-                            <p-dropdown [options]="subscription_days" formControlName='subscription_days'
+                            <p-dropdown [options]="subscription_days" formControlName='subscription_days' appendTo="body"
                                 ngClass="w-100" [optionLabel]="translate.currentLang == 'ar' ? 'displayName_ar':'displayName'"
                                  optionValue="day_count" placeholder='{{"pages.plans.options.days"|translate}}'>
                             </p-dropdown>
