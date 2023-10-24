@@ -87,8 +87,8 @@
 }
 
 :host {
-    ::ng-deep .p-sidebar-bottom{
-        height: 35rem;
+    ::ng-deep .p-sidebar-left{
+        width: 35rem;
       }
 }
 
@@ -271,7 +271,7 @@
     cursor: pointer;
 }
 .replaced_item:hover{
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 .replaced_item .content.active:after{
     content: '\f058';
