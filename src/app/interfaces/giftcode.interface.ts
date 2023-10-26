@@ -4,6 +4,7 @@ export interface IGiftCodeData{
     code:           string;
     global_extra_carb:number;
     global_extra_protein:number;
+    subscription_days :number;
 }
 
 export interface IGiftCodeResponse{

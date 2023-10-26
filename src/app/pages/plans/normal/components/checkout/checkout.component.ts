@@ -298,10 +298,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         fromNormalPlanSelector.normalPlanPriceSelector
       );
 
+        let subscription_days:number|undefined = 0;
+      this.subscriptionInfo$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => (subscription_days = res?.subscription_days));
+
       this._Store.dispatch(
         FETCH_GIFTCODE_START({
           data: {
             code: input.value,
+            subscription_days,
             price: this.price,
             program_id: this.program_id,
             global_extra_protein:this.global_extra_protein,
