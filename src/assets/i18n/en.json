@@ -86,6 +86,9 @@
           "totalCarb": "Total Carb",
           "totalCalories": "Total Calories"
         }
+      },
+      "replacement_sidebar":{
+        "title":"Choose Replacement meal"
       }
     },
     "menu": {

@@ -945,7 +945,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     return meals
   }
 
-  calculateRound(num:number): number {
+  round(num:number): number {
     return Math.round(num);
   }
 }

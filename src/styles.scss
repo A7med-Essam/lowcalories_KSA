@@ -6424,4 +6424,12 @@ input[type=checkbox] {
   z-index: 1000 !important;
 }
 
+.p-sidebar-close{
+  margin: 0 !important;
+}
+
+.p-sidebar-header{
+  justify-content: space-between;
+}
+
 @import "./assets/ar_style/styles_ar.scss";
