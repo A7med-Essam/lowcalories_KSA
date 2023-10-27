@@ -5,6 +5,9 @@ export interface IGiftCodeData{
     global_extra_carb:number;
     global_extra_protein:number;
     subscription_days :number;
+    include_breakfast :number;
+    meal_count:        number;
+    snack_count:        number;
 }
 
 export interface IGiftCodeResponse{

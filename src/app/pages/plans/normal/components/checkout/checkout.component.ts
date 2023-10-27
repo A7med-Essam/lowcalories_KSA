@@ -89,14 +89,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   userMeals: IShowMealsResponse[] | null = [];
   areas: Area[] = [];
   deliveryStatus: any[] = [
-    { name: 'Delivery',name_ar:'توصيل', value: true },
-    { name: 'Pick Up',name_ar:'ألتقاط من المطعم', value: false },
+    { name: 'Delivery', name_ar: 'توصيل', value: true },
+    { name: 'Pick Up', name_ar: 'ألتقاط من المطعم', value: false },
   ];
   deliveryFees: number = 0;
-  maxBirthdate:Date;
+  maxBirthdate: Date;
   minBirthdate: Date;
-  global_extra_carb:any;
-  global_extra_protein:any;
+  global_extra_carb: any;
+  global_extra_protein: any;
 
   constructor(
     private _Store: Store,
@@ -106,10 +106,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _I18nService: I18nService,
     public translate: TranslateService,
     private cdref: ChangeDetectorRef,
-    private _SharedService:SharedService
+    private _SharedService: SharedService
   ) {
-    this.maxBirthdate = new Date("2015-12-31")
-    this.minBirthdate = new Date('1940-01-01')
+    this.maxBirthdate = new Date('2015-12-31');
+    this.minBirthdate = new Date('1940-01-01');
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
     this.dislike$ = _Store.select(dislikeSelector);
@@ -221,16 +221,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
 
     this._SharedService.global_extra_protein
-    .pipe(takeUntil(this.destroyed$))
-    .subscribe(res=>{
-      this.global_extra_protein = res
-    })
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        this.global_extra_protein = res;
+      });
 
     this._SharedService.global_extra_carb
-    .pipe(takeUntil(this.destroyed$))
-    .subscribe(res=>{
-      this.global_extra_carb = res
-    })
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        this.global_extra_carb = res;
+      });
   }
 
   getDeliveryFees(
@@ -269,9 +269,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   setCheckoutForm_Without_Auth() {
     this.checkoutForm_without_auth = this._FormBuilder.group({
-      name: new FormControl(null,[Validators.required]),
-      email: new FormControl(null, [Validators.email,Validators.required]),
-      password: new FormControl(null,[Validators.required]),
+      name: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.email, Validators.required]),
+      password: new FormControl(null, [Validators.required]),
       mobile: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[\\d]{10}$'),
@@ -298,20 +298,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         fromNormalPlanSelector.normalPlanPriceSelector
       );
 
-        let subscription_days:number|undefined = 0;
+      let subscription: any;
       this.subscriptionInfo$
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((res) => (subscription_days = res?.subscription_days));
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((res) => (subscription = res));
 
       this._Store.dispatch(
         FETCH_GIFTCODE_START({
           data: {
             code: input.value,
-            subscription_days,
+            subscription_days: subscription.subscription_days,
             price: this.price,
             program_id: this.program_id,
-            global_extra_protein:this.global_extra_protein,
-            global_extra_carb:this.global_extra_carb,
+            global_extra_protein: this.global_extra_protein,
+            global_extra_carb: this.global_extra_carb,
+            include_breakfast: Number(subscription.meals.includes("breakfast")),
+            meal_count: subscription.meals.includes("breakfast") ?  subscription.meals.length -1 : subscription.meals.length,
+            snack_count: subscription.snacks.length,
           },
         })
       );
@@ -357,11 +360,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
-        meal_backend_types: sub?.meal_types.filter((item:any) => !item.startsWith("snack")),
-        snack_backend_types: sub?.meal_types.filter((item:any) => item.startsWith("snack")),
+        meal_backend_types: sub?.meal_types.filter(
+          (item: any) => !item.startsWith('snack')
+        ),
+        snack_backend_types: sub?.meal_types.filter((item: any) =>
+          item.startsWith('snack')
+        ),
         no_snacks: sub?.no_snacks,
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
@@ -378,9 +384,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         address_id: form.value.address,
         address: form.value.address,
         list_days: this.userMeals ? this.userMeals : [],
-        global_extra_carb:this.global_extra_carb,
-        global_extra_protein:this.global_extra_protein,
-        include_breakfast: sub.meal_types.includes("breakfast")
+        global_extra_carb: this.global_extra_carb,
+        global_extra_protein: this.global_extra_protein,
+        include_breakfast: sub.meal_types.includes('breakfast'),
       };
       checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
@@ -401,11 +407,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-
       const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
-        meal_backend_types: sub?.meal_types.filter((item:any) => !item.startsWith("snack")),
-        snack_backend_types: sub?.meal_types.filter((item:any) => item.startsWith("snack")),
+        meal_backend_types: sub?.meal_types.filter(
+          (item: any) => !item.startsWith('snack')
+        ),
+        snack_backend_types: sub?.meal_types.filter((item: any) =>
+          item.startsWith('snack')
+        ),
         no_snacks: sub?.no_snacks,
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
@@ -426,9 +435,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         subscription_from: 'web',
         address_id: form.value.state_id,
         list_days: this.userMeals ? this.userMeals : [],
-        global_extra_carb:this.global_extra_carb,
-        global_extra_protein:this.global_extra_protein,
-        include_breakfast: sub.meal_types.includes("breakfast")
+        global_extra_carb: this.global_extra_carb,
+        global_extra_protein: this.global_extra_protein,
+        include_breakfast: sub.meal_types.includes('breakfast'),
       };
       checkout.state_id = 0;
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
@@ -448,7 +457,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             icon: 'error',
             title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
             // text: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا':`There's an issue. Please call our Customer Service`,
-            html: this.translate.currentLang == 'ar' ?'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> أضغط هنا </a> ':`There's an issue. Please call our Customer Service 
+            html:
+              this.translate.currentLang == 'ar'
+                ? 'هناك مشكلة. يرجى الاتصال بخدمة العملاء لدينا <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> أضغط هنا </a> '
+                : `There's an issue. Please call our Customer Service 
             <a target="_blank" href="https://api.whatsapp.com/send?phone=9660595036614"> Here </a>`,
             confirmButtonText:
               this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
@@ -516,7 +528,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           state_id.updateValueAndValidity();
           area_id.setValidators([Validators.required]);
           area_id.updateValueAndValidity();
-          this.displayWarning()
+          this.displayWarning();
         } else {
           address.clearValidators();
           address.updateValueAndValidity();
@@ -530,9 +542,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .get('delivery_status')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((val) => {
-        const address = this.checkoutForm_without_auth.get('address') as FormControl;
-        const state_id = this.checkoutForm_without_auth.get('state_id') as FormControl;
-        const area_id = this.checkoutForm_without_auth.get('area_id') as FormControl;
+        const address = this.checkoutForm_without_auth.get(
+          'address'
+        ) as FormControl;
+        const state_id = this.checkoutForm_without_auth.get(
+          'state_id'
+        ) as FormControl;
+        const area_id = this.checkoutForm_without_auth.get(
+          'area_id'
+        ) as FormControl;
         if (val) {
           address.setValidators([Validators.required]);
           address.updateValueAndValidity();
@@ -540,7 +558,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           state_id.updateValueAndValidity();
           area_id.setValidators([Validators.required]);
           area_id.updateValueAndValidity();
-          this.displayWarning()
+          this.displayWarning();
         } else {
           address.clearValidators();
           address.updateValueAndValidity();
@@ -552,12 +570,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
   }
 
-  displayWarning(){
+  displayWarning() {
     Swal.fire({
       title: this.translate.instant('delivery_status_msg'),
       confirmButtonText:
-      this.translate.currentLang == 'ar' ? 'الرجاء المتابعة' : 'Please Proceed',
-    })
+        this.translate.currentLang == 'ar'
+          ? 'الرجاء المتابعة'
+          : 'Please Proceed',
+    });
   }
   // =========================== DOB
   @ViewChild('calendar') calendar!: Calendar;
