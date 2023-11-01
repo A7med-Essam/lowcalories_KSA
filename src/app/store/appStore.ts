@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActionReducerMap } from '@ngrx/store';
 import * as fromAuthStore from './authStore/auth.reducer';
 import * as fromProgramStore from './programStore/program.reducer';
+import * as fromProfileStore from './profileStore/profile.reducer';
 import * as fromNormalPlanStore from './normalPlanStore/normalPlan.reducer';
 import * as fromCustomPlanStore from './customPlanStore/customPlan.reducer';
 import * as fromStateStore from './stateStore/state.reducer';
@@ -25,6 +26,7 @@ import { ClinicEffects } from './clinicStore/clinic.effect';
 import { MenuEffects } from './menuStore/menu.effect';
 import { SocialMediaEffects } from './socialMediaStore/socialMedia.effect';
 import { DislikeEffects } from './dislikeStore/dislike.effect';
+import { ProfileEffects } from './profileStore/profile.effect';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
@@ -52,7 +54,9 @@ export interface AppState {
   menu: fromMenuStore.IMenuState;
   socialMedia: fromSocialMediaStore.ISocialMediaState;
   dislike: fromDislikeStore.IDislikeState;
-  replacement: fromNormalPlanStore.IReplacementState
+  replacement: fromNormalPlanStore.IReplacementState;
+  profileReplacement: fromProfileStore.IProfileReplacementState
+  profileChangeMeal:fromProfileStore.IProfileChangeState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -81,7 +85,9 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   menu: fromMenuStore.MenuReducer,
   socialMedia: fromSocialMediaStore.socialMediaReducer,
   dislike: fromDislikeStore.DislikeReducer,
-  replacement: fromNormalPlanStore.NormalPlanReplacementReducer
+  replacement: fromNormalPlanStore.NormalPlanReplacementReducer,
+  profileReplacement: fromProfileStore.ProfileReplacementMealReducer,
+  profileChangeMeal:fromProfileStore.ProfileChangeMealReducer
 };
 
 export const APP_EFFECTS = [
@@ -96,7 +102,8 @@ export const APP_EFFECTS = [
   GiftcodeEffects,
   MenuEffects,
   SocialMediaEffects,
-  DislikeEffects
+  DislikeEffects,
+  ProfileEffects
 ];
 
 export interface IHttpResponse {

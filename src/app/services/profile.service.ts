@@ -2,6 +2,8 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
+import { IReplacement } from '../interfaces/normal-plan.interface';
+import { IRequestChangeMeal, IRequestChangeMealResponse, ProfileMeal, ProfileMealsResponse } from '../store/profileStore/profile.action';
 
 @Injectable({
   providedIn: 'root'
@@ -87,10 +89,23 @@ export class ProfileService {
   // ===================================================================Calender=====================================================
   currentPlan: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  getPlanImages(meals: any): Observable<any> {
-    return this._ApiService.postReq(`getImagesByMealNames`, meals);
+  // getPlanImages(meals: any): Observable<any> {
+  //   return this._ApiService.postReq(`getImagesByMealNames`, meals);
+  // }
+  // ===================================================================CHANGE MEAL=====================================================
+
+  // getReplacementMeals(data:{item:string,dish_type:string}) : Observable<{status:number,data:IReplacement[], message:string}>{
+  //   return this._ApiService.postReq('replacementMealsWithoutIds', data);
+  // }
+
+  // ===================================================================CHANGE MEAL=====================================================
+
+  getProfileMeals(data:ProfileMeal[]) : Observable<{status:number,data:ProfileMealsResponse[], message:string}>{
+    return this._ApiService.postReq('getImagesByMealNames', data);
   }
 
-  // planStatus: BehaviorSubject<string> = new BehaviorSubject('');
+  changeMeal(data:IRequestChangeMeal) : Observable<{status:number,data:IRequestChangeMealResponse, message:string}>{
+    return this._ApiService.postReq('requestChangeMeal', data);
+  }
 
 }

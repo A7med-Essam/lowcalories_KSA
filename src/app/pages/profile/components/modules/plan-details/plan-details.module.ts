@@ -6,6 +6,7 @@ import { WeeksComponent } from './weeks/weeks.component';
 import { ParentComponent } from './parent/parent.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { SidebarModule } from 'primeng/sidebar';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
     CommonModule,
     PlanDetailsRoutingModule,
     SkeletonModule,
-    SharedModule
+    SharedModule,
+    SidebarModule
   ]
 })
 export class PlanDetailsModule { }

@@ -94,3 +94,58 @@
     background-color: #141a1f !important;
     border-color: #141a1f !important;
 }
+
+.replaced_item{
+    transition: all .5s ease-in-out;
+    position: relative;
+    cursor: pointer;
+}
+.replaced_item:hover{
+    transform: scale(1.03);
+}
+.replaced_item .content.active:after{
+    content: '\f058';
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 20px;
+    right:20px;
+    color: #19a44b;
+}
+.editBtn {
+    background-color: #fff;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #19a44b;
+    color: #19a44b;
+    width: 50px;
+    transition: all .5s;
+}
+.summary-toggle-btn {
+    background-color: #19a44b;
+    color: #fff;
+}
+:host {
+    ::ng-deep .p-sidebar-left{
+        width: 29rem;
+      }
+}
+
+.pending{position: relative;}
+.pending::after{
+    content: "PENDING";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(230, 230, 230, 0.503) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 30px;
+}
