@@ -78,6 +78,7 @@ export class ParentComponent implements OnInit {
 
   DayDetails: any[] = [];
   getDayDetails(e: any) {
+    this.profileMeals = []
     this.DayDetails = e;
     this.getProfileMeals(e);
     // this._ProfileService

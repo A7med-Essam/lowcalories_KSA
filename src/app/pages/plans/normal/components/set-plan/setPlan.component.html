@@ -82,13 +82,17 @@
                         </div>
                         <div class="col-12 py-2 tour4">
                             <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}</label></div>
-                            <div class=" d-flex flex-wrap gap-4" formArrayName="snack_types">
+                            <!-- <div class=" d-flex flex-wrap gap-4" formArrayName="snack_types">
                                 <div *ngFor="let meal of snack_types; let i = index">
                                     <label>
                                         <input type="checkbox" [formControlName]="i" />
                                         {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
                                     </label>
                                 </div>
+                            </div> -->
+                            <div class=" d-flex flex-wrap gap-4">
+                                <p-dropdown [options]="[{name:'1 Snack',value:['snack_one']},{name:'2 Snacks',value:['snack_one','snack_two']}]" optionLabel="name" optionValue="value"
+                                 formControlName='snack_types' ngClass="w-100"  placeholder=' '></p-dropdown>
                             </div>
                         </div>
                         <div class="col-12 py-2 tour5">

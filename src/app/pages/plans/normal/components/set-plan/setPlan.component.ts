@@ -253,7 +253,8 @@ export class SetPlanComponent
       subscription_days: new FormControl(null, [Validators.required]),
       // meal_types: new FormArray([], [this.atLeastOneCheckedValidator()]),
       meal_types: new FormControl(null, [Validators.required]),
-      snack_types: new FormArray([]),
+      snack_types: new FormControl(null),
+      // snack_types: new FormArray([]),
       CheckDays: new FormControl(null),
       addBreakFast: new FormControl(null),
     });
@@ -322,11 +323,11 @@ export class SetPlanComponent
           this.meals = this.getMealTypesCount(res.meal_types.length -1)
         })
         this.snack_types = res.snack_types;
-        this.snack_types.forEach(() => {
-          (this.ProgramDetailsForm.get('snack_types') as FormArray).push(
-            new FormControl(false)
-          );
-        });
+        // this.snack_types.forEach(() => {
+        //   (this.ProgramDetailsForm.get('snack_types') as FormArray).push(
+        //     new FormControl(false)
+        //   );
+        // });
         this.setDefaultDate();
         setTimeout(() => {
           this.createTour();

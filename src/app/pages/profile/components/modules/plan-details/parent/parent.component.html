@@ -33,7 +33,7 @@
                         <div class="d-flex justify-content-between flex-wrap">
                             <div class="d-flex justify-content-center align-items-center">
                                 <h5 class="meal_name mx-4">{{meal?.mealName}}</h5>
-                                <div *ngIf="profileMeals[i]?.meal_replacements?.length">
+                                <div *ngIf="profileMeals[i]?.meal_replacements?.length && meal.deliveryStatus != 1">
                                     <button class="btn py-2 px-4 editBtn"
                                         (click)="getReplacementMeals(i)">
                                         <i class="far fa-edit p-0"></i>
