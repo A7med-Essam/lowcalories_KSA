@@ -27,6 +27,7 @@ export interface ProfileMealsResponse {
 
 export interface IRequestChangeMeal{
     subscrbtionId:number;
+    paymentsDetailsId: number;
     mealTypeId:number;
     subDetail_id:number;
     mealName:string;
@@ -41,6 +42,7 @@ export interface IRequestChangeMeal{
 
 export interface IRequestChangeMealResponse {
     subscrbtionId:              number;
+    paymentsDetailsId:              number;
     subDetail_id:               number;
     user_id:                    number;
     planTitle:                  string;

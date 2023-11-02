@@ -264,8 +264,8 @@ export class ParentComponent implements OnInit {
             planTitle: this.plan.planTitle,
             from: 'web',
             subDetail_id: this.DayDetails[this.replacement_index].id,
-            subscrbtionId:
-              this.DayDetails[this.replacement_index].subscrbtionId,
+            subscrbtionId: this.DayDetails[this.replacement_index].subscrbtionId,
+            paymentsDetailsId: this.DayDetails[this.replacement_index].paymentsDetailsId,
             mealTypeId: this.DayDetails[this.replacement_index].mealTypeId,
           },
         })
