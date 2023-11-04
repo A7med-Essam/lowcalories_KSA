@@ -91,7 +91,9 @@
                                 </div>
                             </div> -->
                             <div class=" d-flex flex-wrap gap-4">
-                                <p-dropdown [options]="[{name:'1 Snack',value:['snack_one']},{name:'2 Snacks',value:['snack_one','snack_two']}]" optionLabel="name" optionValue="value"
+                                <p-dropdown [options]="[
+                                {name:translate.currentLang == 'ar' ?'بدون سناك':'No Snack',value:[]},
+                                {name:translate.currentLang == 'ar' ?'وجبة سناك':'1 Snack',value:['snack_one']},{name:translate.currentLang == 'ar' ?'وجبتين سناك':'2 Snacks',value:['snack_one','snack_two']}]" optionLabel="name" optionValue="value"
                                  formControlName='snack_types' ngClass="w-100"  placeholder=' '></p-dropdown>
                             </div>
                         </div>
