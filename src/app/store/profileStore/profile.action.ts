@@ -14,14 +14,16 @@ export interface ProfileMeal {
     deliveryDate:string;
     mealName:string;
     sub_detail_id:number;
+    extraCarb:number;
+    extraProtin:number;
 }
 
 export interface ProfileMealsResponse {
     meal_name:         string;
     image:             string;
-    meal_status:       null;
-    meal_native:       null;
-    meal_native_image: string;
+    to_meal_name:       null;
+    to_meal_image:       null;
+    request_status:       null;
     meal_replacements: IReplacement[];
 }
 
@@ -38,6 +40,8 @@ export interface IRequestChangeMeal{
     changed_meal_without_grams:string;
     planTitle:string;
     from:string;
+    mealNameWithGram:string;
+    change_meal_details:IReplacement;
 }
 
 export interface IRequestChangeMealResponse {

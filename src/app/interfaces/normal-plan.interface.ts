@@ -173,6 +173,7 @@ export interface IReplacement {
     meal_name : string
     meal_name_ar : string
     meal_image : string
+    is_native?:boolean
 }
 
 export interface IReplacementData {

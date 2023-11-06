@@ -78,7 +78,7 @@ export class ParentComponent implements OnInit {
 
   DayDetails: any[] = [];
   getDayDetails(e: any) {
-    this.profileMeals = []
+    this.profileMeals = [];
     this.DayDetails = e;
     this.getProfileMeals(e);
     // this._ProfileService
@@ -145,46 +145,6 @@ export class ParentComponent implements OnInit {
   }
 
   // =================================================================================REPLACE=========================================================================
-  // replaced_item_index: number = 0;
-  // getReplacementMeals(item:string) {
-  // const destroyed$: Subject<void> = new Subject();
-
-  //   // this.replaced_item_index = index;
-  //   this.ReplacementButtonMode$ = this._Store.select(
-  //     fromProfileSelector.profileReplacementLoadingSelector
-  //   );
-  // this._Store.dispatch(
-  //   FETCH_PROFILE_REPLACEMENT_MEALS_START({
-  //     data: {
-  //       dish_type: 'meal',
-  //       item,
-  //     },
-  //   })
-  // );
-
-  // this._Store
-  //   .select(fromProfileSelector.profileReplacementSelector)
-  //   .pipe(takeUntil(destroyed$))
-  //   .subscribe((res) => {
-  //     if (res) {
-  //       // if (item.is_replaced) {
-  //       //   let modifiedMeals: Meal[] = JSON.parse(
-  //       //     JSON.stringify(res)
-  //       //   );
-  //       //   modifiedMeals = modifiedMeals.filter(e => e.mainDish.meal_name_en != item.meal_name_en)
-  //       //   modifiedMeals.push(this.userMealsClone[this.category_index].meals[index])
-  //       //   res = modifiedMeals
-  //       // }
-  //       // let modifiedMeals: Meal[] = JSON.parse(JSON.stringify(res));
-  //       // modifiedMeals = this.calcReplacementMeals(modifiedMeals)
-  //       // res = modifiedMeals
-  //       this.replacementModal = true;
-  //       this.replacementMeals = res;
-  //       destroyed$.next();
-  //       destroyed$.complete();
-  //     }
-  //   });
-  // }
 
   round(num: number): number {
     return Math.round(num);
@@ -192,7 +152,9 @@ export class ParentComponent implements OnInit {
   @ViewChild('replaced_items') replaced_items!: ElementRef;
 
   current_replaced_item: any = null;
+  replacement_meal_index = 0;
   toggleItems(index: number, replaced_item: Meal) {
+    this.replacement_meal_index = index;
     this.current_replaced_item = replaced_item;
     for (
       let i = 0;
@@ -201,10 +163,10 @@ export class ParentComponent implements OnInit {
     ) {
       this.replaced_items.nativeElement.children[
         i
-      ].children[0].children[0].classList.remove('active');
+      ].children[0]?.children[0]?.classList.remove('active');
       this.replaced_items.nativeElement.children[
         index
-      ].children[0].children[0].classList.add('active');
+      ].children[0]?.children[0]?.classList.add('active');
     }
   }
 
@@ -217,6 +179,8 @@ export class ParentComponent implements OnInit {
       deliveryDate: meal.deliveryDate,
       mealName: this.filterMealName(meal.mealName),
       sub_detail_id: meal.id,
+      extraCarb: meal.extraCarb,
+      extraProtin: meal.extraProtin,
     }));
     this._Store.dispatch(
       FETCH_PROFILE_REPLACEMENT_MEALS_START({
@@ -230,10 +194,35 @@ export class ParentComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.profileMeals = res;
+          this.checkPending(res)
           destroyed$.next();
           destroyed$.complete();
         }
       });
+  }
+
+  checkPending(meals:any){
+    meals.forEach((m:any,index:number) => {
+      if (m.request_status == 'pending') {
+        const meal = m.meal_replacements.find((r:any) => r.meal_name == m.to_meal_name);
+        const replacement_index = m.meal_replacements.findIndex((r:any) => r.meal_name == m.to_meal_name);
+        let modifiedProfileMeals = JSON.parse(JSON.stringify(this.profileMeals));
+        modifiedProfileMeals[index].image = meal.meal_image;
+
+        modifiedProfileMeals[index].meal_replacements.map(
+          (meal: any) => (meal.is_native = false)
+        );
+        modifiedProfileMeals[index].meal_replacements[replacement_index].is_native = true;
+
+        this.profileMeals = modifiedProfileMeals;
+        let modifiedDay = JSON.parse(JSON.stringify(this.DayDetails));
+        modifiedDay[index].mealName =
+          this.getMealNameWithGrams(meal);
+        modifiedDay[index].nutritions =
+          this.calculateNutrition(meal);
+        this.DayDetails = modifiedDay;
+      }
+    });
   }
 
   replacement_index: number = 0;
@@ -250,32 +239,54 @@ export class ParentComponent implements OnInit {
       .trim();
   }
 
-  replace() {
+  replace(mealDetails: IReplacement) {
     if (this.current_replaced_item != null) {
       this.replacementModal = false;
       this._Store.dispatch(
         FETCH_PROFILE_CHANGE_MEALS_START({
           data: {
-            changed_meal: this.getMealNameWithGrams(this.current_replaced_item),
-            changed_meal_without_grams: this.current_replaced_item.meal_name,
-            deliveryDate: this.DayDetails[this.replacement_index].deliveryDate,
-            mealName: this.DayDetails[this.replacement_index].mealName,
-            typeName: this.DayDetails[this.replacement_index].typeName,
-            planName: this.plan.planName,
-            planTitle: this.plan.planTitle,
-            from: 'web',
+            subscrbtionId:
+              this.DayDetails[this.replacement_index].subscrbtionId,
             subDetail_id: this.DayDetails[this.replacement_index].id,
-            subscrbtionId: this.DayDetails[this.replacement_index].subscrbtionId,
-            paymentsDetailsId: this.DayDetails[this.replacement_index].paymentsDetailsId,
+            mealName: this.filterMealName(
+              this.DayDetails[this.replacement_index].mealName
+            ),
+            mealNameWithGram: this.DayDetails[this.replacement_index].mealName,
             mealTypeId: this.DayDetails[this.replacement_index].mealTypeId,
+            typeName: this.DayDetails[this.replacement_index].typeName,
+            changed_meal: this.getMealNameWithGrams(this.current_replaced_item),
+            planName: this.plan.planName,
+            from: 'web',
+            changed_meal_without_grams: this.current_replaced_item.meal_name,
+            paymentsDetailsId:
+              this.DayDetails[this.replacement_index].paymentsDetailsId,
+            planTitle: this.plan.planTitle,
+            deliveryDate: this.DayDetails[this.replacement_index].deliveryDate,
+            change_meal_details: mealDetails,
           },
         })
       );
-      let modifiedProfileMeals = JSON.parse(
-        JSON.stringify(this.profileMeals)
-      );
+      let modifiedProfileMeals = JSON.parse(JSON.stringify(this.profileMeals));
       modifiedProfileMeals[this.replacement_index].meal_status = 'pending';
-      this.profileMeals = (modifiedProfileMeals)
+      modifiedProfileMeals[this.replacement_index].image =
+        mealDetails.meal_image;
+
+      modifiedProfileMeals[this.replacement_index].meal_replacements.map(
+        (meal: any) => (meal.is_native = false)
+      );
+      modifiedProfileMeals[this.replacement_index].meal_replacements[
+        this.replacement_meal_index
+      ].is_native = true;
+
+      this.profileMeals = modifiedProfileMeals;
+
+      let modifiedDay = JSON.parse(JSON.stringify(this.DayDetails));
+
+      modifiedDay[this.replacement_index].mealName =
+        this.getMealNameWithGrams(mealDetails);
+      modifiedDay[this.replacement_index].nutritions =
+        this.calculateNutrition(mealDetails);
+      this.DayDetails = modifiedDay;
     }
   }
 
@@ -286,10 +297,42 @@ export class ParentComponent implements OnInit {
     let sideInfo = null;
 
     if (mealObject.sideDish) {
-      sideInfo = mealObject.sideDish.map((side:any) => `${side.meal_name_en} ${side.qty}${side.unit}`)
+      sideInfo = mealObject.sideDish
+        .map((side: any) => `${side.meal_name_en} ${side.qty}${side.unit}`)
         .join(' W/ ');
     }
 
-    return sideInfo ? `${mealName} ${qty}${unit} W/ ${sideInfo}`: `${mealName} ${qty}${unit}`
+    return sideInfo
+      ? `${mealName} ${qty}${unit} W/ ${sideInfo}`
+      : `${mealName} ${qty}${unit}`;
+  }
+
+  calculateNutrition(mealData: Meal) {
+    const nutritionMap: any = {
+      CARB: 0,
+      PROTIN: 0,
+      FAT: 0,
+      CALORIES: 0,
+    };
+
+    const addToNutritionMap = (item: any) => {
+      nutritionMap.CARB += item.carb;
+      nutritionMap.PROTIN += item.protein;
+      nutritionMap.FAT += item.fat;
+      nutritionMap.CALORIES += item.calories;
+    };
+
+    addToNutritionMap(mealData.mainDish);
+
+    if (mealData.sideDish) {
+      mealData.sideDish.forEach((side) => addToNutritionMap(side));
+    }
+
+    const nutritionArray = Object.keys(nutritionMap).map((key, index) => ({
+      nutrationName: key,
+      value: nutritionMap[key],
+      nutirationId: index + 1,
+    }));
+    return nutritionArray;
   }
 }

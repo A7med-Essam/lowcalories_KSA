@@ -7,6 +7,7 @@
   "checkoutMSG": "You will redirect now to complete the payment process , Please Wait ....",
   "calendarMsg":"Delivery will start 48 hours after subscribing, and there is no delivery on Friday",
   "replaceModal":"Replacement Model",
+  "profile_replace_meals_warning":"Note: We have received your meal change request. Please be aware that all meal change requests require review before being processed.",
   "buttons": {
     "changePassword": "Change Password",
     "read_more": "Read More",
