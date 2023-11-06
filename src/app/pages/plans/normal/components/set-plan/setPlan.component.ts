@@ -253,7 +253,7 @@ export class SetPlanComponent
       subscription_days: new FormControl(null, [Validators.required]),
       // meal_types: new FormArray([], [this.atLeastOneCheckedValidator()]),
       meal_types: new FormControl(null, [Validators.required]),
-      snack_types: new FormControl(null),
+      snack_types: new FormControl([]),
       // snack_types: new FormArray([]),
       CheckDays: new FormControl(null),
       addBreakFast: new FormControl(null),
