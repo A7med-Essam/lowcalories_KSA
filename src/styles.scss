@@ -259,6 +259,12 @@ strong {
   bottom: 0px;
 }
 
+@media all and (max-width:600px) {
+  .section-title h2 {
+    font-size: 30px;
+  }
+}
+
 .section-title p {
   font-style: italic;
   font-size: 14px;
@@ -3620,6 +3626,13 @@ table tr td a {
   object-fit: contain;
 }
 
+@media all and (max-width:500px) {
+  .special-menu .menu-body .menu-thumbnail img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
 .our-menu .middle-image {
   /*position: relative; */
   height: 100%;
@@ -3645,6 +3658,13 @@ table tr td a {
 .menu-body .menu-thumbnail img {
   width: 100px;
   height: 100px;
+}
+
+@media all and (max-width:500px) {
+  .menu-body .menu-thumbnail img {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .menu-body .menu-thumbnail {
@@ -3689,6 +3709,12 @@ table tr td a {
   margin-bottom: 0;
 }
 
+@media all and (max-width:500px) {
+  .menu-body.menu-left .menu-thumbnail {
+    width: 50px;
+  }
+}
+
 .menu-body.menu-left .menu-details {
   display: table-cell;
 }
@@ -3708,6 +3734,12 @@ table tr td a {
 
 .menu-body.menu-left .menu-title h4 {
   display: inline-block;
+}
+
+@media all and (max-width:500px) {
+  .menu-body.menu-left .menu-title h4 {
+    font-size: 20px !important;
+  }
 }
 
 .menu-body.menu-left .menu-details .price {
@@ -6250,7 +6282,7 @@ button.nav-link.active a {
 
 @media all and (max-width:500px) {
   .bg-darkImg {
-    height: 430px !important;
+    // height: 430px !important;
 
     h1 {
       font-size: 20px;
@@ -6259,6 +6291,26 @@ button.nav-link.active a {
     p {
       font-size: 15px;
     }
+  }
+}
+.w-500{
+  width: 500px;
+}
+@media all and (max-width:500px) {
+  .w-500{
+    width: 400px;
+  }
+}
+
+@media all and (max-width:400px) {
+  .w-500{
+    width: 300px;
+  }
+}
+
+@media all and (max-width:300px) {
+  .w-500{
+    width: 200px;
   }
 }
 
@@ -6432,4 +6484,10 @@ input[type=checkbox] {
   justify-content: space-between;
 }
 
+
+@media all and (max-width:770px){
+  nav.mega-menu .navbar {
+      margin-top: 30px;
+  }
+}
 @import "./assets/ar_style/styles_ar.scss";
