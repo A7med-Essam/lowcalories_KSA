@@ -42,9 +42,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () =>
-      import('./pages/profile/profile.module').then(
-        (m) => m.ProfileModule
-      ),
+      import('./pages/profile/profile.module').then((m) => m.ProfileModule),
     canActivate: [AuthGuard],
   },
 
@@ -54,7 +52,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      useHash: true,
       scrollPositionRestoration: 'top',
     }),
   ],

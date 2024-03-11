@@ -8,7 +8,8 @@
             <ul class="page-breadcrumb">
                 <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
                         class="fa fa-angle-double-right"></i></li>
-                        <li><a routerLink="../../plans">{{"pages.plans.title"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink="../../plans">{{"pages.plans.title"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
                 <li><span>{{translate.currentLang == 'ar' ? program.name_ar:program.name}}</span></li>
             </ul>
         </div>
@@ -53,9 +54,10 @@
                         <div class="col-12 py-2 tour1">
                             <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span
                                         class="text-danger">*</span></label></div>
-                            <p-dropdown [options]="subscription_days" formControlName='subscription_days' appendTo="body"
-                                ngClass="w-100" [optionLabel]="translate.currentLang == 'ar' ? 'displayName_ar':'displayName'"
-                                 optionValue="day_count" placeholder='{{"pages.plans.options.days"|translate}}'>
+                            <p-dropdown [options]="subscription_days" formControlName='subscription_days'
+                                appendTo="body" ngClass="w-100"
+                                [optionLabel]="translate.currentLang == 'ar' ? 'displayName_ar':'displayName'"
+                                optionValue="day_count" placeholder='{{"pages.plans.options.days"|translate}}'>
                             </p-dropdown>
                             <small class="text-danger "
                                 *ngIf="ProgramDetailsForm.get('subscription_days')?.touched &&
@@ -65,46 +67,40 @@
                             <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}</label></div>
                             <div class=" d-flex flex-wrap gap-4">
                                 <p-dropdown [options]="meals" optionLabel="displayName" optionValue="value"
-                                 formControlName='meal_types' ngClass="w-100"  placeholder=' '></p-dropdown>
+                                    formControlName='meal_types' ngClass="w-100" placeholder=' '></p-dropdown>
                             </div>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.hasError('atLeastOneChecked', 'meal_types') && 
                                 ProgramDetailsForm.get('meal_types')?.dirty">
                                 {{"validations.required"|translate}}
                             </small>
                         </div>
-                        <div class="col-12 py-2 tour3">
+                        <div class="col-12 py-2 tour3" *ngIf="!isRamadan">
                             <div class=" d-flex flex-wrap gap-4">
                                 <label>
-                                    <input type="checkbox" formControlName="addBreakFast" (change)="onBreakfastChange($event)"/>
+                                    <input type="checkbox" formControlName="addBreakFast"
+                                        (change)="onBreakfastChange($event)" />
                                     {{"pages.plans.options.breakfast"|translate}}
                                 </label>
                             </div>
                         </div>
-                        <div class="col-12 py-2 tour4">
+                        <div class="col-12 py-2 tour4" *ngIf="snackCount.length">
                             <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}</label></div>
-                            <!-- <div class=" d-flex flex-wrap gap-4" formArrayName="snack_types">
-                                <div *ngFor="let meal of snack_types; let i = index">
-                                    <label>
-                                        <input type="checkbox" [formControlName]="i" />
-                                        {{ translate.currentLang == 'ar' ? meal.meal_type_name_ar:meal.meal_type_name }}
-                                    </label>
-                                </div>
-                            </div> -->
                             <div class=" d-flex flex-wrap gap-4">
-                                <p-dropdown [options]="[
-                                {name:translate.currentLang == 'ar' ?'بدون سناك':'No Snack',value:[]},
-                                {name:translate.currentLang == 'ar' ?'وجبة سناك':'1 Snack',value:['snack_one']},{name:translate.currentLang == 'ar' ?'وجبتين سناك':'2 Snacks',value:['snack_one','snack_two']}]" optionLabel="name" optionValue="value"
-                                 formControlName='snack_types' ngClass="w-100"  placeholder=' '></p-dropdown>
+                                <p-dropdown
+                                    [options]="snackCount"
+                                    optionLabel="name" optionValue="value" formControlName='snack_types' ngClass="w-100"
+                                    placeholder=' '></p-dropdown>
                             </div>
                         </div>
                         <div class="col-12 py-2 tour5">
                             <div class="mb-2">
-                                <label>{{"pages.plans.options.date"|translate}} <span class="text-danger">*</span></label>
+                                <label>{{"pages.plans.options.date"|translate}} <span
+                                        class="text-danger">*</span></label>
                                 <div class="text-danger mt-2">{{"calendarMsg"|translate}}</div>
                             </div>
                             <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" [minDate]="ksaDate"
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
-                                formControlName='Start_Date'  [disabledDays]="[5]"></p-calendar>
+                                formControlName='Start_Date' [disabledDays]="[5]"></p-calendar>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
                             ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
@@ -138,7 +134,8 @@
                         </div>
                         <div class="col-12 py-2 tour7">
                             <div class="text-center">
-                                <button class="btn border-0 p-0 mt-4" type="submit" [disabled]="ProgramDetailsForm.invalid">
+                                <button class="btn border-0 p-0 mt-4" type="submit"
+                                    [disabled]="ProgramDetailsForm.invalid">
                                     <a class="button pointer py-2 px-5">{{"buttons.apply"|translate}}
                                         <ng-container *ngIf="nextButtonMode$ | async">
                                             <i class="fa-solid fa-circle-notch fa-spin p-0"></i>

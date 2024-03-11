@@ -45,9 +45,7 @@ import { ShepherdService } from 'angular-shepherd';
   templateUrl: './setPlan.component.html',
   styleUrls: ['./setPlan.component.scss'],
 })
-export class SetPlanComponent
-  implements OnInit, OnDestroy 
-{
+export class SetPlanComponent implements OnInit, OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   @ViewChild('AllWeek') AllWeek!: ElementRef;
   @ViewChild('deliveredDays') deliveredDays!: ElementRef;
@@ -59,6 +57,9 @@ export class SetPlanComponent
   skeletonMode$: Observable<boolean | null> = of(false);
   nextButtonMode$: Observable<boolean | null> = of(false);
   tour: any;
+  isRamadan: boolean = false;
+  snackCount: any[] = [];
+
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
@@ -73,37 +74,43 @@ export class SetPlanComponent
     this._I18nService.getCurrentLang(this.translate);
   }
 
-  createTour(){
+  createTour() {
     this.shepherdService.defaultStepOptions = {
       cancelIcon: {
-        enabled: true
+        enabled: true,
       },
       classes: 'class-1 class-2',
       scrollTo: { behavior: 'smooth', block: 'center' },
-    }
+    };
     this.shepherdService.modal = true;
     this.shepherdService.addSteps([
       {
-        text:  this.translate.currentLang == 'ar' ?'ما هو عدد الايام المناسب لك في خطتك الشهرية؟':'What is the appropriate number of days for you in your monthly plan?',
+        text:
+          this.translate.currentLang == 'ar'
+            ? 'ما هو عدد الايام المناسب لك في خطتك الشهرية؟'
+            : 'What is the appropriate number of days for you in your monthly plan?',
         attachTo: {
           element: '.tour1',
-          on: 'right'
+          on: 'right',
         },
         buttons: [
           {
             action() {
               return this.next();
             },
-            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
-          }
+            text: this.translate.currentLang == 'ar' ? 'التالي' : 'Next',
+          },
         ],
-        id: 'creating'
+        id: 'creating',
       },
       {
-        text: this.translate.currentLang == 'ar' ?'ماذا تحب ان نحضر لك من الوجبات اليومية؟':'What would you like us to prepare for your daily meals?',
+        text:
+          this.translate.currentLang == 'ar'
+            ? 'ماذا تحب ان نحضر لك من الوجبات اليومية؟'
+            : 'What would you like us to prepare for your daily meals?',
         attachTo: {
           element: '.tour2',
-          on: 'right'
+          on: 'right',
         },
         buttons: [
           {
@@ -111,23 +118,25 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق' : 'Back',
           },
           {
             action() {
               return this.next();
             },
-            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
-
-          }
+            text: this.translate.currentLang == 'ar' ? 'التالي' : 'Next',
+          },
         ],
-        id: 'creating'
+        id: 'creating',
       },
       {
-        text:  this.translate.currentLang == 'ar' ?'هل تريد أضافة وجبة الافطار':'Do you want to add breakfast?',
+        text:
+          this.translate.currentLang == 'ar'
+            ? 'هل تريد أضافة وجبة الافطار'
+            : 'Do you want to add breakfast?',
         attachTo: {
           element: '.tour3',
-          on: 'right'
+          on: 'right',
         },
         buttons: [
           {
@@ -135,22 +144,25 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق' : 'Back',
           },
           {
             action() {
               return this.next();
             },
-            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
-          }
+            text: this.translate.currentLang == 'ar' ? 'التالي' : 'Next',
+          },
         ],
-        id: 'creating'
+        id: 'creating',
       },
       {
-        text:  this.translate.currentLang == 'ar' ?'هل تريد أضافة سناكس؟':'Do you want to add snacks?',
+        text:
+          this.translate.currentLang == 'ar'
+            ? 'هل تريد أضافة سناكس؟'
+            : 'Do you want to add snacks?',
         attachTo: {
           element: '.tour4',
-          on: 'right'
+          on: 'right',
         },
         buttons: [
           {
@@ -158,22 +170,25 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق' : 'Back',
           },
           {
             action() {
               return this.next();
             },
-            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
-          }
+            text: this.translate.currentLang == 'ar' ? 'التالي' : 'Next',
+          },
         ],
-        id: 'creating'
+        id: 'creating',
       },
       {
-        text:  this.translate.currentLang == 'ar' ?'ستبدأ خطتك بداية من؟':'When will your plan start?',
+        text:
+          this.translate.currentLang == 'ar'
+            ? 'ستبدأ خطتك بداية من؟'
+            : 'When will your plan start?',
         attachTo: {
           element: '.tour5',
-          on: 'right'
+          on: 'right',
         },
         buttons: [
           {
@@ -181,22 +196,25 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق' : 'Back',
           },
           {
             action() {
               return this.next();
             },
-            text: this.translate.currentLang == 'ar' ? 'التالي':'Next'
-          }
+            text: this.translate.currentLang == 'ar' ? 'التالي' : 'Next',
+          },
         ],
-        id: 'creating'
+        id: 'creating',
       },
       {
-        text:  this.translate.currentLang == 'ar' ?'ما هي الايام التي سوف تستلم فيها وجباتك؟':'On what days will you receive your meals?',
+        text:
+          this.translate.currentLang == 'ar'
+            ? 'ما هي الايام التي سوف تستلم فيها وجباتك؟'
+            : 'On what days will you receive your meals?',
         attachTo: {
           element: '.tour6',
-          on: 'right'
+          on: 'right',
         },
         buttons: [
           {
@@ -204,17 +222,17 @@ export class SetPlanComponent
               return this.back();
             },
             classes: 'shepherd-button-secondary',
-            text: this.translate.currentLang == 'ar' ? 'السابق':'Back'
+            text: this.translate.currentLang == 'ar' ? 'السابق' : 'Back',
           },
           {
             action() {
               return this.next();
             },
-            text: this.translate.currentLang == 'ar' ? 'أنهاء':'Finish'
-          }
+            text: this.translate.currentLang == 'ar' ? 'أنهاء' : 'Finish',
+          },
         ],
-        id: 'creating'
-      }
+        id: 'creating',
+      },
     ]);
     this.shepherdService.start();
   }
@@ -242,98 +260,78 @@ export class SetPlanComponent
         this.getKsaDate();
       }
     });
-
   }
-
-
 
   createPlanForm() {
     this.ProgramDetailsForm = this._FormBuilder.group({
       Start_Date: new FormControl(null, [Validators.required]),
       subscription_days: new FormControl(null, [Validators.required]),
-      // meal_types: new FormArray([], [this.atLeastOneCheckedValidator()]),
       meal_types: new FormControl(null, [Validators.required]),
       snack_types: new FormControl([]),
-      // snack_types: new FormArray([]),
       CheckDays: new FormControl(null),
       addBreakFast: new FormControl(null),
     });
     this.onMealsChange();
   }
 
-  // atLeastOneCheckedValidator(): ValidatorFn {
-  //   return (formArray: AbstractControl): { [key: string]: boolean } | null => {
-  //     if (formArray && formArray instanceof FormArray) {
-  //       const values = formArray.value as boolean[];
-  //       const hasChecked = values.some((value) => value === true);
-
-  //       return hasChecked ? null : { atLeastOneChecked: true };
-  //     }
-
-  //     return null;
-  //   };
-  // }
-
   onSelectedDate(SelectedDate: Date, deliveredDays: HTMLElement) {
     this._SharedService.onSelectedDate(SelectedDate, deliveredDays);
   }
 
   meal_types: MealType[] = [];
-  meal_count:string[] = [];
+  meal_count: string[] = [];
   snack_types: MealType[] = [];
   subscription_days: SubscriptionDay[] = [];
   delivery_days: DeliveryDay[] = [];
-  meals:any[] = []
+  meals: any[] = [];
   getProgramDetails() {
     this.ProgramDetails.pipe(takeUntil(this.destroyed$))
-    .pipe(
-      map(res=>{
-        if (res) {
-          let modifiedDays: SubscriptionDay[] = JSON.parse(
-            JSON.stringify(res.subscription_days)
-          );
-          modifiedDays.forEach(e => {
-            e.displayName = e.day_count + ' Days'
-            e.displayName_ar = e.day_count + ' أيام'
-            return e
-          })
-          const updatedObject = {
-            ...res,
-            subscription_days: modifiedDays
-          };
-          res = updatedObject;
-        }
-        return res
-      })
-    )
-    .subscribe((res) => {
-      if (res) {
-        this.delivery_days = res.delivery_days.filter(
-          (day) => day.closed !== 1
-        );
-        this.subscription_days = res.subscription_days;
-        this.ProgramDetailsForm.get('subscription_days')?.setValue(
-          res.subscription_days[0].day_count
-        );
-        this.meal_types = res.meal_types;
-        this.meals = this.getMealTypesCount(res.meal_types.length -1)
-        this.translate.onLangChange
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe(lang=>{
-          this.meals = this.getMealTypesCount(res.meal_types.length -1)
+      .pipe(
+        map((res) => {
+          if (res) {
+            let modifiedDays: SubscriptionDay[] = JSON.parse(
+              JSON.stringify(res.subscription_days)
+            );
+            modifiedDays.forEach((e) => {
+              e.displayName = e.day_count + ' Days';
+              e.displayName_ar = e.day_count + ' أيام';
+              return e;
+            });
+            const updatedObject = {
+              ...res,
+              subscription_days: modifiedDays,
+            };
+            res = updatedObject;
+          }
+          return res;
         })
-        this.snack_types = res.snack_types;
-        // this.snack_types.forEach(() => {
-        //   (this.ProgramDetailsForm.get('snack_types') as FormArray).push(
-        //     new FormControl(false)
-        //   );
-        // });
-        this.setDefaultDate();
-        setTimeout(() => {
-          this.createTour();
-        }, 1);
-      }
-    });
+      )
+      .subscribe((res) => {
+        if (res) {
+          this.isRamadan = res.name.toLowerCase().includes('ramadan');
+          this.delivery_days = res.delivery_days.filter(
+            (day) => day.closed !== 1
+          );
+          this.subscription_days = res.subscription_days;
+          this.ProgramDetailsForm.get('subscription_days')?.setValue(
+            res.subscription_days[0].day_count
+          );
+          this.meal_types = res.meal_types;
+          this.meals = this.getMealTypesCount(res.meal_types);
+          this.getSnackTypesCount(res.snack_types);
+          this.translate.onLangChange
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((lang) => {
+              this.getSnackTypesCount(res.snack_types);
+              this.meals = this.getMealTypesCount(res.meal_types);
+            });
+          this.snack_types = res.snack_types;
+          this.setDefaultDate();
+          setTimeout(() => {
+            this.createTour();
+          }, 1);
+        }
+      });
   }
 
   getKsaDate() {
@@ -354,7 +352,7 @@ export class SetPlanComponent
       this.ProgramDetailsForm.get('Start_Date')?.setValue(new Date(firstDate));
       const DeliveredDays: HTMLElement[] =
         this._ElementRef.nativeElement.querySelectorAll('.deliveredDays');
-        this._SharedService.onSelectedDate(new Date(firstDate), DeliveredDays[0]);
+      this._SharedService.onSelectedDate(new Date(firstDate), DeliveredDays[0]);
     }, 1);
   }
 
@@ -368,9 +366,10 @@ export class SetPlanComponent
             meal_count: subData.meals.length,
             program_id: subData.program_id,
             snack_count: subData.snacks.length,
-            include_breakfast: subData.meal_types.includes("breakfast")
+            include_breakfast: subData.meal_types.includes('breakfast'),
           },
-        }))
+        })
+      );
       this._Store.dispatch(SAVE_NORMAL_SUBSCRIPTION({ data: subData }));
       this._Store.dispatch(FETCH_SHOWMEALS_START({ data: subData }));
     }
@@ -402,8 +401,7 @@ export class SetPlanComponent
       for (let i = 0; i <= meals; i++) {
         selectedMeals.push(meal_types[i].meal_name_backend);
       }
-    } 
-    else {
+    } else {
       for (let i = 1; i <= meals; i++) {
         selectedMeals.push(meal_types[i].meal_name_backend);
       }
@@ -451,12 +449,11 @@ export class SetPlanComponent
 
   checkAllWeekBtn(e: HTMLElement) {
     this._SharedService.checkAllWeek(e);
-    if (e.classList.contains("active")) {
+    if (e.classList.contains('active')) {
       Swal.fire({
         title: this.translate.instant('deliveryMsg'),
-        confirmButtonText:
-        this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
-      })
+        confirmButtonText: this.translate.currentLang == 'ar' ? 'حسنا' : 'OK',
+      });
     }
   }
 
@@ -468,63 +465,95 @@ export class SetPlanComponent
     this.destroyed$.next();
     this.destroyed$.complete();
   }
-// ================================================new logic===========================================
 
-  getMealTypesCount(num: number) {
+  getMealTypesCount(meals: MealType[]) {
     const count = [];
-    for (let i = 0; i <= num; i++) {
-      if (i == 0) {
+    for (let i = 0; i <= meals.length - 1; i++) {
+      if (this.isRamadan) {
         count.push({
-          displayName:`${this.translate.currentLang == 'ar' ? 'بدون وجبات' : 'No Meals'}`,
-          value :i
+          displayName:
+            this.translate.currentLang == 'ar'
+              ? meals[i]?.meal_type_name_ar
+              : meals[i]?.meal_type_name,
+          value: i,
         });
-      } else if(i == 1) {
-        count.push({
-          displayName:`${i} ${this.translate.currentLang == 'ar' ? 'وجبه' : 'Meal'}`,
-          value:i
-        });
-      }
-      else {
-        count.push({
-          displayName:`${i} ${this.translate.currentLang == 'ar' ? 'وجبات' : 'Meals'}`,
-          value:i
-        });
+      } else {
+        if (i == 0) {
+          count.push({
+            displayName: `${
+              this.translate.currentLang == 'ar' ? 'بدون وجبات' : 'No Meals'
+            }`,
+            value: i,
+          });
+        } else if (i == 1) {
+          count.push({
+            displayName: `${i} ${
+              this.translate.currentLang == 'ar' ? 'وجبه' : 'Meal'
+            }`,
+            value: i,
+          });
+        } else {
+          count.push({
+            displayName: `${i} ${
+              this.translate.currentLang == 'ar' ? 'وجبات' : 'Meals'
+            }`,
+            value: i,
+          });
+        }
       }
     }
     return count;
   }
 
+  getSnackTypesCount(snacks: MealType[]) {
+    this.snackCount = [];
+    if (snacks.length) {
+      this.snackCount.push({
+        name: this.translate.currentLang == 'ar' ? 'بدون سناك' : 'No Snack',
+        value: [],
+      });
+      for (let i = 0; i < snacks.length; i++) {
+        if (i == 0) {
+          this.snackCount.push({
+            name: this.translate.currentLang == 'ar' ? 'وجبة سناك' : '1 Snack',
+            value: ['snack_one'],
+          });
+        } else if (i == 1) {
+          this.snackCount.push({
+            name:
+              this.translate.currentLang == 'ar' ? 'وجبتين سناك' : '2 Snacks',
+            value: snacks.slice(0, i + 1),
+          });
+        } else {
+          this.snackCount.push({
+            name: `${i} ${
+              this.translate.currentLang == 'ar' ? 'سناكس' : 'Snacks'
+            }`,
+            value: snacks.slice(0, i + 1),
+          });
+        }
+      }
+    }
+  }
 
   onMealsChange() {
-    // this.ProgramDetailsForm
-    //   .get('addBreakFast')
-    //   ?.valueChanges.pipe(takeUntil(this.destroyed$))
-    //   .subscribe((val) => {
-        // const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
-        // if (val) {
-        //   meal_types.clearValidators();
-        //   meal_types.updateValueAndValidity();
-        // } else {
-        //   meal_types.setValidators([Validators.required]);
-        //   meal_types.updateValueAndValidity();
-        // }
-    //   });
     const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
-    const breakFast = this.ProgramDetailsForm.get('addBreakFast') as FormControl;
-    meal_types.patchValue(0)
-    breakFast.patchValue(true)
-    
-      this.ProgramDetailsForm
-      .get('meal_types')
+    const breakFast = this.ProgramDetailsForm.get(
+      'addBreakFast'
+    ) as FormControl;
+    meal_types.patchValue(0);
+    breakFast.patchValue(this.isRamadan ? false : true);
+
+    this.ProgramDetailsForm.get('meal_types')
       ?.valueChanges.pipe(takeUntil(this.destroyed$))
       .subscribe((val) => {
         if (val == 0) {
-          breakFast.patchValue(true)
+          breakFast.patchValue(this.isRamadan ? false : true);
         }
       });
   }
 
-  onBreakfastChange(e:any){
+  onBreakfastChange(e: any) {
     const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
     meal_types.setValidators(e.target.checked ? Validators.required : null);
     meal_types.updateValueAndValidity();
