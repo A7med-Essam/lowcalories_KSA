@@ -58,12 +58,12 @@
                         </div>
                         <div class="row mt-3 mb-4">
                             <div class="col-xl-10 col-lg-9 col-md-8 col-12 my-2">
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control" [disabled]="isRamadan"
                                     placeholder='{{"pages.checkout.giftcode.placeholder" | translate}}' #inputGiftCode>
                             </div>
                             <div class="col-xl-2 col-lg-3 col-md-4 col-12 my-2">
                                 <a class="button pointer py-2 px-5 w-100" (click)="applyGiftCode(inputGiftCode)">
-                                    <button class="btn w-100 border-0 flex-center">
+                                    <button class="btn w-100 border-0 flex-center" [disabled]="isRamadan">
                                         <span class="mx-1">{{"buttons.apply"|translate}}</span>
                                         <ng-container *ngIf="giftcodeButtonMode$ | async">
                                             <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
@@ -444,8 +444,8 @@
             <h6 class="txt-main">{{"pages.checkout.subscription.meals" | translate}}:</h6>
             <span>{{sub.meals.length}}</span>
         </div>
-        <hr class="my-2" style="height: .5px;">
-        <div class="d-flex justify-content-between">
+        <hr class="my-2" style="height: .5px;" *ngIf="!isRamadan">
+        <div class="d-flex justify-content-between" *ngIf="!isRamadan">
             <h6 class="txt-main">{{"pages.checkout.subscription.snacks" | translate}}:</h6>
             <span>{{sub.snacks.length}}</span>
         </div>

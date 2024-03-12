@@ -97,6 +97,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   minBirthdate: Date;
   global_extra_carb: any;
   global_extra_protein: any;
+  isRamadan: boolean = false;
 
   constructor(
     private _Store: Store,
@@ -144,6 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroyed$))
             .subscribe((res) => {
               if (res) {
+                this.isRamadan = res.name.toLowerCase().includes('ramadan');
                 this._Store.dispatch(FETCH_STATE_START());
               }
             });
@@ -312,8 +314,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             program_id: this.program_id,
             global_extra_protein: this.global_extra_protein,
             global_extra_carb: this.global_extra_carb,
-            include_breakfast: Number(subscription.meals.includes("breakfast")),
-            meal_count: subscription.meals.includes("breakfast") ?  subscription.meals.length -1 : subscription.meals.length,
+            include_breakfast: Number(subscription.meals.includes('breakfast')),
+            meal_count: subscription.meals.includes('breakfast')
+              ? subscription.meals.length - 1
+              : subscription.meals.length,
             snack_count: subscription.snacks.length,
           },
         })

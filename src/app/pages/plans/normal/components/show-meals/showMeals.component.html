@@ -54,7 +54,7 @@
                         <div class="col-9 d-flex justify-content-between flex-column">
                             <div class="content mt-xl-3 mt-md-0 mt-3">
                                 <div>
-                                    <h6>
+                                    <h6 *ngIf="!isRamadan">
                                         {{translate.currentLang == 'ar'?
                                         meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
                                         {{meal.mainDish.qty + meal.mainDish.extra.protein + meal.mainDish.extra.carb}}
@@ -75,6 +75,9 @@
                                             </p-tag>
                                         </span>
 
+                                    </h6>
+                                    <h6 *ngIf="isRamadan">
+                                        {{meal?.meal_name}}
                                     </h6>
                                     <ng-container *ngIf="meal.sideDish">
                                         <h6 *ngFor="let sideDish of meal.sideDish">
@@ -103,7 +106,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted m-0">
                                             <i class="fas fa-info-circle txt-main"></i>
-                                            {{ meal.mainDish.meal_type | mealNameTranslate :translate.currentLang}}
+                                            {{ meal.mainDish.meal_type | mealNameTranslate :translate.currentLang:isRamadan}}
                                         </p>
                                         <div *ngIf="meal.mainDish.has_replaced || meal.mainDish.is_replaced">
                                             <ng-container *ngIf="ReplacementButtonMode$ | async; else elseBlock">
@@ -203,7 +206,7 @@
         <i class="fas fa-info-circle"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
-        <div *ngIf="!check_meal_types()">
+        <div *ngIf="!check_meal_types() && !isRamadan">
             <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
             <div class="my-2">
                 <div class="my-4">
@@ -309,7 +312,7 @@
                                     <div class="d-flex justify-content-center align-items-center mb-3">
                                         <p class="text-muted m-0">
                                             <i class="fas fa-info-circle txt-main"></i>
-                                            {{ replaced_item.mainDish.meal_type | mealNameTranslate :translate.currentLang}}
+                                            {{ replaced_item.mainDish.meal_type | mealNameTranslate :translate.currentLang:isRamadan}}
                                         </p>
                                     </div>
                                     <h6 class="text-orange">

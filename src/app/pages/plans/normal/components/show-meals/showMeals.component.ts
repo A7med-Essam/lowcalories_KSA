@@ -79,6 +79,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   };
   selected_program!: ISubscriptionData;
   @ViewChild('replaced_items') replaced_items!: ElementRef;
+  isRamadan: boolean = false;
 
   constructor(
     private _SharedService: SharedService,
@@ -107,6 +108,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           this.ProgramDetails.pipe(takeUntil(this.destroyed$)).subscribe(
             (res) => {
               if (res) {
+                this.isRamadan = res.name.toLowerCase().includes('ramadan');
                 this.program_id = res.id;
                 this.program_extra_prices = res.extra_prices;
               } else {
