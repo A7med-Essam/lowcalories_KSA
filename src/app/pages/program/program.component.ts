@@ -16,7 +16,7 @@ export class ProgramComponent implements OnDestroy {
   programs$: Observable<IProgramResponse[] | null>;
   private destroyed$: Subject<void> = new Subject();
 
-  constructor(private _Store: Store, public translate:TranslateService) {
+  constructor(private _Store: Store, public translate: TranslateService) {
     this.programs$ = this._Store.select(fromProgramSelector.programSelector);
     this.skeletonMode$ = this._Store.select(
       fromProgramSelector.programLoadingSelector
@@ -24,6 +24,10 @@ export class ProgramComponent implements OnDestroy {
     this.programs$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
       res || this._Store.dispatch(fromProgramActions.FETCH_PROGRAM_START());
     });
+  }
+
+  isRamadan(program_name: string): boolean {
+    return program_name.toLowerCase().includes('ramadan');
   }
 
   ngOnDestroy() {
