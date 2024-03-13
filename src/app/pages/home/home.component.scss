@@ -26,7 +26,8 @@
 }
 
 #slider-1 {
-    background-image: url('../../../assets/images/slider/Website-01.jpg');
+    // background-image: url('../../../assets/images/slider/Website-01.jpg');
+    background-image: url('../../../assets/images/slider/ramadan/New\ Project\ \(3\).png');
     background-size: 100% 100%;
     height: 700px;
     display: flex;
@@ -36,7 +37,28 @@
 }
 
 #slider-2 {
-    background-image: url('../../../assets/images/slider/Website-02.jpg');
+    // background-image: url('../../../assets/images/slider/Website-02.jpg');
+    background-image: url('../../../assets/images/slider/ramadan/New\ Project\ \(4\).png');
+    background-size: 100% 100%;
+    height: 700px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: end;
+}
+#slider-3 {
+    // background-image: url('../../../assets/images/slider/Website-02.jpg');
+    background-image: url('../../../assets/images/slider/ramadan/New\ Project\ \(5\).png');
+    background-size: 100% 100%;
+    height: 700px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: end;
+}
+#slider-4 {
+    // background-image: url('../../../assets/images/slider/Website-02.jpg');
+    background-image: url('../../../assets/images/slider/ramadan/New\ Project\ \(6\).png');
     background-size: 100% 100%;
     height: 700px;
     display: flex;
@@ -45,19 +67,19 @@
     align-items: end;
 }
 
-#slider-3 {
-    background-image: url('../../../assets/images/slider/slider3.png');
-    background-size: 100% 100%;
-    height: 700px;
+// #slider-3 {
+//     background-image: url('../../../assets/images/slider/slider3.png');
+//     background-size: 100% 100%;
+//     height: 700px;
 
-    .slider3-btns {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: end;
-        height: 90%;
-    }
-}
+//     .slider3-btns {
+//         display: flex;
+//         justify-content: space-between;
+//         flex-wrap: wrap;
+//         align-items: end;
+//         height: 90%;
+//     }
+// }
 
 #slider .owl {
     width: 100%;
