@@ -462,6 +462,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.shepherdService.cancel();
     this.destroyed$.next();
     this.destroyed$.complete();
   }
