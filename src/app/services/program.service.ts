@@ -13,6 +13,6 @@ export class ProgramService {
   ) { }
 
   getPrograms(): Observable<{ status: number; data: IProgramResponse[]; message: string }> {
-    return this._ApiService.postReq('programs', '');
+    return this._ApiService.postReq('programs', {version:["v1","v2"]});
   }
 }

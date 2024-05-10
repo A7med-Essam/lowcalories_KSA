@@ -58,6 +58,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
   nextButtonMode$: Observable<boolean | null> = of(false);
   tour: any;
   isRamadan: boolean = false;
+  isSandwichProgram: boolean = false;
   snackCount: any[] = [];
 
   constructor(
@@ -309,6 +310,9 @@ export class SetPlanComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res) {
           this.isRamadan = res.name.toLowerCase().includes('ramadan');
+          this.isSandwichProgram = res.shortcut_name
+            .toLowerCase()
+            .includes('slw');
           this.delivery_days = res.delivery_days.filter(
             (day) => day.closed !== 1
           );
@@ -469,37 +473,48 @@ export class SetPlanComponent implements OnInit, OnDestroy {
 
   getMealTypesCount(meals: MealType[]) {
     const count = [];
-    for (let i = 0; i <= meals.length - 1; i++) {
-      if (this.isRamadan) {
-        count.push({
-          displayName:
-            this.translate.currentLang == 'ar'
-              ? meals[i]?.meal_type_name_ar
-              : meals[i]?.meal_type_name,
-          value: i,
-        });
-      } else {
-        if (i == 0) {
+    if (this.isSandwichProgram){
+      count.push({
+        displayName: `${meals.length} ${
+          this.translate.currentLang == 'ar' ? 'وجبات' : 'Meals'
+        }`,
+        value: meals.length-1,
+      });
+      const meal_types = this.ProgramDetailsForm.get('meal_types') as FormControl;
+      meal_types.setValue(meals.length-1);
+    }else{
+      for (let i = 0; i <= meals.length - 1; i++) {
+        if (this.isRamadan) {
           count.push({
-            displayName: `${
-              this.translate.currentLang == 'ar' ? 'بدون وجبات' : 'No Meals'
-            }`,
+            displayName:
+              this.translate.currentLang == 'ar'
+                ? meals[i]?.meal_type_name_ar
+                : meals[i]?.meal_type_name,
             value: i,
           });
-        } else if (i == 1) {
-          count.push({
-            displayName: `${i} ${
-              this.translate.currentLang == 'ar' ? 'وجبه' : 'Meal'
-            }`,
-            value: i,
-          });
-        } else {
-          count.push({
-            displayName: `${i} ${
-              this.translate.currentLang == 'ar' ? 'وجبات' : 'Meals'
-            }`,
-            value: i,
-          });
+        }else {
+          if (i == 0) {
+            count.push({
+              displayName: `${
+                this.translate.currentLang == 'ar' ? 'بدون وجبات' : 'No Meals'
+              }`,
+              value: i,
+            });
+          } else if (i == 1) {
+            count.push({
+              displayName: `${i} ${
+                this.translate.currentLang == 'ar' ? 'وجبه' : 'Meal'
+              }`,
+              value: i,
+            });
+          } else {
+            count.push({
+              displayName: `${i} ${
+                this.translate.currentLang == 'ar' ? 'وجبات' : 'Meals'
+              }`,
+              value: i,
+            });
+          }
         }
       }
     }
@@ -508,30 +523,44 @@ export class SetPlanComponent implements OnInit, OnDestroy {
 
   getSnackTypesCount(snacks: MealType[]) {
     this.snackCount = [];
-    if (snacks.length) {
-      this.snackCount.push({
-        name: this.translate.currentLang == 'ar' ? 'بدون سناك' : 'No Snack',
-        value: [],
-      });
+    if (this.isSandwichProgram) {
       for (let i = 0; i < snacks.length; i++) {
-        if (i == 0) {
-          this.snackCount.push({
-            name: this.translate.currentLang == 'ar' ? 'وجبة سناك' : '1 Snack',
-            value: ['snack_one'],
-          });
-        } else if (i == 1) {
-          this.snackCount.push({
-            name:
-              this.translate.currentLang == 'ar' ? 'وجبتين سناك' : '2 Snacks',
-            value: snacks.slice(0, i + 1),
-          });
-        } else {
-          this.snackCount.push({
-            name: `${i} ${
-              this.translate.currentLang == 'ar' ? 'سناكس' : 'Snacks'
-            }`,
-            value: snacks.slice(0, i + 1),
-          });
+        this.snackCount.push({
+          name: this.translate.currentLang == 'ar' ? 'وجبة سناك' : '1 Snack',
+          value: ['snack_one'],
+        });
+      }
+      const snack_types = this.ProgramDetailsForm.get('snack_types') as FormControl;
+      this.snackCount.forEach(e => {
+        snack_types.setValue(e.value);
+      });
+    } else {
+      if (snacks.length) {
+        this.snackCount.push({
+          name: this.translate.currentLang == 'ar' ? 'بدون سناك' : 'No Snack',
+          value: [],
+        });
+        for (let i = 0; i < snacks.length; i++) {
+          if (i == 0) {
+            this.snackCount.push({
+              name:
+                this.translate.currentLang == 'ar' ? 'وجبة سناك' : '1 Snack',
+              value: ['snack_one'],
+            });
+          } else if (i == 1) {
+            this.snackCount.push({
+              name:
+                this.translate.currentLang == 'ar' ? 'وجبتين سناك' : '2 Snacks',
+              value: snacks.slice(0, i + 1),
+            });
+          } else {
+            this.snackCount.push({
+              name: `${i} ${
+                this.translate.currentLang == 'ar' ? 'سناكس' : 'Snacks'
+              }`,
+              value: snacks.slice(0, i + 1),
+            });
+          }
         }
       }
     }
