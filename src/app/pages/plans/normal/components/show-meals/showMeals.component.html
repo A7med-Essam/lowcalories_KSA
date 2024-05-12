@@ -55,7 +55,7 @@
                         <div class="col-9 d-flex justify-content-between flex-column">
                             <div class="content mt-xl-3 mt-md-0 mt-3">
                                 <div>
-                                    <h6 *ngIf="!isRamadan">
+                                    <h6 *ngIf="!isRamadan && !isSandwichProgram">
                                         {{translate.currentLang == 'ar'?
                                         meal?.mainDish?.meal_name_ar:meal?.mainDish?.meal_name_en}}
                                         {{meal.mainDish.qty + meal.mainDish.extra.protein + meal.mainDish.extra.carb}}
@@ -77,8 +77,8 @@
                                         </span>
 
                                     </h6>
-                                    <h6 *ngIf="isRamadan">
-                                        {{meal?.meal_name}}
+                                    <h6 *ngIf="isRamadan || isSandwichProgram">
+                                        {{translate.currentLang == 'ar' ?  (meal?.meal_name_ar ? meal?.meal_name_ar: meal?.meal_name) : meal?.meal_name}}
                                     </h6>
                                     <ng-container *ngIf="meal.sideDish">
                                         <h6 *ngFor="let sideDish of meal.sideDish">
@@ -110,7 +110,7 @@
                                             {{ meal.mainDish.meal_type | mealNameTranslate
                                             :translate.currentLang:isRamadan}}
                                         </p>
-                                        <div *ngIf="!isRamadan">
+                                        <div *ngIf="!isRamadan && !isSandwichProgram">
                                             <div *ngIf="meal.mainDish.has_replaced || meal.mainDish.is_replaced">
                                                 <ng-container *ngIf="ReplacementButtonMode$ | async; else elseBlock">
                                                     <button class="btn py-2 px-4 editBtn">
@@ -127,8 +127,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr *ngIf="!isRamadan">
-                                <div class="row" *ngIf="!isRamadan">
+                                <hr *ngIf="!isRamadan && !isSandwichProgram">
+                                <div class="row" *ngIf="!isRamadan && !isSandwichProgram">
                                     <div class="col-md-3 col-6 my-2 postion-relative fs-12">
                                         <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column"
                                             style="border-radius: 30%;">
@@ -205,7 +205,7 @@
         <i class="fas fa-info-circle"></i>
     </div>
     <p-sidebar [(visible)]="sidebarOptions" position="right">
-        <div *ngIf="!check_meal_types() && !isRamadan">
+        <div *ngIf="!check_meal_types() && !isRamadan && !isSandwichProgram">
             <h5>{{"pages.plans.sidebar.section1.title" | translate}}</h5>
             <div class="my-2">
                 <div class="my-4">
@@ -269,29 +269,31 @@
                 </span>
             </div>
         </div>
-        <hr>
-        <button class="btn summary-toggle-btn mb-3 w-100" (click)="showNutritionSummary = !showNutritionSummary"
-            *ngIf="!isRamadan">
-            {{ showNutritionSummary ? ("buttons.hideSummary"|translate) : "buttons.showSummary"|translate}}
-        </button>
-        <h5 *ngIf="showNutritionSummary">{{"pages.plans.sidebar.section3.title" | translate}}</h5>
-        <div *ngIf="showNutritionSummary">
-            <div class="mt-3" *ngFor="let meal of userMeals">
-                <div *ngFor="let nutrition of meal | nutritionTotal">
-                    <small class="txt-main">{{ nutrition.date }} / {{ translate.currentLang == 'ar' ? (nutrition.day |
-                        weekdayTranslate ):nutrition.day }}</small> <br>
-                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span>
-                        <span>{{
-                            round(nutrition.totalProtein) }}</span></small> <br>
-                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span>
-                        <span>{{
-                            round(nutrition.totalCalories) }}</span></small> <br>
-                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCarb" | translate}}</span> <span>{{
-                            round(nutrition.totalCarbs) }}</span></small> <br>
-                    <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalFat" | translate}}</span> <span>{{
-                            round(nutrition.totalFat) }}</span></small>
+        <div *ngIf="!isSandwichProgram">
+            <hr>
+            <button class="btn summary-toggle-btn mb-3 w-100" (click)="showNutritionSummary = !showNutritionSummary"
+                *ngIf="!isRamadan">
+                {{ showNutritionSummary ? ("buttons.hideSummary"|translate) : "buttons.showSummary"|translate}}
+            </button>
+            <h5 *ngIf="showNutritionSummary">{{"pages.plans.sidebar.section3.title" | translate}}</h5>
+            <div *ngIf="showNutritionSummary">
+                <div class="mt-3" *ngFor="let meal of userMeals">
+                    <div *ngFor="let nutrition of meal | nutritionTotal">
+                        <small class="txt-main">{{ nutrition.date }} / {{ translate.currentLang == 'ar' ? (nutrition.day |
+                            weekdayTranslate ):nutrition.day }}</small> <br>
+                        <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalProtein" | translate}}</span>
+                            <span>{{
+                                round(nutrition.totalProtein) }}</span></small> <br>
+                        <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCalories" | translate}} </span>
+                            <span>{{
+                                round(nutrition.totalCalories) }}</span></small> <br>
+                        <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalCarb" | translate}}</span> <span>{{
+                                round(nutrition.totalCarbs) }}</span></small> <br>
+                        <small><span class="mx-2">{{"pages.plans.sidebar.section3.totalFat" | translate}}</span> <span>{{
+                                round(nutrition.totalFat) }}</span></small>
+                    </div>
+                    <hr>
                 </div>
-                <hr>
             </div>
         </div>
     </p-sidebar>
