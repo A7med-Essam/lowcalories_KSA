@@ -15,4 +15,5 @@ export interface IProgramResponse {
     image_new:      string;
     bag_price:      number;
     snack_price:    number;
+    is_new:      string;
 }
